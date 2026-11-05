@@ -1,0 +1,20 @@
+# macOS system files
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Temporary scratch and cache
+.scratch/
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Google Drive symlinks & parent links
+Dashboard NAPeN - Roadmaps 2026-2027
+
+# IDE & Editor settings
+.idea/
+.vscode/
+*.swp
+*.swo

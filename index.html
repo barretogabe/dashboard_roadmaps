@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Plataforma Interativa de Prescrição Clínica em Neuromodulação Não Invasiva — Rede NAPeN</title>
+  <meta name="description" content="Roadmaps e Algoritmos de Decisão Terapêutica Baseados em Evidências para Neuromodulação Não Invasiva — Rede NAPeN.">
+  <link rel="icon" type="image/png" href="assets/logos/napen_logo_icon.png">
+
+  <!-- Estilos Oficiais NAPeN -->
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- ========================================================================
+       Header Oficial Rede NAPeN (Mimetização Estrita do Portal Oficial)
+       ======================================================================== -->
+  <header class="site-header">
+    <!-- 1. Barra Superior Branca -->
+    <div class="header-top-bar">
+      <div class="header-top-inner">
+        <a href="index.html" class="brand-link" title="Rede NAPeN — Plataforma Interativa">
+          <img src="assets/logos/napen_logo_horizontal.png" alt="Rede NAPeN — Núcleo de Assistência e Pesquisa em Neuromodulação" class="brand-logo-img">
+        </a>
+
+        <!-- Ações do Topo: Botão Portal Externo + Widget Seletor de Idioma (Oficial Rede NAPeN) -->
+        <div class="header-top-actions">
+          <a href="https://www.neuromodulation-net.com/" target="_blank" rel="noopener noreferrer" class="btn-portal-return">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+            Retornar ao Portal da Rede NAPeN
+          </a>
+
+          <!-- Widget de Seleção de Idioma Retrátil Oficial (Mimetização Estrita do Portal Rede NAPeN) -->
+          <div class="lang-dropdown-wrapper" id="langDropdownWrapper">
+            <!-- Estado Fechado: Cápsula Horizontal Turquesa com Seta para Baixo -->
+            <button type="button" class="lang-capsule-btn" id="langCapsuleBtn" aria-expanded="false" aria-label="Selecionar Idioma da Plataforma" title="Alternar idioma">
+              <span class="flag-icon-circle" id="capsuleFlag">
+                <svg viewBox="0 0 32 32" width="20" height="20">
+                  <clipPath id="br-flag-c"><circle cx="16" cy="16" r="16"/></clipPath>
+                  <g clip-path="url(#br-flag-c)">
+                    <rect width="32" height="32" fill="#009b3a"/>
+                    <polygon points="16,5 29,16 16,27 3,16" fill="#fedf00"/>
+                    <circle cx="16" cy="16" r="6.8" fill="#002776"/>
+                    <path d="M 9.8,16.8 A 7,7 0 0,0 22.2,15.2" stroke="#ffffff" stroke-width="1.2" fill="none"/>
+                  </g>
+                </svg>
+              </span>
+              <span class="capsule-lang-text" id="capsuleLangText">PT</span>
+              <svg class="capsule-chevron-down" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 12 15 18 9"/>
+              </svg>
+            </button>
+
+            <!-- Estado Expandido ao Clicar: Pílula Vertical de Dois Andares -->
+            <div class="lang-menu-expanded" id="langMenuExpanded">
+              <div class="lang-tier lang-tier-active" id="langTierActive">
+                <span class="flag-icon-circle" id="tierActiveFlag">
+                  <svg viewBox="0 0 32 32" width="20" height="20">
+                    <clipPath id="br-flag-t"><circle cx="16" cy="16" r="16"/></clipPath>
+                    <g clip-path="url(#br-flag-t)">
+                      <rect width="32" height="32" fill="#009b3a"/>
+                      <polygon points="16,5 29,16 16,27 3,16" fill="#fedf00"/>
+                      <circle cx="16" cy="16" r="6.8" fill="#002776"/>
+                      <path d="M 9.8,16.8 A 7,7 0 0,0 22.2,15.2" stroke="#ffffff" stroke-width="1.2" fill="none"/>
+                    </g>
+                  </svg>
+                </span>
+                <span class="tier-lang-text" id="tierActiveText">PT</span>
+                <svg class="tier-chevron-up" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#1e293b" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="18 15 12 9 6 15"/>
+                </svg>
+              </div>
+
+              <div class="lang-tier lang-tier-option" id="langTierOption" role="button" tabindex="0">
+                <span class="flag-icon-circle" id="tierOptionFlag">
+                  <svg viewBox="0 0 32 32" width="20" height="20">
+                    <clipPath id="us-flag-t"><circle cx="16" cy="16" r="16"/></clipPath>
+                    <g clip-path="url(#us-flag-t)">
+                      <rect width="32" height="32" fill="#b22234"/>
+                      <rect y="2.46" width="32" height="2.46" fill="#ffffff"/>
+                      <rect y="7.38" width="32" height="2.46" fill="#ffffff"/>
+                      <rect y="12.30" width="32" height="2.46" fill="#ffffff"/>
+                      <rect y="17.23" width="32" height="2.46" fill="#ffffff"/>
+                      <rect y="22.15" width="32" height="2.46" fill="#ffffff"/>
+                      <rect y="27.07" width="32" height="2.46" fill="#ffffff"/>
+                      <rect width="14" height="17.23" fill="#3c3b6e"/>
+                      <circle cx="4" cy="4" r="0.9" fill="#ffffff"/><circle cx="10" cy="4" r="0.9" fill="#ffffff"/>
+                      <circle cx="7" cy="7.5" r="0.9" fill="#ffffff"/>
+                      <circle cx="4" cy="11" r="0.9" fill="#ffffff"/><circle cx="10" cy="11" r="0.9" fill="#ffffff"/>
+                      <circle cx="7" cy="14" r="0.9" fill="#ffffff"/>
+                    </g>
+                  </svg>
+                </span>
+                <span class="tier-lang-text" id="tierOptionText">EN</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. Barra de Navegação Turquesa Oficial (Standalone: Botões do Dashboard) -->
+    <nav class="header-nav-bar" aria-label="Navegação da Plataforma">
+      <div class="header-nav-container">
+        
+        <!-- Botão 1: Prescrição Interativa com Dropdown no Hover das Condições -->
+        <div class="nav-item has-dropdown active" id="navItemPrescription">
+          <button class="nav-btn" type="button" id="tabBtnPrescription">
+            <span>PRESCRIÇÃO INTERATIVA</span>
+            <svg class="nav-arrow-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+
+          <!-- Dropdown com Hover e Transição de Cores Idêntico ao Site NAPeN -->
+          <ul class="dropdown-menu-napen" id="dropdownConditionsList">
+            <!-- Populado dinamicamente via JavaScript com as condições clínicas -->
+          </ul>
+        </div>
+
+        <!-- Botão 2: Calculadora de Resposta Clínica (Acesso Direto para Reavaliação e Decisão) -->
+        <div class="nav-item has-dropdown" id="navItemCalc">
+          <button class="nav-btn" type="button" id="tabBtnCalc">
+            <span>CALCULADORA DE RESPOSTA CLÍNICA</span>
+            <svg class="nav-arrow-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+
+          <!-- Dropdown em Cascata: Diagnóstico ➔ Medidas/Escalas de Desfecho Sugeridas -->
+          <ul class="dropdown-menu-napen" id="dropdownCalcList">
+            <!-- Populado dinamicamente via JavaScript com Diagnóstico > Medidas -->
+          </ul>
+        </div>
+
+        <!-- Botão 3: Matriz de Protocolos e Parâmetros -->
+        <div class="nav-item" id="navItemPocket">
+          <button class="nav-btn" type="button" id="tabBtnPocket">
+            MATRIZ DE PROTOCOLOS E PARÂMETROS
+          </button>
+        </div>
+
+        <!-- Botão 3: Como os Roadmaps de Indicação Foram Desenvolvidos -->
+        <div class="nav-item" id="navItemMethod">
+          <button class="nav-btn" type="button" id="tabBtnMethod">
+            COMO OS ROADMAPS DE INDICAÇÃO FORAM DESENVOLVIDOS
+          </button>
+        </div>
+
+      </div>
+    </nav>
+  </header>
+
+  <!-- ========================================================================
+       Hero / Identificação da Plataforma
+       ======================================================================== -->
+  <section class="hero-section">
+    <div class="hero-container">
+      <h1 class="hero-title">Plataforma Interativa de Prescrição Clínica em Neuromodulação Não Invasiva</h1>
+      <p class="hero-subtitle">Roadmaps e Algoritmos de Decisão Terapêutica Baseados em Evidências</p>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       Conteúdo Principal (Standalone)
+       ======================================================================== -->
+  <main class="main-wrapper">
+
+    <!-- ====================================================================
+         Aba 1: Prescrição Interativa (Sob Demanda: Dropdown no Menu ou Busca Ativa)
+         ==================================================================== -->
+    <div id="panePrescription" class="prescription-view-container">
+
+      <!-- Estado Inicial Limpo: Busca Rápida e Orientação -->
+      <div class="search-selector-hero" id="searchHeroPanel">
+        <div class="search-selector-header">
+          <h2 class="search-selector-title">Selecione uma Condição Clínica para Prescrição</h2>
+          <p class="search-selector-subtitle">
+            Passe o mouse sobre o botão <strong>PRESCRIÇÃO INTERATIVA</strong> no menu turquesa acima para escolher a condição, ou digite abaixo para buscar um protocolo:
+          </p>
+        </div>
+
+        <div class="search-inputs-row">
+          <div class="search-box-wrap">
+            <input type="text" id="globalSearchInput" class="search-input-field" placeholder="" aria-label="Busca por diagnóstico, alvo ou técnica (ex: AVC, espasticidade, depressão, dor neuropática, áreas do sistema 10-20 como C3, F3, Cz, marcha, Parkinson, iTBS, EAM, SARA, BBS...)">
+            <div class="search-placeholder-marquee" id="searchPlaceholderMarquee" aria-hidden="true">
+              <div class="marquee-track">
+                <span class="marquee-content">Busca por diagnóstico, alvo ou técnica (ex: AVC, espasticidade, depressão, dor neuropática, áreas do sistema 10-20 como C3, F3, Cz, marcha, Parkinson, iTBS, EAM, SARA, BBS...)</span>
+                <span class="marquee-separator">✦</span>
+                <span class="marquee-content">Busca por diagnóstico, alvo ou técnica (ex: AVC, espasticidade, depressão, dor neuropática, áreas do sistema 10-20 como C3, F3, Cz, marcha, Parkinson, iTBS, EAM, SARA, BBS...)</span>
+                <span class="marquee-separator">✦</span>
+              </div>
+            </div>
+            <button id="searchClearBtn" class="search-clear-btn" type="button" aria-label="Limpar busca">✕</button>
+
+            <!-- Lista Suspensa de Resultados da Busca com Badges Explicativos -->
+            <div class="search-results-dropdown" id="searchResultsDropdown"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Área Ativa do Algoritmo Interativo (Visível Apenas Após Seleção) -->
+      <div class="algorithm-active-container" id="algorithmActiveContainer">
+
+        <!-- Barra de Cabeçalho do Algoritmo e Retorno -->
+        <div class="algorithm-header-nav">
+          <div class="algo-header-info">
+            <span class="algo-cond-eixo" id="algoCondEixo">Doenças Cerebrovasculares (AVC)</span>
+            <h2 class="algo-cond-title" id="algoCondTitle">Acidente Vascular Cerebral (AVC) — Membro Superior</h2>
+          </div>
+          <button class="btn-clear-selection" id="btnClearSelection" type="button">
+            Voltar à Seleção de Condições
+          </button>
+        </div>
+
+        <!-- Trilha Visual do Algoritmo (Flow Stepper) -->
+        <div class="flow-stepper-track">
+          <div class="step-node completed">
+            <span class="step-num">1</span>
+            <span>Condição Clínica</span>
+          </div>
+          <span class="step-divider">➔</span>
+          <div class="step-node current" id="stepNode2">
+            <span class="step-num">2</span>
+            <span>Fator Limitante Principal</span>
+          </div>
+          <span class="step-divider">➔</span>
+          <div class="step-node" id="stepNode3">
+            <span class="step-num">3</span>
+            <span>Prescrição Primária</span>
+          </div>
+          <span class="step-divider">➔</span>
+          <div class="step-node" id="stepNode4">
+            <span class="step-num">4</span>
+            <span>Desfecho & Protocolo Alternativo</span>
+          </div>
+        </div>
+
+        <!-- Painel Interativo do Fator Limitante Principal -->
+        <div class="node1-panel">
+          <div class="node1-title">
+            <span style="font-weight: 700; color: var(--napen-navy); font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.02em;">
+              Estratificação Clínica: Fator Limitante ou Sintoma-Alvo
+            </span>
+            <span id="node1QuestionText" style="display: block; font-size: 0.88rem; color: var(--text-muted); font-weight: normal; margin-top: 2px;">
+              Qual é o principal fator limitante ou foco de ganho terapêutico?
+            </span>
+          </div>
+          <div class="node1-options-list" id="node1OptionsList"></div>
+        </div>
+
+        <!-- Card de Prescrição Primária -->
+        <article class="prescription-details-card">
+          <div class="prescription-top-header">
+            <h3 class="prescription-main-title">Prescrição Terapêutica Primária Recomendada</h3>
+            <div class="guideline-badge-card" id="guidelineBadge">
+              <span id="guidelineBadgeText">Diretriz Internacional: Lefaucheur et al., 2020 (IFCN) — Nível A</span>
+            </div>
+          </div>
+
+          <!-- Parâmetros de Estimulação e Dose -->
+          <div class="params-details-grid">
+            <div class="param-box">
+              <span class="param-box-label">Técnica Recomendada</span>
+              <span class="param-box-val" id="prescTecnica">—</span>
+              <span class="param-box-desc" id="prescModalidade">—</span>
+            </div>
+
+            <div class="param-box">
+              <span class="param-box-label">Alvo Anatômico & Coordenadas</span>
+              <span class="param-box-val" id="prescAlvo">—</span>
+              <span class="param-box-desc">Área de estimulação cortical ou periférica</span>
+            </div>
+
+            <div class="param-box">
+              <span class="param-box-label">Frequência & Intensidade</span>
+              <span class="param-box-val" id="prescFrequencia">—</span>
+              <span class="param-box-desc" id="prescIntensidade">—</span>
+            </div>
+
+            <div class="param-box">
+              <span class="param-box-label">Dose e Regime de Aplicação</span>
+              <span class="param-box-val" id="prescPulsos">—</span>
+              <span class="param-box-desc" id="prescSessoes">—</span>
+            </div>
+          </div>
+
+          <!-- Eficácia Ancorada -->
+          <div class="scale-efficacy-panel">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+              <span style="font-size: 0.82rem; font-weight: 700; color: var(--napen-navy); text-transform: uppercase;">
+                Eficácia Ancorada na Escala Clínica Recomendada
+              </span>
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <span class="scale-badge-pill" id="prescEscala">Escala Clínica Validada</span>
+              </div>
+            </div>
+            <div style="font-size: 0.88rem; color: var(--text-main); margin-top: 2px;">
+              <strong>Tamanho de Efeito Reportado:</strong> <span id="prescEfeito">—</span>
+            </div>
+            <div style="font-size: 0.82rem; color: var(--napen-teal-dark);">
+              <strong>Meta Terapêutica Estabelecida:</strong> <span id="prescMeta">—</span>
+            </div>
+          </div>
+
+          <!-- Evidência Científica e Artigos de Referência do Protocolo -->
+          <div class="evidence-reference-panel" id="evidenceReferencePanel">
+            <div class="evidence-ref-header">
+              <span class="evidence-ref-title">Evidência Científica & Referências Formais</span>
+              <span class="evidence-type-badge" id="evidenceTypeBadge">Ensaio Clínico Randomizado Seminal</span>
+            </div>
+            <div class="evidence-ref-body">
+              <div class="evidence-block">
+                <span class="evidence-block-label">Ensaio Clínico Seminal do Protocolo (Parâmetros & Desfecho Primário):</span>
+                <p class="evidence-citation" id="evidenceCitationText">—</p>
+                <div class="evidence-doi-row">
+                  <span style="font-weight: 700; color: var(--text-muted); font-size: 0.78rem;">Publicação Original:</span>
+                  <a href="#" target="_blank" rel="noopener noreferrer" class="doi-link-btn" id="evidenceDoiLink">
+                    <span id="evidenceDoiText">Acessar Artigo Oficial</span> ↗
+                  </a>
+                </div>
+              </div>
+              <div class="evidence-block" style="margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--border-subtle);">
+                <span class="evidence-block-label">Diretriz Internacional Consensual (Grau Formal de Recomendação):</span>
+                <p class="evidence-citation" id="evidenceGuidelineText">—</p>
+                <div class="evidence-doi-row">
+                  <span style="font-weight: 700; color: var(--text-muted); font-size: 0.78rem;">Consenso de Diretriz:</span>
+                  <a href="#" target="_blank" rel="noopener noreferrer" class="doi-link-btn" id="evidenceGuidelineDoiLink">
+                    <span id="evidenceGuidelineDoiText">Acessar Diretriz IFCN</span> ↗
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Monitoramento Clínico e Regras de Reavaliação (Destaque Geral dos Roadmaps) -->
+          <div class="monitoring-rules-panel" id="monitoringRulesPanel">
+            <div class="monitoring-head">
+              <span class="monitoring-title">
+                Monitoramento Clínico, Reavaliação e Regras Gerais do Ciclo
+              </span>
+              <span class="monitoring-subtitle">
+                Diretriz sistematizada para verificação de resposta e conduta de ajuste
+              </span>
+            </div>
+
+            <div class="monitoring-grid">
+              <div class="monitoring-item">
+                <span class="monitoring-label">Janela de Reavaliação Clínica</span>
+                <span class="monitoring-text" id="monitoringReeval">—</span>
+              </div>
+              <div class="monitoring-item">
+                <span class="monitoring-label">Ajuste de Parâmetros (Resposta Parcial)</span>
+                <span class="monitoring-text" id="monitoringDoseAdjust">—</span>
+              </div>
+              <div class="monitoring-item">
+                <span class="monitoring-label">Critério de Interrupção & Falha</span>
+                <span class="monitoring-text" id="monitoringStopRule">—</span>
+              </div>
+            </div>
+
+            <div class="monitoring-notes" id="monitoringNotesBox">
+              <strong>Observações Clínicas e Terapias Adjuvantes:</strong>
+              <span id="monitoringNotesText">—</span>
+            </div>
+          </div>
+
+          <!-- Calculadora Dual de Resposta Clínica & Comparador de Efeito Terapêutico -->
+          <div class="dual-calc-container" id="dualCalcContainer">
+            <div class="dual-calc-header">
+              <div>
+                <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+                  <span class="dual-calc-title">Calculadora de Resposta Clínica & Comparador de Efeito Terapêutico</span>
+                  <span id="calcFastTrackBadge" class="calc-fast-track-pill" style="display: none;">Reavaliação Direta de Desfecho</span>
+                </div>
+                <p class="dual-calc-subtitle">
+                  Avalie a resposta individual do paciente (Δ e %) e compare simultaneamente com o tamanho de efeito do ensaio clínico de suporte:
+                </p>
+              </div>
+              <a href="#metodologia-calculo-efeito" class="effect-calc-info-link" id="linkComoEfeitoCalculado">
+                Como o tamanho de efeito foi calculado? ↗
+              </a>
+            </div>
+
+            <div class="dual-calc-grid">
+              <!-- Lado 1: Avaliação da Resposta Clínica Individual -->
+              <div class="calc-col-clinical">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                  <span class="calc-col-label" style="margin-bottom: 0;">1. Avaliação da Resposta Clínica Individual</span>
+                  <button type="button" class="btn-guide-pill" id="btnOpenScaleGuideCalc" title="Como aplicar esta escala no exame clínico">
+                    Como Aplicar
+                  </button>
+                </div>
+
+                <!-- Seletor de Escala (Tabs para protocolos com múltiplos instrumentos) -->
+                <div class="calc-scale-tabs" id="calcScaleTabs" style="display: none;"></div>
+
+                <!-- Painel de Seleção Especial da EAM (0, 1, 1+, 2, 3, 4) -->
+                <div class="calc-eam-box" id="calcEamBox" style="display: none;">
+                  <div class="eam-row">
+                    <span class="eam-label">Grau Inicial (Pré-Tratamento):</span>
+                    <div class="eam-buttons-group" id="eamGroupBase">
+                      <button type="button" class="btn-eam" data-val="0">0</button>
+                      <button type="button" class="btn-eam" data-val="1">1</button>
+                      <button type="button" class="btn-eam" data-val="1+">1+</button>
+                      <button type="button" class="btn-eam" data-val="2">2</button>
+                      <button type="button" class="btn-eam" data-val="3">3</button>
+                      <button type="button" class="btn-eam" data-val="4">4</button>
+                    </div>
+                  </div>
+                  <div class="eam-row" style="margin-top: 8px;">
+                    <span class="eam-label">Grau Pós-Tratamento:</span>
+                    <div class="eam-buttons-group" id="eamGroupPost">
+                      <button type="button" class="btn-eam" data-val="0">0</button>
+                      <button type="button" class="btn-eam" data-val="1">1</button>
+                      <button type="button" class="btn-eam" data-val="1+">1+</button>
+                      <button type="button" class="btn-eam" data-val="2">2</button>
+                      <button type="button" class="btn-eam" data-val="3">3</button>
+                      <button type="button" class="btn-eam" data-val="4">4</button>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Inputs de Escala Contínua -->
+                <div class="calc-inputs-row" id="calcContinuousInputsRow">
+                  <div class="calc-input-group">
+                    <label for="calcValBase" id="calcValBaseLabel">Escore Inicial (Pré-Tratamento)</label>
+                    <input type="number" step="any" id="calcValBase" placeholder="Ex: 24">
+                  </div>
+                  <div class="calc-input-group">
+                    <label for="calcValPost" id="calcValPostLabel">Escore Pós-Tratamento</label>
+                    <input type="number" step="any" id="calcValPost" placeholder="Ex: 12">
+                  </div>
+                </div>
+
+                <div class="calc-clinical-result" id="calcClinicalResult">
+                  <div class="calc-metric-pill" id="calcDeltaBadge">Δ = Aguardando dados</div>
+                  <div class="calc-goal-feedback" id="calcGoalFeedback">
+                    Insira os escores para verificar se o paciente atingiu a meta terapêutica estabelecida no roadmap.
+                  </div>
+                </div>
+              </div>
+
+              <!-- Lado 2: Confronto com o Tamanho de Efeito da Evidência -->
+              <div class="calc-col-evidence">
+                <span class="calc-col-label">2. Tamanho de Efeito da Literatura de Suporte</span>
+                <div class="calc-evidence-box">
+                  <div style="font-size: 0.76rem; font-weight: 700; color: var(--napen-navy); text-transform: uppercase;">
+                    Efeito Médio Reportado na Literatura (IC 95%)
+                  </div>
+                  <div id="calcRoadmapEffectText" style="font-size: 0.88rem; color: var(--text-main); font-weight: 600; margin-top: 4px;">
+                    —
+                  </div>
+                  <div id="calcComparisonFeedback" style="font-size: 0.82rem; color: var(--napen-teal-dark); margin-top: 6px; line-height: 1.45;">
+                    Ao informar os escores, o sistema analisará se o ganho clínico individual é compatível com o intervalo de confiança reportado nos ensaios clínicos controlados.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Assistente de Resposta Clínica (Pós-Indução) -->
+          <div class="response-assistant-panel">
+            <div class="assistant-head">
+              <span class="assistant-title">
+                Assistente de Resposta Clínica (Pós-Indução)
+              </span>
+              <span style="font-size: 0.8rem; color: var(--text-faint);">Desfecho clínico e conduta terapêutica (ativado automaticamente pela calculadora):</span>
+            </div>
+
+            <div class="outcome-buttons-row">
+              <button class="btn-outcome success" id="btnOutcomeSuccess" type="button">
+                <span class="outcome-bullet status-success"></span>
+                <span>Resposta Satisfatória</span>
+              </button>
+              <button class="btn-outcome warning" id="btnOutcomeWarning" type="button">
+                <span class="outcome-bullet status-warning"></span>
+                <span>Ajuste de Parâmetros</span>
+              </button>
+              <button class="btn-outcome danger" id="btnOutcomeDanger" type="button">
+                <span class="outcome-bullet status-danger"></span>
+                <span>Resposta Insatisfatória (Protocolo Alternativo)</span>
+              </button>
+            </div>
+
+            <!-- Painel Dinâmico da Ramificação do Algoritmo -->
+            <div class="branch-result-panel" id="branchResultPanel"></div>
+
+          </div>
+        </article>
+
+      </div>
+    </div>
+
+    <!-- ====================================================================
+         Aba 2: Matriz de Protocolos e Parâmetros (Visão de Consulta Operacional)
+         ==================================================================== -->
+    <div id="panePocket" style="display: none;">
+      <div style="margin-bottom: 16px; color: var(--text-muted); font-size: 0.9rem;">
+        Matriz consolidada de protocolos e parâmetros de estimulação para consulta clínica comparativa.
+      </div>
+      <div class="pocket-table-container">
+        <table class="pocket-table">
+          <thead>
+            <tr>
+              <th>Condição Clínica</th>
+              <th>Foco / Fator Limitante</th>
+              <th>Técnica Indicada</th>
+              <th>Alvo Anatômico</th>
+              <th>Frequência & Intensidade</th>
+              <th>Dose e Sessões</th>
+              <th>Escala Recomendada</th>
+              <th>Recomendação Internacional</th>
+              <th>Evidência Científica (Ensaio & Metanálise)</th>
+            </tr>
+          </thead>
+          <tbody id="pocketTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ====================================================================
+         Aba 3: Metodologia ("Como os Roadmaps de Indicação Foram Desenvolvidos")
+         ==================================================================== -->
+    <div id="paneMethod" style="display: none;">
+      <div class="methodology-container">
+        <div class="methodology-header">
+          <h2>Como os Roadmaps de indicação foram desenvolvidos</h2>
+          <p style="color: var(--text-muted); margin-top: 4px; font-size: 0.95rem;">
+            Processo Metodológico e Diretrizes de Construção dos Algoritmos de Neuromodulação da Rede NAPeN
+          </p>
+        </div>
+
+        <div style="background-color: var(--napen-teal-soft); border-left: 4px solid var(--napen-teal-bar); padding: 14px 18px; border-radius: var(--radius-md); font-size: 0.88rem; color: var(--napen-teal-dark); line-height: 1.5;">
+          <strong>Nota Institucional:</strong> Os processos metodológicos de consolidação dos roadmaps estão sendo sistematizados e revisados pelos Grupos de Trabalho (GTs) temáticos da Rede NAPeN. As diretrizes aqui apresentadas sintetizam os consensos internacionais vigentes da versão 2025–2026.
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 14px;">
+          <h3 style="font-size: 1.15rem; color: var(--napen-navy); font-weight: 700;">1. Curadoria Baseada em Evidências e Consensos Internacionais</h3>
+          <p style="font-size: 0.92rem; color: var(--text-muted); line-height: 1.6;">
+            A seleção dos protocolos apoia-se em revisões sistemáticas com metanálise da literatura internacional e nos consensos da <em>International Federation of Clinical Neurophysiology (IFCN)</em> (Lefaucheur et al.). As recomendações são categorizadas de acordo com o grau de comprovação científica (Nível A: Eficácia Estabelecida; Nível B: Eficácia Provável).
+          </p>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 14px;">
+          <h3 style="font-size: 1.15rem; color: var(--napen-navy); font-weight: 700;">2. Algoritmos Clínicos Estruturados e Transição Sequencial</h3>
+          <p style="font-size: 0.92rem; color: var(--text-muted); line-height: 1.6;">
+            Cada roadmap constitui uma árvore de decisão direcionada. A estratificação clínica inicial pelo <strong>Fator Limitante Principal (Sintoma-Alvo)</strong> define o protocolo de indução mais eficaz para o microdesfecho funcional. Diante de resposta insatisfatória na escala avaliada, o algoritmo estipula a transição direta para o <strong>Protocolo Alternativo</strong> correspondente, salvaguardando as orientações de segurança e terapias adjuvantes recomendadas.
+          </p>
+        </div>
+
+        <!-- Seção 3: Metodologia de Cálculo do Tamanho de Efeito -->
+        <div id="metodologia-calculo-efeito" style="display: flex; flex-direction: column; gap: 14px; scroll-margin-top: 160px; border-top: 2px solid var(--napen-teal-bar); padding-top: 24px;">
+          <h3 style="font-size: 1.15rem; color: var(--napen-navy); font-weight: 700;">
+            3. Como o Tamanho de Efeito (Effect Size) foi Calculado nos Roadmaps?
+          </h3>
+          <p style="font-size: 0.92rem; color: var(--text-muted); line-height: 1.6;">
+            O tamanho de efeito quantifica a magnitude clínica real do benefício produzido pela intervenção ativa em comparação ao controle (placebo/<em>sham</em> ou tratamento habitual). Nos Roadmaps da Rede NAPeN, os valores reportados baseiam-se na <strong>Diferença de Médias Padronizada (SMD)</strong> calculada pelo <em>d de Cohen</em> ou <em>g de Hedges</em> (para corrigir viés de pequenas amostras), ponderados segundo o modelo de efeitos aleatórios (<em>DerSimonian-Laird</em>):
+          </p>
+          <div style="background-color: var(--bg-page); border: 1px solid var(--border-subtle); padding: 14px 18px; border-radius: var(--radius-md); font-family: monospace; font-size: 0.88rem; color: var(--napen-navy); line-height: 1.5;">
+            SMD (d de Cohen) = (Média_Intervenção - Média_Controle) / Desvio_Padrão_Agrupado (SD_pooled)
+          </div>
+          <p style="font-size: 0.92rem; color: var(--text-muted); line-height: 1.6;">
+            Cada parâmetro vem acompanhado de seu respectivo <strong>Intervalo de Confiança de 95% (IC 95%)</strong>. Quando o intervalo não cruza o valor nulo (zero), comprova-se relevância e significância estatística. Esses tamanhos de efeito determinaram os limiares de <strong>Diferença Clinicamente Importante Mínima (MCID)</strong> adotados como metas terapêuticas de cada roadmap, permitindo confrontar a resposta individual de cada paciente com o padrão ouro da literatura mundial.
+          </p>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ========================================================================
+       Rodapé Institucional Oficial
+       ======================================================================== -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div>
+        <strong>Rede NAPeN</strong> — Rede de Núcleos de Assistência e Pesquisa em Neuromodulação. Todos os direitos reservados.
+      </div>
+      <div style="display: flex; align-items: center; gap: 16px;">
+        <span class="footer-version-tag">Versão: 2025–2026</span>
+        <a href="https://www.neuromodulation-net.com/" target="_blank" rel="noopener noreferrer" style="color: var(--napen-teal-dark); font-weight: 700; text-decoration: none;">
+          Portal Oficial da Rede
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ========================================================================
+       Drawer / Modal: Guia Clínico Operacional de Aplicação de Escalas
+       ======================================================================== -->
+  <div class="scale-guide-backdrop" id="scaleGuideBackdrop"></div>
+  <aside class="scale-guide-drawer" id="scaleGuideDrawer" role="dialog" aria-modal="true" aria-labelledby="scaleGuideTitle" aria-hidden="true">
+    <div class="scale-guide-header">
+      <div class="scale-guide-header-text">
+        <div class="scale-guide-badges-top">
+          <span class="scale-badge-sigla" id="scaleGuideSigla">EAM</span>
+          <span class="scale-badge-tempo" id="scaleGuideTempo">⏱ 3 a 5 min</span>
+        </div>
+        <h2 class="scale-guide-title" id="scaleGuideTitle">Escala de Ashworth Modificada</h2>
+        <p class="scale-guide-subtitle" id="scaleGuideDominio">Espasticidade e Resistência Passiva ao Movimento</p>
+      </div>
+      <button type="button" class="scale-guide-close-btn" id="scaleGuideCloseBtn" aria-label="Fechar guia de aplicação">✕</button>
+    </div>
+
+    <!-- Navegação por Abas do Guia -->
+    <div class="scale-guide-nav-tabs">
+      <button type="button" class="scale-tab-btn active" data-tab="passos">Passo a Passo</button>
+      <button type="button" class="scale-tab-btn" data-tab="pontuacao">Pontuação & MCID</button>
+      <button type="button" class="scale-tab-btn" data-tab="validacao">Validação Científica (ABNT)</button>
+    </div>
+
+    <div class="scale-guide-body">
+      <!-- Aba 1: Passo a Passo da Aplicação -->
+      <div class="scale-tab-content active" id="scaleTabPassos">
+        <div class="scale-meta-info-box">
+          <div class="scale-meta-item">
+            <strong>Público-Alvo:</strong> <span id="scaleGuidePublico">—</span>
+          </div>
+          <div class="scale-meta-item" style="margin-top: 6px;">
+            <strong>Materiais Necessários:</strong> <span id="scaleGuideMateriais">—</span>
+          </div>
+        </div>
+        <h3 class="scale-section-heading">Procedimento e Manobras Padronizadas</h3>
+        <ol class="scale-steps-list" id="scaleGuideStepsList"></ol>
+      </div>
+
+      <!-- Aba 2: Pontuação e Critérios -->
+      <div class="scale-tab-content" id="scaleTabPontuacao">
+        <h3 class="scale-section-heading">Critérios e Graus de Pontuação</h3>
+        <div class="scale-scores-table" id="scaleGuideScoresTable"></div>
+        
+        <div class="scale-card-highlight" style="margin-top: 14px;">
+          <h4 style="font-size: 0.88rem; color: var(--napen-navy); font-weight: 700; margin-bottom: 4px;">
+            Diferença Clinicamente Importante Mínima (MCID)
+          </h4>
+          <p id="scaleGuideMcidText" style="font-size: 0.86rem; color: var(--text-main); line-height: 1.5;"></p>
+        </div>
+
+        <div class="scale-card-highlight" style="margin-top: 12px; background: #F0FDF4; border-color: #86EFAC;">
+          <h4 style="font-size: 0.88rem; color: #166534; font-weight: 700; margin-bottom: 4px;">
+            Interpretação na Neuromodulação Clínica
+          </h4>
+          <p id="scaleGuideInterpretacaoText" style="font-size: 0.86rem; color: #166534; line-height: 1.5;"></p>
+        </div>
+      </div>
+
+      <!-- Aba 3: Validação Científica (ABNT) & Links -->
+      <div class="scale-tab-content" id="scaleTabValidacao">
+        <div class="scale-card-highlight">
+          <h4 style="font-size: 0.88rem; color: var(--napen-navy); font-weight: 700; margin-bottom: 6px;">
+            Referência Normativa Seminal (Padrão ABNT)
+          </h4>
+          <p class="scale-ref-citation" id="scaleGuideRefAbnt"></p>
+          <div style="margin-top: 10px;">
+            <a href="#" target="_blank" rel="noopener noreferrer" class="btn-ref-access" id="scaleGuideDoiLink">
+              Acessar Artigo Original (DOI) ↗
+            </a>
+          </div>
+        </div>
+
+        <div class="scale-card-highlight" style="margin-top: 14px;">
+          <h4 style="font-size: 0.88rem; color: var(--napen-navy); font-weight: 700; margin-bottom: 6px;">
+            Validação e Adaptação Transcultural no Brasil
+          </h4>
+          <p class="scale-ref-citation" id="scaleGuideValidacaoBrasil"></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="scale-guide-footer">
+      <button type="button" class="btn-use-in-calc" id="btnScaleGuideUseInCalc">
+        Usar Esta Escala na Calculadora ➔
+      </button>
+    </div>
+  </aside>
+
+  <!-- Scripts da Aplicação -->
+  <script src="js/data.js"></script>
+  <script src="js/scale-guide-data.js"></script>
+  <script src="js/decision-engine.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

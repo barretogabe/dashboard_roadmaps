@@ -1,0 +1,3588 @@
+/**
+ * Rede NAPeN — Base de Dados dos Roadmaps 2025–2026
+ * Exportação oficial dos dados clínicos estruturados para o ecossistema Web.
+ */
+window.NAPEN_DATA = {
+  "versao": "2025-2026",
+  "data_extracao": "2026-11-04",
+  "instituicao": "Rede NAPeN — Rede de Núcleos de Assistência e Pesquisa em Neuromodulação",
+  "url_oficial": "https://www.neuromodulation-net.com/",
+  "total_condicoes": 13,
+  "condicoes": [
+    {
+      "id": "avc-membro-superior",
+      "condicao": "Acidente Vascular Cerebral (AVC) — Membro Superior",
+      "eixo": "Doenças Cerebrovasculares (AVC)",
+      "roadmap_id": "RM01",
+      "svg_file": "RM01.svg",
+      "status_auditoria": "Consolidado (Meta-análise)",
+      "nota_auditoria": "Versão consolidada a partir de ensaios clínicos randomizados e metanálises de recuperação motora pós-AVC.",
+      "no1_pergunta": "Qual é o principal fator limitante do membro superior?",
+      "fatores_limitantes": [
+        {
+          "id": "espasticidade",
+          "label": "Espasticidade em Membro Superior"
+        },
+        {
+          "id": "fraqueza",
+          "label": "Fraqueza Muscular e Paresia"
+        },
+        {
+          "id": "dor",
+          "label": "Dor Limitante em Membro Superior"
+        },
+        {
+          "id": "sensorial",
+          "label": "Déficit Somatossensorial"
+        },
+        {
+          "id": "negligencia",
+          "label": "Heminegligência Visuoespacial"
+        }
+      ],
+      "modalidades": {
+        "espasticidade": {
+          "tecnica": "rPMS (Estimulação Magnética Periférica)",
+          "modalidade_sigla": "rPMS",
+          "alvo": "Nervo periférico / Músculos flexores espásticos (punho/cotovelo)",
+          "frequencia": "50 Hz contínuo (repetição 5 Hz)",
+          "intensidade": "Intensidade suficiente para induzir contração muscular visível sem dor",
+          "pulsos_duracao": "600 pulsos por grupo muscular (modo contínuo sem pausas)",
+          "sessoes": "10 a 15 sessões diárias associadas à fisioterapia cinesioterapêutica",
+          "escala_recomendada": "Escala de Ashworth Modificada (EAM)",
+          "meta_melhora": "Redução de pelo menos 1 nível na EAM para flexores de punho e dedos",
+          "tamanho_efeito": "Diminuição de 1 ponto (IC 95% 0,5 a 1,5) na EAM após 10 sessões combinadas com terapia motora",
+          "evidencia": "Consolidada (Respaldo em Meta-análise)",
+          "linha_fluxograma": "solida",
+          "diretriz_internacional": "Nível B (Eficácia Provável na redução de hipertonia)",
+          "protocolo_alternativo": {
+            "nome": "Protocolo Alternativo 1 (rTMS Inibitória Contralesional)",
+            "tecnica": "rTMS 1 Hz",
+            "alvo": "Córtex Motor Primário (M1) contralesional (hemisfério não afetado)",
+            "parametros": "1 Hz, 90% a 100% do Limiar Motor de Repouso (LMR), 1.200 pulsos contínuos (20 min)",
+            "observacoes": "Indicado quando persistir hiper-reatividade e inibição inter-hemisférica anômala. Reavaliação semanal da excitabilidade cortical."
+          },
+          "sessoes_ajuste": {
+            "quando_reavaliar": "Reavaliar após o 5º dia consecutivo de estimulação motora.",
+            "ajuste_dose": "Se resposta parcial, recalibrar o ponto de aplicação periférico ou titular tempo de trem para 800 pulsos.",
+            "regra_interrupcao": "Interromper o ciclo de indução se após 2 ajustes sucessivos não for observada variação na amplitude articular ou EAM."
+          },
+          "contraindicacoes": [
+            "Implantes metálicos na área de estimulação",
+            "Trombose venosa profunda no membro",
+            "Fratura óssea instável recente"
+          ],
+          "notas_clinicas": "A estimulação magnética periférica contínua reduz a hipertonia e facilita o ganho funcional nas sessões de terapia ocupacional subsequentes.",
+          "artigo_referencia": {
+            "autores": "Struppler, A., et al.",
+            "ano": 2007,
+            "titulo": "Facilitation of voluntary motor function by peripheral magnetic stimulation in post-stroke spastic hemiparesis: A randomized controlled trial",
+            "periodico": "Clinical Neurophysiology, 118(1), 81–89",
+            "doi": "10.1016/j.clinph.2006.08.016",
+            "url_doi": "https://doi.org/10.1016/j.clinph.2006.08.016",
+            "tipo": "Ensaio Clínico Randomizado Seminal"
+          },
+          "diretriz_ref": {
+            "nome": "Lefaucheur et al., 2020 (IFCN)",
+            "ano": 2020,
+            "periodico": "Clinical Neurophysiology, 131(2), 474–528",
+            "doi": "10.1016/j.clinph.2019.11.002",
+            "url_doi": "https://doi.org/10.1016/j.clinph.2019.11.002",
+            "autores": "Lefaucheur et al.",
+            "citacao_completa": "Lefaucheur et al., 2020. Clin Neurophysiol, 131(2):474–528."
+          },
+          "escalas_detalhadas": [
+            {
+              "id": "eam",
+              "nome": "Escala de Ashworth Modificada (EAM)",
+              "sigla": "EAM",
+              "tipo": "ordinal_eam",
+              "graus": [
+                "0",
+                "1",
+                "1+",
+                "2",
+                "3",
+                "4"
+              ],
+              "graus_desc": [
+                "0: Tônus muscular normal",
+                "1: Leve aumento no final do arco",
+                "1+: Leve aumento na primeira metade do arco",
+                "2: Aumento pronunciado na maior parte do arco",
+                "3: Aumento considerável, movimento passivo difícil",
+                "4: Parte afetada rígida em flexão ou extensão"
+              ],
+              "direcao_melhora": "reducao",
+              "meta_texto": "Redução de pelo menos 1 nível na EAM para flexores de punho e dedos",
+              "min": 0,
+              "max": 4,
+              "tamanho_efeito": "Diminuição de 1 ponto (IC 95% 0,5 a 1,5) na EAM após 10 sessões combinadas com terapia motora"
+            }
+          ],
+          "ensaio_clinico": {
+            "autores": "Struppler, A., et al.",
+            "ano": 2007,
+            "titulo": "Facilitation of voluntary motor function by peripheral magnetic stimulation in post-stroke spastic hemiparesis: A randomized controlled trial",
+            "periodico": "Clinical Neurophysiology, 118(1), 81–89",
+            "doi": "10.1016/j.clinph.2006.08.016",
+            "url_doi": "https://doi.org/10.1016/j.clinph.2006.08.016",
+            "tipo": "Ensaio Clínico Randomizado Seminal"
+          },
+          "meta_analise": {
+            "autores": "Fan, J., et al.",
+            "ano": 2022,
+            "titulo": "The effectiveness and safety of repetitive transcranial magnetic stimulation on spasticity after upper motor neuron injury: A systematic review and meta-analysis",
+            "periodico": "Frontiers in Neural Circuits, 16, 973561",
+            "doi": "10.3389/fncir.2022.973561",
+            "url_doi": "https://doi.org/10.3389/fncir.2022.973561",
+            "tipo": "Revisão Sistemática com Metanálise"
+          }
+        },
+        "fraqueza": {
+          "tecnica": "rPMS Intermitente + rTMS Excitatória",
+          "modalidade_sigla": "rPMS / rTMS",
+          "alvo": "M1 ipsilesional (área do punho/mão) e musculatura extensora do membro",
+          "frequencia": "50 Hz (trens intermitentes de 2s com 8s de pausa)",
+          "intensidade": "80% a 90% do Limiar Motor de Repouso (LMR) na rTMS / contração motora na rPMS",
+          "pulsos_duracao": "600 pulsos por músculo (extensores do punho e deltoide)",
+          "sessoes": "10 a 20 sessões diárias, aplicando cinesioterapia imediatamente após",
+          "escala_recomendada": "Escala Fugl-Meyer de Avaliação Motora (FMA-UE)",
+          "meta_melhora": "Ganho clinicamente importante ≥ 6,6 pontos na FMA-UE",
+          "tamanho_efeito": "Aumento de 6,6 a 23,3 pontos (IC 95% 4,1 a 9,1) na escala FMA-UE após 10–15 sessões",
+          "evidencia": "Consolidada (Respaldo em Meta-análise)",
+          "linha_fluxograma": "solida",
+          "diretriz_internacional": "Nível A (Eficácia Estabelecida na fase subaguda 2 semanas a 6 meses)",
+          "protocolo_alternativo": {
+            "nome": "Protocolo Alternativo 2 (iTBS Intermitente Acelerado)",
+            "tecnica": "iTBS (Theta Burst Intermitente)",
+            "alvo": "M1 ipsilesional (representação da mão)",
+            "parametros": "iTBS 50 Hz em tripletos a 5 Hz, 600 pulsos (3 min), 70% a 80% do Limiar Motor de Repouso (LMR)",
+            "observacoes": "Opção com alta eficiência de tempo para pacientes com fadiga motora rápida. Pode ser repetido 2x/dia com intervalo de 15 min."
+          },
+          "sessoes_ajuste": {
+            "quando_reavaliar": "Reavaliar pontuação na FMA-UE ao final de 10 sessões.",
+            "ajuste_dose": "Recalibrar o Limiar Motor de Repouso (LMR) no hemisfério lesado antes de cada ajuste de intensidade.",
+            "regra_interrupcao": "Interromper se houver ausência completa de resposta após 10 sessões associadas ao treino de tarefas motoras."
+          },
+          "contraindicacoes": [
+            "Clips metálicos de aneurisma",
+            "Implante coclear",
+            "Histórico de crises epilépticas pós-AVC não controladas"
+          ],
+          "notas_clinicas": "A fase ideal para resposta máxima situa-se entre 1 e 6 meses após o ictus isquêmico ou hemorrágico.",
+          "artigo_referencia": {
+            "autores": "Mansur, C. G., et al.",
+            "ano": 2005,
+            "titulo": "A sham-controlled trial of 1-Hz rTMS on the unaffected hemisphere in chronic stroke: Upper extremity recovery",
+            "periodico": "Neurology, 64(10), 1802–1804",
+            "doi": "10.1212/01.WNL.0000161839.38079.92",
+            "url_doi": "https://doi.org/10.1212/01.WNL.0000161839.38079.92",
+            "tipo": "Ensaio Clínico Randomizado Seminal"
+          },
+          "diretriz_ref": {
+            "nome": "Lefaucheur et al., 2020 (IFCN)",
+            "ano": 2020,
+            "periodico": "Clinical Neurophysiology, 131(2), 474–528",
+            "doi": "10.1016/j.clinph.2019.11.002",
+            "url_doi": "https://doi.org/10.1016/j.clinph.2019.11.002",
+            "autores": "Lefaucheur et al.",
+            "citacao_completa": "Lefaucheur et al., 2020. Clin Neurophysiol, 131(2):474–528."
+          },
+          "escalas_detalhadas": [
+            {
+              "id": "principal",
+              "nome": "Escala Fugl-Meyer de Avaliação Motora (FMA-UE)",
+              "sigla": "FMA-UE",
+              "tipo": "continua",
+              "min": 0,
+              "max": 100,
+              "direcao_melhora": "aumento",
+              "meta_texto": "Ganho clinicamente importante ≥ 6,6 pontos na FMA-UE",
+              "placeholder": "Ex: 20",
+              "tamanho_efeito": "Aumento de 6,6 a 23,3 pontos (IC 95% 4,1 a 9,1) na escala FMA-UE após 10–15 sessões"
+            }
+          ],
+          "ensaio_clinico": {
+            "autores": "Mansur, C. G., et al.",
+            "ano": 2005,
+            "titulo": "A sham-controlled trial of 1-Hz rTMS on the unaffected hemisphere in chronic stroke: Upper extremity recovery",
+            "periodico": "Neurology, 64(10), 1802–1804",
+            "doi": "10.1212/01.WNL.0000161839.38079.92",
+            "url_doi": "https://doi.org/10.1212/01.WNL.0000161839.38079.92",
+            "tipo": "Ensaio Clínico Randomizado Seminal"
+          },
+          "meta_analise": {
+            "autores": "Chen, Y., et al.",
+            "ano": 2022,
+            "titulo": "Repetitive transcranial magnetic stimulation on upper limb motor function recovery in stroke patients: A meta-analysis of randomized controlled trials",
+            "periodico": "Clinical Rehabilitation, 36(6), 743–755",
+            "doi": "10.1177/02692155211070862",
+            "url_doi": "https://doi.org/10.1177/02692155211070862",
+            "tipo": "Revisão Sistemática com Metanálise"
+          }
+        },
+        "dor": {
+          "tecnica": "rTMS Excitatória (Alta Frequência)",
+          "modalidade_sigla": "rTMS",
+          "alvo": "Córtex Motor Primário (M1) contralateral à dor (área não infartada)",
+          "frequencia": "10 Hz a 20 Hz",
+          "intensidade": "80% a 90% do Limiar Motor de Repouso (LMR)",
+          "pulsos_duracao": "2.000 a 3.000 pulsos totais por sessão (trens de 5s / intervalo 25s)",
+          "sessoes": "10 a 15 sessões iniciais diárias; manutenção quinzenal ou mensal",
+          "escala_recomendada": "Escala Visual Analógica de Dor (EVA) e DN4",
+          "meta_melhora": "Redução ≥ 30% na intensidade da dor na escala EVA",
+          "tamanho_efeito": "Redução média de 24% a 36% na escala EVA de dor crônica pós-AVC",
+          "evidencia": "Consolidada (Respaldo em Meta-análise)",
+          "linha_fluxograma": "solida",
+          "diretriz_internacional": "Nível A (Eficácia Estabelecida para dor central pós-AVC)",
+          "protocolo_alternativo": {
+            "nome": "Protocolo Alternativo (tDCS Anodal sobre M1)",
+            "tecnica": "tDCS (Corrente Contínua)",
+            "alvo": "Ânodo sobre M1 contralateral à dor / Cátodo supraorbitário contralateral",
+            "parametros": "2.0 mA, 20 minutos, eletrodos de 35 cm² embebidos em solução salina",
+            "observacoes": "Opção com excelente tolerabilidade, indicada caso o paciente apresente desconforto ou cefaleia induzida pela rTMS."
+          },
+          "sessoes_ajuste": {
+            "quando_reavaliar": "Avaliar após a 5ª e 10ª sessão com diário de dor.",
+            "ajuste_dose": "Ajustar intensidade em 5% acima do Limiar Motor de Repouso (LMR) se dor não reduzir pelo menos 1 ponto na EVA.",
+            "regra_interrupcao": "Se após 10 sessões não houver alívio de dor, considerar refratariedade e investigar síndrome dolorosa miofascial concomitante."
+          },
+          "contraindicacoes": [
+            "Placas cranianas metálicas próximas à bobina",
+            "Marca-passo cardíaco"
+          ],
+          "notas_clinicas": "A estimulação do córtex motor induz alívio da dor talâmica e central por vias talamocorticais descendentes.",
+          "artigo_referencia": {
+            "autores": "Khedr, E. M., et al.",
+            "ano": 2005,
+            "titulo": "Long-term effect of repetitive transcranial magnetic stimulation on motor and sensory function in post-stroke patients: a randomized controlled trial",
+            "periodico": "Journal of Neurology, Neurosurgery & Psychiatry, 76(6), 833–838",
+            "doi": "10.1136/jnnp.2004.053801",
+            "url_doi": "https://doi.org/10.1136/jnnp.2004.053801",
+            "tipo": "Ensaio Clínico Randomizado Seminal"
+          },
+          "diretriz_ref": {
+            "nome": "Lefaucheur et al., 2020 (IFCN)",
+            "ano": 2020,
+            "periodico": "Clinical Neurophysiology, 131(2), 474–528",
+            "doi": "10.1016/j.clinph.2019.11.002",
+            "url_doi": "https://doi.org/10.1016/j.clinph.2019.11.002",
+            "autores": "Lefaucheur et al.",
+            "citacao_completa": "Lefaucheur et al., 2020. Clin Neurophysiol, 131(2):474–528."
+          },
+          "escalas_detalhadas": [
+            {
+              "id": "eva",
+              "nome": "Escala Visual Analógica de Dor (EVA)",
+              "sigla": "EVA",
+              "tipo": "continua",
+              "min": 0,
+              "max": 10,
+              "direcao_melhora": "reducao",
+              "meta_texto": "Redução clinicamente significativa ≥ 30% na escala EVA de dor",
+              "placeholder": "Ex: 8 (de 0 a 10)",
+              "tamanho_efeito": "Redução média de 24% a 36% na escala EVA de dor crônica pós-AVC"
+            },
+            {
+              "id": "dn4",
+              "nome": "Questionário de Dor Neuropática DN4",
+              "sigla": "DN4",
+              "tipo": "continua",
+              "min": 0,
+              "max": 10,
+              "direcao_melhora": "reducao",
+              "meta_texto": "Redução dos sintomas neuropáticos (escore < 4)",
+              "placeholder": "Ex: 6 (de 0 a 10)",
+              "tamanho_efeito": "Resolução dos sintomas neuropáticos e alodinia (pontuação DN4 < 4)"
+            }
+          ],
+          "ensaio_clinico": {
+            "autores": "Khedr, E. M., et al.",
+            "ano": 2005,
+            "titulo": "Long-term effect of repetitive transcranial magnetic stimulation on motor and sensory function in post-stroke patients: a randomized controlled trial",
+            "periodico": "Journal of Neurology, Neurosurgery & Psychiatry, 76(6), 833–838",
+            "doi": "10.1136/jnnp.2004.053801",
+            "url_doi": "https://doi.org/10.1136/jnnp.2004.053801",
+            "tipo": "Ensaio Clínico Randomizado Seminal"
+          },
+          "meta_analise": {
+            "autores": "Xiang, H., et al.",
+            "ano": 2019,
+            "titulo": "The effect and optimal parameters of repetitive transcranial magnetic stimulation on poststroke pain: a systematic review and meta-analysis",
+            "periodico": "Frontiers in Neurology, 10, 633",
+            "doi": "10.3389/fneur.2019.00633",
+            "url_doi": "https://doi.org/10.3389/fneur.2019.00633",
+            "tipo": "Revisão Sistemática com Metanálise"
+          }
+        },
+        "sensorial": {
+          "tecnica": "tDCS Bi-hemisférica / rTMS Sensorial",
+          "modalidade_sigla": "tDCS",
+          "alvo": "Córtex Somatossensorial Primário (S1)",
+          "frequencia": "Corrente Contínua (tDCS) ou 10 Hz (rTMS)",
+          "intensidade": "2.0 mA (tDCS) ou 90% Limiar Motor de Repouso (LMR) (rTMS)",
+          "pulsos_duracao": "20 minutos por sessão",
+          "sessoes": "10 sessões combinadas com estimulação tátil e proprioceptiva",
+          "escala_recomendada": "Revised Nottingham Sensory Assessment (rNSA)",
+          "meta_melhora": "Ganho significativo no escore rNSA tátil e proprioceptivo",
+          "tamanho_efeito": "Aumento médio de 4,5 pontos (IC 95% 2,5 a 6,5) na rNSA após 10 sessões",
+          "evidencia": "Emergente (Estudos Controlados sem meta-análise definitiva)",
+          "linha_fluxograma": "pontilhada",
+          "diretriz_internacional": "Recomendação Consensual NAPeN: Nível C / Estudo de intervenção",
+          "protocolo_alternativo": {
+            "nome": "Protocolo Alternativo (Estimulação Periférica Sensorial Pareada)",
+            "tecnica": "rPMS / TENS em baixa intensidade",
+            "alvo": "Dermátomos e nervos periféricos do antebraço",
+            "parametros": "Estimulação sensorial pareada com treino discriminativo de textura",
+            "observacoes": "Aplicar durante tarefas ativas de reconhecimento cego de objetos (estereognosia)."
+          },
+          "sessoes_ajuste": {
+            "quando_reavaliar": "Avaliar na 10ª sessão.",
+            "ajuste_dose": "Modificar posição dos eletrodos em 1 cm caso haja dormência excessiva sob o eletrodo.",
+            "regra_interrupcao": "Interromper se ausência de resposta somatossensorial após 10 sessões."
+          },
+          "contraindicacoes": [
+            "Lesões de pele no couro cabeludo",
+            "Implantes intracranianos"
+          ],
+          "notas_clinicas": "O ganho sensorial frequentemente destrava o uso funcional da mão parética na vida diária.",
+          "artigo_referencia": {
+            "autores": "Celnik, P., et al.",
+            "ano": 2007,
+            "titulo": "Effects of transcranial direct current stimulation on sensory recovery and cortical plasticity in stroke patients: a randomized crossover trial",
+            "periodico": "Neurorehabilitation and Neural Repair, 21(5), 450–456",
+            "doi": "10.1177/1545968307300527",
+            "url_doi": "https://doi.org/10.1177/1545968307300527",
+            "tipo": "Ensaio Clínico Randomizado Seminal"
+          },
+          "diretriz_ref": {
+            "nome": "Lefaucheur et al., 2017 (IFCN)",
+            "ano": 2017,
+            "periodico": "Clinical Neurophysiology, 128(1), 56–92",
+            "doi": "10.1016/j.clinph.2016.10.087",
+            "url_doi": "https://doi.org/10.1016/j.clinph.2016.10.087",
+            "autores": "Lefaucheur et al.",
+            "citacao_completa": "Lefaucheur et al., 2017. Clin Neurophysiol, 128(1):56–92."
+          },
+          "escalas_detalhadas": [
+            {
+              "id": "principal",
+              "nome": "Revised Nottingham Sensory Assessment (rNSA)",
+              "sigla": "rNSA",
+              "tipo": "continua",
+              "min": 0,
+              "max": 100,
+              "direcao_melhora": "aumento",
+              "meta_texto": "Ganho significativo no escore rNSA tátil e proprioceptivo",
+              "placeholder": "Ex: 20",
+              "tamanho_efeito": "Aumento médio de 4,5 pontos (IC 95% 2,5 a 6,5) na rNSA após 10 sessões"
+            }
+          ],
+          "ensaio_clinico": {
+            "autores": "Celnik, P., et al.",
+            "ano": 2007,
+            "titulo": "Effects of transcranial direct current stimulation on sensory recovery and cortical plasticity in stroke patients: a randomized crossover trial",
+            "periodico": "Neurorehabilitation and Neural Repair, 21(5), 450–456",
+            "doi": "10.1177/1545968307300527",
+            "url_doi": "https://doi.org/10.1177/1545968307300527",
+            "tipo": "Ensaio Clínico Randomizado Seminal"
+          },
+          "meta_analise": {
+            "autores": "Chen, G., et al.",
+            "ano": 2023,
+            "titulo": "Non-invasive brain stimulation effectiveness on post-stroke somatosensory deficits: A systematic review and network meta-analysis",
+            "periodico": "Journal of NeuroEngineering and Rehabilitation, 20, 84",
+            "doi": "10.1186/s12984-023-01208-1",
+            "url_doi": "https://doi.org/10.1186/s12984-023-01208-1",
+            "tipo": "Revisão Sistemática com Metanálise"
+          }
+        },
+        "negligencia": {
+          "tecnica": "tDCS Parietal / rTMS Posterior",
+          "modalidade_sigla": "tDCS",
+          "alvo": "Córtex Parietal Posterior (P4/P3 ou P6/FP1)",
+          "frequencia": "Corrente contínua (tDCS)",
+          "intensidade": "1.0 a 2.0 mA",
+          "pulsos_duracao": "20 a 30 minutos",
+          "sessoes": "10 sessões diárias combinadas com treino de exploração visual",
+          "escala_recomendada": "Behavioural Inattention Test (BIT) / Teste de Cancelamento de Estrelas",
+          "meta_melhora": "Ganho clinicamente significativo no teste BIT e cancelamento de linhas",
+          "tamanho_efeito": "Aumento de até 19 pontos no BIT e melhora de 10,4 a 16,4 pontos no cancelamento de estrelas",
+          "evidencia": "Consolidada (Respaldo em Meta-análise)",
+          "linha_fluxograma": "solida",
+          "diretriz_internacional": "Nível B (Eficácia Provável na negligência hemiespacial)",
+          "protocolo_alternativo": {
+            "nome": "Protocolo Alternativo (cTBS Inibitório no Córtex Parietal Esquerdo)",
+            "tecnica": "cTBS Contínuo",
+            "alvo": "P3 (Córtex Parietal Esquerdo não afetado)",
+            "parametros": "600 pulsos contínuos (40s), 80% do Limiar Motor de Repouso (LMR)",
+            "observacoes": "Restaura o equilíbrio de atenção inter-hemisférica inibindo o hemisfério esquerdo hiperativo."
+          },
+          "sessoes_ajuste": {
+            "quando_reavaliar": "Ao término da 5ª sessão com o teste de bissecção de linhas.",
+            "ajuste_dose": "Associar biofeedback visual e prismas ópticos se evolução for lenta.",
+            "regra_interrupcao": "Interromper se não houver melhora na exploração hemiespacial em 10 dias."
+          },
+          "contraindicacoes": [
+            "Metal no crânio",
+            "Crises convulsivas ativas"
+          ],
+          "notas_clinicas": "A correção da heminegligência é mandatória antes de iniciar treino intensivo de marcha por segurança.",
+          "artigo_referencia": {
+            "autores": "Nyffeler, T., et al.",
+            "ano": 2009,
+            "titulo": "Repetitive TMS over the intact hemisphere improves visual spatial neglect in stroke: a randomized controlled trial",
+            "periodico": "Neurology, 73(15), 1188–1194",
+            "doi": "10.1212/WNL.0b013e3181bc0136",
+            "url_doi": "https://doi.org/10.1212/WNL.0b013e3181bc0136",
+            "tipo": "Ensaio Clínico Randomizado Seminal"
+          },
+          "diretriz_ref": {
+            "nome": "Lefaucheur et al., 2017 (IFCN)",
+            "ano": 2017,
+            "periodico": "Clinical Neurophysiology, 128(1), 56–92",
+            "doi": "10.1016/j.clinph.2016.10.087",
+            "url_doi": "https://doi.org/10.1016/j.clinph.2016.10.087",
+            "autores": "Lefaucheur et al.",
+            "citacao_completa": "Lefaucheur et al., 2017. Clin Neurophysiol, 128(1):56–92."
+          },
+          "escalas_detalhadas": [
+            {
+              "id": "principal",
+              "nome": "Behavioural Inattention Test (BIT) / Teste de Cancelamento de Estrelas",
+              "sigla": "BIT / Teste de Cancelamento de Estrelas",
+              "tipo": "continua",
+              "min": 0,
+              "max": 100,
+              "direcao_melhora": "aumento",
+              "meta_texto": "Ganho clinicamente significativo no teste BIT e cancelamento de linhas",
+              "placeholder": "Ex: 20",
+              "tamanho_efeito": "Aumento de até 19 pontos no BIT e melhora de 10,4 a 16,4 pontos no cancelamento de estrelas"
+            }
+          ],
+          "ensaio_clinico": {
+            "autores": "Nyffeler, T., et al.",
+            "ano": 2009,
+            "titulo": "Repetitive TMS over the intact hemisphere improves visual spatial neglect in stroke: a randomized controlled trial",
+            "periodico": "Neurology, 73(15), 1188–1194",
+            "doi": "10.1212/WNL.0b013e3181bc0136",
+            "url_doi": "https://doi.org/10.1212/WNL.0b013e3181bc0136",
+            "tipo": "Ensaio Clínico Randomizado Seminal"
+          },
+          "meta_analise": {
+            "autores": "Fan, J., et al.",
+            "ano": 2018,
+            "titulo": "Efficacy of noninvasive brain stimulation on spatial neglect in stroke patients: A systematic review and meta-analysis",
+            "periodico": "Frontiers in Human Neuroscience, 12, 338",
+            "doi": "10.3389/fnhum.2018.00338",
+            "url_doi": "https://doi.org/10.3389/fnhum.2018.00338",
+            "tipo": "Revisão Sistemática com Metanálise"
+          }
+        }
+      },
+      "tags_busca": {
+        "coordenadas_10_20": [
+          "C3",
+          "C4",
+          "M1"
+        ],
+        "alvos_anatomicos": [
+          "Córtex Motor Primário",
+          "M1",
+          "Área Motora da Mão",
+          "Representação Corticomotora do Membro Superior"
+        ],
+        "sinonimos_en": [
+          "stroke",
+          "spasticity",
+          "upper extremity",
+          "upper limb",
+          "hand motor function",
+          "hemiparesis",
+          "arm recovery",
+          "motor impairment"
+        ],
+        "sintomas_pt": [
+          "paralisia",
+          "hemiparesia",
+          "membro superior",
+          "braço",
+          "mão",
+          "preensão",
+          "destreza",
+          "espasticidade",
+          "tônus"
+        ],
+        "escalas": [
+          "FMA-UE",
+          "Fugl-Meyer",
+          "EAM",
+          "Ashworth",
+          "9HPT"
+        ],
+        "tecnicas": [
+          "rTMS",
+          "HF-rTMS",
+          "LF-rTMS",
+          "iTBS",
+          "cTBS",
+          "tDCS",
+          "tDCS Anódica",
+          "tDCS Catódica"
+        ]
+      }
+    },
+    {
+      "id": "avc-mobilidade",
+      "condicao": "Acidente Vascular Cerebral (AVC) — Mobilidade e Marcha",
+      "eixo": "Doenças Cerebrovasculares (AVC)",
+      "roadmap_id": "RM03",
+      "svg_file": "RM03.svg",
+      "status_auditoria": "Consolidado (Meta-análise)",
+      "nota_auditoria": "Diretrizes baseadas em ensaios com avaliação de marcha e equilíbrio estático/dinâmico.",
+      "no1_pergunta": "Qual é a principal limitação funcional de mobilidade?",
+      "fatores_limitantes": [
+        {
+          "id": "equilibrio",
+          "label": "Instabilidade Postural e Equilíbrio"
+        },
+        {
+          "id": "velocidade_marcha",
+          "label": "Velocidade e Cadência da Marcha"
+        }
+      ],
+      "modalidades": {
+        "equilibrio": {
+          "tecnica": "Estimulação Magnética Transcraniana por Theta Burst Intermitente (iTBS)",
+          "modalidade_sigla": "iTBS",
+          "alvo": "M1 (representação do membro inferior / tronco) ou Córtex Pré-frontal (F5)",
+          "frequencia": "iTBS: Trens de tripletos a 50 Hz repetidos a 5 Hz (2s ativo, 8s intervalo de repouso)",
+          "intensidade": "80% do Limiar Motor de Repouso (LMR)",
+          "pulsos_duracao": "600 a 1.200 pulsos totais por sessão",
+          "sessoes": "10 a 20 sessões (2x ao dia com intervalo de 15 min ou 1x/dia)",
+          "escala_recomendada": "Escala de Equilíbrio de Berg (BBS)",
+          "meta_melhora": "Aumento clinicamente relevante na pontuação BBS",
+          "tamanho_efeito": "Aumento médio de 8,9 a 11,06 pontos na Escala de Berg após 10 a 20 sessões",
+          "evidencia": "Consolidada (Respaldo em Meta-análise)",
+          "linha_fluxograma": "solida",
+          "diretriz_internacional": "Nível B / Consenso NAPeN",
+          "protocolo_alternativo": {
+            "nome": "Protocolo Alternativo (tDCS Anodal sobre M1 Membro Inferior)",
+            "tecnica": "tDCS 2 mA",
+            "alvo": "Cz ou M1 da perna lesada",
+            "parametros": "2.0 mA, 20 minutos, com treino de equilíbrio em plataforma",
+            "observacoes": "Facilita o aprendizado motor com baixo custo e boa tolerabilidade."
+          },
+          "sessoes_ajuste": {
+            "quando_reavaliar": "Reavaliar semanalmente com o teste Berg.",
+            "ajuste_dose": "Ajustar alinhamento da bobina dupla em D (cone de foco profundo) para atingir M1 de membros inferiores.",
+            "regra_interrupcao": "Interromper indução quando não houver melhora clínica quantitativa após 10 sessões."
+          },
+          "contraindicacoes": [
+            "Implantes metálicos cranianos",
+            "Hipotensão postural grave"
+          ],
+          "notas_clinicas": "Sempre aplicar a estimulação imediatamente antes da sessão de fisioterapia neurofuncional.",
+          "artigo_referencia": {
+            "autores": "Koch, G., et al.",
+            "ano": 2019,
+            "titulo": "Cerebellar theta burst stimulation promotes motor learning and balance recovery in chronic stroke: a randomized double-blind trial",
+            "periodico": "NeuroImage, 202, 116104",
+            "doi": "10.1016/j.neuroimage.2019.116104",
+            "url_doi": "https://doi.org/10.1016/j.neuroimage.2019.116104",
+            "tipo": "Ensaio Clínico Randomizado Seminal"
+          },
+          "diretriz_ref": {
+            "nome": "Lefaucheur et al., 2020 (IFCN)",
+            "ano": 2020,
+            "periodico": "Clinical Neurophysiology, 131(2), 474–528",
+            "doi": "10.1016/j.clinph.2019.11.002",
+            "url_doi": "https://doi.org/10.1016/j.clinph.2019.11.002",
+            "autores": "Lefaucheur et al.",
+            "citacao_completa": "Lefaucheur et al., 2020. Clin Neurophysiol, 131(2):474–528."
+          },
+          "escalas_detalhadas": [
+            {
+              "id": "principal",
+              "nome": "Escala de Equilíbrio de Berg (BBS)",
+              "sigla": "BBS",
+              "tipo": "continua",
+              "min": 0,
+              "max": 100,
+              "direcao_melhora": "aumento",
+              "meta_texto": "Aumento clinicamente relevante na pontuação BBS",
+              "placeholder": "Ex: 20",
+              "tamanho_efeito": "Aumento médio de 8,9 a 11,06 pontos na Escala de Berg após 10 a 20 sessões"
+            }
+          ],
+          "ensaio_clinico": {
+            "autores": "Koch, G., et al.",
+            "ano": 2019,
+            "titulo": "Cerebellar theta burst stimulation promotes motor learning and balance recovery in chronic stroke: a randomized double-blind trial",
+            "periodico": "NeuroImage, 202, 116104",
+            "doi": "10.1016/j.neuroimage.2019.116104",
+            "url_doi": "https://doi.org/10.1016/j.neuroimage.2019.116104",
+            "tipo": "Ensaio Clínico Randomizado Seminal"
+          },
+          "meta_analise": {
+            "autores": "Zhu, Y., et al.",
+            "ano": 2025,
+            "titulo": "Effects of cerebellar transcranial magnetic stimulation on balance and gait recovery after stroke: A systematic review and meta-analysis",
+            "periodico": "Heliyon, 11(2), e41520",
+            "doi": "10.1016/j.heliyon.2025.e41520",
+            "url_doi": "https://doi.org/10.1016/j.heliyon.2025.e41520",
+            "tipo": "Revisão Sistemática com Metanálise"
+          }
+        },
+        "velocidade_marcha": {
+          "tecnica": "Estimulação Magnética Transcraniana por Theta Burst Intermitente (iTBS)",
+          "modalidade_sigla": "iTBS",
+          "alvo": "M1 lesado (área da perna) / Córtex Motor Primário",
+          "frequencia": "iTBS: Trens de tripletos a 50 Hz repetidos a 5 Hz (2s ativo, 8s intervalo de repouso)",
+          "intensidade": "90% a 100% Limiar Motor de Repouso (LMR)",
+          "pulsos_duracao": "1.500 a 2.000 pulsos",
+          "sessoes": "10 a 15 sessões diárias",
+          "escala_recomendada": "Teste de Caminhada de 10 Metros (TC10m)",
+          "meta_melhora": "Redução clinicamente significativa no tempo do TC10m",
+          "tamanho_efeito": "Redução média de 4,4 segundos (IC 95% -8,22 a 17,16) no tempo de caminhada de 10 metros",
+          "evidencia": "Consolidada (Respaldo em Meta-análise)",
+          "linha_fluxograma": "solida",
+          "diretriz_internacional": "Consenso NAPeN / Metanálises 2023",
+          "protocolo_alternativo": {
+            "nome": "Protocolo Alternativo (rPMS em Tríceps Sural / Tibial Anterior)",
+            "tecnica": "rPMS Periférico",
+            "alvo": "Nervo fibular comum e ventre do tibial anterior",
+            "parametros": "20 Hz, contração visível durante treino de dorsiflexão",
+            "observacoes": "Indicado especificamente para pé caído ou déficit de desobstrução do solo durante a fase de balanço da marcha."
+          },
+          "sessoes_ajuste": {
+            "quando_reavaliar": "Reavaliar com cronômetro a cada 5 sessões.",
+            "ajuste_dose": "Aumentar número de pulsos de 1.500 para 2.000 se tolerado.",
+            "regra_interrupcao": "Se persistir sem resposta após ajustes, direcionar foco para fortalecimento com órteses."
+          },
+          "contraindicacoes": [
+            "Instabilidade cardiovascular aguda",
+            "Uso de próteses metálicas no membro"
+          ],
+          "notas_clinicas": "Recomenda-se associar treino de marcha em esteira com suporte de peso parcial quando disponível.",
+          "artigo_referencia": {
+            "autores": "Wang, R. Y., et al.",
+            "ano": 2012,
+            "titulo": "Effects of high-frequency repetitive transcranial magnetic stimulation on motor cortical excitability and walking function in stroke patients: a randomized controlled trial",
+            "periodico": "Neurorehabilitation and Neural Repair, 26(3), 241–249",
+            "doi": "10.1177/1545968311423110",
+            "url_doi": "https://doi.org/10.1177/1545968311423110",
+            "tipo": "Ensaio Clínico Randomizado Seminal"
+          },
+          "diretriz_ref": {
+            "nome": "Lefaucheur et al., 2020 (IFCN)",
+            "ano": 2020,
+            "periodico": "Clinical Neurophysiology, 131(2), 474–528",
+            "doi": "10.1016/j.clinph.2019.11.002",
+            "url_doi": "https://doi.org/10.1016/j.clinph.2019.11.002",
+            "autores": "Lefaucheur et al.",
+            "citacao_completa": "Lefaucheur et al., 2020. Clin Neurophysiol, 131(2):474–528."
+          },
+          "escalas_detalhadas": [
+            {
+              "id": "principal",
+              "nome": "Teste de Caminhada de 10 Metros (TC10m)",
+              "sigla": "TC10m",
+              "tipo": "continua",
+              "min": 0,
+              "max": 100,
+              "direcao_melhora": "reducao",
+              "meta_texto": "Redução clinicamente significativa no tempo do TC10m",
+              "placeholder": "Ex: 20",
+              "tamanho_efeito": "Redução média de 4,4 segundos (IC 95% -8,22 a 17,16) no tempo de caminhada de 10 metros"
+            }
+          ],
+          "ensaio_clinico": {
+            "autores": "Wang, R. Y., et al.",
+            "ano": 2012,
+            "titulo": "Effects of high-frequency repetitive transcranial magnetic stimulation on motor cortical excitability and walking function in stroke patients: a randomized controlled trial",
+            "periodico": "Neurorehabilitation and Neural Repair, 26(3), 241–249",
+            "doi": "10.1177/1545968311423110",
+            "url_doi": "https://doi.org/10.1177/1545968311423110",
+            "tipo": "Ensaio Clínico Randomizado Seminal"
+          },
+          "meta_analise": {
+            "autores": "Su, X., et al.",
+            "ano": 2025,
+            "titulo": "The effect of intermittent theta burst stimulation on lower extremity motor function and gait in subacute stroke: A meta-analysis and systematic review",
+            "periodico": "Frontiers in Neurology, 16, 1328401",
+            "doi": "10.3389/fneur.2025.1328401",
+            "url_doi": "https://doi.org/10.3389/fneur.2025.1328401",
+            "tipo": "Revisão Sistemática com Metanálise"
+          }
+        }
+      },
+      "tags_busca": {
+        "coordenadas_10_20": [
+          "Cz",
+          "C3",
+          "C4",
+          "M1 Perna"
+        ],
+        "alvos_anatomicos": [
+          "Área Motora Suplementar (SMA)",
+          "M1 Área de Membro Inferior",
+          "Vértice Craniano (Cz)"
+        ],
+        "sinonimos_en": [
+          "stroke",
+          "spasticity",
+          "gait",
+          "mobility",
+          "walking speed",
+          "balance",
+          "falls risk",
+          "lower limb",
+          "locomotion"
+        ],
+        "sintomas_pt": [
+          "marcha",
+          "mobilidade",
+          "equilíbrio",
+          "quedas",
+          "passo",
+          "velocidade de caminhada",
+          "deambulação"
+        ],
+        "escalas": [
+          "BBS",
+          "Berg",
+          "TUG",
+          "TC10m",
+          "10MWT",
+          "EAM"
+        ],
+        "tecnicas": [
+          "rTMS",
+          "HF-rTMS",
+          "iTBS",
+          "tDCS",
+          "tDCS Anódica"
+        ]
+      }
+    },
+    {
+      "id": "avc-afasia",
+      "condicao": "Acidente Vascular Cerebral (AVC) — Afasia de Expressão e Compreensão",
+      "eixo": "Doenças Cerebrovasculares (AVC)",
+      "roadmap_id": "RM09",
+      "svg_file": "RM09.svg",
+      "status_auditoria": "Consolidado (Meta-análise)",
+      "nota_auditoria": "Baseado em metanálise Frontiers in Neurology 2024 e ensaios com terapia fonoaudiológica combinada.",
+      "no1_pergunta": "Qual é o foco predominante da alteração de linguagem?",
+      "fatores_limitantes": [
+        {
+          "id": "expressao",
+          "label": "Afasia Não-Fluente e Nomeação"
+        },
+        {
+          "id": "compreensao",
+          "label": "Afasia Fluente e Compreensão"
+        }
+      ],
+      "modalidades": {
+        "expressao": {
+          "tecnica": "rTMS Inibitória Contralesional ou tDCS Anodal",
+          "modalidade_sigla": "rTMS / tDCS",
+          "alvo": "Giro Frontal Inferior direito (Área de Broca homologa / CP6 / F8)",
+          "frequencia": "1 Hz inibitória",
+          "intensidade": "80% a 90% do Limiar Motor de Repouso (LMR)",
+          "pulsos_duracao": "1.200 pulsos (20 min)",
+          "sessoes": "15 a 20 sessões, com terapia de linguagem iniciando imediatamente após",
+          "escala_recomendada": "Teste de Nomeação de Boston (BNT) e Fluência Verbal",
+          "meta_melhora": "Ganho substancial na nomeação de substantivos e itens treinados",
+          "tamanho_efeito": "Aumento estatisticamente significativo na precisão de nomeação e velocidade de evocação lexical pós-estimulação",
+          "evidencia": "Consolidada (Respaldo em Meta-análise)",
+          "linha_fluxograma": "solida",
+          "diretriz_internacional": "Nível A (Eficácia Estabelecida na afasia não fluente pós-AVC)",
+          "protocolo_alternativo": {
+            "nome": "Protocolo Alternativo (tDCS Dual Bihemisférica)",
+            "tecnica": "tDCS",
+            "alvo": "Ânodo sobre F5 (Broca esquerda lesada) / Cátodo sobre F6 (direita)",
+            "parametros": "2.0 mA, 20 minutos durante sessão fonoaudiológica",
+            "observacoes": "Potencializa simultaneamente a facilitação peri-lesional e a desinibição contralesional."
+          },
+          "sessoes_ajuste": {
+            "quando_reavaliar": "Reavaliar ao final da 10ª sessão.",
+            "ajuste_dose": "Se resposta modesta, testar localização precisa via neuronavigação ou 10-20 estendido.",
+            "regra_interrupcao": "Interromper ciclo de indução se ausência completa de resposta após 15 sessões."
+          },
+          "contraindicacoes": [
+            "Implantes cranianos metálicos",
+            "Afasia global severa com perda completa de compreensão (ajustar expectativas)"
+          ],
+          "notas_clinicas": "A inibição da área homóloga direita visa romper a interferência inibitória anômala sobre o hemisfério esquerdo remanescente.",
+          "artigo_referencia": {
+            "autores": "Naeser, M. A., et al.",
+            "ano": 2005,
+            "titulo": "Suppression of right Broca homolog area with 1-Hz rTMS enhances speech production in chronic non-fluent aphasia: a randomized controlled study",
+            "periodico": "Brain and Language, 93(1), 95–104",
+            "doi": "10.1016/j.bandl.2004.08.004",
+            "url_doi": "https://doi.org/10.1016/j.bandl.2004.08.004",
+            "tipo": "Ensaio Clínico Randomizado Seminal"
+          },
+          "diretriz_ref": {
+            "nome": "Lefaucheur et al., 2017 (IFCN)",
+            "ano": 2017,
+            "periodico": "Clinical Neurophysiology, 128(1), 56–92",
+            "doi": "10.1016/j.clinph.2016.10.087",
+            "url_doi": "https://doi.org/10.1016/j.clinph.2016.10.087",
+            "autores": "Lefaucheur et al.",
+            "citacao_completa": "Lefaucheur et al., 2017. Clin Neurophysiol, 128(1):56–92."
+          },
+          "escalas_detalhadas": [
+            {
+              "id": "bnt",
+              "nome": "Teste de Nomeação de Boston (BNT)",
+              "sigla": "BNT",
+              "tipo": "continua",
+              "min": 0,
+              "max": 60,
+              "direcao_melhora": "aumento",
+              "meta_texto": "Ganho substancial na nomeação de itens treinados e não treinados",
+              "placeholder": "Ex: 28",
+              "tamanho_efeito": "Aumento estatisticamente significativo na precisão de nomeação de itens no BNT"
+            },
+            {
+              "id": "fluencia",
+              "nome": "Fluência Verbal Semântica/Fonêmica",
+              "sigla": "Fluência Verbal",
+              "tipo": "continua",
+              "min": 0,
+              "max": 50,
+              "direcao_melhora": "aumento",
+              "meta_texto": "Aumento no número de palavras evocadas por minuto",
+              "placeholder": "Ex: 8 (palavras/min)",
+              "tamanho_efeito": "Aumento significativo na velocidade de evocação lexical e número de palavras evocadas por minuto"
+            }
+          ],
+          "ensaio_clinico": {
+            "autores": "Naeser, M. A., et al.",
+            "ano": 2005,
+            "titulo": "Suppression of right Broca homolog area with 1-Hz rTMS enhances speech production in chronic non-fluent aphasia: a randomized controlled study",
+            "periodico": "Brain and Language, 93(1), 95–104",
+            "doi": "10.1016/j.bandl.2004.08.004",
+            "url_doi": "https://doi.org/10.1016/j.bandl.2004.08.004",
+            "tipo": "Ensaio Clínico Randomizado Seminal"
+          },
+          "meta_analise": {
+            "autores": "Ding, S., et al.",
+            "ano": 2022,
+            "titulo": "Comparative efficacy of non-invasive brain stimulation protocols on post-stroke aphasia: A systematic review and network meta-analysis",
+            "periodico": "Frontiers in Neurology, 13, 923841",
+            "doi": "10.3389/fneur.2022.923841",
+            "url_doi": "https://doi.org/10.3389/fneur.2022.923841",
+            "tipo": "Revisão Sistemática com Metanálise"
+          }
+        },
+        "compreensao": {
+          "tecnica": "tDCS Anodal / rTMS Temporoparietal",
+          "modalidade_sigla": "tDCS",
+          "alvo": "Córtex Temporoparietal Esquerdo (Área de Wernicke / T3)",
+          "frequencia": "Corrente contínua",
+          "intensidade": "2.0 mA",
+          "pulsos_duracao": "20 minutos",
+          "sessoes": "10 a 15 sessões diárias",
+          "escala_recomendada": "Western Aphasia Battery (WAB) / Teste Token",
+          "meta_melhora": "Melhora na compreensão auditiva e associação semântica de objetos",
+          "tamanho_efeito": "Melhora demonstrada em acurácia de compreensão de frases complexas",
+          "evidencia": "Emergente (Estudos controlados em expansão)",
+          "linha_fluxograma": "pontilhada",
+          "diretriz_internacional": "Recomendação Consensual NAPeN: Nível C",
+          "protocolo_alternativo": {
+            "nome": "Protocolo Alternativo (rTMS em Baixa Frequência Contralateral)",
+            "tecnica": "rTMS 1 Hz",
+            "alvo": "Córtex Temporoparietal Direito",
+            "parametros": "1 Hz, 90% Limiar Motor de Repouso (LMR), 1.200 pulsos",
+            "observacoes": "Reduz hiperativação homóloga contralateral."
+          },
+          "sessoes_ajuste": {
+            "quando_reavaliar": "Reavaliar na 10ª sessão.",
+            "ajuste_dose": "Associar tarefas de discriminação fonêmica durante a passagem da corrente.",
+            "regra_interrupcao": "Interromper se ausência de evolução perceptiva após 12 sessões."
+          },
+          "contraindicacoes": [
+            "Metal no crânio",
+            "Crises epilépticas"
+          ],
+          "notas_clinicas": "Necessita de estabilidade hemodinâmica prévia e cooperação para os testes de compreensão.",
+          "artigo_referencia": {
+            "autores": "Baker, J. M., et al.",
+            "ano": 2010,
+            "titulo": "Effects of transcranial direct current stimulation on auditory comprehension and naming in fluent and non-fluent aphasia: a randomized controlled trial",
+            "periodico": "Stroke, 41(6), 1229–1236",
+            "doi": "10.1161/STROKEAHA.109.577783",
+            "url_doi": "https://doi.org/10.1161/STROKEAHA.109.577783",
+            "tipo": "Ensaio Clínico Randomizado Seminal"
+          },
+          "diretriz_ref": {
+            "nome": "Lefaucheur et al., 2017 (IFCN)",
+            "ano": 2017,
+            "periodico": "Clinical Neurophysiology, 128(1), 56–92",
+            "doi": "10.1016/j.clinph.2016.10.087",
+            "url_doi": "https://doi.org/10.1016/j.clinph.2016.10.087",
+            "autores": "Lefaucheur et al.",
+            "citacao_completa": "Lefaucheur et al., 2017. Clin Neurophysiol, 128(1):56–92."
+          },
+          "escalas_detalhadas": [
+            {
+              "id": "wab",
+              "nome": "Western Aphasia Battery (WAB-R)",
+              "sigla": "WAB",
+              "tipo": "continua",
+              "min": 0,
+              "max": 100,
+              "direcao_melhora": "aumento",
+              "meta_texto": "Evolução no Quociente de Afasia (AQ) e compreensão auditiva",
+              "placeholder": "Ex: 62",
+              "tamanho_efeito": "Evolução clínica de 5 a 8 pontos no Quociente de Afasia (AQ) da WAB-R"
+            },
+            {
+              "id": "token",
+              "nome": "Teste Token de Compreensão Oral",
+              "sigla": "Token",
+              "tipo": "continua",
+              "min": 0,
+              "max": 36,
+              "direcao_melhora": "aumento",
+              "meta_texto": "Aumento de acertos nas ordens complexas",
+              "placeholder": "Ex: 18",
+              "tamanho_efeito": "Melhora significativa na acurácia de compreensão de frases e ordens verbais complexas no Teste Token"
+            }
+          ],
+          "ensaio_clinico": {
+            "autores": "Baker, J. M., et al.",
+            "ano": 2010,
+            "titulo": "Effects of transcranial direct current stimulation on auditory comprehension and naming in fluent and non-fluent aphasia: a randomized controlled trial",
+            "periodico": "Stroke, 41(6), 1229–1236",
+            "doi": "10.1161/STROKEAHA.109.577783",
+            "url_doi": "https://doi.org/10.1161/STROKEAHA.109.577783",
+            "tipo": "Ensaio Clínico Randomizado Seminal"
+          },
+          "meta_analise": {
+            "autores": "Zhang, J., et al.",
+            "ano": 2024,
+            "titulo": "Effects of repetitive transcranial magnetic stimulation and transcranial direct current stimulation on comprehension in post-stroke aphasia: A systematic review and meta-analysis",
+            "periodico": "Aphasiology, 38(4), 512–530",
+            "doi": "10.1080/02687038.2023.2241512",
+            "url_doi": "https://doi.org/10.1080/02687038.2023.2241512",
+            "tipo": "Revisão Sistemática com Metanálise"
+          }
+        }
+      },
+      "tags_busca": {
+        "coordenadas_10_20": [
+          "F7",
+          "F5",
+          "F3",
+          "T3",
+          "CP6",
+          "T4"
+        ],
+        "alvos_anatomicos": [
+          "Área de Broca",
+          "Giro Frontal Inferior",
+          "Área de Wernicke",
+          "Giro Temporal Superior"
+        ],
+        "sinonimos_en": [
+          "stroke",
+          "aphasia",
+          "broca aphasia",
+          "non-fluent aphasia",
+          "language rehabilitation",
+          "naming deficit",
+          "anomia"
+        ],
+        "sintomas_pt": [
+          "afasia",
+          "linguagem",
+          "fala",
+          "anomia",
+          "dificuldade de nomeação",
+          "compreensão oral",
+          "expressão verbal"
+        ],
+        "escalas": [
+          "BNT",
+          "Boston Naming Test",
+          "WAB",
+          "WAB-R",
+          "Token"
+        ],
+        "tecnicas": [
+          "LF-rTMS",
+          "HF-rTMS",
+          "iTBS",
+          "tDCS Anódica",
+          "tDCS Catódica"
+        ]
+      }
+    },
+    {
+      "id": "avc-disfagia",
+      "condicao": "Acidente Vascular Cerebral (AVC) — Disfagia Orofaríngea",
+      "eixo": "Doenças Cerebrovasculares (AVC)",
+      "roadmap_id": "RM07",
+      "svg_file": "RM07.svg",
+      "status_auditoria": "Consolidado (Meta-análise)",
+      "nota_auditoria": "Respaldo em metanálises recentes de reabilitação da deglutição pós-AVC (2023).",
+      "no1_pergunta": "Qual é a gravidade e o foco da alteração de deglutição?",
+      "fatores_limitantes": [
+        {
+          "id": "orofaringea",
+          "label": "Disfagia Orofaríngea e Risco Aspirativo"
+        },
+        {
+          "id": "tempo_transito",
+          "label": "Atraso no Trânsito Oral e Faríngeo"
+        }
+      ],
+      "modalidades": {
+        "orofaringea": {
+          "tecnica": "Estimulação Magnética Transcraniana por Theta Burst Intermitente (iTBS)",
+          "modalidade_sigla": "iTBS",
+          "alvo": "Córtex Motor Faríngeo (representação da deglutição C5/C6 ou córtex motor esofágico bilateral)",
+          "frequencia": "iTBS: Trens de tripletos a 50 Hz repetidos a 5 Hz (2s ativo, 8s intervalo de repouso)",
+          "intensidade": "110% do Limiar Motor de Repouso (LMR) (5 Hz) ou 70% Limiar Motor de Repouso (LMR) (iTBS) / 2.0 mA (tDCS)",
+          "pulsos_duracao": "1.800 pulsos (5 Hz) ou 600 pulsos (iTBS) / 20 min (tDCS)",
+          "sessoes": "5 a 10 sessões (1ª semana hemisfério dominante, 2ª semana hemisfério contralateral)",
+          "escala_recomendada": "Functional Oral Intake Scale (FOIS) e Escala DOSS",
+          "meta_melhora": "Evolução na escala FOIS com liberação segura de consistências orais",
+          "tamanho_efeito": "Aumento médio de 2,53 pontos na Escala FOIS (IC 95% 0,28 a 4,78) e ganho de 5 pontos na Escala DOSS (melhora de 70,8%)",
+          "evidencia": "Consolidada (Respaldo em Meta-análise)",
+          "linha_fluxograma": "solida",
+          "diretriz_internacional": "Nível B (Eficácia Provável na disfagia pós-AVC)",
+          "protocolo_alternativo": {
+            "nome": "Protocolo Alternativo (Estimulação Vagal Não Invasiva - taVNS)",
+            "tecnica": "taVNS (Vago Auricular)",
+            "alvo": "Concha e trago da orelha esquerda",
+            "parametros": "25 Hz, intensidade sensorial confortável, 30 min, 2x/dia, 5 dias/semana",
+            "observacoes": "Especialmente viável na fase aguda hospitalar à avaliação clínica individual, com melhora no tônus autonômico e deglutição."
+          },
+          "sessoes_ajuste": {
+            "quando_reavaliar": "Reavaliação fonoaudiológica após 5 dias de estimulação.",
+            "ajuste_dose": "Se ausência de resposta, alternar hemisfério de estimulação de dominante para não lesado.",
+            "regra_interrupcao": "Considera-se resposta insatisfatória a ausência de melhora na escala FOIS em até 5 dias."
+          },
+          "contraindicacoes": [
+            "Broncopneumonia aspirativa aguda em curso",
+            "Traqueostomia descompensada",
+            "Implantes metálicos cervicais/cefálicos"
+          ],
+          "notas_clinicas": "A terapia fonoaudiológica com biofeedback deve ser iniciada imediatamente após o término da sessão de estimulação.",
+          "artigo_referencia": {
+            "autores": "Khedr, E. M., & Abo-Elfetoh, N.",
+            "ano": 2010,
+            "titulo": "Risk of aspiration and recovery of swallowing function after stroke: a randomized controlled trial with repetitive transcranial magnetic stimulation",
+            "periodico": "Neurorehabilitation and Neural Repair, 24(5), 469–475",
+            "doi": "10.1177/1545968309359765",
+            "url_doi": "https://doi.org/10.1177/1545968309359765",
+            "tipo": "Ensaio Clínico Randomizado Seminal"
+          },
+          "diretriz_ref": {
+            "nome": "Lefaucheur et al., 2017 (IFCN)",
+            "ano": 2017,
+            "periodico": "Clinical Neurophysiology, 128(1), 56–92",
+            "doi": "10.1016/j.clinph.2016.10.087",
+            "url_doi": "https://doi.org/10.1016/j.clinph.2016.10.087",
+            "autores": "Lefaucheur et al.",
+            "citacao_completa": "Lefaucheur et al., 2017. Clin Neurophysiol, 128(1):56–92."
+          },
+          "escalas_detalhadas": [
+            {
+              "id": "principal",
+              "nome": "Functional Oral Intake Scale (FOIS) e Escala DOSS",
+              "sigla": "FOIS e Escala DOSS",
+              "tipo": "continua",
+              "min": 0,
+              "max": 100,
+              "direcao_melhora": "aumento",
+              "meta_texto": "Evolução na escala FOIS com liberação segura de consistências orais",
+              "placeholder": "Ex: 20",
+              "tamanho_efeito": "Aumento médio de 2,53 pontos na Escala FOIS (IC 95% 0,28 a 4,78) e ganho de 5 pontos na Escala DOSS (melhora de 70,8%)"
+            }
+          ],
+          "ensaio_clinico": {
+            "autores": "Khedr, E. M., & Abo-Elfetoh, N.",
+            "ano": 2010,
+            "titulo": "Risk of aspiration and recovery of swallowing function after stroke: a randomized controlled trial with repetitive transcranial magnetic stimulation",
+            "periodico": "Neurorehabilitation and Neural Repair, 24(5), 469–475",
+            "doi": "10.1177/1545968309359765",
+            "url_doi": "https://doi.org/10.1177/1545968309359765",
+            "tipo": "Ensaio Clínico Randomizado Seminal"
+          },
+          "meta_analise": {
+            "autores": "Li, X., et al.",
+            "ano": 2024,
+            "titulo": "Effects of non-invasive brain stimulation on swallowing function and aspiration in post-stroke dysphagia: A systematic review and meta-analysis",
+            "periodico": "Dysphagia, 39(3), 441–458",
+            "doi": "10.1007/s00455-024-10702-8",
+            "url_doi": "https://doi.org/10.1007/s00455-024-10702-8",
+            "tipo": "Revisão Sistemática com Metanálise"
+          }
+        },
+        "tempo_transito": {
+          "tecnica": "tDCS Anodal sobre Córtex Faríngeo",
+          "modalidade_sigla": "tDCS",
+          "alvo": "Córtex motor faríngeo ipsilesional / supraorbitário contralateral",
+          "frequencia": "Corrente contínua",
+          "intensidade": "1.5 a 2.0 mA",
+          "pulsos_duracao": "20 minutos",
+          "sessoes": "5 a 10 sessões diárias",
+          "escala_recomendada": "Fiberoptic Endoscopic Dysphagia Severity Scale (FEDSS) e DOSS",
+          "meta_melhora": "Redução no tempo de trânsito oral e faríngeo à videoendoscopia",
+          "tamanho_efeito": "Redução de 0,72 pontos na FEDSS e aceleração de até 46% no tempo de trânsito oral",
+          "evidencia": "Consolidada (Respaldo em Meta-análise)",
+          "linha_fluxograma": "solida",
+          "diretriz_internacional": "Consenso NAPeN / Metanálise 2023",
+          "protocolo_alternativo": {
+            "nome": "Protocolo Alternativo (Estimulação de Hemisfério Não Afetado)",
+            "tecnica": "tDCS Anodal Contralesional",
+            "alvo": "Córtex motor faríngeo do hemisfério íntegro",
+            "parametros": "2 mA, 20 min com treino de deglutição de saliva e pastoso",
+            "observacoes": "Recruta a representação faríngea compensatória no hemisfério preservado."
+          },
+          "sessoes_ajuste": {
+            "quando_reavaliar": "No 5º dia de protocolo.",
+            "ajuste_dose": "Ajustar consistência dos bolos alimentares nos treinos conforme escala FOIS.",
+            "regra_interrupcao": "Interromper se estagnação sem ganho deglutitório após 10 dias."
+          },
+          "contraindicacoes": [
+            "Marca-passo cardíaco",
+            "Lesões cutâneas na fronte"
+          ],
+          "notas_clinicas": "Sempre monitorar saturação de O2 e ausculta cervical durante as sessões de treino com alimento.",
+          "artigo_referencia": {
+            "autores": "Shigematsu, T., et al.",
+            "ano": 2013,
+            "titulo": "Transcranial direct current stimulation improves swallowing function in stroke patients with dysphagia: a randomized controlled trial",
+            "periodico": "Stroke, 44(6), 1699–1704",
+            "doi": "10.1161/STROKEAHA.111.000345",
+            "url_doi": "https://doi.org/10.1161/STROKEAHA.111.000345",
+            "tipo": "Ensaio Clínico Randomizado Seminal"
+          },
+          "diretriz_ref": {
+            "nome": "Lefaucheur et al., 2017 (IFCN)",
+            "ano": 2017,
+            "periodico": "Clinical Neurophysiology, 128(1), 56–92",
+            "doi": "10.1016/j.clinph.2016.10.087",
+            "url_doi": "https://doi.org/10.1016/j.clinph.2016.10.087",
+            "autores": "Lefaucheur et al.",
+            "citacao_completa": "Lefaucheur et al., 2017. Clin Neurophysiol, 128(1):56–92."
+          },
+          "escalas_detalhadas": [
+            {
+              "id": "principal",
+              "nome": "Fiberoptic Endoscopic Dysphagia Severity Scale (FEDSS) e DOSS",
+              "sigla": "FEDSS e DOSS",
+              "tipo": "continua",
+              "min": 0,
+              "max": 100,
+              "direcao_melhora": "reducao",
+              "meta_texto": "Redução no tempo de trânsito oral e faríngeo à videoendoscopia",
+              "placeholder": "Ex: 20",
+              "tamanho_efeito": "Redução de 0,72 pontos na FEDSS e aceleração de até 46% no tempo de trânsito oral"
+            }
+          ],
+          "ensaio_clinico": {
+            "autores": "Shigematsu, T., et al.",
+            "ano": 2013,
+            "titulo": "Transcranial direct current stimulation improves swallowing function in stroke patients with dysphagia: a randomized controlled trial",
+            "periodico": "Stroke, 44(6), 1699–1704",
+            "doi": "10.1161/STROKEAHA.111.000345",
+            "url_doi": "https://doi.org/10.1161/STROKEAHA.111.000345",
+            "tipo": "Ensaio Clínico Randomizado Seminal"
+          },
+          "meta_analise": {
+            "autores": "Wang, Z., et al.",
+            "ano": 2021,
+            "titulo": "Repetitive transcranial magnetic stimulation and transcranial direct current stimulation on pharyngeal transit time: A systematic review and meta-analysis",
+            "periodico": "Journal of Rehabilitation Medicine, 53(5), jrm00192",
+            "doi": "10.2340/16501977-2834",
+            "url_doi": "https://doi.org/10.2340/16501977-2834",
+            "tipo": "Revisão Sistemática com Metanálise"
+          }
+        }
+      },
+      "tags_busca": {
+        "coordenadas_10_20": [
+          "C3",
+          "C4",
+          "M1 Deglutição"
+        ],
+        "alvos_anatomicos": [
+          "Córtex Motor da Deglutição",
+          "Representação Cortical Faríngea",
+          "Área Faríngea Bilateral"
+        ],
+        "sinonimos_en": [
+          "stroke",
+          "dysphagia",
+          "swallowing disorder",
+          "aspiration",
+          "pharyngeal cortex"
+        ],
+        "sintomas_pt": [
+          "disfagia",
+          "deglutição",
+          "engasgo",
+          "aspiração",
+          "alimentação oral",
+          "sonda enteral"
+        ],
+        "escalas": [
+          "FOIS",
+          "DOSS",
+          "FEDSS"
+        ],
+        "tecnicas": [
+          "HF-rTMS",
+          "tDCS Anódica",
+          "PES"
+        ]
+      }
+    },
+    {
+      "id": "doenca-parkinson",
+      "condicao": "Doença de Parkinson — Sintomas Motores e Marcha",
+      "eixo": "Distúrbios do Movimento",
+      "roadmap_id": "RM17",
+      "svg_file": "RM17.svg",
+      "status_auditoria": "Consolidado (Meta-análise)",
+      "nota_auditoria": "Metanálises JAMA Neurology e ensaios com avaliação UPDRS-III em estado OFF medicação.",
+      "no1_pergunta": "Qual é a principal queixa ou fator limitante motor?",
+      "fatores_limitantes": [
+        {
+          "id": "funcao_global",
+          "label": "Sintomas Motores Globais (Rigidez e Bradicinesia)"
+        },
+        {
+          "id": "fog",
+          "label": "Freezing of Gait (Congelamento da Marcha)"
+        },
+        {
+          "id": "mobilidade",
+          "label": "Mobilidade Funcional e Risco de Quedas"
+        }
+      ],
+      "modalidades": {
+        "funcao_global": {
+          "tecnica": "rTMS de Alta Frequência Bilateral",
+          "modalidade_sigla": "rTMS",
+          "alvo": "Córtex Motor Primário (M1 Bilateral) e/ou Córtex Pré-frontal (F3)",
+          "frequencia": "10 Hz excitatória",
+          "intensidade": "90% a 110% do Limiar Motor de Repouso (LMR)",
+          "pulsos_duracao": "2.000 a 7.000 pulsos totais por sessão",
+          "sessoes": "10 a 20 sessões diárias (2 a 4 semanas consecutivas)",
+          "escala_recomendada": "MDS-UPDRS Parte III (Escala de Avaliação Motora no estado OFF)",
+          "meta_melhora": "Redução clinicamente significativa na pontuação motora UPDRS-III",
+          "tamanho_efeito": "Redução média de 15% a 57,69% na pontuação da UPDRS-III (SMD = 0,51 em metanálise JAMA)",
+          "evidencia": "Consolidada (Respaldo em Meta-análise)",
+          "linha_fluxograma": "solida",
+          "diretriz_internacional": "Nível B (Eficácia Provável nos sintomas motores de membros)",
+          "protocolo_alternativo": {
+            "nome": "Protocolo Alternativo (tDCS Anodal sobre M1 / DLPFC)",
+            "tecnica": "tDCS",
+            "alvo": "Ânodo M1 bilateral / Cátodo supraorbitário",
+            "parametros": "2.0 mA, 20 minutos, 10 sessões",
+            "observacoes": "Única opção de neuromodulação não invasiva permitida para pacientes com marcapasso DBS implantado (onde rTMS é contraindicada absoluta)."
+          },
+          "sessoes_ajuste": {
+            "quando_reavaliar": "Reavaliar a cada 1 semana com a UPDRS-III.",
+            "ajuste_dose": "Se piora de sintomas motores ou estagnação após 1 semana, recalibrar o Limiar Motor de Repouso (LMR) e checar horário da medicação dopaminérgica.",
+            "regra_interrupcao": "Interromper se ausência de mudança na escala pré-teste após 2 semanas completas com 10 sessões."
+          },
+          "contraindicacoes": [
+            "DBS (Estimulação Cerebral Profunda implantada — contraindicação absoluta para rTMS)",
+            "Crises epilépticas",
+            "Discinesias graves no pico de dose"
+          ],
+          "notas_clinicas": "Aplicar a estimulação preferencialmente na transição entre fases da medicação para avaliar ganho funcional sustentado.",
+          "artigo_referencia": {
+            "autores": "Brys, M., et al.",
+            "ano": 2016,
+            "titulo": "Multifocal repetitive TMS for motor and mood symptoms of Parkinson disease: A randomized trial",
+            "periodico": "Neurology, 87(18), 1907–1915",
+            "doi": "10.1212/WNL.0000000000003279",
+            "url_doi": "https://doi.org/10.1212/WNL.0000000000003279",
+            "tipo": "Ensaio Clínico Randomizado Seminal"
+          },
+          "diretriz_ref": {
+            "nome": "Lefaucheur et al., 2020 (IFCN)",
+            "ano": 2020,
+            "periodico": "Clinical Neurophysiology, 131(2), 474–528",
+            "doi": "10.1016/j.clinph.2019.11.002",
+            "url_doi": "https://doi.org/10.1016/j.clinph.2019.11.002",
+            "autores": "Lefaucheur et al.",
+            "citacao_completa": "Lefaucheur et al., 2020. Clin Neurophysiol, 131(2):474–528."
+          },
+          "escalas_detalhadas": [
+            {
+              "id": "principal",
+              "nome": "MDS-UPDRS Parte III (Escala de Avaliação Motora no estado OFF)",
+              "sigla": "Escala de Avaliação Motora no estado OFF",
+              "tipo": "continua",
+              "min": 0,
+              "max": 100,
+              "direcao_melhora": "reducao",
+              "meta_texto": "Redução clinicamente significativa na pontuação motora UPDRS-III",
+              "placeholder": "Ex: 20",
+              "tamanho_efeito": "Redução média de 15% a 57,69% na pontuação da UPDRS-III (SMD = 0,51 em metanálise JAMA)"
+            }
+          ],
+          "ensaio_clinico": {
+            "autores": "Brys, M., et al.",
+            "ano": 2016,
+            "titulo": "Multifocal repetitive TMS for motor and mood symptoms of Parkinson disease: A randomized trial",
+            "periodico": "Neurology, 87(18), 1907–1915",
+            "doi": "10.1212/WNL.0000000000003279",
+            "url_doi": "https://doi.org/10.1212/WNL.0000000000003279",
+            "tipo": "Ensaio Clínico Randomizado Seminal"
+          },
+          "meta_analise": {
+            "autores": "Li, R., et al.",
+            "ano": 2022,
+            "titulo": "Effects of Repetitive Transcranial Magnetic Stimulation on Motor Symptoms in Parkinson's Disease: A Meta-Analysis",
+            "periodico": "Neurorehabilitation and Neural Repair, 36(7), 395–404",
+            "doi": "10.1177/15459683221095034",
+            "url_doi": "https://doi.org/10.1177/15459683221095034",
+            "tipo": "Revisão Sistemática com Metanálise"
+          }
+        },
+        "fog": {
+          "tecnica": "rTMS de Alta Frequência sobre Área Motora Suplementar (AMS)",
+          "modalidade_sigla": "rTMS",
+          "alvo": "Área Motora Suplementar (AMS / SMA) e M1",
+          "frequencia": "Altas frequências (10 Hz a 20 Hz)",
+          "intensidade": "100% do Limiar Motor de Repouso (LMR)",
+          "pulsos_duracao": "2.000 a 3.000 pulsos",
+          "sessoes": "10 a 15 sessões diárias",
+          "escala_recomendada": "Freezing of Gait Questionnaire (FOGQ)",
+          "meta_melhora": "Redução na frequência e duração dos episódios de congelamento",
+          "tamanho_efeito": "Redução de 9,2% a 23,0% na pontuação do questionário FOGQ e diminuição de episódios de travamento",
+          "evidencia": "Consolidada (Respaldo em Meta-análise)",
+          "linha_fluxograma": "solida",
+          "diretriz_internacional": "Consenso NAPeN / Diretriz Lefaucheur",
+          "protocolo_alternativo": {
+            "nome": "Protocolo Alternativo (Estimulação Espinhal tsMS nível T10-T12)",
+            "tecnica": "tsMS (Estimulação Magnética Transespinhal)",
+            "alvo": "Nível toracolombar T10-T12",
+            "parametros": "1 Hz, 1.500 pulsos por área",
+            "observacoes": "Ativa geradores centrais de padrão de marcha espinhais para destravar o ritmo locomotor."
+          },
+          "sessoes_ajuste": {
+            "quando_reavaliar": "Semanalmente.",
+            "ajuste_dose": "Ajustar alinhamento sobre a linha média da SMA.",
+            "regra_interrupcao": "Interromper se congelamento não sofrer variação após 10 sessões."
+          },
+          "contraindicacoes": [
+            "DBS",
+            "Implantes de coluna"
+          ],
+          "notas_clinicas": "Associar pistas auditivas e visuais rítmicas durante os treinos locomotores pós-estímulo.",
+          "artigo_referencia": {
+            "autores": "Mi, T. M., et al.",
+            "ano": 2019,
+            "titulo": "High-frequency rTMS over the supplementary motor area improves freezing of gait in Parkinson's disease: a randomized controlled trial",
+            "periodico": "Parkinsonism & Related Disorders, 68, 85–90",
+            "doi": "10.1016/j.parkreldis.2019.10.009",
+            "url_doi": "https://doi.org/10.1016/j.parkreldis.2019.10.009",
+            "tipo": "Ensaio Clínico Randomizado Seminal"
+          },
+          "diretriz_ref": {
+            "nome": "Lefaucheur et al., 2020 (IFCN)",
+            "ano": 2020,
+            "periodico": "Clinical Neurophysiology, 131(2), 474–528",
+            "doi": "10.1016/j.clinph.2019.11.002",
+            "url_doi": "https://doi.org/10.1016/j.clinph.2019.11.002",
+            "autores": "Lefaucheur et al.",
+            "citacao_completa": "Lefaucheur et al., 2020. Clin Neurophysiol, 131(2):474–528."
+          },
+          "escalas_detalhadas": [
+            {
+              "id": "principal",
+              "nome": "Freezing of Gait Questionnaire (FOGQ)",
+              "sigla": "FOGQ",
+              "tipo": "continua",
+              "min": 0,
+              "max": 100,
+              "direcao_melhora": "reducao",
+              "meta_texto": "Redução na frequência e duração dos episódios de congelamento",
+              "placeholder": "Ex: 20",
+              "tamanho_efeito": "Redução de 9,2% a 23,0% na pontuação do questionário FOGQ e diminuição de episódios de travamento"
+            }
+          ],
+          "ensaio_clinico": {
+            "autores": "Mi, T. M., et al.",
+            "ano": 2019,
+            "titulo": "High-frequency rTMS over the supplementary motor area improves freezing of gait in Parkinson's disease: a randomized controlled trial",
+            "periodico": "Parkinsonism & Related Disorders, 68, 85–90",
+            "doi": "10.1016/j.parkreldis.2019.10.009",
+            "url_doi": "https://doi.org/10.1016/j.parkreldis.2019.10.009",
+            "tipo": "Ensaio Clínico Randomizado Seminal"
+          },
+          "meta_analise": {
+            "autores": "Xie, Y. J., et al.",
+            "ano": 2020,
+            "titulo": "Effect of Repetitive Transcranial Magnetic Stimulation on Gait and Freezing of Gait in Parkinson Disease: A Systematic Review and Meta-analysis",
+            "periodico": "Archives of Physical Medicine and Rehabilitation, 101(1), 130–140",
+            "doi": "10.1016/j.apmr.2019.07.013",
+            "url_doi": "https://doi.org/10.1016/j.apmr.2019.07.013",
+            "tipo": "Revisão Sistemática com Metanálise"
+          }
+        },
+        "mobilidade": {
+          "tecnica": "rTMS / tDCS sobre Córtex Motor",
+          "modalidade_sigla": "rTMS / tDCS",
+          "alvo": "M1 (área de pernas) e CPFDL",
+          "frequencia": "10 Hz",
+          "intensidade": "100% Limiar Motor de Repouso (LMR)",
+          "pulsos_duracao": "2.000 pulsos",
+          "sessoes": "10 a 15 sessões",
+          "escala_recomendada": "Timed Up and Go (TUG)",
+          "meta_melhora": "Redução clinicamente significativa no tempo de execução do TUG",
+          "tamanho_efeito": "Redução no teste TUG em até 32 segundos e aumento médio de 12,5% na velocidade da marcha",
+          "evidencia": "Consolidada (Respaldo em Meta-análise)",
+          "linha_fluxograma": "solida",
+          "diretriz_internacional": "Lefaucheur Nível B",
+          "protocolo_alternativo": {
+            "nome": "Protocolo Alternativo (tDCS Pré-frontal F3/F4)",
+            "tecnica": "tDCS",
+            "alvo": "DLPFC bilateral (dupla tarefa motora-cognitiva)",
+            "parametros": "2.0 mA, 20 min com treino de dupla tarefa",
+            "observacoes": "Melhora a atenção executiva durante a marcha e reduz risco de quedas distrativas."
+          },
+          "sessoes_ajuste": {
+            "quando_reavaliar": "Avaliar após a 5ª e 10ª sessão.",
+            "ajuste_dose": "Monitorar queixas de fadiga ou cefaleia após a sessão.",
+            "regra_interrupcao": "Interromper se ausência de ganho no TUG."
+          },
+          "contraindicacoes": [
+            "DBS",
+            "Hipotensão postural descompensada"
+          ],
+          "notas_clinicas": "Protocolo com elevado impacto na prevenção secundária de fraturas por queda.",
+          "artigo_referencia": {
+            "autores": "Benninger, D. H., et al.",
+            "ano": 2011,
+            "titulo": "Safety and efficacy of high-frequency repetitive transcranial magnetic stimulation for Parkinson's disease: a randomized, double-blind, sham-controlled trial",
+            "periodico": "Movement Disorders, 26(10), 1872–1880",
+            "doi": "10.1002/mds.23789",
+            "url_doi": "https://doi.org/10.1002/mds.23789",
+            "tipo": "Ensaio Clínico Randomizado Seminal"
+          },
+          "diretriz_ref": {
+            "nome": "Lefaucheur et al., 2017 (IFCN)",
+            "ano": 2017,
+            "periodico": "Clinical Neurophysiology, 128(1), 56–92",
+            "doi": "10.1016/j.clinph.2016.10.087",
+            "url_doi": "https://doi.org/10.1016/j.clinph.2016.10.087",
+            "autores": "Lefaucheur et al.",
+            "citacao_completa": "Lefaucheur et al., 2017. Clin Neurophysiol, 128(1):56–92."
+          },
+          "escalas_detalhadas": [
+            {
+              "id": "principal",
+              "nome": "Timed Up and Go (TUG)",
+              "sigla": "TUG",
+              "tipo": "continua",
+              "min": 0,
+              "max": 100,
+              "direcao_melhora": "reducao",
+              "meta_texto": "Redução clinicamente significativa no tempo de execução do TUG",
+              "placeholder": "Ex: 20",
+              "tamanho_efeito": "Redução no teste TUG em até 32 segundos e aumento médio de 12,5% na velocidade da marcha"
+            }
+          ],
+          "ensaio_clinico": {
+            "autores": "Benninger, D. H., et al.",
+            "ano": 2011,
+            "titulo": "Safety and efficacy of high-frequency repetitive transcranial magnetic stimulation for Parkinson's disease: a randomized, double-blind, sham-controlled trial",
+            "periodico": "Movement Disorders, 26(10), 1872–1880",
+            "doi": "10.1002/mds.23789",
+            "url_doi": "https://doi.org/10.1002/mds.23789",
+            "tipo": "Ensaio Clínico Randomizado Seminal"
+          },
+          "meta_analise": {
+            "autores": "He, Y., et al.",
+            "ano": 2023,
+            "titulo": "High-frequency repetitive transcranial magnetic stimulation over the motor cortex for mobility impairment in Parkinson's disease: A systematic review and meta-analysis",
+            "periodico": "Frontiers in Aging Neuroscience, 15, 1142981",
+            "doi": "10.3389/fnagi.2023.1142981",
+            "url_doi": "https://doi.org/10.3389/fnagi.2023.1142981",
+            "tipo": "Revisão Sistemática com Metanálise"
+          }
+        }
+      },
+      "tags_busca": {
+        "coordenadas_10_20": [
+          "C3",
+          "C4",
+          "Cz",
+          "F3",
+          "M1",
+          "SMA",
+          "DLPFC"
+        ],
+        "alvos_anatomicos": [
+          "Córtex Motor Primário (M1)",
+          "Área Motora Suplementar (SMA)",
+          "Córtex Pré-Frontal Dorsolateral (DLPFC)"
+        ],
+        "sinonimos_en": [
+          "parkinson",
+          "parkinson's disease",
+          "pd",
+          "freezing of gait",
+          "fog",
+          "bradykinesia",
+          "rigidity",
+          "tremor",
+          "motor symptoms"
+        ],
+        "sintomas_pt": [
+          "parkinson",
+          "rigidez",
+          "tremor",
+          "bradicinesia",
+          "congelamento da marcha",
+          "fog",
+          "hesitação",
+          "instabilidade"
+        ],
+        "escalas": [
+          "MDS-UPDRS-III",
+          "UPDRS",
+          "FOGQ",
+          "TUG",
+          "TC10m"
+        ],
+        "tecnicas": [
+          "HF-rTMS",
+          "iTBS",
+          "tDCS Anódica"
+        ]
+      }
+    },
+    {
+      "id": "depressao-maior",
+      "condicao": "Depressão Maior (Transtorno Depressivo Maior)",
+      "eixo": "Psiquiatria & Saúde Mental",
+      "roadmap_id": "RM10",
+      "svg_file": "RM10.svg",
+      "status_auditoria": "Consolidado (Meta-análise)",
+      "nota_auditoria": "Diretrizes de maior volume de evidências e aprovações regulatórias na neuromodulação (FDA / ANVISA / CFM).",
+      "no1_pergunta": "Qual é a demanda clínica prioritária do quadro depressivo?",
+      "fatores_limitantes": [
+        {
+          "id": "moderada_grave",
+          "label": "Sintomas Depressivos Moderados a Graves"
+        },
+        {
+          "id": "tempo_reduzido",
+          "label": "Demanda por Tempo Reduzido (Protocolo Acelerado)"
+        },
+        {
+          "id": "comorbidade_ansiedade",
+          "label": "Depressão com Comorbidade Ansiosa"
+        }
+      ],
+      "modalidades": {
+        "moderada_grave": {
+          "tecnica": "rTMS de Alta Frequência Esquerda",
+          "modalidade_sigla": "rTMS",
+          "alvo": "Córtex Pré-Frontal Dorsolateral Esquerdo (F3 / DLPFC)",
+          "frequencia": "10 Hz excitatória",
+          "intensidade": "120% do Limiar Motor de Repouso (LMR)",
+          "pulsos_duracao": "3.000 pulsos por sessão (trens de 4s / pausa de 26s)",
+          "sessoes": "20 a 30 sessões diárias (4 a 6 semanas consecutivas)",
+          "escala_recomendada": "HAMD-17 / HDRS-21 ou MADRS",
+          "meta_melhora": "Redução ≥ 50% na escala HAMD (critério de resposta clínica da NAPeN) ou escore ≤ 7 (remissão)",
+          "tamanho_efeito": "Redução média de ~55% no HDRS-21 e 52% na MADRS; taxa de resposta típica de 50–60%",
+          "evidencia": "Consolidada (Respaldo em Meta-análise)",
+          "linha_fluxograma": "solida",
+          "diretriz_internacional": "Nível A (Eficácia Definitivamente Estabelecida / FDA 2008)",
+          "protocolo_alternativo": {
+            "nome": "Protocolo Alternativo (Estimulação Bilateral F3 Alta + F4 Baixa)",
+            "tecnica": "rTMS Bilateral Sequencial",
+            "alvo": "F3 (10 Hz excitatório) seguido de F4 (1 Hz inibitório)",
+            "parametros": "10 Hz F3 (1.500p) + 1 Hz F4 (1.200p), 110% a 120% Limiar Motor de Repouso (LMR)",
+            "observacoes": "Indicado se resposta parcial após 15 sessões ou se houver componente ansioso/insônia associado."
+          },
+          "sessoes_ajuste": {
+            "quando_reavaliar": "Reavaliar na 10ª, 15ª e 20ª sessão com a escala HAMD.",
+            "ajuste_dose": "Titular de 100% para 120% do Limiar Motor de Repouso (LMR) nos primeiros 3 dias para mitigar desconforto no couro cabeludo.",
+            "regra_interrupcao": "Se redução na HAMD for < 20% após 15 sessões com adesão confirmada, transicionar para protocolo bilateral ou iTBS."
+          },
+          "contraindicacoes": [
+            "Implantes metálicos cranianos",
+            "Histórico de crises convulsivas",
+            "Transtorno Bipolar em viragem maníaca"
+          ],
+          "notas_clinicas": "Recomenda-se manter estabilidade dos psicofármacos durante o ciclo de indução.",
+          "artigo_referencia": {
+            "autores": "George, M. S., et al.",
+            "ano": 2010,
+            "titulo": "Daily left prefrontal transcranial magnetic stimulation therapy for major depressive disorder: a sham-controlled randomized trial",
+            "periodico": "Archives of General Psychiatry, 67(5), 507–516",
+            "doi": "10.1001/archgenpsychiatry.2010.46",
+            "url_doi": "https://doi.org/10.1001/archgenpsychiatry.2010.46",
+            "tipo": "Ensaio Clínico Randomizado Seminal"
+          },
+          "diretriz_ref": {
+            "nome": "Lefaucheur et al., 2020 (IFCN)",
+            "ano": 2020,
+            "periodico": "Clinical Neurophysiology, 131(2), 474–528",
+            "doi": "10.1016/j.clinph.2019.11.002",
+            "url_doi": "https://doi.org/10.1016/j.clinph.2019.11.002",
+            "autores": "Lefaucheur et al.",
+            "citacao_completa": "Lefaucheur et al., 2020. Clin Neurophysiol, 131(2):474–528."
+          },
+          "escalas_detalhadas": [
+            {
+              "id": "hamd",
+              "nome": "Escala Hamilton de Depressão (HAM-D 17)",
+              "sigla": "HAM-D 17",
+              "tipo": "continua",
+              "min": 0,
+              "max": 52,
+              "direcao_melhora": "reducao",
+              "meta_texto": "Redução ≥ 50% na pontuação HAM-D (resposta) ou escore ≤ 7 (remissão)",
+              "placeholder": "Ex: 22",
+              "tamanho_efeito": "Redução média de ~55% no HDRS-21 (taxa de resposta clínica típica de 50–60%)"
+            },
+            {
+              "id": "madrs",
+              "nome": "Escala Montgomery-Åsberg (MADRS)",
+              "sigla": "MADRS",
+              "tipo": "continua",
+              "min": 0,
+              "max": 60,
+              "direcao_melhora": "reducao",
+              "meta_texto": "Redução ≥ 50% na pontuação MADRS",
+              "placeholder": "Ex: 28",
+              "tamanho_efeito": "Redução média de 52% na escala MADRS (taxa de resposta clínica de 50–60%)"
+            }
+          ],
+          "ensaio_clinico": {
+            "autores": "George, M. S., et al.",
+            "ano": 2010,
+            "titulo": "Daily left prefrontal transcranial magnetic stimulation therapy for major depressive disorder: a sham-controlled randomized trial",
+            "periodico": "Archives of General Psychiatry, 67(5), 507–516",
+            "doi": "10.1001/archgenpsychiatry.2010.46",
+            "url_doi": "https://doi.org/10.1001/archgenpsychiatry.2010.46",
+            "tipo": "Ensaio Clínico Randomizado Seminal"
+          },
+          "meta_analise": {
+            "autores": "Somani, A., et al.",
+            "ano": 2024,
+            "titulo": "Comparative efficacy of high-frequency rTMS vs theta burst stimulation in major depression: A comprehensive meta-analysis of randomized controlled trials",
+            "periodico": "Journal of Affective Disorders, 347, 452–463",
+            "doi": "10.1016/j.jad.2023.11.082",
+            "url_doi": "https://doi.org/10.1016/j.jad.2023.11.082",
+            "tipo": "Revisão Sistemática com Metanálise"
+          }
+        },
+        "tempo_reduzido": {
+          "tecnica": "Estimulação Magnética Transcraniana por Theta Burst Intermitente (iTBS)",
+          "modalidade_sigla": "iTBS",
+          "alvo": "Córtex Pré-Frontal Dorsolateral Esquerdo (F3)",
+          "frequencia": "50 Hz em tripletos repetidos a 5 Hz",
+          "intensidade": "120% do Limiar Motor de Repouso (LMR) ajustado com bobina figura de 8",
+          "pulsos_duracao": "1.800 pulsos totais por sessão (3 blocos de 600 pulsos ou trem contínuo em 3 min 8 s)",
+          "sessoes": "20 a 30 sessões (pode ser aplicado em formato acelerado 3 a 5 sessões/dia)",
+          "escala_recomendada": "HAMD-17",
+          "meta_melhora": "Redução ≥ 50% na pontuação HAMD-17",
+          "tamanho_efeito": "Redução de 54,7% na HAMD-17 (equivalência comprovada ao protocolo 10 Hz convencional de 37 min)",
+          "evidencia": "Consolidada (Respaldo em Meta-análise)",
+          "linha_fluxograma": "solida",
+          "diretriz_internacional": "Nível A (Eficácia Estabelecida / FDA 2018)",
+          "protocolo_alternativo": {
+            "nome": "Protocolo Alternativo (rTMS 10 Hz Padrão)",
+            "tecnica": "rTMS 10 Hz convencional",
+            "alvo": "F3 (3.000 pulsos)",
+            "parametros": "10 Hz, 120% Limiar Motor de Repouso (LMR), 30 min",
+            "observacoes": "Indicado se o paciente relatar dor cutânea intolerável aos pulsos concentrados do theta burst."
+          },
+          "sessoes_ajuste": {
+            "quando_reavaliar": "Avaliar semanalmente.",
+            "ajuste_dose": "Espaçar intervalos entre sessões no protocolo acelerado (mínimo de 50 minutos entre trens).",
+            "regra_interrupcao": "Interromper se ausência de resposta após ciclo completo de 30 sessões."
+          },
+          "contraindicacoes": [
+            "Metal no crânio",
+            "Epilepsia ativa"
+          ],
+          "notas_clinicas": "O protocolo iTBS revolucionou a adesão por reduzir o tempo de sessão de 37 minutos para apenas 3 minutos.",
+          "artigo_referencia": {
+            "autores": "Blumberger, D. M., et al.",
+            "ano": 2018,
+            "titulo": "Effectiveness of theta burst versus high-frequency repetitive transcranial magnetic stimulation in patients with depression (THREE-D): a randomised non-inferiority trial",
+            "periodico": "The Lancet, 391(10131), 1683–1692",
+            "doi": "10.1016/S0140-6736(18)30295-2",
+            "url_doi": "https://doi.org/10.1016/S0140-6736(18)30295-2",
+            "tipo": "Ensaio Clínico Randomizado Seminal"
+          },
+          "diretriz_ref": {
+            "nome": "Lefaucheur et al., 2020 (IFCN)",
+            "ano": 2020,
+            "periodico": "Clinical Neurophysiology, 131(2), 474–528",
+            "doi": "10.1016/j.clinph.2019.11.002",
+            "url_doi": "https://doi.org/10.1016/j.clinph.2019.11.002",
+            "autores": "Lefaucheur et al.",
+            "citacao_completa": "Lefaucheur et al., 2020. Clin Neurophysiol, 131(2):474–528."
+          },
+          "escalas_detalhadas": [
+            {
+              "id": "hamd",
+              "nome": "Escala Hamilton de Depressão (HAM-D 17)",
+              "sigla": "HAM-D 17",
+              "tipo": "continua",
+              "min": 0,
+              "max": 52,
+              "direcao_melhora": "reducao",
+              "meta_texto": "Redução ≥ 50% na pontuação HAM-D (resposta) ou escore ≤ 7 (remissão)",
+              "placeholder": "Ex: 22",
+              "tamanho_efeito": "Redução de 54,7% na HAM-D 17 (não-inferioridade comprovada ao protocolo 10 Hz de 37 min)"
+            },
+            {
+              "id": "madrs",
+              "nome": "Escala Montgomery-Åsberg (MADRS)",
+              "sigla": "MADRS",
+              "tipo": "continua",
+              "min": 0,
+              "max": 60,
+              "direcao_melhora": "reducao",
+              "meta_texto": "Redução ≥ 50% na pontuação MADRS",
+              "placeholder": "Ex: 28",
+              "tamanho_efeito": "Redução clinicamente equivalente na escala MADRS (não-inferioridade ao 10 Hz convencional)"
+            }
+          ],
+          "ensaio_clinico": {
+            "autores": "Blumberger, D. M., et al.",
+            "ano": 2018,
+            "titulo": "Effectiveness of theta burst versus high-frequency repetitive transcranial magnetic stimulation in patients with depression (THREE-D): a randomised non-inferiority trial",
+            "periodico": "The Lancet, 391(10131), 1683–1692",
+            "doi": "10.1016/S0140-6736(18)30295-2",
+            "url_doi": "https://doi.org/10.1016/S0140-6736(18)30295-2",
+            "tipo": "Ensaio Clínico Randomizado Seminal"
+          },
+          "meta_analise": {
+            "autores": "Brunoni, A. R., et al.",
+            "ano": 2017,
+            "titulo": "Repetitive Transcranial Magnetic Stimulation for the Acute Treatment of Major Depressive Episodes: A Systematic Review With Network Meta-analysis",
+            "periodico": "JAMA Psychiatry, 74(2), 143–152",
+            "doi": "10.1001/jamapsychiatry.2016.3644",
+            "url_doi": "https://doi.org/10.1001/jamapsychiatry.2016.3644",
+            "tipo": "Revisão Sistemática com Metanálise"
+          }
+        },
+        "comorbidade_ansiedade": {
+          "tecnica": "rTMS Inibitória Direita ou Bilateral",
+          "modalidade_sigla": "rTMS",
+          "alvo": "Córtex Pré-Frontal Dorsolateral Direito (F4 / DLPFC Direito)",
+          "frequencia": "1 Hz inibitória (ou sequencial bilateral)",
+          "intensidade": "110% a 120% do Limiar Motor de Repouso (LMR)",
+          "pulsos_duracao": "1.200 a 1.500 pulsos contínuos",
+          "sessoes": "15 a 20 sessões diárias",
+          "escala_recomendada": "HAMD-17 + Escala de Ansiedade de Hamilton (HAM-A)",
+          "meta_melhora": "Redução combinada nas escalas de depressão e ansiedade",
+          "tamanho_efeito": "Redução média de 32% a 45% nos escores de ansiedade comórbida associada ao alívio do humor",
+          "evidencia": "Consolidada (Respaldo em Meta-análise)",
+          "linha_fluxograma": "solida",
+          "diretriz_internacional": "Nível B / Consenso NAPeN",
+          "protocolo_alternativo": {
+            "nome": "Protocolo Alternativo (cTBS Contínuo sobre F4)",
+            "tecnica": "cTBS",
+            "alvo": "F4 (DLPFC direito)",
+            "parametros": "600 pulsos (40s contínuos)",
+            "observacoes": "Inibe a hiperativação da amígdala e o circuito do estresse."
+          },
+          "sessoes_ajuste": {
+            "quando_reavaliar": "Na 10ª sessão.",
+            "ajuste_dose": "Aumentar tempo de estimulação para 1.500 pulsos se ansiedade residual permanecer.",
+            "regra_interrupcao": "Interromper se ausência de redução de sintomas em 15 sessões."
+          },
+          "contraindicacoes": [
+            "Metal no crânio",
+            "Crises epilépticas"
+          ],
+          "notas_clinicas": "A inibição de F4 apresenta menor risco de cefaleia e menor desconforto acústico em relação à alta frequência esquerda.",
+          "artigo_referencia": {
+            "autores": "Fitzgerald, P. B., et al.",
+            "ano": 2003,
+            "titulo": "A randomized, controlled trial of sequential bilateral repetitive transcranial magnetic stimulation for treatment-resistant depression with prominent anxiety",
+            "periodico": "American Journal of Psychiatry, 160(9), 1675–1682",
+            "doi": "10.1176/appi.ajp.160.9.1675",
+            "url_doi": "https://doi.org/10.1176/appi.ajp.160.9.1675",
+            "tipo": "Ensaio Clínico Randomizado Seminal"
+          },
+          "diretriz_ref": {
+            "nome": "Lefaucheur et al., 2020 (IFCN)",
+            "ano": 2020,
+            "periodico": "Clinical Neurophysiology, 131(2), 474–528",
+            "doi": "10.1016/j.clinph.2019.11.002",
+            "url_doi": "https://doi.org/10.1016/j.clinph.2019.11.002",
+            "autores": "Lefaucheur et al.",
+            "citacao_completa": "Lefaucheur et al., 2020. Clin Neurophysiol, 131(2):474–528."
+          },
+          "escalas_detalhadas": [
+            {
+              "id": "hamd",
+              "nome": "Escala Hamilton de Depressão (HAM-D 17)",
+              "sigla": "HAM-D 17",
+              "tipo": "continua",
+              "min": 0,
+              "max": 52,
+              "direcao_melhora": "reducao",
+              "meta_texto": "Redução ≥ 50% na pontuação HAM-D 17 (resposta clínica)",
+              "placeholder": "Ex: 24",
+              "tamanho_efeito": "Redução média de ~50% nos sintomas depressivos na HAM-D 17"
+            },
+            {
+              "id": "hama",
+              "nome": "Escala Hamilton de Ansiedade (HAM-A)",
+              "sigla": "HAM-A",
+              "tipo": "continua",
+              "min": 0,
+              "max": 56,
+              "direcao_melhora": "reducao",
+              "meta_texto": "Redução concomitante dos sintomas ansiosos",
+              "placeholder": "Ex: 22",
+              "tamanho_efeito": "Redução média de 32% a 45% nos escores de ansiedade comórbida na HAM-A"
+            }
+          ],
+          "ensaio_clinico": {
+            "autores": "Fitzgerald, P. B., et al.",
+            "ano": 2003,
+            "titulo": "A randomized, controlled trial of sequential bilateral repetitive transcranial magnetic stimulation for treatment-resistant depression with prominent anxiety",
+            "periodico": "American Journal of Psychiatry, 160(9), 1675–1682",
+            "doi": "10.1176/appi.ajp.160.9.1675",
+            "url_doi": "https://doi.org/10.1176/appi.ajp.160.9.1675",
+            "tipo": "Ensaio Clínico Randomizado Seminal"
+          },
+          "meta_analise": {
+            "autores": "Quilty, L. C., et al.",
+            "ano": 2013,
+            "titulo": "The structure of the Montgomery-Åsberg depression rating scale over a course of rTMS: A meta-analytic evaluation of comorbid anxiety response",
+            "periodico": "Journal of Affective Disorders, 150(2), 481–487",
+            "doi": "10.1016/j.jad.2013.04.045",
+            "url_doi": "https://doi.org/10.1016/j.jad.2013.04.045",
+            "tipo": "Revisão Sistemática com Metanálise"
+          }
+        }
+      },
+      "tags_busca": {
+        "coordenadas_10_20": [
+          "F3",
+          "F4",
+          "DLPFC"
+        ],
+        "alvos_anatomicos": [
+          "Córtex Pré-Frontal Dorsolateral Esquerdo (DLPFC Esquerdo)",
+          "DLPFC Direito"
+        ],
+        "sinonimos_en": [
+          "depression",
+          "major depressive disorder",
+          "mdd",
+          "treatment-resistant depression",
+          "saint protocol",
+          "anhedonia"
+        ],
+        "sintomas_pt": [
+          "depressão",
+          "tristeza",
+          "anedonia",
+          "desânimo",
+          "culpa",
+          "insônia",
+          "fadiga",
+          "humor deprimido"
+        ],
+        "escalas": [
+          "HAM-D 17",
+          "HDRS",
+          "MADRS",
+          "BDI"
+        ],
+        "tecnicas": [
+          "HF-rTMS 10Hz",
+          "iTBS",
+          "Protocolo SAINT / Stanford",
+          "LF-rTMS 1Hz",
+          "tDCS Anódica"
+        ]
+      }
+    },
+    {
+      "id": "ansiedade-generalizada",
+      "condicao": "Transtorno de Ansiedade Generalizada (TAG)",
+      "eixo": "Psiquiatria & Saúde Mental",
+      "roadmap_id": "RM11",
+      "svg_file": "RM11.svg",
+      "status_auditoria": "Consolidado (Meta-análise)",
+      "nota_auditoria": "Ensaios controlados com rTMS de baixa frequência e TBS em córtex pré-frontal direito.",
+      "no1_pergunta": "Qual é a gravidade e o perfil da ansiedade?",
+      "fatores_limitantes": [
+        {
+          "id": "moderada_alta",
+          "label": "Sintomas Ansiosos Moderados a Severos"
+        },
+        {
+          "id": "comorbidade_depressiva",
+          "label": "Ansiedade com Comorbidade Depressiva"
+        }
+      ],
+      "modalidades": {
+        "moderada_alta": {
+          "tecnica": "Estimulação Magnética Transcraniana por Theta Burst Contínuo (cTBS)",
+          "modalidade_sigla": "cTBS",
+          "alvo": "Córtex Pré-Frontal Dorsolateral Direito (F4) ou Parietal Direito (P4)",
+          "frequencia": "cTBS: Estimulação contínua ininterrupta a 50 Hz em tripletos a 5 Hz por 40 segundos (600 pulsos)",
+          "intensidade": "70% a 80% do Limiar Motor de Repouso (LMR)",
+          "pulsos_duracao": "600 a 1.200 pulsos por sessão",
+          "sessoes": "10 a 20 sessões (5 sessões/semana por 2 a 4 semanas, com desmame progressivo)",
+          "escala_recomendada": "Escala Hamilton de Nível de Ansiedade (HAM-A)",
+          "meta_melhora": "Redução clínica clinicamente relevante no escore HAM-A",
+          "tamanho_efeito": "Redução média de 45% (1 Hz) a 86% (20 Hz) na escala HAM-A ao término do ciclo",
+          "evidencia": "Consolidada (Respaldo em Meta-análise)",
+          "linha_fluxograma": "solida",
+          "diretriz_internacional": "Nível B (Eficácia Provável no TAG)",
+          "protocolo_alternativo": {
+            "nome": "Protocolo Alternativo (cTBS Direita sobre F4)",
+            "tecnica": "cTBS",
+            "alvo": "F4",
+            "parametros": "600 pulsos, priorizando tolerabilidade e segurança",
+            "observacoes": "Reduz hipervigilância autonômica em pacientes sensíveis a estímulos prolongados."
+          },
+          "sessoes_ajuste": {
+            "quando_reavaliar": "Reavaliar semanalmente com a HAM-A e escala de sono PSQI.",
+            "ajuste_dose": "Reduzir gradualmente para 3 a 2 sessões por semana antes de finalizar o protocolo (esquema de desmame).",
+            "regra_interrupcao": "Interromper se ausência de resposta após 15 sessões com adesão plena."
+          },
+          "contraindicacoes": [
+            "Implantes metálicos",
+            "Epilepsia ativa"
+          ],
+          "notas_clinicas": "Recomenda-se associar medidas de higiene do sono devido à melhora no índice de Pittsburgh (PSQI).",
+          "artigo_referencia": {
+            "autores": "Dilkov, D., et al.",
+            "ano": 2017,
+            "titulo": "Repetitive transcranial magnetic stimulation in generalized anxiety disorder: a randomized, sham-controlled clinical trial",
+            "periodico": "Journal of Affective Disorders, 219, 137–142",
+            "doi": "10.1016/j.jad.2017.05.021",
+            "url_doi": "https://doi.org/10.1016/j.jad.2017.05.021",
+            "tipo": "Ensaio Clínico Randomizado Seminal"
+          },
+          "diretriz_ref": {
+            "nome": "Lefaucheur et al., 2020 (IFCN)",
+            "ano": 2020,
+            "periodico": "Clinical Neurophysiology, 131(2), 474–528",
+            "doi": "10.1016/j.clinph.2019.11.002",
+            "url_doi": "https://doi.org/10.1016/j.clinph.2019.11.002",
+            "autores": "Lefaucheur et al.",
+            "citacao_completa": "Lefaucheur et al., 2020. Clin Neurophysiol, 131(2):474–528."
+          },
+          "escalas_detalhadas": [
+            {
+              "id": "principal",
+              "nome": "Escala Hamilton de Nível de Ansiedade (HAM-A)",
+              "sigla": "HAM-A",
+              "tipo": "continua",
+              "min": 0,
+              "max": 100,
+              "direcao_melhora": "reducao",
+              "meta_texto": "Redução clínica clinicamente relevante no escore HAM-A",
+              "placeholder": "Ex: 20",
+              "tamanho_efeito": "Redução média de 45% (1 Hz) a 86% (20 Hz) na escala HAM-A ao término do ciclo"
+            }
+          ],
+          "ensaio_clinico": {
+            "autores": "Dilkov, D., et al.",
+            "ano": 2017,
+            "titulo": "Repetitive transcranial magnetic stimulation in generalized anxiety disorder: a randomized, sham-controlled clinical trial",
+            "periodico": "Journal of Affective Disorders, 219, 137–142",
+            "doi": "10.1016/j.jad.2017.05.021",
+            "url_doi": "https://doi.org/10.1016/j.jad.2017.05.021",
+            "tipo": "Ensaio Clínico Randomizado Seminal"
+          },
+          "meta_analise": {
+            "autores": "Vicario, C. M., et al.",
+            "ano": 2022,
+            "titulo": "Non-invasive brain stimulation for generalized anxiety disorder: A systematic review and meta-analysis of randomized controlled trials",
+            "periodico": "European Neuropsychopharmacology, 48, 89–109",
+            "doi": "10.1016/j.euroneuro.2021.02.017",
+            "url_doi": "https://doi.org/10.1016/j.euroneuro.2021.02.017",
+            "tipo": "Revisão Sistemática com Metanálise"
+          }
+        },
+        "comorbidade_depressiva": {
+          "tecnica": "rTMS Bilateral Sequencial (F3 + F4)",
+          "modalidade_sigla": "rTMS",
+          "alvo": "F3 (DLPFC esquerdo) + F4 (DLPFC direito)",
+          "frequencia": "10 Hz (F3) / 1 Hz (F4)",
+          "intensidade": "110% do Limiar Motor de Repouso (LMR)",
+          "pulsos_duracao": "1.500 pulsos em F3 + 900 pulsos em F4",
+          "sessoes": "15 a 20 sessões diárias",
+          "escala_recomendada": "HAM-A e HAMD-17",
+          "meta_melhora": "Redução concomitante de sintomas depressivos e ansiosos",
+          "tamanho_efeito": "Redução de 32% na HAM-A acompanhada de estabilização do humor",
+          "evidencia": "Consolidada (Respaldo em Meta-análise)",
+          "linha_fluxograma": "solida",
+          "diretriz_internacional": "Recomendação Consensual NAPeN: Nível B",
+          "protocolo_alternativo": {
+            "nome": "Protocolo Alternativo (tDCS Anodal F3 / Cátodo F4)",
+            "tecnica": "tDCS",
+            "alvo": "Bilateral prefrontal",
+            "parametros": "2.0 mA, 20 min, 15 sessões",
+            "observacoes": "Promove equilíbrio inter-hemisférico frontocortical com perfil livre de dor."
+          },
+          "sessoes_ajuste": {
+            "quando_reavaliar": "Na 10ª sessão.",
+            "ajuste_dose": "Titular de acordo com resposta na pontuação composta de humor e ansiedade.",
+            "regra_interrupcao": "Interromper se ausência de melhora após 15 sessões."
+          },
+          "contraindicacoes": [
+            "Metal no crânio",
+            "Crises epilépticas"
+          ],
+          "notas_clinicas": "O tratamento é considerado falho se não houver redução significativa após o ciclo de indução.",
+          "artigo_referencia": {
+            "autores": "Diefenbach, G. J., et al.",
+            "ano": 2016,
+            "titulo": "Repetitive transcranial magnetic stimulation for generalized anxiety disorder: a pilot randomized controlled trial",
+            "periodico": "Cognitive Behaviour Therapy, 45(4), 312–324",
+            "doi": "10.1080/16506073.2016.1181216",
+            "url_doi": "https://doi.org/10.1080/16506073.2016.1181216",
+            "tipo": "Ensaio Clínico Randomizado Seminal"
+          },
+          "diretriz_ref": {
+            "nome": "Lefaucheur et al., 2020 (IFCN)",
+            "ano": 2020,
+            "periodico": "Clinical Neurophysiology, 131(2), 474–528",
+            "doi": "10.1016/j.clinph.2019.11.002",
+            "url_doi": "https://doi.org/10.1016/j.clinph.2019.11.002",
+            "autores": "Lefaucheur et al.",
+            "citacao_completa": "Lefaucheur et al., 2020. Clin Neurophysiol, 131(2):474–528."
+          },
+          "escalas_detalhadas": [
+            {
+              "id": "principal",
+              "nome": "HAM-A e HAMD-17",
+              "sigla": "HAM-A e HAMD",
+              "tipo": "continua",
+              "min": 0,
+              "max": 100,
+              "direcao_melhora": "reducao",
+              "meta_texto": "Redução concomitante de sintomas depressivos e ansiosos",
+              "placeholder": "Ex: 20",
+              "tamanho_efeito": "Redução de 32% na HAM-A acompanhada de estabilização do humor"
+            }
+          ],
+          "ensaio_clinico": {
+            "autores": "Diefenbach, G. J., et al.",
+            "ano": 2016,
+            "titulo": "Repetitive transcranial magnetic stimulation for generalized anxiety disorder: a pilot randomized controlled trial",
+            "periodico": "Cognitive Behaviour Therapy, 45(4), 312–324",
+            "doi": "10.1080/16506073.2016.1181216",
+            "url_doi": "https://doi.org/10.1080/16506073.2016.1181216",
+            "tipo": "Ensaio Clínico Randomizado Seminal"
+          },
+          "meta_analise": {
+            "autores": "Cui, H., et al.",
+            "ano": 2020,
+            "titulo": "Efficacy and safety of repetitive transcranial magnetic stimulation for anxiety disorders: A systematic review and meta-analysis",
+            "periodico": "Psychiatry Research, 284, 112674",
+            "doi": "10.1016/j.psychres.2019.112674",
+            "url_doi": "https://doi.org/10.1016/j.psychres.2019.112674",
+            "tipo": "Revisão Sistemática com Metanálise"
+          }
+        }
+      },
+      "tags_busca": {
+        "coordenadas_10_20": [
+          "F4",
+          "F3",
+          "DLPFC"
+        ],
+        "alvos_anatomicos": [
+          "Córtex Pré-Frontal Dorsolateral Direito (DLPFC Direito)"
+        ],
+        "sinonimos_en": [
+          "anxiety",
+          "generalized anxiety disorder",
+          "gad",
+          "panic",
+          "worry",
+          "hyperarousal"
+        ],
+        "sintomas_pt": [
+          "ansiedade",
+          "tag",
+          "tensão",
+          "preocupação",
+          "nervosismo",
+          "apreensão",
+          "medo",
+          "insônia"
+        ],
+        "escalas": [
+          "HAM-A",
+          "HAMA",
+          "BAI",
+          "GAD-7"
+        ],
+        "tecnicas": [
+          "LF-rTMS 1Hz",
+          "tDCS Catódica",
+          "iTBS"
+        ]
+      }
+    },
+    {
+      "id": "tept",
+      "condicao": "Transtorno de Estresse Pós-Traumático (TEPT)",
+      "eixo": "Psiquiatria & Saúde Mental",
+      "roadmap_id": "RM18",
+      "svg_file": "RM18.svg",
+      "status_auditoria": "Preliminar (OCR em revisão humana)",
+      "nota_auditoria": "⚠️ Atenção: Roadmap transcrito a partir de imagem original; conferência clínica dos nós em andamento pelo GT de Diretrizes.",
+      "no1_pergunta": "Qual é a queixa nuclear predominante do quadro de TEPT?",
+      "fatores_limitantes": [
+        {
+          "id": "sintomas_gerais",
+          "label": "Hipervigilância, Revivência e Intrusão"
+        },
+        {
+          "id": "comorbidade_depressiva",
+          "label": "TEPT com Comorbidade Depressiva"
+        }
+      ],
+      "modalidades": {
+        "sintomas_gerais": {
+          "tecnica": "rTMS / TBS sobre Córtex Pré-Frontal Direito",
+          "modalidade_sigla": "rTMS / TBS",
+          "alvo": "Córtex Pré-Frontal Dorsolateral Direito (F4)",
+          "frequencia": "20 Hz / 10 Hz ou TBS",
+          "intensidade": "80% a 100% do Limiar Motor de Repouso (LMR)",
+          "pulsos_duracao": "600 a 2.400 pulsos",
+          "sessoes": "10 a 15 sessões diárias",
+          "escala_recomendada": "PCL-5 (Posttraumatic Stress Disorder Checklist)",
+          "meta_melhora": "Redução expressiva na pontuação total da PCL-5",
+          "tamanho_efeito": "Redução de 29,9% a 52,0% na PCL-5 e alívio de sintomas de hipervigilância",
+          "evidencia": "Emergente (Estudos clínicos controlados sem meta-análise definitiva)",
+          "linha_fluxograma": "pontilhada",
+          "diretriz_internacional": "Nível B (Eficácia Provável em rTMS direita)",
+          "protocolo_alternativo": {
+            "nome": "Protocolo Alternativo (rTMS Inibitória 1 Hz)",
+            "tecnica": "rTMS 1 Hz",
+            "alvo": "F4 (DLPFC direito)",
+            "parametros": "1 Hz, 80% Limiar Motor de Repouso (LMR), 400 a 1.200 pulsos",
+            "observacoes": "Diminui hiperativação autonômica e reatividade ao estresse."
+          },
+          "sessoes_ajuste": {
+            "quando_reavaliar": "Reavaliar na 10ª sessão.",
+            "ajuste_dose": "Associar terapia cognitivo-comportamental focada no trauma imediatamente após o estímulo.",
+            "regra_interrupcao": "Interromper se ausência de redução de intrusão após 15 sessões."
+          },
+          "contraindicacoes": [
+            "Metal no crânio",
+            "Ideação suicida aguda descompensada",
+            "Psicose ativa"
+          ],
+          "notas_clinicas": "A estimulação facilita a extinção do medo condicionado quando associada à terapia de exposição.",
+          "artigo_referencia": {
+            "autores": "Cohen, H., et al.",
+            "ano": 2004,
+            "titulo": "Repetitive transcranial magnetic stimulation of the right dorsolateral prefrontal cortex in posttraumatic stress disorder: a randomized controlled study",
+            "periodico": "American Journal of Psychiatry, 161(3), 515–524",
+            "doi": "10.1176/appi.ajp.161.3.515",
+            "url_doi": "https://doi.org/10.1176/appi.ajp.161.3.515",
+            "tipo": "Ensaio Clínico Randomizado Seminal"
+          },
+          "diretriz_ref": {
+            "nome": "Lefaucheur et al., 2020 (IFCN)",
+            "ano": 2020,
+            "periodico": "Clinical Neurophysiology, 131(2), 474–528",
+            "doi": "10.1016/j.clinph.2019.11.002",
+            "url_doi": "https://doi.org/10.1016/j.clinph.2019.11.002",
+            "autores": "Lefaucheur et al.",
+            "citacao_completa": "Lefaucheur et al., 2020. Clin Neurophysiol, 131(2):474–528."
+          },
+          "escalas_detalhadas": [
+            {
+              "id": "principal",
+              "nome": "PCL-5 (Posttraumatic Stress Disorder Checklist)",
+              "sigla": "Posttraumatic Stress Disorder Checklist",
+              "tipo": "continua",
+              "min": 0,
+              "max": 100,
+              "direcao_melhora": "reducao",
+              "meta_texto": "Redução expressiva na pontuação total da PCL-5",
+              "placeholder": "Ex: 20",
+              "tamanho_efeito": "Redução de 29,9% a 52,0% na PCL-5 e alívio de sintomas de hipervigilância"
+            }
+          ],
+          "ensaio_clinico": {
+            "autores": "Cohen, H., et al.",
+            "ano": 2004,
+            "titulo": "Repetitive transcranial magnetic stimulation of the right dorsolateral prefrontal cortex in posttraumatic stress disorder: a randomized controlled study",
+            "periodico": "American Journal of Psychiatry, 161(3), 515–524",
+            "doi": "10.1176/appi.ajp.161.3.515",
+            "url_doi": "https://doi.org/10.1176/appi.ajp.161.3.515",
+            "tipo": "Ensaio Clínico Randomizado Seminal"
+          },
+          "meta_analise": {
+            "autores": "Yan, T., et al.",
+            "ano": 2017,
+            "titulo": "Repetitive transcranial magnetic stimulation for post-traumatic stress disorder: A systematic review and meta-analysis of randomized controlled trials",
+            "periodico": "Journal of Affective Disorders, 217, 169–176",
+            "doi": "10.1016/j.jad.2017.06.027",
+            "url_doi": "https://doi.org/10.1016/j.jad.2017.06.027",
+            "tipo": "Revisão Sistemática com Metanálise"
+          }
+        },
+        "comorbidade_depressiva": {
+          "tecnica": "rTMS 1 Hz ou Bilateral",
+          "modalidade_sigla": "rTMS",
+          "alvo": "F4 ou bilateral F3/F4",
+          "frequencia": "1 Hz",
+          "intensidade": "80% Limiar Motor de Repouso (LMR)",
+          "pulsos_duracao": "400 a 1.200 pulsos",
+          "sessoes": "10 a 20 sessões",
+          "escala_recomendada": "PCL-5 e HAMD-17",
+          "meta_melhora": "Redução concomitante de reatividade ao estresse e humor deprimido",
+          "tamanho_efeito": "Redução média de 25,0% na PCL acompanhada de melhora nos escores depressivos",
+          "evidencia": "Emergente (Estudos em revisão)",
+          "linha_fluxograma": "pontilhada",
+          "diretriz_internacional": "Recomendação Consensual NAPeN: Nível C",
+          "protocolo_alternativo": {
+            "nome": "Protocolo Alternativo (tDCS Pré-frontal)",
+            "tecnica": "tDCS",
+            "alvo": "F3 ânodo / F4 cátodo",
+            "parametros": "2 mA, 20 min",
+            "observacoes": "Facilita o controle inibitório sobre memórias aversivas."
+          },
+          "sessoes_ajuste": {
+            "quando_reavaliar": "Avaliar na 10ª sessão.",
+            "ajuste_dose": "Ajustar dose conforme tolerabilidade psicológica durante o estímulo.",
+            "regra_interrupcao": "Interromper se estagnação após 15 sessões."
+          },
+          "contraindicacoes": [
+            "Metal no crânio",
+            "Crises convulsivas"
+          ],
+          "notas_clinicas": "Monitorar possíveis sintomas dissociativos durante as primeiras sessões.",
+          "artigo_referencia": {
+            "autores": "Boggio, P. S., et al.",
+            "ano": 2010,
+            "titulo": "Non-invasive brain stimulation with high-frequency rTMS over the left or right dorsolateral prefrontal cortex for posttraumatic stress disorder: a randomized controlled trial",
+            "periodico": "Journal of Clinical Psychiatry, 71(8), 992–999",
+            "doi": "10.4088/JCP.08m04638blu",
+            "url_doi": "https://doi.org/10.4088/JCP.08m04638blu",
+            "tipo": "Ensaio Clínico Randomizado Seminal"
+          },
+          "diretriz_ref": {
+            "nome": "Lefaucheur et al., 2020 (IFCN)",
+            "ano": 2020,
+            "periodico": "Clinical Neurophysiology, 131(2), 474–528",
+            "doi": "10.1016/j.clinph.2019.11.002",
+            "url_doi": "https://doi.org/10.1016/j.clinph.2019.11.002",
+            "autores": "Lefaucheur et al.",
+            "citacao_completa": "Lefaucheur et al., 2020. Clin Neurophysiol, 131(2):474–528."
+          },
+          "escalas_detalhadas": [
+            {
+              "id": "principal",
+              "nome": "PCL-5 e HAMD-17",
+              "sigla": "PCL-5 e HAMD",
+              "tipo": "continua",
+              "min": 0,
+              "max": 100,
+              "direcao_melhora": "reducao",
+              "meta_texto": "Redução concomitante de reatividade ao estresse e humor deprimido",
+              "placeholder": "Ex: 20",
+              "tamanho_efeito": "Redução média de 25,0% na PCL acompanhada de melhora nos escores depressivos"
+            }
+          ],
+          "ensaio_clinico": {
+            "autores": "Boggio, P. S., et al.",
+            "ano": 2010,
+            "titulo": "Non-invasive brain stimulation with high-frequency rTMS over the left or right dorsolateral prefrontal cortex for posttraumatic stress disorder: a randomized controlled trial",
+            "periodico": "Journal of Clinical Psychiatry, 71(8), 992–999",
+            "doi": "10.4088/JCP.08m04638blu",
+            "url_doi": "https://doi.org/10.4088/JCP.08m04638blu",
+            "tipo": "Ensaio Clínico Randomizado Seminal"
+          },
+          "meta_analise": {
+            "autores": "Cirillo, P., et al.",
+            "ano": 2019,
+            "titulo": "Repetitive transcranial magnetic stimulation in posttraumatic stress disorder: A comprehensive systematic review and meta-analysis",
+            "periodico": "Brain Sciences, 9(12), 346",
+            "doi": "10.3390/brainsci9120346",
+            "url_doi": "https://doi.org/10.3390/brainsci9120346",
+            "tipo": "Revisão Sistemática com Metanálise"
+          }
+        }
+      },
+      "tags_busca": {
+        "coordenadas_10_20": [
+          "F4",
+          "F3",
+          "DLPFC"
+        ],
+        "alvos_anatomicos": [
+          "Córtex Pré-Frontal Dorsolateral Direito (DLPFC Direito)",
+          "DLPFC Bilateral"
+        ],
+        "sinonimos_en": [
+          "ptsd",
+          "posttraumatic stress disorder",
+          "trauma",
+          "flashback",
+          "hyperarousal",
+          "nightmares"
+        ],
+        "sintomas_pt": [
+          "estresse pós-traumático",
+          "tept",
+          "trauma",
+          "flashbacks",
+          "pesadelos",
+          "hipervigilância",
+          "esquiva"
+        ],
+        "escalas": [
+          "PCL-5",
+          "CAPS-5",
+          "HAM-A"
+        ],
+        "tecnicas": [
+          "LF-rTMS 1Hz",
+          "HF-rTMS",
+          "tDCS Anódica / Catódica"
+        ]
+      }
+    },
+    {
+      "id": "dor-neuropatica",
+      "condicao": "Dor Neuropática Crônica",
+      "eixo": "Dor Crônica & Neuropática",
+      "roadmap_id": "RM05",
+      "svg_file": "RM05.svg",
+      "status_auditoria": "Consolidado (Meta-análise)",
+      "nota_auditoria": "Diretrizes com respaldo nos consensos de Lefaucheur et al. e revisões Cochrane de dor crônica.",
+      "no1_pergunta": "Qual é a topografia e a origem da dor neuropática?",
+      "fatores_limitantes": [
+        {
+          "id": "geral",
+          "label": "Dor Neuropática Geral e Central Pós-AVC"
+        },
+        {
+          "id": "espinhal",
+          "label": "Dor Neuropática Espinhal e Radicular"
+        }
+      ],
+      "modalidades": {
+        "geral": {
+          "tecnica": "rTMS de Alta Frequência sobre M1",
+          "modalidade_sigla": "rTMS",
+          "alvo": "C3 ou M1 contralateral à dor (área motora somatotópica)",
+          "frequencia": "10 Hz a 20 Hz",
+          "intensidade": "80% a 90% do Limiar Motor de Repouso (LMR)",
+          "pulsos_duracao": "2.000 a 3.000 pulsos totais por sessão",
+          "sessoes": "10 ou mais sessões diárias (fase de indução), seguidas de manutenção",
+          "escala_recomendada": "Escala Visual Analógica de Dor (EVA) e DN4",
+          "meta_melhora": "Redução clinicamente significativa ≥ 30% na escala EVA de dor",
+          "tamanho_efeito": "Redução média de 24% a 36% na escala EVA; possível melhora precoce em alodinia e hiperalgesia",
+          "evidencia": "Consolidada (Respaldo em Meta-análise)",
+          "linha_fluxograma": "solida",
+          "diretriz_internacional": "Nível A (Eficácia Definitivamente Estabelecida para dor neuropática crônica)",
+          "protocolo_alternativo": {
+            "nome": "Protocolo Alternativo (tDCS Anodal sobre M1)",
+            "tecnica": "tDCS",
+            "alvo": "Ânodo sobre M1 contralateral à dor / Cátodo supraorbitário",
+            "parametros": "2.0 mA, 20 minutos, 10 a 20 sessões",
+            "observacoes": "Excelente opção para pacientes que necessitam de intervenção contínua e boa tolerabilidade."
+          },
+          "sessoes_ajuste": {
+            "quando_reavaliar": "Avaliar após a 5ª e 10ª sessão.",
+            "ajuste_dose": "É possível que os pacientes não melhorem na intensidade pura da dor, mas melhorem em alterações sensoriais como alodinia e hiperalgesia. Avaliar ambos.",
+            "regra_interrupcao": "Interromper se ausência de alteração após 10 sessões."
+          },
+          "contraindicacoes": [
+            "Placas cranianas metálicas próximas",
+            "Marca-passo cardíaco"
+          ],
+          "notas_clinicas": "A estimulação do córtex motor ativa mecanismos inibitórios endógenos opióides e vias talamocorticais descendentes.",
+          "artigo_referencia": {
+            "autores": "Lefaucheur, J. P., et al.",
+            "ano": 2004,
+            "titulo": "Repetitive transcranial magnetic stimulation of motor cortex for neuropathic pain: a randomized controlled trial",
+            "periodico": "Pain, 110(3), 604–612",
+            "doi": "10.1016/j.pain.2004.04.020",
+            "url_doi": "https://doi.org/10.1016/j.pain.2004.04.020",
+            "tipo": "Ensaio Clínico Randomizado Seminal"
+          },
+          "diretriz_ref": {
+            "nome": "Lefaucheur et al., 2020 (IFCN)",
+            "ano": 2020,
+            "periodico": "Clinical Neurophysiology, 131(2), 474–528",
+            "doi": "10.1016/j.clinph.2019.11.002",
+            "url_doi": "https://doi.org/10.1016/j.clinph.2019.11.002",
+            "autores": "Lefaucheur et al.",
+            "citacao_completa": "Lefaucheur et al., 2020. Clin Neurophysiol, 131(2):474–528."
+          },
+          "escalas_detalhadas": [
+            {
+              "id": "eva",
+              "nome": "Escala Visual Analógica de Dor (EVA)",
+              "sigla": "EVA",
+              "tipo": "continua",
+              "min": 0,
+              "max": 10,
+              "direcao_melhora": "reducao",
+              "meta_texto": "Redução clinicamente significativa ≥ 30% na escala EVA de dor",
+              "placeholder": "Ex: 8 (de 0 a 10)",
+              "tamanho_efeito": "Redução média de 24% a 36% na escala EVA de intensidade da dor"
+            },
+            {
+              "id": "dn4",
+              "nome": "Questionário de Dor Neuropática DN4",
+              "sigla": "DN4",
+              "tipo": "continua",
+              "min": 0,
+              "max": 10,
+              "direcao_melhora": "reducao",
+              "meta_texto": "Redução dos sintomas neuropáticos (escore < 4)",
+              "placeholder": "Ex: 6 (de 0 a 10)",
+              "tamanho_efeito": "Melhora precoce em alodinia mecânica e hiperalgesia (queda do escore DN4 < 4)"
+            }
+          ],
+          "ensaio_clinico": {
+            "autores": "Lefaucheur, J. P., et al.",
+            "ano": 2004,
+            "titulo": "Repetitive transcranial magnetic stimulation of motor cortex for neuropathic pain: a randomized controlled trial",
+            "periodico": "Pain, 110(3), 604–612",
+            "doi": "10.1016/j.pain.2004.04.020",
+            "url_doi": "https://doi.org/10.1016/j.pain.2004.04.020",
+            "tipo": "Ensaio Clínico Randomizado Seminal"
+          },
+          "meta_analise": {
+            "autores": "Moisset, X., et al.",
+            "ano": 2021,
+            "titulo": "Pharmacological and non-pharmacological treatments for neuropathic pain: Systematic review and French recommendations",
+            "periodico": "Revue Neurologique, 177(5), 441–458",
+            "doi": "10.1016/j.neurol.2020.10.006",
+            "url_doi": "https://doi.org/10.1016/j.neurol.2020.10.006",
+            "tipo": "Revisão Sistemática com Metanálise"
+          }
+        },
+        "espinhal": {
+          "tecnica": "tsDCS (Estimulação Espinhal Transcutânea por Corrente Contínua)",
+          "modalidade_sigla": "tsDCS",
+          "alvo": "Medula espinhal (nível C4-C5 cervical ou L1-L2 lombar)",
+          "frequencia": "Corrente contínua",
+          "intensidade": "2.0 mA",
+          "pulsos_duracao": "20 minutos",
+          "sessoes": "5 ou mais sessões",
+          "escala_recomendada": "Escala Visual Analógica (EVA)",
+          "meta_melhora": "Alívio da dor radicular e lombar/cervical",
+          "tamanho_efeito": "Redução média de até 20% nos escores de dor radicular crônica",
+          "evidencia": "Emergente (Estudos pilotos e observacionais)",
+          "linha_fluxograma": "pontilhada",
+          "diretriz_internacional": "Recomendação Consensual NAPeN: Nível C",
+          "protocolo_alternativo": {
+            "nome": "Protocolo Alternativo (rTMS sobre M1 correspondente)",
+            "tecnica": "rTMS 10 Hz",
+            "alvo": "M1 cortical representativo da área do membro acometido",
+            "parametros": "10 Hz, 85% Limiar Motor de Repouso (LMR), 2.000 pulsos",
+            "observacoes": "Modulação ascendente do controle inibitório da dor."
+          },
+          "sessoes_ajuste": {
+            "quando_reavaliar": "No 5º dia de estimulação.",
+            "ajuste_dose": "Verificar impedância e contato dos eletrodos sobre o processo espinhoso.",
+            "regra_interrupcao": "Interromper se ausência de alívio após 10 dias."
+          },
+          "contraindicacoes": [
+            "Implantes metálicos de fixação vertebral no segmento estimulado",
+            "Gestação"
+          ],
+          "notas_clinicas": "Modalidade inovadora em expansão com excelente perfil de segurança.",
+          "artigo_referencia": {
+            "autores": "Bocci, T., et al.",
+            "ano": 2015,
+            "titulo": "Transcutaneous spinal direct current stimulation in neuropathic pain: a randomized, double-blind, sham-controlled study",
+            "periodico": "Pain Medicine, 16(5), 984–994",
+            "doi": "10.1111/pme.12646",
+            "url_doi": "https://doi.org/10.1111/pme.12646",
+            "tipo": "Ensaio Clínico Randomizado Seminal"
+          },
+          "diretriz_ref": {
+            "nome": "Lefaucheur et al., 2020 (IFCN)",
+            "ano": 2020,
+            "periodico": "Clinical Neurophysiology, 131(2), 474–528",
+            "doi": "10.1016/j.clinph.2019.11.002",
+            "url_doi": "https://doi.org/10.1016/j.clinph.2019.11.002",
+            "autores": "Lefaucheur et al.",
+            "citacao_completa": "Lefaucheur et al., 2020. Clin Neurophysiol, 131(2):474–528."
+          },
+          "escalas_detalhadas": [
+            {
+              "id": "eva",
+              "nome": "Escala Visual Analógica de Dor (EVA)",
+              "sigla": "EVA",
+              "tipo": "continua",
+              "min": 0,
+              "max": 10,
+              "direcao_melhora": "reducao",
+              "meta_texto": "Redução clinicamente significativa ≥ 30% na escala EVA de dor",
+              "placeholder": "Ex: 8 (de 0 a 10)",
+              "tamanho_efeito": "Redução média de até 20% nos escores de dor radicular crônica na escala EVA"
+            },
+            {
+              "id": "dn4",
+              "nome": "Questionário de Dor Neuropática DN4",
+              "sigla": "DN4",
+              "tipo": "continua",
+              "min": 0,
+              "max": 10,
+              "direcao_melhora": "reducao",
+              "meta_texto": "Redução dos sintomas neuropáticos (escore < 4)",
+              "placeholder": "Ex: 6 (de 0 a 10)",
+              "tamanho_efeito": "Alívio dos sintomas de queimação, choques e dormência espinhal (DN4 < 4)"
+            }
+          ],
+          "ensaio_clinico": {
+            "autores": "Bocci, T., et al.",
+            "ano": 2015,
+            "titulo": "Transcutaneous spinal direct current stimulation in neuropathic pain: a randomized, double-blind, sham-controlled study",
+            "periodico": "Pain Medicine, 16(5), 984–994",
+            "doi": "10.1111/pme.12646",
+            "url_doi": "https://doi.org/10.1111/pme.12646",
+            "tipo": "Ensaio Clínico Randomizado Seminal"
+          },
+          "meta_analise": {
+            "autores": "Nardone, R., et al.",
+            "ano": 2020,
+            "titulo": "Non-invasive brain and spinal stimulation for neuropathic pain after spinal cord injury: a systematic review and meta-analysis",
+            "periodico": "Spinal Cord, 58(8), 837–848",
+            "doi": "10.1038/s41393-020-0453-y",
+            "url_doi": "https://doi.org/10.1038/s41393-020-0453-y",
+            "tipo": "Revisão Sistemática com Metanálise"
+          }
+        }
+      },
+      "tags_busca": {
+        "coordenadas_10_20": [
+          "C3",
+          "C4",
+          "M1"
+        ],
+        "alvos_anatomicos": [
+          "Córtex Motor Primário (M1)",
+          "Representação Somatotópica da Área Dolorosa em M1"
+        ],
+        "sinonimos_en": [
+          "pain",
+          "neuropathic pain",
+          "chronic pain",
+          "thalamic pain",
+          "central pain",
+          "fibromyalgia",
+          "allodynia"
+        ],
+        "sintomas_pt": [
+          "dor",
+          "dor neuropática",
+          "queimação",
+          "choque",
+          "formigamento",
+          "alodínia",
+          "fibromialgia",
+          "analgesia"
+        ],
+        "escalas": [
+          "EVA",
+          "VAS",
+          "DN4",
+          "LANSS"
+        ],
+        "tecnicas": [
+          "HF-rTMS 10Hz",
+          "HF-rTMS 20Hz",
+          "tDCS Anódica M1"
+        ]
+      }
+    },
+    {
+      "id": "ataxia-cerebelar",
+      "condicao": "Ataxia Cerebelar",
+      "eixo": "Distúrbios do Movimento",
+      "roadmap_id": "RM16",
+      "svg_file": "RM16.svg",
+      "status_auditoria": "Consolidado (Meta-análise)",
+      "nota_auditoria": "Estudos randomizados com estimulação magnética e elétrica cerebelar.",
+      "no1_pergunta": "Qual é a manifestação atáxica primária a ser reabilitada?",
+      "fatores_limitantes": [
+        {
+          "id": "severidade_motora",
+          "label": "Severidade Motora e Destreza Manual"
+        },
+        {
+          "id": "equilibrio",
+          "label": "Equilíbrio e Marcha Atáxica"
+        }
+      ],
+      "modalidades": {
+        "severidade_motora": {
+          "tecnica": "rTMS Cerebelar (cbTMS)",
+          "modalidade_sigla": "rTMS (cbTMS)",
+          "alvo": "Hemisférios cerebelares ou Vérmis cerebelar",
+          "frequencia": "1 Hz inibitória (ou alta frequência excitatória)",
+          "intensidade": "100% do Limiar Motor de Repouso (LMR)",
+          "pulsos_duracao": "1.800 pulsos totais por sessão",
+          "sessoes": "10 a 20 sessões diárias",
+          "escala_recomendada": "Scale for Assessment and Rating of Ataxia (SARA) e 9-Hole Peg Test (9HPT)",
+          "meta_melhora": "Redução clinicamente perceptível na pontuação SARA",
+          "tamanho_efeito": "Redução média de 25% na SARA, redução de 28% no ICARS e melhora de 12,83% no 9HPT",
+          "evidencia": "Consolidada (Respaldo em Meta-análise)",
+          "linha_fluxograma": "solida",
+          "diretriz_internacional": "Nível B / Consenso NAPeN",
+          "protocolo_alternativo": {
+            "nome": "Protocolo Alternativo (ctDCS Cerebelar)",
+            "tecnica": "tDCS Cerebelar",
+            "alvo": "Ânodo cerebelar bilateral / Cátodo em bucinador",
+            "parametros": "2.0 mA, 20 minutos, 10 sessões",
+            "observacoes": "Alternativa de alta comodidade para estabilização de tônus e coordenação fina."
+          },
+          "sessoes_ajuste": {
+            "quando_reavaliar": "Reavaliar a cada 1 semana para verificar resposta terapêutica.",
+            "ajuste_dose": "De uma semana para a outra se o paciente não teve mudança de pontuação nas escalas pré-teste para o microdesfecho, realizar sessão de ajuste na terapia motora associada.",
+            "regra_interrupcao": "Interromper se estagnação sem melhora após 2 semanas consecutivas."
+          },
+          "contraindicacoes": [
+            "Clips de aneurisma na fossa posterior",
+            "Implantes metálicos occipitais"
+          ],
+          "notas_clinicas": "A terapia motora associada deve estar relacionada com o desfecho. Evitar fadiga excessiva do paciente atáxico.",
+          "artigo_referencia": {
+            "autores": "França, C., et al.",
+            "ano": 2020,
+            "titulo": "Effects of cerebellar transcranial magnetic stimulation on ataxias: A randomized trial",
+            "periodico": "Parkinsonism & Related Disorders, 80, 1–6",
+            "doi": "10.1016/j.parkreldis.2020.08.026",
+            "url_doi": "https://doi.org/10.1016/j.parkreldis.2020.08.026",
+            "tipo": "Ensaio Clínico Randomizado Seminal"
+          },
+          "diretriz_ref": {
+            "nome": "Lefaucheur et al., 2020 (IFCN)",
+            "ano": 2020,
+            "periodico": "Clinical Neurophysiology, 131(2), 474–528",
+            "doi": "10.1016/j.clinph.2019.11.002",
+            "url_doi": "https://doi.org/10.1016/j.clinph.2019.11.002",
+            "autores": "Lefaucheur et al.",
+            "citacao_completa": "Lefaucheur et al., 2020. Clin Neurophysiol, 131(2):474–528."
+          },
+          "escalas_detalhadas": [
+            {
+              "id": "sara",
+              "nome": "Scale for Assessment and Rating of Ataxia (SARA)",
+              "sigla": "SARA",
+              "tipo": "continua",
+              "min": 0,
+              "max": 40,
+              "direcao_melhora": "reducao",
+              "meta_texto": "Redução clinicamente perceptível na pontuação SARA",
+              "placeholder": "Ex: 16",
+              "tamanho_efeito": "Redução média de -25% na escala SARA (e redução de -28% no ICARS)"
+            },
+            {
+              "id": "9hpt",
+              "nome": "9-Hole Peg Test (9HPT)",
+              "sigla": "9HPT",
+              "tipo": "continua",
+              "min": 10,
+              "max": 180,
+              "direcao_melhora": "reducao",
+              "meta_texto": "Redução no tempo de execução do teste (segundos)",
+              "placeholder": "Ex: 45 (segundos)",
+              "tamanho_efeito": "Melhora média de 12,83% no tempo de execução do 9-Hole Peg Test (9HPT)"
+            }
+          ],
+          "ensaio_clinico": {
+            "autores": "França, C., et al.",
+            "ano": 2020,
+            "titulo": "Effects of cerebellar transcranial magnetic stimulation on ataxias: A randomized trial",
+            "periodico": "Parkinsonism & Related Disorders, 80, 1–6",
+            "doi": "10.1016/j.parkreldis.2020.08.026",
+            "url_doi": "https://doi.org/10.1016/j.parkreldis.2020.08.026",
+            "tipo": "Ensaio Clínico Randomizado Seminal"
+          },
+          "meta_analise": {
+            "autores": "Benussi, A., et al.",
+            "ano": 2021,
+            "titulo": "Cerebellar transcranial magnetic stimulation in spinocerebellar ataxias: A randomized, double-blind, sham-controlled multicenter trial",
+            "periodico": "Movement Disorders, 36(7), 1699–1704",
+            "doi": "10.1002/mds.28472",
+            "url_doi": "https://doi.org/10.1002/mds.28472",
+            "tipo": "Revisão Sistemática com Metanálise"
+          }
+        },
+        "equilibrio": {
+          "tecnica": "tDCS Cerebelar (ctDCS)",
+          "modalidade_sigla": "tDCS (ctDCS)",
+          "alvo": "Cerebelo (linha média 2 cm abaixo do ínion)",
+          "frequencia": "Corrente contínua",
+          "intensidade": "2.0 mA",
+          "pulsos_duracao": "20 minutos",
+          "sessoes": "10 sessões associadas a treino de equilíbrio em plataforma",
+          "escala_recomendada": "Berg Balance Scale (BBS) e SARA",
+          "meta_melhora": "Melhora no equilíbrio estático e tempo de caminhada de 10 metros",
+          "tamanho_efeito": "Melhora de 14,8% na escala SARA, aumento de 11,77% na BBS e ganho de 31,11% no teste de 10 metros",
+          "evidencia": "Consolidada (Respaldo em Meta-análise)",
+          "linha_fluxograma": "solida",
+          "diretriz_internacional": "Nível B",
+          "protocolo_alternativo": {
+            "nome": "Protocolo Alternativo (cbTMS de Alta Frequência)",
+            "tecnica": "rTMS 10 Hz",
+            "alvo": "Vérmis cerebelar",
+            "parametros": "10 Hz, 90% Limiar Motor de Repouso (LMR), 1.500 pulsos",
+            "observacoes": "Facilitação das vias dentatorrubrotalamocorticais."
+          },
+          "sessoes_ajuste": {
+            "quando_reavaliar": "Semanalmente.",
+            "ajuste_dose": "Ajustar exercícios motores para nível de fadiga leve a moderado.",
+            "regra_interrupcao": "Interromper se não houver ganho funcional em 10 sessões."
+          },
+          "contraindicacoes": [
+            "Metal no crânio",
+            "Lesões cutâneas na nuca"
+          ],
+          "notas_clinicas": "Medicamentos como benzodiazepínicos tendem a diminuir os efeitos terapêuticos da estimulação.",
+          "artigo_referencia": {
+            "autores": "Benussi, A., et al.",
+            "ano": 2018,
+            "titulo": "Cerebello-spinal tDCS in ataxia: A randomized, double-blind, sham-controlled, crossover trial",
+            "periodico": "Neurology, 91(12), e1090–e1101",
+            "doi": "10.1212/WNL.0000000000016206",
+            "url_doi": "https://doi.org/10.1212/WNL.0000000000016206",
+            "tipo": "Ensaio Clínico Randomizado Seminal"
+          },
+          "diretriz_ref": {
+            "nome": "Lefaucheur et al., 2017 (IFCN)",
+            "ano": 2017,
+            "periodico": "Clinical Neurophysiology, 128(1), 56–92",
+            "doi": "10.1016/j.clinph.2016.10.087",
+            "url_doi": "https://doi.org/10.1016/j.clinph.2016.10.087",
+            "autores": "Lefaucheur et al.",
+            "citacao_completa": "Lefaucheur et al., 2017. Clin Neurophysiol, 128(1):56–92."
+          },
+          "escalas_detalhadas": [
+            {
+              "id": "bbs",
+              "nome": "Berg Balance Scale (BBS)",
+              "sigla": "BBS",
+              "tipo": "continua",
+              "min": 0,
+              "max": 56,
+              "direcao_melhora": "aumento",
+              "meta_texto": "Ganho clinicamente relevante na pontuação BBS (aumento de pontos)",
+              "placeholder": "Ex: 38",
+              "tamanho_efeito": "Aumento médio de +11,77% na pontuação da Berg Balance Scale (BBS)"
+            },
+            {
+              "id": "sara",
+              "nome": "Scale for Assessment and Rating of Ataxia (SARA)",
+              "sigla": "SARA",
+              "tipo": "continua",
+              "min": 0,
+              "max": 40,
+              "direcao_melhora": "reducao",
+              "meta_texto": "Redução clinicamente perceptível na pontuação SARA",
+              "placeholder": "Ex: 18",
+              "tamanho_efeito": "Melhora média de -14,8% na pontuação da escala SARA (ganho de +31,11% na velocidade no TC10m)"
+            }
+          ],
+          "ensaio_clinico": {
+            "autores": "Benussi, A., et al.",
+            "ano": 2018,
+            "titulo": "Cerebello-spinal tDCS in ataxia: A randomized, double-blind, sham-controlled, crossover trial",
+            "periodico": "Neurology, 91(12), e1090–e1101",
+            "doi": "10.1212/WNL.0000000000016206",
+            "url_doi": "https://doi.org/10.1212/WNL.0000000000016206",
+            "tipo": "Ensaio Clínico Randomizado Seminal"
+          },
+          "meta_analise": {
+            "autores": "Song, P., et al.",
+            "ano": 2023,
+            "titulo": "Effects of cerebellar transcranial direct current stimulation on balance and motor ataxia: A systematic review and meta-analysis",
+            "periodico": "Frontiers in Neuroscience, 17, 1147814",
+            "doi": "10.3389/fnins.2023.1147814",
+            "url_doi": "https://doi.org/10.3389/fnins.2023.1147814",
+            "tipo": "Revisão Sistemática com Metanálise"
+          }
+        }
+      },
+      "tags_busca": {
+        "coordenadas_10_20": [
+          "Inion",
+          "Cerebelo",
+          "Vermis"
+        ],
+        "alvos_anatomicos": [
+          "Córtex Cerebelar Bilateral",
+          "Hemisférios Cerebelares",
+          "Vermis Cerebelar"
+        ],
+        "sinonimos_en": [
+          "ataxia",
+          "spinocerebellar ataxia",
+          "sca",
+          "cerebellar ataxia",
+          "incoordination",
+          "dysmetria",
+          "cerebellum"
+        ],
+        "sintomas_pt": [
+          "ataxia",
+          "incoordenação",
+          "dismetria",
+          "desequilíbrio",
+          "disdiadococinesia",
+          "disartria",
+          "marcha ébria"
+        ],
+        "escalas": [
+          "SARA",
+          "BBS",
+          "Berg",
+          "9HPT",
+          "ICARS"
+        ],
+        "tecnicas": [
+          "tDCS Anódica Cerebelar",
+          "rTMS Cerebelar",
+          "iTBS"
+        ]
+      }
+    },
+    {
+      "id": "paralisia-cerebral",
+      "condicao": "Paralisia Cerebral (PC)",
+      "eixo": "Neurodesenvolvimento",
+      "roadmap_id": "RM14",
+      "svg_file": "RM14.svg",
+      "status_auditoria": "Consolidado (Meta-análise)",
+      "nota_auditoria": "Diretrizes com ensaios clínicos pediátricos em crianças e adolescentes com PC espástica.",
+      "no1_pergunta": "Qual é a distribuição topográfica e motora predominante?",
+      "fatores_limitantes": [
+        {
+          "id": "deficits_motores",
+          "label": "Controle Motor e Hemiparesia Espástica"
+        }
+      ],
+      "modalidades": {
+        "deficits_motores": {
+          "tecnica": "rTMS / tDCS sobre Córtex Motor",
+          "modalidade_sigla": "rTMS / tDCS",
+          "alvo": "M1 lesado (C3/C4) ou M1 não lesado",
+          "frequencia": "10 Hz (no hemisfério lesado) ou 1 Hz (no não lesado) / Anodal no tDCS",
+          "intensidade": "90% do Limiar Motor de Repouso (LMR) (rTMS) / 1.0 a 1.5 mA conforme faixa etária (tDCS)",
+          "pulsos_duracao": "1.600 pulsos (10 Hz) ou 960 pulsos (1 Hz) / 20 min (tDCS)",
+          "sessoes": "10 a 20 sessões combinadas com fisioterapia intensiva",
+          "escala_recomendada": "Gross Motor Function Measure (GMFM) e Escala de Ashworth Modificada",
+          "meta_melhora": "Ganho observável na função motora grossa e redução da espasticidade",
+          "tamanho_efeito": "Melhora de até 63% no equilíbrio e ganho funcional motor observável nas tarefas ativas",
+          "evidencia": "Consolidada (Respaldo em Meta-análise)",
+          "linha_fluxograma": "solida",
+          "diretriz_internacional": "Recomendação Consensual NAPeN: Nível B",
+          "protocolo_alternativo": {
+            "nome": "Protocolo Alternativo (tDCS Bihemisférica com Rampa Suave)",
+            "tecnica": "tDCS",
+            "alvo": "M1 lesado (ânodo) / M1 contralesional (cátodo)",
+            "parametros": "1.0 mA a 1.5 mA com rampa de subida/descida de 10s, 20 minutos",
+            "observacoes": "Adaptação pediátrica com alta tolerabilidade e redução de desconforto sensorial."
+          },
+          "sessoes_ajuste": {
+            "quando_reavaliar": "Reavaliar na 5ª sessão de neuromodulação.",
+            "ajuste_dose": "Considera-se resposta insatisfatória a ausência de resposta clínica observável após 5 sessões, seja motora ou em indicadores secundários (sono, atenção, regulação emocional).",
+            "regra_interrupcao": "Respeitar intervalo de 3 a 4 meses entre ciclos repetidos para consolidação neuroplástica."
+          },
+          "contraindicacoes": [
+            "Epilepsia refratária ativa não controlada",
+            "Válvula de derivação ventriculoperitoneal com componente magnético próximo à bobina"
+          ],
+          "notas_clinicas": "Recomenda-se realizar a aplicação concomitante ou imediatamente antes de terapia motora com metas bem definidas.",
+          "artigo_referencia": {
+            "autores": "Duarte, N. A., et al.",
+            "ano": 2018,
+            "titulo": "Effect of transcranial direct current stimulation combined with treadmill training in children with cerebral palsy: a randomized, double-blind, controlled trial",
+            "periodico": "PLOS ONE, 13(3), e0193702",
+            "doi": "10.1371/journal.pone.0193702",
+            "url_doi": "https://doi.org/10.1371/journal.pone.0193702",
+            "tipo": "Ensaio Clínico Randomizado Seminal"
+          },
+          "diretriz_ref": {
+            "nome": "Lefaucheur et al., 2017 (IFCN)",
+            "ano": 2017,
+            "periodico": "Clinical Neurophysiology, 128(1), 56–92",
+            "doi": "10.1016/j.clinph.2016.10.087",
+            "url_doi": "https://doi.org/10.1016/j.clinph.2016.10.087",
+            "autores": "Lefaucheur et al.",
+            "citacao_completa": "Lefaucheur et al., 2017. Clin Neurophysiol, 128(1):56–92."
+          },
+          "escalas_detalhadas": [
+            {
+              "id": "principal",
+              "nome": "Gross Motor Function Measure (GMFM) e Escala de Ashworth Modificada",
+              "sigla": "GMFM e Escala de Ashworth Modificada",
+              "tipo": "continua",
+              "min": 0,
+              "max": 100,
+              "direcao_melhora": "reducao",
+              "meta_texto": "Ganho observável na função motora grossa e redução da espasticidade",
+              "placeholder": "Ex: 20",
+              "tamanho_efeito": "Melhora de até 63% no equilíbrio e ganho funcional motor observável nas tarefas ativas"
+            }
+          ],
+          "ensaio_clinico": {
+            "autores": "Duarte, N. A., et al.",
+            "ano": 2018,
+            "titulo": "Effect of transcranial direct current stimulation combined with treadmill training in children with cerebral palsy: a randomized, double-blind, controlled trial",
+            "periodico": "PLOS ONE, 13(3), e0193702",
+            "doi": "10.1371/journal.pone.0193702",
+            "url_doi": "https://doi.org/10.1371/journal.pone.0193702",
+            "tipo": "Ensaio Clínico Randomizado Seminal"
+          },
+          "meta_analise": {
+            "autores": "Moura, R. C., et al.",
+            "ano": 2025,
+            "titulo": "Transcranial direct current stimulation combined with motor training for motor function in children with cerebral palsy: A systematic review and meta-analysis",
+            "periodico": "Neurorehabilitation and Neural Repair, 39(1), 45–59",
+            "doi": "10.1177/15459683241289104",
+            "url_doi": "https://doi.org/10.1177/15459683241289104",
+            "tipo": "Revisão Sistemática com Metanálise"
+          }
+        }
+      },
+      "tags_busca": {
+        "coordenadas_10_20": [
+          "C3",
+          "C4",
+          "M1"
+        ],
+        "alvos_anatomicos": [
+          "Córtex Motor Primário (M1)",
+          "Hemisfério Mais Acometido em M1"
+        ],
+        "sinonimos_en": [
+          "cerebral palsy",
+          "cp",
+          "spastic diplegia",
+          "hemiplegic cp",
+          "pediatric motor rehabilitation"
+        ],
+        "sintomas_pt": [
+          "paralisia cerebral",
+          "pc",
+          "diparesia",
+          "hemiparesia espástica",
+          "função motora",
+          "criança",
+          "pediatria"
+        ],
+        "escalas": [
+          "GMFM",
+          "GMFM-66",
+          "GMFM-88",
+          "EAM",
+          "Ashworth"
+        ],
+        "tecnicas": [
+          "tDCS Anódica M1",
+          "rTMS"
+        ]
+      }
+    },
+    {
+      "id": "transtorno-espectro-autista",
+      "condicao": "Transtorno do Espectro Autista (TEA)",
+      "eixo": "Neurodesenvolvimento",
+      "roadmap_id": "RM15",
+      "svg_file": "RM15.svg",
+      "status_auditoria": "Consolidado (Meta-análise)",
+      "nota_auditoria": "Respaldo em metanálises recentes de ensaios controlados em TEA (Frontiers / ScienceDirect).",
+      "no1_pergunta": "Qual é a dimensão clínica prioritária do paciente?",
+      "fatores_limitantes": [
+        {
+          "id": "comportamental",
+          "label": "Déficits Comportamentais e Irritabilidade"
+        },
+        {
+          "id": "social",
+          "label": "Comunicação Social e Interação"
+        }
+      ],
+      "modalidades": {
+        "comportamental": {
+          "tecnica": "rTMS de Baixa Frequência / tDCS",
+          "modalidade_sigla": "rTMS / tDCS",
+          "alvo": "Córtex Pré-Frontal Dorsolateral Esquerdo ou Bilateral (F3/F4)",
+          "frequencia": "1 Hz inibitória (rTMS) ou estimulação catódica",
+          "intensidade": "80% a 90% do Limiar Motor de Repouso (LMR) / 1.0 a 1.5 mA no tDCS",
+          "pulsos_duracao": "1.200 pulsos / 20 minutos",
+          "sessoes": "10 a 20 sessões (1 a 2x/semana ou diárias conforme tolerância sensorial)",
+          "escala_recomendada": "Aberrant Behavior Checklist (ABC) — Subescala de Irritabilidade",
+          "meta_melhora": "Redução clinicamente relevante na irritabilidade e estereotipias",
+          "tamanho_efeito": "Redução média de 43,3% na pontuação do domínio Irritabilidade do questionário ABC",
+          "evidencia": "Consolidada (Respaldo em Meta-análise)",
+          "linha_fluxograma": "solida",
+          "diretriz_internacional": "Recomendação Consensual NAPeN: Nível B",
+          "protocolo_alternativo": {
+            "nome": "Protocolo Alternativo (tDCS de Baixa Intensidade com Acomodação Sensorial)",
+            "tecnica": "tDCS",
+            "alvo": "F3/F4",
+            "parametros": "1 mA, 15–20 min com dessensibilização progressiva",
+            "observacoes": "Indicado para crianças com hipersensibilidade tátil ou auditiva à bobina magnética."
+          },
+          "sessoes_ajuste": {
+            "quando_reavaliar": "Reavaliar na 5ª sessão clínica.",
+            "ajuste_dose": "Considerar resposta insatisfatória a ausência de resposta observável após 5 sessões (cognitiva, qualidade do sono ou autorregulação).",
+            "regra_interrupcao": "Não ultrapassar 20 sessões no ciclo completo de indução. Intervalo de 3 a 4 meses antes de reindução."
+          },
+          "contraindicacoes": [
+            "Epilepsia com descargas paroxísticas frequentes no EEG",
+            "Implantes cocleares ou metálicos"
+          ],
+          "notas_clinicas": "Manter esquema medicamentoso estável durante todo o ciclo para não mascarar a resposta à estimulação.",
+          "artigo_referencia": {
+            "autores": "Sokhadze, E. M., et al.",
+            "ano": 2014,
+            "titulo": "Effects of low-frequency repetitive transcranial magnetic stimulation on behavior and executive functions in children with autism: a randomized controlled trial",
+            "periodico": "Autism Research and Treatment, 2014, 431049",
+            "doi": "10.1155/2014/431049",
+            "url_doi": "https://doi.org/10.1155/2014/431049",
+            "tipo": "Ensaio Clínico Randomizado Seminal"
+          },
+          "diretriz_ref": {
+            "nome": "Lefaucheur et al., 2017 (IFCN)",
+            "ano": 2017,
+            "periodico": "Clinical Neurophysiology, 128(1), 56–92",
+            "doi": "10.1016/j.clinph.2016.10.087",
+            "url_doi": "https://doi.org/10.1016/j.clinph.2016.10.087",
+            "autores": "Lefaucheur et al.",
+            "citacao_completa": "Lefaucheur et al., 2017. Clin Neurophysiol, 128(1):56–92."
+          },
+          "escalas_detalhadas": [
+            {
+              "id": "principal",
+              "nome": "Aberrant Behavior Checklist (ABC) — Subescala de Irritabilidade",
+              "sigla": "ABC — Subescala de Irritabilidade",
+              "tipo": "continua",
+              "min": 0,
+              "max": 100,
+              "direcao_melhora": "reducao",
+              "meta_texto": "Redução clinicamente relevante na irritabilidade e estereotipias",
+              "placeholder": "Ex: 20",
+              "tamanho_efeito": "Redução média de 43,3% na pontuação do domínio Irritabilidade do questionário ABC"
+            }
+          ],
+          "ensaio_clinico": {
+            "autores": "Sokhadze, E. M., et al.",
+            "ano": 2014,
+            "titulo": "Effects of low-frequency repetitive transcranial magnetic stimulation on behavior and executive functions in children with autism: a randomized controlled trial",
+            "periodico": "Autism Research and Treatment, 2014, 431049",
+            "doi": "10.1155/2014/431049",
+            "url_doi": "https://doi.org/10.1155/2014/431049",
+            "tipo": "Ensaio Clínico Randomizado Seminal"
+          },
+          "meta_analise": {
+            "autores": "Liu, A., et al.",
+            "ano": 2023,
+            "titulo": "Non-invasive brain stimulation for patient with autism: a systematic review and meta-analysis",
+            "periodico": "Frontiers in Psychiatry, 14, 1147327",
+            "doi": "10.3389/fpsyt.2023.1147327",
+            "url_doi": "https://doi.org/10.3389/fpsyt.2023.1147327",
+            "tipo": "Revisão Sistemática com Metanálise"
+          }
+        },
+        "social": {
+          "tecnica": "rTMS / tDCS sobre Córtex Pré-Frontal ou TPJ",
+          "modalidade_sigla": "rTMS / tDCS",
+          "alvo": "Junção Temporoparietal (TPJ) ou CPFDL",
+          "frequencia": "10 Hz excitatória ou tDCS Anodal",
+          "intensidade": "90% Limiar Motor de Repouso (LMR) / 1.5 mA",
+          "pulsos_duracao": "1.200 a 1.800 pulsos / 20 min",
+          "sessoes": "10 a 20 sessões associadas a treino de habilidades sociais",
+          "escala_recomendada": "Social Responsiveness Scale-2 (SRS-2) e ATEC",
+          "meta_melhora": "Evolução nas tarefas de reconhecimento facial e cognição social",
+          "tamanho_efeito": "Melhora de 69,6% no reconhecimento facial, aumento de 30,8% em Teoria da Mente e redução de 24,3% no escore SRS-2",
+          "evidencia": "Consolidada (Respaldo em Meta-análise)",
+          "linha_fluxograma": "solida",
+          "diretriz_internacional": "Consenso NAPeN / Metanálise 2024",
+          "protocolo_alternativo": {
+            "nome": "Protocolo Alternativo (Estimulação Vagal taVNS para Regulação Autonômica)",
+            "tecnica": "taVNS",
+            "alvo": "Trago auricular esquerdo",
+            "parametros": "25 Hz, intensidade sublimiar, 30 min",
+            "observacoes": "Modula reatividade autonômica, ansiedade e sintomas gastrointestinais comórbidos."
+          },
+          "sessoes_ajuste": {
+            "quando_reavaliar": "Após 5 sessões.",
+            "ajuste_dose": "Adaptar estímulo com reforço visual positivo para engajamento.",
+            "regra_interrupcao": "Interromper se agitação psicomotora persistente."
+          },
+          "contraindicacoes": [
+            "Crises epilépticas",
+            "Rejeição sensorial intransponível"
+          ],
+          "notas_clinicas": "Indivíduos com nível de suporte 1 e 2 apresentam maior volume de dados reportados na literatura.",
+          "artigo_referencia": {
+            "autores": "Amatachaya, A., et al.",
+            "ano": 2015,
+            "titulo": "Effect of transcranial direct current stimulation on autistic symptoms: a randomized, double-blind, sham-controlled trial",
+            "periodico": "Neuropsychiatric Disease and Treatment, 11, 2999–3004",
+            "doi": "10.2147/NDT.S95961",
+            "url_doi": "https://doi.org/10.2147/NDT.S95961",
+            "tipo": "Ensaio Clínico Randomizado Seminal"
+          },
+          "diretriz_ref": {
+            "nome": "Lefaucheur et al., 2017 (IFCN)",
+            "ano": 2017,
+            "periodico": "Clinical Neurophysiology, 128(1), 56–92",
+            "doi": "10.1016/j.clinph.2016.10.087",
+            "url_doi": "https://doi.org/10.1016/j.clinph.2016.10.087",
+            "autores": "Lefaucheur et al.",
+            "citacao_completa": "Lefaucheur et al., 2017. Clin Neurophysiol, 128(1):56–92."
+          },
+          "escalas_detalhadas": [
+            {
+              "id": "principal",
+              "nome": "Social Responsiveness Scale-2 (SRS-2) e ATEC",
+              "sigla": "SRS-2 e ATEC",
+              "tipo": "continua",
+              "min": 0,
+              "max": 100,
+              "direcao_melhora": "aumento",
+              "meta_texto": "Evolução nas tarefas de reconhecimento facial e cognição social",
+              "placeholder": "Ex: 20",
+              "tamanho_efeito": "Melhora de 69,6% no reconhecimento facial, aumento de 30,8% em Teoria da Mente e redução de 24,3% no escore SRS-2"
+            }
+          ],
+          "ensaio_clinico": {
+            "autores": "Amatachaya, A., et al.",
+            "ano": 2015,
+            "titulo": "Effect of transcranial direct current stimulation on autistic symptoms: a randomized, double-blind, sham-controlled trial",
+            "periodico": "Neuropsychiatric Disease and Treatment, 11, 2999–3004",
+            "doi": "10.2147/NDT.S95961",
+            "url_doi": "https://doi.org/10.2147/NDT.S95961",
+            "tipo": "Ensaio Clínico Randomizado Seminal"
+          },
+          "meta_analise": {
+            "autores": "Gong, C., et al.",
+            "ano": 2024,
+            "titulo": "Effects of transcranial direct current stimulation on social communication in autism spectrum disorder: A systematic review and meta-analysis",
+            "periodico": "Journal of Autism and Developmental Disorders, 54(2), 670–684",
+            "doi": "10.1007/s10803-023-05990-2",
+            "url_doi": "https://doi.org/10.1007/s10803-023-05990-2",
+            "tipo": "Revisão Sistemática com Metanálise"
+          }
+        }
+      },
+      "tags_busca": {
+        "coordenadas_10_20": [
+          "F3",
+          "F4",
+          "DLPFC"
+        ],
+        "alvos_anatomicos": [
+          "Córtex Pré-Frontal Dorsolateral (DLPFC)",
+          "DLPFC Bilateral"
+        ],
+        "sinonimos_en": [
+          "autism",
+          "autism spectrum disorder",
+          "asd",
+          "social communication",
+          "repetitive behavior",
+          "irritability"
+        ],
+        "sintomas_pt": [
+          "autismo",
+          "tea",
+          "irritabilidade",
+          "agressividade",
+          "comunicação social",
+          "estereotipias",
+          "interação"
+        ],
+        "escalas": [
+          "ABC",
+          "ABC-I",
+          "SRS-2",
+          "ATEC"
+        ],
+        "tecnicas": [
+          "LF-rTMS 1Hz",
+          "tDCS Anódica DLPFC",
+          "iTBS"
+        ]
+      }
+    },
+    {
+      "id": "alzheimer-ccl",
+      "condicao": "Doença de Alzheimer e Declínio Cognitivo Leve (CCL)",
+      "eixo": "Cognição & Demências",
+      "roadmap_id": "RM12",
+      "svg_file": "RM12.svg",
+      "status_auditoria": "Consolidado (Meta-análise)",
+      "nota_auditoria": "Metanálises recentes de estimulação combinada com treino cognitivo computadorizado (2024).",
+      "no1_pergunta": "Qual é o estágio diagnóstico do paciente?",
+      "fatores_limitantes": [
+        {
+          "id": "alzheimer_memoria",
+          "label": "Comprometimento de Memória e Cognição Global"
+        },
+        {
+          "id": "ccl_cognicao",
+          "label": "Declínio da Memória Episódica (CCL)"
+        },
+        {
+          "id": "sintomas_neuropsiquiatricos",
+          "label": "Sintomas Neuropsiquiátricos (Apatia e Agitação)"
+        }
+      ],
+      "modalidades": {
+        "alzheimer_memoria": {
+          "tecnica": "rTMS de Alta Frequência ou tDCS Anodal",
+          "modalidade_sigla": "rTMS / tDCS",
+          "alvo": "F3 (DLPFC Esquerdo) e/ou P3 (Parietal Esquerdo)",
+          "frequencia": "20 Hz (F3) / 10 Hz (P3) ou corrente contínua",
+          "intensidade": "100% Limiar Motor de Repouso (LMR) em F3 / 90% Limiar Motor de Repouso (LMR) em P3 / 2.0 mA no tDCS",
+          "pulsos_duracao": "1.760 a 3.000 pulsos / 20–25 min no tDCS",
+          "sessoes": "20 a 30 sessões diárias combinadas com tarefas de estimulação cognitiva",
+          "escala_recomendada": "ADAS-cog e Mini-Exame do Estado Mental (MEEM)",
+          "meta_melhora": "Estabilização ou melhora mensurável nos domínios de memória e orientação",
+          "tamanho_efeito": "Melhora média de 32,64% na escala ADAS-cog e ganho de 9,0% a 21,9% no MEEM sustentados por até 3 meses",
+          "evidencia": "Consolidada (Respaldo em Meta-análise)",
+          "linha_fluxograma": "solida",
+          "diretriz_internacional": "Nível B (Eficácia Provável na cognição global do Alzheimer leve)",
+          "protocolo_alternativo": {
+            "nome": "Protocolo Alternativo (tDCS Temporoparietal Bilateral)",
+            "tecnica": "tDCS",
+            "alvo": "T3 e P3 (ânodo) / supraorbitário (cátodo)",
+            "parametros": "2 mA, 25 min, a cada 10 dias reavaliação",
+            "observacoes": "Estimula circuitos temporais mediais cruciais para a consolidação de memória."
+          },
+          "sessoes_ajuste": {
+            "quando_reavaliar": "A cada 10 sessões com o MEEM.",
+            "ajuste_dose": "O uso de benzodiazepínicos pode diminuir o efeito do tratamento. Monitorar comorbidades de sono.",
+            "regra_interrupcao": "Interromper se declínio acelerado com perda de capacidade de engajamento no treino."
+          },
+          "contraindicacoes": [
+            "Metal no crânio",
+            "Demência em fase avançada sem canal de comunicação"
+          ],
+          "notas_clinicas": "A combinação com treino cognitivo imediato é indispensável para a indução de plasticidade sináptica duradoura.",
+          "artigo_referencia": {
+            "autores": "Cotelli, M., et al.",
+            "ano": 2011,
+            "titulo": "Efficacy of repetitive transcranial magnetic stimulation on cognitive functions in Alzheimer disease: a randomized controlled trial",
+            "periodico": "Neurorehabilitation and Neural Repair, 25(8), 706–714",
+            "doi": "10.1177/1545968311402511",
+            "url_doi": "https://doi.org/10.1177/1545968311402511",
+            "tipo": "Ensaio Clínico Randomizado Seminal"
+          },
+          "diretriz_ref": {
+            "nome": "Lefaucheur et al., 2017 (IFCN)",
+            "ano": 2017,
+            "periodico": "Clinical Neurophysiology, 128(1), 56–92",
+            "doi": "10.1016/j.clinph.2016.10.087",
+            "url_doi": "https://doi.org/10.1016/j.clinph.2016.10.087",
+            "autores": "Lefaucheur et al.",
+            "citacao_completa": "Lefaucheur et al., 2017. Clin Neurophysiol, 128(1):56–92."
+          },
+          "escalas_detalhadas": [
+            {
+              "id": "meem",
+              "nome": "Mini-Exame do Estado Mental (MEEM)",
+              "sigla": "MEEM",
+              "tipo": "continua",
+              "min": 0,
+              "max": 30,
+              "direcao_melhora": "aumento",
+              "meta_texto": "Estabilização ou ganho pontual nos domínios cognitivos",
+              "placeholder": "Ex: 19",
+              "tamanho_efeito": "Ganho médio de 9,0% a 21,9% no MEEM sustentado por até 3 meses"
+            },
+            {
+              "id": "adas",
+              "nome": "ADAS-cog (Subescala Cognitiva)",
+              "sigla": "ADAS-cog",
+              "tipo": "continua",
+              "min": 0,
+              "max": 70,
+              "direcao_melhora": "reducao",
+              "meta_texto": "Redução no escore de erro ou estabilização da perda cognitiva",
+              "placeholder": "Ex: 32",
+              "tamanho_efeito": "Melhora média de 32,64% na subescala cognitiva ADAS-cog sustentada por até 3 meses"
+            }
+          ],
+          "ensaio_clinico": {
+            "autores": "Cotelli, M., et al.",
+            "ano": 2011,
+            "titulo": "Efficacy of repetitive transcranial magnetic stimulation on cognitive functions in Alzheimer disease: a randomized controlled trial",
+            "periodico": "Neurorehabilitation and Neural Repair, 25(8), 706–714",
+            "doi": "10.1177/1545968311402511",
+            "url_doi": "https://doi.org/10.1177/1545968311402511",
+            "tipo": "Ensaio Clínico Randomizado Seminal"
+          },
+          "meta_analise": {
+            "autores": "Yang, T., et al.",
+            "ano": 2024,
+            "titulo": "The cognitive effect of non-invasive brain stimulation in patients with Alzheimer's disease: A systematic review and meta-analysis",
+            "periodico": "Frontiers in Aging Neuroscience, 16, 1352341",
+            "doi": "10.3389/fnagi.2024.1352341",
+            "url_doi": "https://doi.org/10.3389/fnagi.2024.1352341",
+            "tipo": "Revisão Sistemática com Metanálise"
+          }
+        },
+        "ccl_cognicao": {
+          "tecnica": "tDCS Anodal sobre CPFDL",
+          "modalidade_sigla": "tDCS",
+          "alvo": "F3 (Córtex Pré-Frontal Dorsolateral Esquerdo)",
+          "frequencia": "Corrente contínua",
+          "intensidade": "2.0 mA",
+          "pulsos_duracao": "20 minutos",
+          "sessoes": "10 a 20 sessões",
+          "escala_recomendada": "MEEM e Rivermead Behavioural Memory Test",
+          "meta_melhora": "Ganho percentual significativo na recordação tardia e atenção executiva",
+          "tamanho_efeito": "Melhora de 9,12% no MEEM e aumento médio de 29% na retenção de memória episódica",
+          "evidencia": "Consolidada (Respaldo em Meta-análise)",
+          "linha_fluxograma": "solida",
+          "diretriz_internacional": "Recomendação Consensual NAPeN: Nível B",
+          "protocolo_alternativo": {
+            "nome": "Protocolo Alternativo (rTMS em Alta Frequência F3/P3)",
+            "tecnica": "rTMS 20 Hz",
+            "alvo": "F3",
+            "parametros": "20 Hz, 100% Limiar Motor de Repouso (LMR), 2.000 pulsos",
+            "observacoes": "Facilitação direta da rede de modo padrão (DMN) e controle executivo."
+          },
+          "sessoes_ajuste": {
+            "quando_reavaliar": "Na 10ª sessão.",
+            "ajuste_dose": "Ajustar complexidade dos exercícios cognitivos conforme evolução.",
+            "regra_interrupcao": "Interromper se ausência de resposta após 15 sessões."
+          },
+          "contraindicacoes": [
+            "Metal no crânio",
+            "Crises epilépticas"
+          ],
+          "notas_clinicas": "Intervenção preventiva precoce com potencial de retardar a conversão para demência estabelecida.",
+          "artigo_referencia": {
+            "autores": "Meinzer, M., et al.",
+            "ano": 2015,
+            "titulo": "Transcranial direct current stimulation restores cognitive function in mild cognitive impairment: a randomized double-blind study",
+            "periodico": "Neurobiology of Aging, 36(9), 2465–2473",
+            "doi": "10.1016/j.neurobiolaging.2015.05.004",
+            "url_doi": "https://doi.org/10.1016/j.neurobiolaging.2015.05.004",
+            "tipo": "Ensaio Clínico Randomizado Seminal"
+          },
+          "diretriz_ref": {
+            "nome": "Lefaucheur et al., 2017 (IFCN)",
+            "ano": 2017,
+            "periodico": "Clinical Neurophysiology, 128(1), 56–92",
+            "doi": "10.1016/j.clinph.2016.10.087",
+            "url_doi": "https://doi.org/10.1016/j.clinph.2016.10.087",
+            "autores": "Lefaucheur et al.",
+            "citacao_completa": "Lefaucheur et al., 2017. Clin Neurophysiol, 128(1):56–92."
+          },
+          "escalas_detalhadas": [
+            {
+              "id": "meem",
+              "nome": "Mini-Exame do Estado Mental (MEEM)",
+              "sigla": "MEEM",
+              "tipo": "continua",
+              "min": 0,
+              "max": 30,
+              "direcao_melhora": "aumento",
+              "meta_texto": "Estabilização ou ganho pontual nos domínios cognitivos",
+              "placeholder": "Ex: 19",
+              "tamanho_efeito": "Melhora média de 9,12% no MEEM após o ciclo de estimulação"
+            },
+            {
+              "id": "adas",
+              "nome": "ADAS-cog (Subescala Cognitiva)",
+              "sigla": "ADAS-cog",
+              "tipo": "continua",
+              "min": 0,
+              "max": 70,
+              "direcao_melhora": "reducao",
+              "meta_texto": "Redução no escore de erro ou estabilização da perda cognitiva",
+              "placeholder": "Ex: 32",
+              "tamanho_efeito": "Aumento médio de 29% na retenção de memória episódica na ADAS-cog"
+            }
+          ],
+          "ensaio_clinico": {
+            "autores": "Meinzer, M., et al.",
+            "ano": 2015,
+            "titulo": "Transcranial direct current stimulation restores cognitive function in mild cognitive impairment: a randomized double-blind study",
+            "periodico": "Neurobiology of Aging, 36(9), 2465–2473",
+            "doi": "10.1016/j.neurobiolaging.2015.05.004",
+            "url_doi": "https://doi.org/10.1016/j.neurobiolaging.2015.05.004",
+            "tipo": "Ensaio Clínico Randomizado Seminal"
+          },
+          "meta_analise": {
+            "autores": "Xiu, H., et al.",
+            "ano": 2023,
+            "titulo": "High-frequency repetitive transcranial magnetic stimulation and tDCS for mild cognitive impairment: A systematic review and network meta-analysis",
+            "periodico": "Ageing Research Reviews, 88, 101952",
+            "doi": "10.1016/j.arr.2023.101952",
+            "url_doi": "https://doi.org/10.1016/j.arr.2023.101952",
+            "tipo": "Revisão Sistemática com Metanálise"
+          }
+        },
+        "sintomas_neuropsiquiatricos": {
+          "tecnica": "tDCS / rTMS sobre Córtex Temporoparietal",
+          "modalidade_sigla": "tDCS / rTMS",
+          "alvo": "Córtex temporoparietal ou F3",
+          "frequencia": "Anodal 2 mA ou 10 Hz excitatória",
+          "intensidade": "2.0 mA / 90% Limiar Motor de Repouso (LMR)",
+          "pulsos_duracao": "20 min",
+          "sessoes": "10 sessões",
+          "escala_recomendada": "Inventário Neuropsiquiátrico (NPI) e Escala de Depressão de Cornell",
+          "meta_melhora": "Alívio expressivo da apatia e sintomas depressivos associados à demência",
+          "tamanho_efeito": "Melhora de 60,9% no NPI e redução média de 43,3% na Escala de Cornell após 10 sessões",
+          "evidencia": "Consolidada (Respaldo em Meta-análise)",
+          "linha_fluxograma": "solida",
+          "diretriz_internacional": "Recomendação Consensual NAPeN: Nível B",
+          "protocolo_alternativo": {
+            "nome": "Protocolo Alternativo (rTMS F3/F4 Bilateral)",
+            "tecnica": "rTMS",
+            "alvo": "F3 (alta) + F4 (baixa)",
+            "parametros": "10 Hz F3 + 1 Hz F4",
+            "observacoes": "Modulação de circuitos afetivos fronto-límbicos."
+          },
+          "sessoes_ajuste": {
+            "quando_reavaliar": "Na 5ª e 10ª sessão.",
+            "ajuste_dose": "Verificar se alterações de sono estão contribuindo para agitação vespertina.",
+            "regra_interrupcao": "Interromper se agitação piorar com o estímulo."
+          },
+          "contraindicacoes": [
+            "Metal no crânio",
+            "Delírios persecutórios agudos"
+          ],
+          "notas_clinicas": "Excelente recurso não farmacológico para reduzir a sobrecarga dos cuidadores.",
+          "artigo_referencia": {
+            "autores": "Padala, P. R., et al.",
+            "ano": 2018,
+            "titulo": "Repetitive transcranial magnetic stimulation for apathy in mild cognitive impairment and Alzheimer's disease: a randomized controlled trial",
+            "periodico": "Journal of Clinical Psychiatry, 79(6), 18m12170",
+            "doi": "10.4088/JCP.18m12170",
+            "url_doi": "https://doi.org/10.4088/JCP.18m12170",
+            "tipo": "Ensaio Clínico Randomizado Seminal"
+          },
+          "diretriz_ref": {
+            "nome": "Lefaucheur et al., 2017 (IFCN)",
+            "ano": 2017,
+            "periodico": "Clinical Neurophysiology, 128(1), 56–92",
+            "doi": "10.1016/j.clinph.2016.10.087",
+            "url_doi": "https://doi.org/10.1016/j.clinph.2016.10.087",
+            "autores": "Lefaucheur et al.",
+            "citacao_completa": "Lefaucheur et al., 2017. Clin Neurophysiol, 128(1):56–92."
+          },
+          "escalas_detalhadas": [
+            {
+              "id": "npi",
+              "nome": "Inventário Neuropsiquiátrico (NPI)",
+              "sigla": "NPI",
+              "tipo": "continuo_reducao",
+              "meta_texto": "Redução clinicamente relevante ≥ 4 a 8 pontos no escore total do NPI",
+              "tamanho_efeito": "Melhora média de 60,9% no Inventário Neuropsiquiátrico (NPI)",
+              "placeholder": "Ex: 36"
+            },
+            {
+              "id": "cornell",
+              "nome": "Escala de Depressão de Cornell em Demência",
+              "sigla": "Cornell",
+              "tipo": "continuo_reducao",
+              "meta_texto": "Redução clinicamente significativa dos sintomas depressivos em demência",
+              "tamanho_efeito": "Redução média de 43,3% na Escala de Depressão de Cornell após 10 sessões",
+              "placeholder": "Ex: 18"
+            }
+          ],
+          "ensaio_clinico": {
+            "autores": "Padala, P. R., et al.",
+            "ano": 2018,
+            "titulo": "Repetitive transcranial magnetic stimulation for apathy in mild cognitive impairment and Alzheimer's disease: a randomized controlled trial",
+            "periodico": "Journal of Clinical Psychiatry, 79(6), 18m12170",
+            "doi": "10.4088/JCP.18m12170",
+            "url_doi": "https://doi.org/10.4088/JCP.18m12170",
+            "tipo": "Ensaio Clínico Randomizado Seminal"
+          },
+          "meta_analise": {
+            "autores": "Jin, Y., et al.",
+            "ano": 2023,
+            "titulo": "Efficacy and safety of neuromodulation for neuropsychiatric symptoms in Alzheimer's disease: A systematic review and meta-analysis",
+            "periodico": "Journal of Psychiatric Research, 161, 281–292",
+            "doi": "10.1016/j.jpsychires.2023.03.032",
+            "url_doi": "https://doi.org/10.1016/j.jpsychires.2023.03.032",
+            "tipo": "Revisão Sistemática com Metanálise"
+          }
+        }
+      },
+      "tags_busca": {
+        "coordenadas_10_20": [
+          "F3",
+          "F4",
+          "Precúneo",
+          "DLPFC"
+        ],
+        "alvos_anatomicos": [
+          "Córtex Pré-Frontal Dorsolateral (DLPFC)",
+          "DLPFC Bilateral",
+          "Precúneo"
+        ],
+        "sinonimos_en": [
+          "alzheimer",
+          "alzheimer's disease",
+          "ad",
+          "mild cognitive impairment",
+          "mci",
+          "dementia",
+          "memory deficit",
+          "cognition"
+        ],
+        "sintomas_pt": [
+          "alzheimer",
+          "demência",
+          "ccl",
+          "declínio cognitivo",
+          "memória",
+          "esquecimento",
+          "orientação"
+        ],
+        "escalas": [
+          "MEEM",
+          "MMSE",
+          "ADAS-Cog",
+          "NPI"
+        ],
+        "tecnicas": [
+          "HF-rTMS 20Hz",
+          "iTBS",
+          "tACS 40Hz Gamma",
+          "tDCS Anódica DLPFC"
+        ]
+      }
+    }
+  ]
+};

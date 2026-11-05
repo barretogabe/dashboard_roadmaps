@@ -1,0 +1,2131 @@
+/* ==========================================================================
+   Rede NAPeN — Plataforma Interativa de Prescrição Clínica em Neuromodulação
+   Mimetização Exata do Site Oficial Rede NAPeN (neuromodulation-net.com)
+   Identidade: Turquesa Base (#18C1C0 / #00A3A8), Teal Profundo (#0A6A6E / #0D6F77),
+   Deep Navy (#2C3070), Branco (#FFFFFF), Neutro Suave (#F4F6F8).
+   ========================================================================== */
+
+:root {
+  /* Cores Extraídas do Site Oficial NAPeN */
+  --napen-teal-bar: #18C1C0;          /* rgb(24, 193, 192) - Turquesa oficial da barra */
+  --napen-teal-dark: #0A6A6E;         /* rgb(10, 106, 110) - Teal escuro no hover/ativo */
+  --napen-teal-hover: #085558;        /* Teal mais escuro no hover profundo */
+  --napen-teal-soft: #E0F7F8;         /* Fundo sutil para estados selecionados */
+  --napen-navy: #2C3070;              /* Deep Navy institucional dos títulos */
+  --napen-border-line: #18C1C0;       /* Linha separadora do menu */
+
+  /* Neutros e Superfícies */
+  --bg-page: #F4F6F8;
+  --bg-surface: #FFFFFF;
+  --border-subtle: #E2E8F0;
+  --border-medium: #CBD5E1;
+  --text-main: #1B2430;
+  --text-muted: #475569;
+  --text-faint: #64748B;
+
+  /* Tipografia Oficial (Lato / Montserrat) */
+  --font-family-nav: "Lato", "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-family-base: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+
+  /* Estados Clínicos */
+  --status-success-bg: #ECFDF5;
+  --status-success-border: #10B981;
+  --status-success-text: #065F46;
+
+  --status-warning-bg: #FFFBEB;
+  --status-warning-border: #F59E0B;
+  --status-warning-text: #92400E;
+
+  --status-danger-bg: #FEF2F2;
+  --status-danger-border: #EF4444;
+  --status-danger-text: #991B1B;
+
+  /* Raios e Sombras */
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-pill: 9999px;
+  --shadow-sm: 0 1px 2px 0 rgba(15, 23, 42, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(15, 23, 42, 0.08), 0 2px 4px -2px rgba(15, 23, 42, 0.04);
+  --shadow-dropdown: 0 12px 24px -4px rgba(10, 106, 110, 0.15), 0 4px 8px -2px rgba(0, 0, 0, 0.06);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-family-base);
+  background-color: var(--bg-page);
+  color: var(--text-main);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ==========================================================================
+   Header Oficial Rede NAPeN
+   ========================================================================== */
+.site-header {
+  background-color: #FFFFFF;
+  box-shadow: var(--shadow-sm);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+/* 1. Barra Superior Branca (Proporção Exata ~1.85:1 vs Barra Turquesa) */
+.header-top-bar {
+  background: #FFFFFF;
+  border-bottom: 1px solid var(--border-subtle);
+  height: 140px;
+  display: flex;
+  align-items: center;
+}
+
+.header-top-inner {
+  max-width: 1320px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.brand-logo-img {
+  height: 112px;
+  max-height: 118px;
+  width: auto;
+  display: block;
+  object-fit: contain;
+}
+
+.btn-portal-return {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: transparent;
+  color: var(--napen-teal-dark);
+  border: 1.5px solid var(--napen-teal-dark);
+  padding: 8px 18px;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-family-nav);
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-decoration: none;
+  letter-spacing: 0.02em;
+  transition: all 0.3s ease;
+}
+
+.btn-portal-return:hover {
+  background-color: var(--napen-teal-dark);
+  color: #FFFFFF;
+}
+
+/* 2. Barra de Navegação Turquesa Oficial (Height: 74px, Transição 0.4s) */
+.header-nav-bar {
+  background-color: var(--napen-teal-bar);
+  height: 74px;
+  display: flex;
+  align-items: stretch;
+}
+
+.header-nav-container {
+  max-width: 1320px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  align-items: stretch;
+  justify-content: center; /* Centralização solicitada da barra turquesa */
+}
+
+/* Itens do Menu na Barra Turquesa */
+.nav-item {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+}
+
+.nav-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 18px;
+  background-color: transparent;
+  border: none;
+  color: #FFFFFF;
+  font-family: var(--font-family-nav);
+  font-size: 0.88rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color 0.4s ease, color 0.4s ease;
+  white-space: nowrap;
+  height: 100%;
+}
+
+/* Efeito Hover e Ativo idêntico ao site NAPeN */
+.nav-btn:hover,
+.nav-item:hover .nav-btn,
+.nav-item.active .nav-btn {
+  background-color: var(--napen-teal-dark);
+  color: #FFFFFF;
+}
+
+.nav-arrow-icon {
+  transition: transform 0.3s ease;
+}
+
+.nav-item:hover .nav-arrow-icon {
+  transform: rotate(180deg);
+}
+
+/* ==========================================================================
+   Menu Dropdown na Prescrição Interativa (Hierarquia de 2 Níveis em Cascata)
+   ========================================================================== */
+.dropdown-menu-napen {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: 320px;
+  background-color: #FFFFFF;
+  border: 1px solid var(--napen-teal-bar);
+  box-shadow: var(--shadow-dropdown);
+  z-index: 2000;
+  list-style: none;
+  border-radius: 0 0 var(--radius-md) var(--radius-md);
+  animation: dropdownFadeIn 0.25s ease;
+}
+
+/* Abre no hover OU quando clicado (.dropdown-open) */
+.nav-item.has-dropdown:hover .dropdown-menu-napen:not(.dropdown-force-closed),
+.nav-item.has-dropdown.dropdown-open .dropdown-menu-napen:not(.dropdown-force-closed),
+.nav-item.has-dropdown:focus-within .dropdown-menu-napen:not(.dropdown-force-closed) {
+  display: block;
+}
+
+.nav-item.dropdown-open .nav-arrow-icon {
+  transform: rotate(180deg);
+}
+
+.dropdown-force-closed {
+  display: none !important;
+}
+
+@keyframes dropdownFadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.dropdown-item-napen {
+  position: relative;
+  border-bottom: 1px solid var(--napen-border-line);
+}
+
+.dropdown-item-napen:last-child {
+  border-bottom: none;
+}
+
+.dropdown-link-napen {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 13px 20px;
+  color: var(--napen-teal-dark);
+  text-decoration: none;
+  font-family: var(--font-family-nav);
+  font-size: 0.88rem;
+  font-weight: 700;
+  background-color: #FFFFFF;
+  transition: background-color 0.3s ease, color 0.3s ease, padding-left 0.2s ease;
+  cursor: pointer;
+}
+
+/* Efeito de cor e transição ao passar o mouse por cima */
+.dropdown-link-napen:hover {
+  background-color: var(--napen-teal-bar);
+  color: #FFFFFF;
+  padding-left: 24px;
+}
+
+.dropdown-link-napen.active-item {
+  background-color: var(--napen-teal-soft);
+  color: var(--napen-teal-dark);
+  border-left: 4px solid var(--napen-teal-dark);
+}
+
+.dropdown-link-napen:hover.active-item {
+  background-color: var(--napen-teal-dark);
+  color: #FFFFFF;
+}
+
+/* 2º Nível: Submenu em Cascata Lateral (Flyout Submenu à direita) */
+.dropdown-submenu {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 100%;
+  min-width: 380px;
+  max-width: 460px;
+  background-color: #FFFFFF;
+  border: 1px solid var(--napen-teal-bar);
+  box-shadow: var(--shadow-dropdown);
+  z-index: 2200;
+  list-style: none;
+  border-radius: 0 var(--radius-md) var(--radius-md) var(--radius-md);
+  animation: dropdownFadeIn 0.2s ease;
+}
+
+.dropdown-item-has-submenu:hover > .dropdown-submenu,
+.dropdown-item-has-submenu.submenu-open > .dropdown-submenu {
+  display: block;
+}
+
+.dropdown-item-has-submenu:hover > .dropdown-link-napen .axis-arrow-icon,
+.dropdown-item-has-submenu.submenu-open .axis-arrow-icon,
+.dropdown-item-has-submenu.submenu-open > .dropdown-link-napen .axis-arrow-icon,
+.dropdown-item-has-submenu.submenu-open > .axis-arrow-icon {
+  transform: rotate(90deg);
+  color: #FFFFFF !important;
+}
+
+/* 3º Nível em Cascata: Desfechos e Escalas Clínicas */
+.dropdown-item-has-subsubmenu {
+  position: relative;
+}
+
+.dropdown-item-has-subsubmenu > .dropdown-sublink-napen,
+.dropdown-sublink-has-subsubmenu {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+}
+
+.dropdown-subsubmenu {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 100%;
+  min-width: 320px;
+  max-width: 440px;
+  background-color: #FFFFFF;
+  border: 1px solid var(--napen-teal-bar);
+  box-shadow: var(--shadow-dropdown);
+  z-index: 2400;
+  list-style: none;
+  border-radius: 0 var(--radius-md) var(--radius-md) var(--radius-md);
+  animation: dropdownFadeIn 0.2s ease;
+}
+
+.dropdown-item-has-subsubmenu:hover > .dropdown-subsubmenu,
+.dropdown-item-has-subsubmenu.subsubmenu-open > .dropdown-subsubmenu {
+  display: block;
+}
+
+.dropdown-item-has-subsubmenu:hover > .dropdown-sublink-napen .axis-arrow-icon,
+.dropdown-item-has-subsubmenu.subsubmenu-open > .dropdown-sublink-napen .axis-arrow-icon {
+  transform: rotate(90deg);
+  color: #FFFFFF !important;
+}
+
+.dropdown-subsubmenu.open-left {
+  left: auto;
+  right: 100%;
+  border-radius: var(--radius-md) 0 var(--radius-md) var(--radius-md);
+}
+
+.dropdown-sublink-napen {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 11px 18px;
+  color: var(--napen-navy);
+  text-decoration: none;
+  font-family: var(--font-family-nav);
+  font-size: 0.85rem;
+  font-weight: 600;
+  background-color: #FFFFFF;
+  border-bottom: 1px solid var(--border-subtle);
+  transition: background-color 0.25s ease, color 0.25s ease, padding-left 0.2s ease;
+  cursor: pointer;
+}
+
+.dropdown-sublink-napen:last-child {
+  border-bottom: none;
+}
+
+.dropdown-sublink-napen:hover {
+  background-color: var(--napen-teal-bar);
+  color: #FFFFFF;
+  padding-left: 22px;
+}
+
+.dropdown-sublink-title {
+  font-weight: 700;
+  color: inherit;
+}
+
+.dropdown-sublink-sub {
+  font-size: 0.74rem;
+  opacity: 0.8;
+  color: inherit;
+}
+
+/* ==========================================================================
+   Painel de Monitoramento Clínico e Regras de Reavaliação do Roadmap
+   ========================================================================== */
+.monitoring-rules-panel {
+  background-color: #F8FAFC;
+  border: 1px solid #CBD5E1;
+  border-left: 4px solid var(--napen-navy);
+  border-radius: var(--radius-md);
+  padding: 18px 20px;
+  margin-top: 20px;
+}
+
+.monitoring-head {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-bottom: 14px;
+}
+
+.monitoring-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--napen-navy);
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+}
+
+.monitoring-subtitle {
+  font-size: 0.8rem;
+  color: var(--text-faint);
+}
+
+.monitoring-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 14px;
+}
+
+.monitoring-item {
+  background-color: #FFFFFF;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.monitoring-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--napen-teal-dark);
+  letter-spacing: 0.03em;
+}
+
+.monitoring-text {
+  font-size: 0.86rem;
+  color: var(--text-main);
+  line-height: 1.45;
+}
+
+.monitoring-notes {
+  background-color: var(--napen-teal-soft);
+  border-radius: var(--radius-sm);
+  padding: 10px 14px;
+  margin-top: 14px;
+  font-size: 0.85rem;
+  color: var(--napen-teal-dark);
+  line-height: 1.5;
+}
+
+/* Status bullet indicator */
+.status-bullet-dot {
+  font-size: 0.95rem;
+  line-height: 1;
+}
+
+/* ==========================================================================
+   Painel de Evidência Científica e Artigo de Referência
+   ========================================================================== */
+.evidence-reference-panel {
+  background-color: #FFFFFF;
+  border: 1px solid var(--border-medium);
+  border-left: 4px solid var(--napen-teal-bar);
+  border-radius: var(--radius-md);
+  padding: 16px 20px;
+  margin-top: 18px;
+}
+
+.evidence-ref-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.evidence-ref-title {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--napen-navy);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.evidence-type-badge {
+  background-color: var(--napen-teal-soft);
+  color: var(--napen-teal-dark);
+  font-size: 0.74rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+}
+
+.evidence-citation {
+  font-size: 0.88rem;
+  color: var(--text-main);
+  line-height: 1.55;
+  font-style: italic;
+}
+
+.evidence-doi-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.doi-link-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--napen-teal-dark);
+  font-weight: 700;
+  font-size: 0.82rem;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 0.2s ease;
+}
+
+.doi-link-btn:hover {
+  color: var(--napen-teal-bar);
+}
+
+.evidence-block-label {
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: var(--napen-navy);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  display: block;
+  margin-bottom: 3px;
+}
+
+/* ==========================================================================
+   Calculadora Dual de Resposta Clínica & Comparador de Efeito Terapêutico
+   ========================================================================== */
+.dual-calc-container {
+  background-color: #F8FAFC;
+  border: 1.5px solid var(--napen-teal-bar);
+  border-radius: var(--radius-md);
+  padding: 20px 24px;
+  margin-top: 22px;
+  scroll-margin-top: 130px;
+  transition: all 0.3s ease;
+}
+
+@keyframes calcPulseHighlight {
+  0% {
+    box-shadow: 0 0 0 0 rgba(24, 193, 192, 0.65);
+    border-color: var(--napen-teal-bar);
+  }
+  40% {
+    box-shadow: 0 0 0 12px rgba(24, 193, 192, 0.25);
+    border-color: var(--napen-teal-dark);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(24, 193, 192, 0);
+    border-color: var(--napen-teal-bar);
+  }
+}
+
+.dual-calc-container.calc-highlight-pulse {
+  animation: calcPulseHighlight 2.5s ease-out;
+  border-color: var(--napen-teal-dark);
+}
+
+.calc-fast-track-pill {
+  font-size: 0.72rem;
+  background-color: var(--napen-teal-soft);
+  color: var(--napen-teal-dark);
+  padding: 2px 10px;
+  border-radius: var(--radius-pill);
+  font-weight: 700;
+  border: 1px solid var(--napen-teal-bar);
+  letter-spacing: 0.02em;
+}
+
+.dual-calc-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.dual-calc-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--napen-navy);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.dual-calc-subtitle {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+.effect-calc-info-link {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--napen-teal-dark);
+  text-decoration: none;
+  border-bottom: 1.5px dotted var(--napen-teal-dark);
+  padding-bottom: 1px;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.effect-calc-info-link:hover {
+  color: var(--napen-teal-bar);
+  border-bottom-style: solid;
+}
+
+.dual-calc-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 18px;
+}
+
+.calc-col-clinical,
+.calc-col-evidence {
+  background-color: #FFFFFF;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.calc-col-label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--napen-teal-dark);
+  letter-spacing: 0.03em;
+}
+
+/* Seletor Dinâmico de Escalas (Tabs) */
+.calc-scale-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+
+.calc-scale-tab-btn {
+  background: var(--bg-card);
+  border: 1px solid var(--border-medium);
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.calc-scale-tab-btn:hover {
+  border-color: var(--napen-teal-bar);
+  color: var(--napen-teal-dark);
+}
+
+.calc-scale-tab-btn.active {
+  background: var(--napen-teal-soft);
+  color: var(--napen-teal-dark);
+  border-color: var(--napen-teal-bar);
+  font-weight: 700;
+}
+
+/* Painel Especial da EAM (0, 1, 1+, 2, 3, 4) */
+.calc-eam-box {
+  background: var(--bg-page);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.eam-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.eam-label {
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.eam-buttons-group {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.btn-eam {
+  flex: 1;
+  min-width: 36px;
+  padding: 7px 10px;
+  background: #FFFFFF;
+  border: 1.5px solid var(--border-medium);
+  border-radius: var(--radius-sm);
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--napen-navy);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+}
+
+.btn-eam:hover {
+  border-color: var(--napen-teal-bar);
+  color: var(--napen-teal-dark);
+}
+
+.btn-eam.active {
+  background: var(--napen-teal-dark);
+  color: #FFFFFF;
+  border-color: var(--napen-teal-dark);
+  box-shadow: 0 2px 6px rgba(10, 106, 110, 0.25);
+}
+
+/* Indicadores Circulares Sóbrios (Substitutos de Emojis) */
+.outcome-bullet {
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.outcome-bullet.status-success {
+  background-color: var(--napen-teal-dark);
+}
+
+.btn-outcome.success.active .outcome-bullet.status-success {
+  background-color: #FFFFFF;
+}
+
+.outcome-bullet.status-warning {
+  background-color: #D97706;
+}
+
+.btn-outcome.warning.active .outcome-bullet.status-warning {
+  background-color: #FFFFFF;
+}
+
+.outcome-bullet.status-danger {
+  background-color: #DC2626;
+}
+
+.btn-outcome.danger.active .outcome-bullet.status-danger {
+  background-color: #FFFFFF;
+}
+
+.calc-inputs-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.calc-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.calc-input-group label {
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: var(--text-muted);
+}
+
+.calc-input-group input {
+  padding: 9px 12px;
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-sm);
+  font-size: 0.92rem;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.calc-input-group input:focus {
+  border-color: var(--napen-teal-bar);
+  box-shadow: 0 0 0 2px var(--napen-teal-soft);
+}
+
+.calc-clinical-result {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.calc-metric-pill {
+  padding: 8px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+  font-weight: 700;
+  background-color: var(--bg-page);
+  color: var(--text-muted);
+  text-align: center;
+  border: 1px solid var(--border-subtle);
+  transition: all 0.3s ease;
+}
+
+.calc-metric-pill.success {
+  background-color: var(--status-success-bg);
+  color: var(--status-success-text);
+  border-color: var(--status-success-border);
+}
+
+.calc-metric-pill.warning,
+.calc-metric-pill.partial {
+  background-color: var(--status-warning-bg);
+  color: var(--status-warning-text);
+  border-color: var(--status-warning-border);
+}
+
+.calc-metric-pill.danger,
+.calc-metric-pill.fail {
+  background-color: var(--status-danger-bg);
+  color: var(--status-danger-text);
+  border-color: var(--status-danger-border);
+}
+
+.calc-goal-feedback {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  line-height: 1.45;
+}
+
+.calc-evidence-box {
+  background-color: var(--bg-page);
+  border: 1px dashed var(--border-medium);
+  border-radius: var(--radius-sm);
+  padding: 14px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* ==========================================================================
+   Hero & Identificação da Plataforma
+   ========================================================================== */
+.hero-section {
+  background-color: #FFFFFF;
+  border-bottom: 1px solid var(--border-subtle);
+  padding: 24px 0 22px 0;
+}
+
+.hero-container {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.hero-title {
+  font-size: 1.55rem;
+  font-weight: 700;
+  color: var(--napen-navy);
+  letter-spacing: -0.02em;
+  margin-bottom: 4px;
+}
+
+.hero-subtitle {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+}
+
+/* ==========================================================================
+   Conteúdo Principal da Plataforma (Standalone)
+   ========================================================================== */
+.main-wrapper {
+  max-width: 1320px;
+  margin: 28px auto 48px auto;
+  padding: 0 24px;
+  min-height: 600px;
+}
+
+/* ==========================================================================
+   Aba 1: Prescrição Interativa (Sob Demanda: Dropdown ou Busca Ativa)
+   ========================================================================== */
+.prescription-view-container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Estado Inicial: Painel de Seleção e Busca Limpa */
+.search-selector-hero {
+  background-color: #FFFFFF;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 32px;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.search-selector-header {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.search-selector-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--napen-navy);
+}
+
+.search-selector-subtitle {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.search-inputs-row {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  position: relative;
+}
+
+.search-box-wrap {
+  flex: 1 1 400px;
+  position: relative;
+}
+
+.search-input-field {
+  width: 100%;
+  padding: 13px 44px 13px 18px;
+  font-size: 0.95rem;
+  border: 1.5px solid var(--border-medium);
+  border-radius: var(--radius-md);
+  background-color: #FFFFFF;
+  color: var(--text-main);
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.search-input-field:focus {
+  border-color: var(--napen-teal-bar);
+  box-shadow: 0 0 0 3px rgba(24, 193, 192, 0.2);
+}
+
+/* Letreiro Dinâmico Rolante (Marquee) para Dicas e Termos de Pesquisa */
+.search-placeholder-marquee {
+  position: absolute;
+  top: 0;
+  left: 18px;
+  right: 44px;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  pointer-events: none;
+  font-size: 0.93rem;
+  user-select: none;
+  z-index: 2;
+}
+
+.search-box-wrap:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+.search-input-field:focus ~ .search-placeholder-marquee,
+.search-placeholder-marquee.hidden {
+  display: none !important;
+}
+
+.marquee-track {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  animation: searchMarqueeScroll 28s linear infinite;
+  will-change: transform;
+}
+
+.marquee-content {
+  display: inline-block;
+  white-space: nowrap;
+  color: #94a3b8;
+}
+
+.marquee-separator {
+  display: inline-block;
+  margin: 0 20px;
+  color: var(--napen-teal-bar);
+  font-size: 0.75rem;
+  opacity: 0.7;
+}
+
+@keyframes searchMarqueeScroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.search-clear-btn {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  color: var(--text-faint);
+  cursor: pointer;
+  display: none;
+}
+
+.search-clear-btn.visible {
+  display: block;
+}
+
+/* Lista Suspensa de Autocomplete da Busca */
+.search-results-dropdown {
+  display: none;
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  width: 100%;
+  background-color: #FFFFFF;
+  border: 1.5px solid var(--napen-teal-bar);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-dropdown);
+  z-index: 1500;
+  max-height: 380px;
+  overflow-y: auto;
+}
+
+.search-results-dropdown.visible {
+  display: block;
+}
+
+.search-result-item {
+  padding: 12px 18px;
+  border-bottom: 1px solid var(--border-subtle);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.search-result-item:last-child {
+  border-bottom: none;
+}
+
+.search-result-item:hover {
+  background-color: var(--napen-teal-soft);
+}
+
+.search-res-title {
+  font-weight: 700;
+  color: var(--napen-navy);
+  font-size: 0.9rem;
+}
+
+.search-res-eixo {
+  font-size: 0.75rem;
+  color: var(--napen-teal-dark);
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+/* ==========================================================================
+   Área do Algoritmo Interativo de Prescrição (Revelado após seleção)
+   ========================================================================== */
+.algorithm-active-container {
+  display: none;
+  flex-direction: column;
+  gap: 24px;
+  animation: fadeIn 0.25s ease;
+}
+
+.algorithm-active-container.visible {
+  display: flex;
+}
+
+/* Barra de Retorno e Identificação da Condição */
+.algorithm-header-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  background-color: #FFFFFF;
+  border: 1px solid var(--border-subtle);
+  padding: 16px 22px;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+}
+
+.algo-header-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.algo-cond-eixo {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--napen-teal-dark);
+  letter-spacing: 0.03em;
+}
+
+.algo-cond-title {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--napen-navy);
+}
+
+.btn-clear-selection {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background-color: transparent;
+  color: var(--napen-teal-dark);
+  border: 1.5px solid var(--napen-teal-bar);
+  padding: 7px 16px;
+  border-radius: var(--radius-sm);
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-clear-selection:hover {
+  background-color: var(--napen-teal-soft);
+  color: var(--napen-teal-hover);
+}
+
+/* Trilha Visual do Algoritmo (Flow Stepper) */
+.flow-stepper-track {
+  display: flex;
+  align-items: center;
+  background-color: #FFFFFF;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 12px 20px;
+  gap: 12px;
+  overflow-x: auto;
+}
+
+.step-node {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-faint);
+  white-space: nowrap;
+}
+
+.step-node.completed {
+  color: var(--napen-teal-dark);
+}
+
+.step-node.current {
+  color: var(--napen-navy);
+  font-weight: 700;
+}
+
+.step-num {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  background-color: var(--bg-page);
+  border: 1px solid var(--border-medium);
+  color: var(--text-muted);
+}
+
+.step-node.current .step-num {
+  background-color: var(--napen-teal-bar);
+  border-color: var(--napen-teal-bar);
+  color: #FFFFFF;
+}
+
+.step-node.completed .step-num {
+  background-color: var(--napen-teal-dark);
+  border-color: var(--napen-teal-dark);
+  color: #FFFFFF;
+}
+
+.step-divider {
+  color: var(--border-medium);
+}
+
+/* Painel Interativo do Nó 1 (Fator Limitante) */
+.node1-panel {
+  background-color: #FFFFFF;
+  border: 1px solid var(--border-subtle);
+  border-left: 4px solid var(--napen-teal-bar);
+  border-radius: var(--radius-lg);
+  padding: 22px;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.node1-title {
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: var(--napen-navy);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.node1-options-list {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.pill-factor-btn {
+  background-color: var(--bg-page);
+  border: 1px solid var(--border-medium);
+  color: var(--text-main);
+  padding: 9px 18px;
+  border-radius: var(--radius-md);
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.pill-factor-btn:hover {
+  border-color: var(--napen-teal-bar);
+  color: var(--napen-teal-dark);
+  background-color: var(--napen-teal-soft);
+}
+
+.pill-factor-btn.active {
+  background-color: var(--napen-teal-dark);
+  border-color: var(--napen-teal-dark);
+  color: #FFFFFF;
+  box-shadow: var(--shadow-sm);
+}
+
+/* Card de Prescrição Primária */
+.prescription-details-card {
+  background-color: #FFFFFF;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 26px;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.prescription-top-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  border-bottom: 1px solid var(--border-subtle);
+  padding-bottom: 14px;
+}
+
+.prescription-main-title {
+  font-size: 1.18rem;
+  font-weight: 700;
+  color: var(--napen-navy);
+}
+
+.guideline-badge-card {
+  background-color: var(--napen-teal-soft);
+  border: 1px solid rgba(24, 193, 192, 0.4);
+  color: var(--napen-teal-dark);
+  padding: 6px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 0.82rem;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Grid de Parâmetros */
+.params-details-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+}
+
+.param-box {
+  background-color: var(--bg-page);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.param-box-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  letter-spacing: 0.04em;
+}
+
+.param-box-val {
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: var(--napen-navy);
+}
+
+.param-box-desc {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+
+/* Eficácia Ancorada */
+.scale-efficacy-panel {
+  background-color: #F8FAFC;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.scale-badge-pill {
+  background-color: var(--napen-teal-dark);
+  color: #FFFFFF;
+  padding: 3px 12px;
+  border-radius: var(--radius-pill);
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+/* Assistente de Resposta Clínica */
+.response-assistant-panel {
+  background-color: #FFFFFF;
+  border: 1.5px solid var(--border-medium);
+  border-radius: var(--radius-lg);
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.assistant-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.assistant-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--napen-navy);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.outcome-buttons-row {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.btn-outcome {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  border-radius: var(--radius-md);
+  border: 1.5px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-outcome.success {
+  background-color: var(--status-success-bg);
+  border-color: var(--status-success-border);
+  color: var(--status-success-text);
+}
+.btn-outcome.success:hover, .btn-outcome.success.active {
+  background-color: #10B981;
+  color: #FFFFFF;
+}
+
+.btn-outcome.warning {
+  background-color: var(--status-warning-bg);
+  border-color: var(--status-warning-border);
+  color: var(--status-warning-text);
+}
+.btn-outcome.warning:hover, .btn-outcome.warning.active {
+  background-color: #F59E0B;
+  color: #FFFFFF;
+}
+
+.btn-outcome.danger {
+  background-color: var(--status-danger-bg);
+  border-color: var(--status-danger-border);
+  color: var(--status-danger-text);
+}
+.btn-outcome.danger:hover, .btn-outcome.danger.active {
+  background-color: #EF4444;
+  color: #FFFFFF;
+}
+
+.branch-result-panel {
+  display: none;
+  border-radius: var(--radius-md);
+  padding: 18px;
+  font-size: 0.88rem;
+  line-height: 1.5;
+  animation: fadeIn 0.2s ease;
+}
+
+.branch-result-panel.visible {
+  display: block;
+}
+
+.branch-result-panel.success {
+  background-color: var(--status-success-bg);
+  border: 1px solid var(--status-success-border);
+  color: var(--status-success-text);
+}
+
+.branch-result-panel.warning {
+  background-color: var(--status-warning-bg);
+  border: 1px solid var(--status-warning-border);
+  color: var(--status-warning-text);
+}
+
+.branch-result-panel.danger {
+  background-color: #FFF5F5;
+  border: 1px solid #FEB2B2;
+  color: #742A2A;
+}
+
+.alternative-protocol-box {
+  margin-top: 12px;
+  background-color: #FFFFFF;
+  border: 1px solid #FEB2B2;
+  border-radius: var(--radius-md);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.alt-title-line {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #9B2C2C;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.alt-clinical-notes {
+  background-color: #FFF5F5;
+  border-left: 3px solid #E53E3E;
+  padding: 8px 12px;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  font-size: 0.82rem;
+  color: #4A5568;
+}
+
+/* ==========================================================================
+   Aba 2: Guia Rápido de Parâmetros e Alvos (Tabela de Bolso)
+   ========================================================================== */
+.pocket-table-container {
+  background-color: #FFFFFF;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  overflow-x: auto;
+  box-shadow: var(--shadow-sm);
+}
+
+.pocket-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.86rem;
+}
+
+.pocket-table th {
+  background-color: var(--napen-teal-dark);
+  color: #FFFFFF;
+  font-weight: 700;
+  padding: 14px 18px;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.pocket-table td {
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--border-subtle);
+  vertical-align: top;
+}
+
+.pocket-table tbody tr:hover {
+  background-color: var(--bg-page);
+}
+
+/* ==========================================================================
+   Aba 3: Metodologia ("Como os Roadmaps de indicação foram desenvolvidos")
+   ========================================================================== */
+.methodology-container {
+  background-color: #FFFFFF;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 38px 42px;
+  max-width: 960px;
+  margin: 0 auto;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.methodology-header {
+  border-bottom: 3px solid var(--napen-teal-bar);
+  padding-bottom: 14px;
+}
+
+.methodology-header h2 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--napen-navy);
+}
+
+/* ==========================================================================
+   Rodapé Institucional Oficial
+   ========================================================================== */
+.site-footer {
+  background-color: #FFFFFF;
+  border-top: 1px solid var(--border-subtle);
+  margin-top: 56px;
+  padding: 24px 0;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+
+.footer-inner {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.footer-version-tag {
+  background-color: var(--bg-page);
+  border: 1px solid var(--border-subtle);
+  color: var(--napen-navy);
+  padding: 4px 12px;
+  border-radius: var(--radius-pill);
+  font-weight: 700;
+  font-size: 0.78rem;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 992px) {
+  .header-nav-bar {
+    height: auto;
+    min-height: 60px;
+  }
+  .header-nav-container {
+    overflow: visible;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 6px 12px;
+  }
+  .nav-btn {
+    padding: 10px 14px;
+    font-size: 0.82rem;
+  }
+  .dropdown-menu-napen {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 290px;
+    max-width: 92vw;
+    max-height: 80vh;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .dropdown-submenu {
+    position: static;
+    display: none;
+    min-width: 100%;
+    max-width: 100%;
+    box-shadow: none;
+    border: none;
+    border-top: 1px solid var(--border-subtle);
+    border-left: 3px solid var(--napen-teal-bar);
+    background-color: #F8FAFC;
+  }
+  .dropdown-item-has-submenu:hover > .dropdown-submenu,
+  .dropdown-item-has-submenu.submenu-open > .dropdown-submenu,
+  .dropdown-item-has-submenu:focus-within > .dropdown-submenu {
+    display: block;
+  }
+  .dropdown-subsubmenu {
+    position: static;
+    display: none;
+    min-width: 100%;
+    max-width: 100%;
+    box-shadow: none;
+    border: none;
+    border-top: 1px solid var(--border-subtle);
+    border-left: 3px solid var(--napen-teal-dark);
+    background-color: #F1F5F9;
+  }
+  .dropdown-item-has-subsubmenu:hover > .dropdown-subsubmenu,
+  .dropdown-item-has-subsubmenu.subsubmenu-open > .dropdown-subsubmenu,
+  .dropdown-item-has-subsubmenu:focus-within > .dropdown-subsubmenu {
+    display: block;
+  }
+}
+
+/* ==========================================================================
+   Header Top Actions & Seletor de Idioma Oficial (Mimetização Rede NAPeN)
+   ========================================================================== */
+.header-top-actions {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+/* Widget de Seleção de Idioma Retrátil Oficial (Mimetização Estrita do Portal Rede NAPeN) */
+.lang-dropdown-wrapper {
+  position: relative;
+  display: inline-block;
+  user-select: none;
+}
+
+.lang-capsule-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: var(--napen-teal-bar);
+  color: #FFFFFF;
+  border: none;
+  border-radius: 9999px;
+  padding: 5px 14px;
+  height: 36px;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  font-family: var(--font-family-base);
+  font-size: 0.90rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+}
+
+.lang-capsule-btn:hover {
+  background-color: var(--napen-teal-dark);
+  box-shadow: 0 4px 10px rgba(0, 153, 161, 0.25);
+}
+
+.lang-menu-expanded {
+  display: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 96px;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
+  border: 1px solid rgba(0, 153, 161, 0.35);
+  z-index: 1100;
+  background: #FFFFFF;
+}
+
+.lang-menu-expanded.open {
+  display: block;
+}
+
+.lang-tier {
+  display: flex;
+  align-items: center;
+  padding: 5px 12px;
+  height: 35px;
+  box-sizing: border-box;
+}
+
+.lang-tier-active {
+  background: #FFFFFF;
+  color: #1e293b;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.lang-tier-option {
+  background: var(--napen-teal-bar);
+  color: #FFFFFF;
+  cursor: pointer;
+  justify-content: flex-start;
+  gap: 10px;
+  transition: background-color 0.15s ease;
+}
+
+.lang-tier-option:hover {
+  background: var(--napen-teal-dark);
+}
+
+.tier-lang-text, .capsule-lang-text {
+  font-family: var(--font-family-base);
+  font-size: 0.90rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.capsule-chevron-down {
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+
+.tier-chevron-up {
+  flex-shrink: 0;
+}
+
+.flag-icon-circle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+  flex-shrink: 0;
+}
+
+.flag-icon-circle svg {
+  display: block;
+}
+
+.search-res-match-tag {
+  display: inline-block;
+  background: #E0F2FE;
+  color: #0369A1;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+  margin-top: 4px;
+}
+
+/* ==========================================================================
+   Botão "Como Aplicar a Escala"
+   ========================================================================== */
+.btn-guide-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background-color: #FFFFFF;
+  color: var(--napen-teal-dark);
+  border: 1.5px solid var(--napen-teal-bar);
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  font-family: var(--font-family-base);
+}
+
+.btn-guide-pill:hover {
+  background-color: var(--napen-teal-bar);
+  color: #FFFFFF;
+  box-shadow: 0 2px 6px rgba(0, 153, 161, 0.25);
+}
+
+/* ==========================================================================
+   Drawer / Modal: Guia Clínico de Aplicação de Escalas
+   ========================================================================== */
+.scale-guide-backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(15, 23, 42, 0.45);
+  backdrop-filter: blur(2px);
+  z-index: 1200;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+
+.scale-guide-backdrop.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.scale-guide-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 580px;
+  max-width: 95vw;
+  background-color: #FFFFFF;
+  box-shadow: -8px 0 24px rgba(15, 23, 42, 0.18);
+  z-index: 1250;
+  transform: translateX(100%);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+}
+
+.scale-guide-drawer.visible {
+  transform: translateX(0);
+}
+
+.scale-guide-header {
+  padding: 20px 24px;
+  background-color: var(--bg-surface);
+  border-bottom: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.scale-guide-badges-top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.scale-badge-sigla {
+  background-color: var(--napen-teal-dark);
+  color: #FFFFFF;
+  font-size: 0.75rem;
+  font-weight: 800;
+  padding: 3px 8px;
+  border-radius: var(--radius-sm);
+  text-transform: uppercase;
+}
+
+.scale-badge-tempo {
+  background-color: #E2E8F0;
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: var(--radius-sm);
+}
+
+.scale-guide-title {
+  font-size: 1.18rem;
+  font-weight: 800;
+  color: var(--napen-navy);
+  line-height: 1.3;
+}
+
+.scale-guide-subtitle {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-top: 3px;
+}
+
+.scale-guide-close-btn {
+  background: transparent;
+  border: none;
+  font-size: 1.25rem;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 4px;
+  line-height: 1;
+  transition: color 0.15s ease;
+}
+
+.scale-guide-close-btn:hover {
+  color: var(--napen-navy);
+}
+
+.scale-guide-nav-tabs {
+  display: flex;
+  border-bottom: 1px solid var(--border-subtle);
+  background-color: #FFFFFF;
+  padding: 0 16px;
+}
+
+.scale-tab-btn {
+  background: transparent;
+  border: none;
+  border-bottom: 2.5px solid transparent;
+  padding: 12px 14px;
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  font-family: var(--font-family-base);
+}
+
+.scale-tab-btn:hover {
+  color: var(--napen-teal-dark);
+}
+
+.scale-tab-btn.active {
+  color: var(--napen-teal-dark);
+  border-bottom-color: var(--napen-teal-dark);
+}
+
+.scale-guide-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 24px;
+}
+
+.scale-tab-content {
+  display: none;
+}
+
+.scale-tab-content.active {
+  display: block;
+}
+
+.scale-meta-info-box {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+  font-size: 0.85rem;
+  margin-bottom: 18px;
+  color: var(--text-main);
+}
+
+.scale-section-heading {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: var(--napen-navy);
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.scale-steps-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.scale-step-item {
+  background-color: #FFFFFF;
+  border: 1px solid var(--border-subtle);
+  border-left: 3px solid var(--napen-teal-dark);
+  border-radius: var(--radius-md);
+  padding: 12px 16px;
+}
+
+.scale-step-item-title {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--napen-navy);
+  margin-bottom: 4px;
+}
+
+.scale-step-item-desc {
+  font-size: 0.84rem;
+  color: var(--text-main);
+  line-height: 1.5;
+}
+
+.scale-scores-table {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.scale-score-row {
+  display: flex;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 8px 12px;
+  gap: 12px;
+  align-items: baseline;
+  font-size: 0.84rem;
+}
+
+.scale-score-grau {
+  font-weight: 800;
+  color: var(--napen-teal-dark);
+  flex-shrink: 0;
+  min-width: 65px;
+}
+
+.scale-score-desc {
+  color: var(--text-main);
+  line-height: 1.4;
+}
+
+.scale-card-highlight {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+}
+
+.scale-ref-citation {
+  font-size: 0.85rem;
+  color: var(--text-main);
+  line-height: 1.55;
+}
+
+.btn-ref-access {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background-color: var(--napen-teal-dark);
+  color: #FFFFFF;
+  text-decoration: none;
+  padding: 6px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 0.82rem;
+  font-weight: 700;
+  transition: opacity 0.15s ease;
+}
+
+.btn-ref-access:hover {
+  opacity: 0.9;
+}
+
+.scale-guide-footer {
+  padding: 16px 24px;
+  background-color: #FFFFFF;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.btn-use-in-calc {
+  width: 100%;
+  background-color: var(--napen-teal-dark);
+  color: #FFFFFF;
+  border: none;
+  padding: 12px;
+  border-radius: var(--radius-md);
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+  font-family: var(--font-family-base);
+}
+
+.btn-use-in-calc:hover {
+  opacity: 0.92;
+}
+
+@media (max-width: 768px) {
+  .header-top-bar {
+    height: 88px;
+  }
+  .brand-logo-img {
+    height: 64px;
+    max-height: 68px;
+  }
+  .header-top-inner {
+    padding: 0 16px;
+  }
+  .header-nav-container {
+    padding: 0 12px;
+  }
+  .nav-btn {
+    padding: 0 14px;
+    font-size: 0.8rem;
+  }
+  .search-inputs-row {
+    flex-direction: column;
+  }
+  .params-details-grid {
+    grid-template-columns: 1fr;
+  }
+  .monitoring-grid {
+    grid-template-columns: 1fr;
+  }
+  .methodology-container {
+    padding: 24px 18px;
+  }
+  .header-top-actions {
+    gap: 10px;
+  }
+  .scale-guide-drawer {
+    width: 100vw;
+  }
+}
+

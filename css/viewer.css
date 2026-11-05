@@ -1,0 +1,204 @@
+/* ==========================================================================
+   Rede NAPeN — Visualizador de Diagramas SVG (Pan & Zoom Modal)
+   ========================================================================== */
+
+.svg-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(4px);
+  z-index: 1000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.svg-modal-backdrop.open {
+  display: flex;
+}
+
+.svg-modal-window {
+  background-color: #FFFFFF;
+  border-radius: var(--radius-lg);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  width: 100%;
+  max-width: 1400px;
+  height: 92vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--border-subtle);
+}
+
+.svg-modal-header {
+  background-color: var(--color-primary);
+  color: #FFFFFF;
+  padding: 14px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid var(--color-secondary);
+}
+
+.svg-modal-title-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.svg-modal-badge {
+  background-color: var(--color-secondary);
+  color: #FFFFFF;
+  font-weight: 700;
+  font-size: 0.8rem;
+  padding: 3px 8px;
+  border-radius: var(--radius-sm);
+}
+
+.svg-modal-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #FFFFFF;
+}
+
+.svg-modal-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.svg-modal-btn {
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: #FFFFFF;
+  width: 34px;
+  height: 34px;
+  border-radius: var(--radius-md);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.svg-modal-btn:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.svg-modal-btn.close {
+  background-color: #EF4444;
+  border-color: #EF4444;
+}
+.svg-modal-btn.close:hover {
+  background-color: #DC2626;
+}
+
+/* Área do Canvas com Pan/Zoom */
+.svg-canvas-container {
+  flex: 1;
+  background-color: #F8FAFC;
+  background-image: 
+    linear-gradient(to right, rgba(0, 0, 0, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.04) 1px, transparent 1px);
+  background-size: 24px 24px;
+  position: relative;
+  overflow: hidden;
+  cursor: grab;
+  user-select: none;
+}
+
+.svg-canvas-container:active {
+  cursor: grabbing;
+}
+
+.svg-canvas-stage {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform-origin: 0 0;
+  will-change: transform;
+}
+
+.svg-canvas-stage svg {
+  max-width: 95%;
+  max-height: 95%;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  background-color: #FFFFFF;
+  border-radius: var(--radius-sm);
+  pointer-events: auto;
+}
+
+/* Barra de Ferramentas Flutuante */
+.svg-floating-toolbar {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #FFFFFF;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-lg);
+  padding: 6px 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  z-index: 20;
+}
+
+.toolbar-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.toolbar-btn:hover {
+  background-color: var(--bg-surface-subtle);
+  color: var(--color-primary);
+}
+
+.toolbar-divider {
+  width: 1px;
+  height: 20px;
+  background-color: var(--border-subtle);
+}
+
+.toolbar-zoom-text {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-main);
+  min-width: 48px;
+  text-align: center;
+  font-family: var(--font-family-mono);
+}
+
+/* Miniatura de Dicas de Navegação */
+.svg-nav-hints {
+  position: absolute;
+  top: 16px;
+  left: 20px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 8px 12px;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  pointer-events: none;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
