@@ -281,21 +281,26 @@
             </div>
           </div>
 
-          <!-- Eficácia Ancorada -->
+          <!-- Desfecho Funcional & Meta Terapêutica (Nomenclatura Oficial Roadmaps NAPeN) -->
           <div class="scale-efficacy-panel">
-            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
-              <span style="font-size: 0.82rem; font-weight: 700; color: var(--napen-navy); text-transform: uppercase;">
-                Eficácia Ancorada na Escala Clínica Recomendada
-              </span>
-              <div style="display: flex; align-items: center; gap: 8px;">
+            <div class="scale-efficacy-header">
+              <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+                <span class="scale-efficacy-title">
+                  Desfecho Funcional & Meta do Ciclo
+                </span>
                 <span class="scale-badge-pill" id="prescEscala">Escala Clínica Validada</span>
               </div>
+              <button type="button" class="btn-guide-pill" id="btnOpenScaleGuidePresc" title="Como aplicar esta escala no exame clínico">
+                Como Aplicar
+              </button>
             </div>
-            <div style="font-size: 0.88rem; color: var(--text-main); margin-top: 2px;">
-              <strong>Tamanho de Efeito Reportado:</strong> <span id="prescEfeito">—</span>
-            </div>
-            <div style="font-size: 0.82rem; color: var(--napen-teal-dark);">
-              <strong>Meta Terapêutica Estabelecida:</strong> <span id="prescMeta">—</span>
+            <div class="scale-meta-row">
+              <div style="font-size: 0.86rem; color: var(--napen-navy);">
+                <strong>Meta Clínica do Protocolo (MCID):</strong> <span id="prescMeta">—</span>
+              </div>
+              <a href="#dualCalcContainer" class="shortcut-to-calc" id="btnScrollToCalc">
+                Avaliar Resposta na Calculadora ↓
+              </a>
             </div>
           </div>
 
@@ -463,11 +468,11 @@
                   <!-- Métricas da Literatura em Grid -->
                   <div class="calc-evidence-metrics-grid">
                     <div class="calc-ev-metric-item">
-                      <span class="calc-ev-metric-title">Ganho Médio na Escala (IC 95%)</span>
+                      <span class="calc-ev-metric-title">Resultado Esperado na Literatura (IC 95%)</span>
                       <span class="calc-ev-metric-num" id="calcRoadmapEffectText">—</span>
                     </div>
                     <div class="calc-ev-metric-item">
-                      <span class="calc-ev-metric-title">Tamanho de Efeito Esperado</span>
+                      <span class="calc-ev-metric-title">Tamanho de Efeito Esperado (d de Cohen)</span>
                       <span class="calc-ev-metric-num" id="calcStudyCohen">—</span>
                     </div>
                     <div class="calc-ev-metric-item">

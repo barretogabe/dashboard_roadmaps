@@ -469,9 +469,12 @@ class TestRedeNAPeNPrescriptionPlatform(unittest.TestCase):
                 content = f.read().lower()
             self.assertNotIn('moderado a grande', content, f"Termo híbrido ambíguo 'moderado a grande' encontrado em {filepath}")
 
-        # 6. Nomenclatura atualizada: 'Estudos de referência' e 'Tamanho de Efeito Esperado'
-        self.assertIn('Tamanho de Efeito Esperado', html)
+        # 6. Nomenclatura atualizada: 'Estudos de referência', 'Resultado Esperado na Literatura' e 'Desfecho Funcional & Meta do Ciclo'
+        self.assertIn('Tamanho de Efeito Esperado (d de Cohen)', html)
+        self.assertIn('Resultado Esperado na Literatura (IC 95%)', html)
+        self.assertIn('Desfecho Funcional & Meta do Ciclo', html)
         self.assertIn('Estudos de referência', html)
+        self.assertNotIn('Tamanho de Efeito Reportado:', html)
         self.assertNotIn('Ensaio Clínico Randomizado de Referência', html)
 
 if __name__ == '__main__':

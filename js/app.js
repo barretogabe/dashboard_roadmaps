@@ -1319,11 +1319,39 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  const btnOpenScaleGuidePresc = document.getElementById('btnOpenScaleGuidePresc');
+  if (btnOpenScaleGuidePresc) {
+    btnOpenScaleGuidePresc.addEventListener('click', () => {
+      const activeScale = engine.getActiveScale();
+      const activeMod = engine.getActiveModality();
+      const scaleToOpen = activeScale?.sigla || activeScale?.id || activeMod?.escala_recomendada;
+      openScaleGuide(scaleToOpen);
+    });
+  }
+
+  const btnScrollToCalc = document.getElementById('btnScrollToCalc');
+  if (btnScrollToCalc) {
+    btnScrollToCalc.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (dualCalcContainer) {
+        const headerEl = document.querySelector('.site-header');
+        const headerHeight = headerEl ? headerEl.offsetHeight : 140;
+        const rect = dualCalcContainer.getBoundingClientRect();
+        const targetScrollY = window.pageYOffset + rect.top - headerHeight - 16;
+        window.scrollTo({ top: targetScrollY, behavior: 'smooth' });
+      }
+    });
+  }
+
   if (btnScaleGuideUseInCalc) {
     btnScaleGuideUseInCalc.addEventListener('click', () => {
       closeScaleGuide();
       if (dualCalcContainer) {
-        dualCalcContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        const headerEl = document.querySelector('.site-header');
+        const headerHeight = headerEl ? headerEl.offsetHeight : 140;
+        const rect = dualCalcContainer.getBoundingClientRect();
+        const targetScrollY = window.pageYOffset + rect.top - headerHeight - 16;
+        window.scrollTo({ top: targetScrollY, behavior: 'smooth' });
       }
     });
   }

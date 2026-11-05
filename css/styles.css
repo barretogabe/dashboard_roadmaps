@@ -1484,15 +1484,62 @@ body {
   color: var(--text-muted);
 }
 
-/* Eficácia Ancorada */
+/* Desfecho Funcional & Meta Terapêutica */
 .scale-efficacy-panel {
   background-color: #F8FAFC;
   border: 1px solid var(--border-subtle);
+  border-left: 4px solid var(--napen-teal-bar);
   border-radius: var(--radius-md);
-  padding: 18px;
+  padding: 14px 18px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
+}
+
+.scale-efficacy-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.scale-efficacy-title {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--napen-navy);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.scale-meta-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.shortcut-to-calc {
+  font-size: 0.80rem;
+  font-weight: 700;
+  color: var(--napen-teal-dark);
+  text-decoration: none;
+  background-color: var(--napen-teal-soft);
+  padding: 4px 12px;
+  border-radius: var(--radius-sm);
+  transition: all 0.2s ease;
+  border: 1px solid var(--border-subtle);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.shortcut-to-calc:hover {
+  background-color: var(--napen-teal-bar);
+  color: #FFFFFF;
+  text-decoration: none;
+  box-shadow: 0 2px 6px rgba(0, 153, 161, 0.2);
 }
 
 .scale-badge-pill {
