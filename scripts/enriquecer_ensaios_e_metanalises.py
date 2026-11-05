@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 Rede NAPeN — Enriquecimento de Referências Formais: Ensaios Clínicos Seminais e Metanálises de Suporte
-Estrutura cada modalidade dos 18 roadmaps para conter tanto o Ensaio Clínico Randomizado Seminal
+Estrutura cada modalidade dos 18 roadmaps para conter tanto o Ensaio Clínico Randomizado de Referência
 (de onde o protocolo e parâmetros foram extraídos) quanto a Metanálise / Revisão Sistemática de suporte.
 """
 
@@ -23,7 +23,7 @@ ENSAIOS_E_METAS = {
             "periodico": "Clinical Neurophysiology, 118(1), 81–89",
             "doi": "10.1016/j.clinph.2006.08.016",
             "url_doi": "https://doi.org/10.1016/j.clinph.2006.08.016",
-            "tipo": "Ensaio Clínico Randomizado Seminal"
+            "tipo": "Ensaio Clínico Randomizado de Referência"
         },
         "meta": {
             "autores": "Fan, J., et al.",
@@ -43,7 +43,7 @@ ENSAIOS_E_METAS = {
             "periodico": "Neurology, 64(10), 1802–1804",
             "doi": "10.1212/01.WNL.0000161839.38079.92",
             "url_doi": "https://doi.org/10.1212/01.WNL.0000161839.38079.92",
-            "tipo": "Ensaio Clínico Randomizado Seminal"
+            "tipo": "Ensaio Clínico Randomizado de Referência"
         },
         "meta": {
             "autores": "Chen, Y., et al.",
@@ -63,7 +63,7 @@ ENSAIOS_E_METAS = {
             "periodico": "Journal of Neurology, Neurosurgery & Psychiatry, 76(6), 833–838",
             "doi": "10.1136/jnnp.2004.053801",
             "url_doi": "https://doi.org/10.1136/jnnp.2004.053801",
-            "tipo": "Ensaio Clínico Randomizado Seminal"
+            "tipo": "Ensaio Clínico Randomizado de Referência"
         },
         "meta": {
             "autores": "Xiang, H., et al.",
@@ -83,7 +83,7 @@ ENSAIOS_E_METAS = {
             "periodico": "Neurorehabilitation and Neural Repair, 21(5), 450–456",
             "doi": "10.1177/1545968307300527",
             "url_doi": "https://doi.org/10.1177/1545968307300527",
-            "tipo": "Ensaio Clínico Randomizado Seminal"
+            "tipo": "Ensaio Clínico Randomizado de Referência"
         },
         "meta": {
             "autores": "Chen, G., et al.",
@@ -103,7 +103,7 @@ ENSAIOS_E_METAS = {
             "periodico": "Neurology, 73(15), 1188–1194",
             "doi": "10.1212/WNL.0b013e3181bc0136",
             "url_doi": "https://doi.org/10.1212/WNL.0b013e3181bc0136",
-            "tipo": "Ensaio Clínico Randomizado Seminal"
+            "tipo": "Ensaio Clínico Randomizado de Referência"
         },
         "meta": {
             "autores": "Fan, J., et al.",
@@ -125,7 +125,7 @@ ENSAIOS_E_METAS = {
             "periodico": "NeuroImage, 202, 116104",
             "doi": "10.1016/j.neuroimage.2019.116104",
             "url_doi": "https://doi.org/10.1016/j.neuroimage.2019.116104",
-            "tipo": "Ensaio Clínico Randomizado Seminal"
+            "tipo": "Ensaio Clínico Randomizado de Referência"
         },
         "meta": {
             "autores": "Zhu, Y., et al.",
@@ -145,7 +145,7 @@ ENSAIOS_E_METAS = {
             "periodico": "Neurorehabilitation and Neural Repair, 26(3), 241–249",
             "doi": "10.1177/1545968311423110",
             "url_doi": "https://doi.org/10.1177/1545968311423110",
-            "tipo": "Ensaio Clínico Randomizado Seminal"
+            "tipo": "Ensaio Clínico Randomizado de Referência"
         },
         "meta": {
             "autores": "Su, X., et al.",
@@ -167,7 +167,7 @@ ENSAIOS_E_METAS = {
             "periodico": "Brain and Language, 93(1), 95–104",
             "doi": "10.1016/j.bandl.2004.08.004",
             "url_doi": "https://doi.org/10.1016/j.bandl.2004.08.004",
-            "tipo": "Ensaio Clínico Randomizado Seminal"
+            "tipo": "Ensaio Clínico Randomizado de Referência"
         },
         "meta": {
             "autores": "Ding, S., et al.",
@@ -187,7 +187,7 @@ ENSAIOS_E_METAS = {
             "periodico": "Stroke, 41(6), 1229–1236",
             "doi": "10.1161/STROKEAHA.109.577783",
             "url_doi": "https://doi.org/10.1161/STROKEAHA.109.577783",
-            "tipo": "Ensaio Clínico Randomizado Seminal"
+            "tipo": "Ensaio Clínico Randomizado de Referência"
         },
         "meta": {
             "autores": "Zhang, J., et al.",
@@ -209,7 +209,7 @@ ENSAIOS_E_METAS = {
             "periodico": "Neurorehabilitation and Neural Repair, 24(5), 469–475",
             "doi": "10.1177/1545968309359765",
             "url_doi": "https://doi.org/10.1177/1545968309359765",
-            "tipo": "Ensaio Clínico Randomizado Seminal"
+            "tipo": "Ensaio Clínico Randomizado de Referência"
         },
         "meta": {
             "autores": "Li, X., et al.",
@@ -229,7 +229,7 @@ ENSAIOS_E_METAS = {
             "periodico": "Stroke, 44(6), 1699–1704",
             "doi": "10.1161/STROKEAHA.111.000345",
             "url_doi": "https://doi.org/10.1161/STROKEAHA.111.000345",
-            "tipo": "Ensaio Clínico Randomizado Seminal"
+            "tipo": "Ensaio Clínico Randomizado de Referência"
         },
         "meta": {
             "autores": "Wang, Z., et al.",
@@ -251,7 +251,7 @@ ENSAIOS_E_METAS = {
             "periodico": "Neurology, 87(18), 1907–1915",
             "doi": "10.1212/WNL.0000000000003279",
             "url_doi": "https://doi.org/10.1212/WNL.0000000000003279",
-            "tipo": "Ensaio Clínico Randomizado Seminal"
+            "tipo": "Ensaio Clínico Randomizado de Referência"
         },
         "meta": {
             "autores": "Li, R., et al.",
@@ -271,7 +271,7 @@ ENSAIOS_E_METAS = {
             "periodico": "Parkinsonism & Related Disorders, 68, 85–90",
             "doi": "10.1016/j.parkreldis.2019.10.009",
             "url_doi": "https://doi.org/10.1016/j.parkreldis.2019.10.009",
-            "tipo": "Ensaio Clínico Randomizado Seminal"
+            "tipo": "Ensaio Clínico Randomizado de Referência"
         },
         "meta": {
             "autores": "Xie, Y. J., et al.",
@@ -291,7 +291,7 @@ ENSAIOS_E_METAS = {
             "periodico": "Movement Disorders, 26(10), 1872–1880",
             "doi": "10.1002/mds.23789",
             "url_doi": "https://doi.org/10.1002/mds.23789",
-            "tipo": "Ensaio Clínico Randomizado Seminal"
+            "tipo": "Ensaio Clínico Randomizado de Referência"
         },
         "meta": {
             "autores": "He, Y., et al.",
@@ -313,7 +313,7 @@ ENSAIOS_E_METAS = {
             "periodico": "Archives of General Psychiatry, 67(5), 507–516",
             "doi": "10.1001/archgenpsychiatry.2010.46",
             "url_doi": "https://doi.org/10.1001/archgenpsychiatry.2010.46",
-            "tipo": "Ensaio Clínico Randomizado Seminal"
+            "tipo": "Ensaio Clínico Randomizado de Referência"
         },
         "meta": {
             "autores": "Somani, A., et al.",
@@ -333,7 +333,7 @@ ENSAIOS_E_METAS = {
             "periodico": "The Lancet, 391(10131), 1683–1692",
             "doi": "10.1016/S0140-6736(18)30295-2",
             "url_doi": "https://doi.org/10.1016/S0140-6736(18)30295-2",
-            "tipo": "Ensaio Clínico Randomizado Seminal"
+            "tipo": "Ensaio Clínico Randomizado de Referência"
         },
         "meta": {
             "autores": "Brunoni, A. R., et al.",
@@ -353,7 +353,7 @@ ENSAIOS_E_METAS = {
             "periodico": "American Journal of Psychiatry, 160(9), 1675–1682",
             "doi": "10.1176/appi.ajp.160.9.1675",
             "url_doi": "https://doi.org/10.1176/appi.ajp.160.9.1675",
-            "tipo": "Ensaio Clínico Randomizado Seminal"
+            "tipo": "Ensaio Clínico Randomizado de Referência"
         },
         "meta": {
             "autores": "Quilty, L. C., et al.",
@@ -375,7 +375,7 @@ ENSAIOS_E_METAS = {
             "periodico": "Journal of Affective Disorders, 219, 137–142",
             "doi": "10.1016/j.jad.2017.05.021",
             "url_doi": "https://doi.org/10.1016/j.jad.2017.05.021",
-            "tipo": "Ensaio Clínico Randomizado Seminal"
+            "tipo": "Ensaio Clínico Randomizado de Referência"
         },
         "meta": {
             "autores": "Vicario, C. M., et al.",
@@ -395,7 +395,7 @@ ENSAIOS_E_METAS = {
             "periodico": "Cognitive Behaviour Therapy, 45(4), 312–324",
             "doi": "10.1080/16506073.2016.1181216",
             "url_doi": "https://doi.org/10.1080/16506073.2016.1181216",
-            "tipo": "Ensaio Clínico Randomizado Seminal"
+            "tipo": "Ensaio Clínico Randomizado de Referência"
         },
         "meta": {
             "autores": "Cui, H., et al.",
@@ -417,7 +417,7 @@ ENSAIOS_E_METAS = {
             "periodico": "American Journal of Psychiatry, 161(3), 515–524",
             "doi": "10.1176/appi.ajp.161.3.515",
             "url_doi": "https://doi.org/10.1176/appi.ajp.161.3.515",
-            "tipo": "Ensaio Clínico Randomizado Seminal"
+            "tipo": "Ensaio Clínico Randomizado de Referência"
         },
         "meta": {
             "autores": "Yan, T., et al.",
@@ -437,7 +437,7 @@ ENSAIOS_E_METAS = {
             "periodico": "Journal of Clinical Psychiatry, 71(8), 992–999",
             "doi": "10.4088/JCP.08m04638blu",
             "url_doi": "https://doi.org/10.4088/JCP.08m04638blu",
-            "tipo": "Ensaio Clínico Randomizado Seminal"
+            "tipo": "Ensaio Clínico Randomizado de Referência"
         },
         "meta": {
             "autores": "Cirillo, P., et al.",
@@ -459,7 +459,7 @@ ENSAIOS_E_METAS = {
             "periodico": "Pain, 110(3), 604–612",
             "doi": "10.1016/j.pain.2004.04.020",
             "url_doi": "https://doi.org/10.1016/j.pain.2004.04.020",
-            "tipo": "Ensaio Clínico Randomizado Seminal"
+            "tipo": "Ensaio Clínico Randomizado de Referência"
         },
         "meta": {
             "autores": "Moisset, X., et al.",
@@ -479,7 +479,7 @@ ENSAIOS_E_METAS = {
             "periodico": "Pain Medicine, 16(5), 984–994",
             "doi": "10.1111/pme.12646",
             "url_doi": "https://doi.org/10.1111/pme.12646",
-            "tipo": "Ensaio Clínico Randomizado Seminal"
+            "tipo": "Ensaio Clínico Randomizado de Referência"
         },
         "meta": {
             "autores": "Nardone, R., et al.",
@@ -501,7 +501,7 @@ ENSAIOS_E_METAS = {
             "periodico": "Parkinsonism & Related Disorders, 80, 1–6",
             "doi": "10.1016/j.parkreldis.2020.08.026",
             "url_doi": "https://doi.org/10.1016/j.parkreldis.2020.08.026",
-            "tipo": "Ensaio Clínico Randomizado Seminal"
+            "tipo": "Ensaio Clínico Randomizado de Referência"
         },
         "meta": {
             "autores": "Benussi, A., et al.",
@@ -521,7 +521,7 @@ ENSAIOS_E_METAS = {
             "periodico": "Neurology, 91(12), e1090–e1101",
             "doi": "10.1212/WNL.0000000000016206",
             "url_doi": "https://doi.org/10.1212/WNL.0000000000016206",
-            "tipo": "Ensaio Clínico Randomizado Seminal"
+            "tipo": "Ensaio Clínico Randomizado de Referência"
         },
         "meta": {
             "autores": "Song, P., et al.",
@@ -543,7 +543,7 @@ ENSAIOS_E_METAS = {
             "periodico": "PLOS ONE, 13(3), e0193702",
             "doi": "10.1371/journal.pone.0193702",
             "url_doi": "https://doi.org/10.1371/journal.pone.0193702",
-            "tipo": "Ensaio Clínico Randomizado Seminal"
+            "tipo": "Ensaio Clínico Randomizado de Referência"
         },
         "meta": {
             "autores": "Moura, R. C., et al.",
@@ -565,7 +565,7 @@ ENSAIOS_E_METAS = {
             "periodico": "Autism Research and Treatment, 2014, 431049",
             "doi": "10.1155/2014/431049",
             "url_doi": "https://doi.org/10.1155/2014/431049",
-            "tipo": "Ensaio Clínico Randomizado Seminal"
+            "tipo": "Ensaio Clínico Randomizado de Referência"
         },
         "meta": {
             "autores": "Liu, A., et al.",
@@ -585,7 +585,7 @@ ENSAIOS_E_METAS = {
             "periodico": "Neuropsychiatric Disease and Treatment, 11, 2999–3004",
             "doi": "10.2147/NDT.S95961",
             "url_doi": "https://doi.org/10.2147/NDT.S95961",
-            "tipo": "Ensaio Clínico Randomizado Seminal"
+            "tipo": "Ensaio Clínico Randomizado de Referência"
         },
         "meta": {
             "autores": "Gong, C., et al.",
@@ -607,7 +607,7 @@ ENSAIOS_E_METAS = {
             "periodico": "Neurorehabilitation and Neural Repair, 25(8), 706–714",
             "doi": "10.1177/1545968311402511",
             "url_doi": "https://doi.org/10.1177/1545968311402511",
-            "tipo": "Ensaio Clínico Randomizado Seminal"
+            "tipo": "Ensaio Clínico Randomizado de Referência"
         },
         "meta": {
             "autores": "Yang, T., et al.",
@@ -627,7 +627,7 @@ ENSAIOS_E_METAS = {
             "periodico": "Neurobiology of Aging, 36(9), 2465–2473",
             "doi": "10.1016/j.neurobiolaging.2015.05.004",
             "url_doi": "https://doi.org/10.1016/j.neurobiolaging.2015.05.004",
-            "tipo": "Ensaio Clínico Randomizado Seminal"
+            "tipo": "Ensaio Clínico Randomizado de Referência"
         },
         "meta": {
             "autores": "Xiu, H., et al.",
@@ -647,7 +647,7 @@ ENSAIOS_E_METAS = {
             "periodico": "Journal of Clinical Psychiatry, 79(6), 18m12170",
             "doi": "10.4088/JCP.18m12170",
             "url_doi": "https://doi.org/10.4088/JCP.18m12170",
-            "tipo": "Ensaio Clínico Randomizado Seminal"
+            "tipo": "Ensaio Clínico Randomizado de Referência"
         },
         "meta": {
             "autores": "Jin, Y., et al.",
@@ -676,7 +676,7 @@ def enriquecer():
                 info = ENSAIOS_E_METAS[pair]
                 m['ensaio_clinico'] = info['ensaio']
                 m['meta_analise'] = info['meta']
-                # Atualiza artigo_referencia para apontar para o ensaio clínico seminal
+                # Atualiza artigo_referencia para apontar para o ensaio clínico de referência
                 m['artigo_referencia'] = info['ensaio']
                 count_ensaios += 1
                 count_metas += 1

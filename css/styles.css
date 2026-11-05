@@ -801,8 +801,73 @@ body {
 .calc-clinical-result {
   display: flex;
   flex-direction: column;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+/* Dashboard de 3 Cards de Métricas Individuais */
+.calc-metrics-dashboard {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   gap: 8px;
-  margin-top: 4px;
+}
+
+@media (max-width: 600px) {
+  .calc-metrics-dashboard {
+    grid-template-columns: 1fr;
+  }
+}
+
+.calc-metric-card {
+  background-color: var(--bg-page);
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-sm);
+  padding: 8px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  transition: all 0.25s ease;
+}
+
+.calc-metric-card.success {
+  background-color: var(--status-success-bg);
+  border-color: var(--status-success-border);
+}
+
+.calc-metric-card.warning {
+  background-color: var(--status-warning-bg);
+  border-color: var(--status-warning-border);
+}
+
+.calc-metric-card.danger {
+  background-color: var(--status-danger-bg);
+  border-color: var(--status-danger-border);
+}
+
+.calc-metric-label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  letter-spacing: 0.02em;
+}
+
+.calc-metric-val {
+  font-size: 0.88rem;
+  font-weight: 800;
+  color: var(--napen-navy);
+}
+
+.calc-metric-card.success .calc-metric-val {
+  color: var(--status-success-text);
+}
+
+.calc-metric-card.warning .calc-metric-val {
+  color: var(--status-warning-text);
+}
+
+.calc-metric-card.danger .calc-metric-val {
+  color: var(--status-danger-text);
 }
 
 .calc-metric-pill {
@@ -841,17 +906,110 @@ body {
   font-size: 0.8rem;
   color: var(--text-muted);
   line-height: 1.45;
+  background-color: var(--bg-surface);
+  border-left: 3px solid var(--napen-teal-bar);
+  padding: 8px 12px;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
 }
 
+/* Lado 2: Caixa de Evidência e Confronto em Tempo Real */
 .calc-evidence-box {
   background-color: var(--bg-page);
-  border: 1px dashed var(--border-medium);
+  border: 1px solid var(--border-medium);
   border-radius: var(--radius-sm);
   padding: 14px;
-  height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  gap: 12px;
+}
+
+.calc-study-reference-row {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  padding-bottom: 8px;
+  border-bottom: 1px dashed var(--border-medium);
+}
+
+.calc-study-tag {
+  background-color: var(--napen-teal-soft);
+  color: var(--napen-teal-dark);
+  font-size: 0.68rem;
+  font-weight: 800;
+  padding: 2px 7px;
+  border-radius: var(--radius-pill);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  flex-shrink: 0;
+}
+
+.calc-study-name {
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: var(--napen-navy);
+  line-height: 1.35;
+}
+
+.calc-evidence-metrics-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.calc-ev-metric-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  background-color: #FFFFFF;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 8px 12px;
+}
+
+.calc-ev-metric-title {
+  font-size: 0.70rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  letter-spacing: 0.02em;
+}
+
+.calc-ev-metric-num {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--napen-navy);
+  line-height: 1.4;
+}
+
+.calc-dynamic-comparison-card {
+  background-color: #FFFFFF;
+  border: 1px solid var(--napen-teal-bar);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  box-shadow: 0 1px 3px rgba(10, 106, 110, 0.08);
+}
+
+.calc-comparison-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.calc-comparison-title {
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: var(--napen-teal-dark);
+  letter-spacing: 0.02em;
+}
+
+.calc-comparison-text {
+  font-size: 0.82rem;
+  color: var(--text-main);
+  line-height: 1.5;
 }
 
 /* ==========================================================================

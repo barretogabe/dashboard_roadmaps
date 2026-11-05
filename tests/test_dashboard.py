@@ -416,6 +416,51 @@ class TestRedeNAPeNPrescriptionPlatform(unittest.TestCase):
         self.assertNotIn('1. Selecione o Roadmap', js)
         self.assertNotIn('Escala sugerida:', js)
 
+    def test_12_calculator_mcid_and_cohen_d_evidence(self):
+        """Verifica a nova estrutura de MCID, estimativa de Cohen's d e ausência do termo seminal."""
+        html_file = os.path.join(BASE_DIR, 'index.html')
+        css_file = os.path.join(BASE_DIR, 'css', 'styles.css')
+        app_js = os.path.join(BASE_DIR, 'js', 'app.js')
+        engine_js = os.path.join(BASE_DIR, 'js', 'decision-engine.js')
+        json_file = os.path.join(BASE_DIR, 'data', 'napen_roadmaps_data.json')
+
+        # 1. Ausência completa da palavra "seminal"
+        for filepath in [html_file, app_js, engine_js, json_file]:
+            with open(filepath, 'r', encoding='utf-8') as f:
+                content = f.read().lower()
+            self.assertNotIn('seminal', content, f"Termo 'seminal' encontrado indevidamente em {filepath}")
+
+        # 2. Presença dos novos cards e elementos no HTML
+        with open(html_file, 'r', encoding='utf-8') as f:
+            html = f.read()
+        self.assertIn('id="calcDeltaPoints"', html)
+        self.assertIn('id="calcDeltaPercent"', html)
+        self.assertIn('id="calcMcidBadge"', html)
+        self.assertIn('id="calcStudyRef"', html)
+        self.assertIn('id="calcStudyCohen"', html)
+        self.assertIn('id="calcStudyMcid"', html)
+        self.assertIn('id="calcComparisonBox"', html)
+
+        # 3. Presença das classes no CSS
+        with open(css_file, 'r', encoding='utf-8') as f:
+            css = f.read()
+        self.assertIn('.calc-metrics-dashboard', css)
+        self.assertIn('.calc-metric-card', css)
+        self.assertIn('.calc-study-reference-row', css)
+        self.assertIn('.calc-evidence-metrics-grid', css)
+        self.assertIn('.calc-dynamic-comparison-card', css)
+
+        # 4. Estrutura de dados enriquecida com MCID e Cohen's d no JSON
+        with open(json_file, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+        avc = next(c for c in data['condicoes'] if c['id'] == 'avc-membro-superior')
+        fraqueza = avc['modalidades']['fraqueza']
+        self.assertIn('efeito_clinico', fraqueza)
+        self.assertEqual(fraqueza['efeito_clinico']['mcid_valor'], 6.6)
+        self.assertIn('Zheng', fraqueza['efeito_clinico']['estudo_referencia'])
+        self.assertIn('cohen_d', fraqueza)
+        self.assertIn('mcid_valor', fraqueza)
+
 if __name__ == '__main__':
     unittest.main()
 

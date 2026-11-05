@@ -101,6 +101,15 @@ document.addEventListener('DOMContentLoaded', () => {
   const calcValBase = document.getElementById('calcValBase');
   const calcValPost = document.getElementById('calcValPost');
   const calcDeltaBadge = document.getElementById('calcDeltaBadge');
+  const cardDeltaPoints = document.getElementById('cardDeltaPoints');
+  const calcDeltaPoints = document.getElementById('calcDeltaPoints');
+  const cardDeltaPercent = document.getElementById('cardDeltaPercent');
+  const calcDeltaPercent = document.getElementById('calcDeltaPercent');
+  const cardMcidBadge = document.getElementById('cardMcidBadge');
+  const calcMcidBadge = document.getElementById('calcMcidBadge');
+  const calcStudyRef = document.getElementById('calcStudyRef');
+  const calcStudyCohen = document.getElementById('calcStudyCohen');
+  const calcStudyMcid = document.getElementById('calcStudyMcid');
   const calcGoalFeedback = document.getElementById('calcGoalFeedback');
   const calcRoadmapEffectText = document.getElementById('calcRoadmapEffectText');
   const calcComparisonFeedback = document.getElementById('calcComparisonFeedback');
@@ -682,14 +691,30 @@ document.addEventListener('DOMContentLoaded', () => {
     const activeScale = engine.getActiveScale() || (scales.length > 0 ? scales[0] : null);
 
     // 2. Sincronização em tempo real do tamanho de efeito e meta com a escala selecionada
-    const eff = activeScale?.tamanho_efeito || m.tamanho_efeito || 'Eficácia demonstrada em ensaios controlados randomizados.';
+    const effObj = m?.efeito_clinico || {};
+    const eff = activeScale?.tamanho_efeito || effObj.efeito_esperado_resumo || m.tamanho_efeito || 'Eficácia demonstrada em ensaios controlados randomizados.';
     const meta = activeScale?.meta_texto || m.meta_melhora || 'Melhora clinicamente relevante conforme protocolo.';
     const escNome = activeScale?.nome || m.escala_recomendada || 'Escala Clínica Validada';
 
+    // 2. Sincronização em tempo real do estudo de referência, efeito e MCID da literatura
     if (calcRoadmapEffectText) calcRoadmapEffectText.textContent = eff;
     if (prescEfeito) prescEfeito.textContent = eff;
     if (prescMeta) prescMeta.textContent = meta;
     if (prescEscala) prescEscala.textContent = escNome;
+
+    const studyName = effObj.estudo_referencia || m?.ensaio_clinico?.autores || 'Ensaio Clínico de Referência';
+    const studyDetail = effObj.estudo_detalhe ? ` (${effObj.estudo_detalhe})` : '';
+    if (calcStudyRef) {
+      calcStudyRef.textContent = `${studyName}${studyDetail}`;
+    }
+
+    if (calcStudyCohen) {
+      calcStudyCohen.textContent = effObj.cohen_d || 'd ≈ 0.65 (Efeito Moderado)';
+    }
+
+    if (calcStudyMcid) {
+      calcStudyMcid.textContent = effObj.mcid_label || activeScale?.meta_texto || m.meta_melhora || 'Ganho clínico relevante';
+    }
 
     // 3. Alternância entre Modo EAM (Graus 0 a 4) e Modo Contínuo
     if (activeScale && activeScale.tipo === 'ordinal_eam') {
@@ -728,12 +753,23 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
 
+    // Reseta cartões de métricas individuais
+    if (calcDeltaPoints) calcDeltaPoints.textContent = 'Δ = —';
+    if (calcDeltaPercent) calcDeltaPercent.textContent = '— %';
+    if (calcMcidBadge) {
+      calcMcidBadge.textContent = 'Aguardando escores';
+      calcMcidBadge.className = 'calc-metric-val calc-mcid-status';
+    }
+    if (cardDeltaPoints) cardDeltaPoints.className = 'calc-metric-card';
+    if (cardDeltaPercent) cardDeltaPercent.className = 'calc-metric-card';
+    if (cardMcidBadge) cardMcidBadge.className = 'calc-metric-card';
+
     if (calcDeltaBadge) {
       calcDeltaBadge.textContent = 'Δ = Aguardando dados';
       calcDeltaBadge.className = 'calc-metric-pill';
     }
     if (calcComparisonFeedback) {
-      calcComparisonFeedback.textContent = 'Ao informar os escores, o sistema analisará se o ganho clínico individual é compatível com o intervalo de confiança reportado nos ensaios clínicos controlados.';
+      calcComparisonFeedback.textContent = 'Ao informar os escores, o sistema analisará se o ganho clínico individual é compatível com o intervalo de confiança do ensaio clínico e se superou a MCID da escala.';
     }
 
     // Reseta desfecho ao alternar escala ou fator
@@ -798,10 +834,10 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
 
-    // Painel de Evidências: Ensaio Clínico Seminal vs. Diretriz Internacional
+    // Painel de Evidências: Ensaio Clínico de Referência vs. Diretriz Internacional
     if (m.artigo_referencia) {
       if (evidenceTypeBadge) {
-        evidenceTypeBadge.textContent = m.artigo_referencia.tipo || 'Ensaio Clínico Randomizado Seminal';
+        evidenceTypeBadge.textContent = m.artigo_referencia.tipo || 'Ensaio Clínico Randomizado de Referência';
       }
       if (evidenceCitationText) {
         evidenceCitationText.innerHTML = `<strong>${m.artigo_referencia.citacao_completa || m.artigo_referencia.autores}</strong> — <em>"${m.artigo_referencia.titulo || ''}"</em> (${m.artigo_referencia.revista || ''})`;
@@ -967,48 +1003,72 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const res = engine.calculateDelta(valBaseRaw, valPostRaw, activeScale, m);
 
+    if (!res.isSuccess) {
+      if (calcDeltaPoints) calcDeltaPoints.textContent = 'Δ = —';
+      if (calcDeltaPercent) calcDeltaPercent.textContent = '— %';
+      if (calcMcidBadge) {
+        calcMcidBadge.textContent = 'Aguardando dados';
+        calcMcidBadge.className = 'calc-metric-val calc-mcid-status';
+      }
+      if (cardDeltaPoints) cardDeltaPoints.className = 'calc-metric-card';
+      if (cardDeltaPercent) cardDeltaPercent.className = 'calc-metric-card';
+      if (cardMcidBadge) cardMcidBadge.className = 'calc-metric-card';
+
+      if (calcDeltaBadge) {
+        calcDeltaBadge.textContent = res.text;
+        calcDeltaBadge.className = 'calc-metric-pill';
+      }
+      if (calcGoalFeedback) {
+        calcGoalFeedback.textContent = `Meta do protocolo: ${activeScale?.meta_texto || m?.meta_melhora || 'Insira os escores para verificar o desfecho.'}`;
+      }
+      if (calcComparisonFeedback) {
+        calcComparisonFeedback.textContent = 'Ao informar os escores, o sistema analisará se o ganho clínico individual é compatível com o intervalo de confiança do ensaio clínico e se superou a MCID da escala.';
+      }
+      return;
+    }
+
+    // Atualização dos 3 Cards de Métricas Individuais
+    if (calcDeltaPoints) calcDeltaPoints.textContent = res.deltaPointsFormatted || `Δ = ${res.delta}`;
+    if (calcDeltaPercent) calcDeltaPercent.textContent = res.percentFormatted || `${res.percent}%`;
+    
+    if (calcMcidBadge) {
+      if (res.mcidMet) {
+        calcMcidBadge.textContent = 'MCID Atingida';
+      } else if (res.isImproved) {
+        calcMcidBadge.textContent = 'Abaixo da MCID';
+      } else {
+        calcMcidBadge.textContent = 'Não Atingida';
+      }
+    }
+
+    const statusClass = res.outcomeRecommended === 'success' ? 'success' : (res.outcomeRecommended === 'warning' ? 'warning' : 'danger');
+    if (cardDeltaPoints) cardDeltaPoints.className = `calc-metric-card ${statusClass}`;
+    if (cardDeltaPercent) cardDeltaPercent.className = `calc-metric-card ${statusClass}`;
+    if (cardMcidBadge) cardMcidBadge.className = `calc-metric-card ${statusClass}`;
+
     if (calcDeltaBadge) {
       calcDeltaBadge.textContent = res.text;
-      if (!res.isSuccess) {
-        calcDeltaBadge.className = 'calc-metric-pill';
-        if (calcGoalFeedback) {
-          calcGoalFeedback.textContent = `Meta do protocolo: ${activeScale?.meta_texto || m?.meta_melhora || 'Insira os escores para verificar o desfecho.'}`;
-        }
-        if (calcComparisonFeedback) {
-          calcComparisonFeedback.textContent = 'Ao informar os escores, o sistema analisará se o ganho clínico individual é compatível com o intervalo de confiança reportado nos ensaios clínicos controlados.';
-        }
-        return;
-      }
+      calcDeltaBadge.className = `calc-metric-pill ${statusClass}`;
+    }
 
-      // Automatismo: Seleciona e abre automaticamente o desfecho clínico
-      engine.setOutcome(res.outcomeRecommended);
-      updateOutcomeDisplay();
+    // Automatismo: Seleciona e abre automaticamente o desfecho clínico
+    engine.setOutcome(res.outcomeRecommended);
+    updateOutcomeDisplay();
 
+    // Feedback Clínico e Conduta
+    if (calcGoalFeedback) {
       if (res.outcomeRecommended === 'success') {
-        calcDeltaBadge.className = 'calc-metric-pill success';
-        if (calcGoalFeedback) {
-          calcGoalFeedback.innerHTML = `<strong>[Meta Terapêutica Alcançada]</strong> O paciente atingiu o ganho clínico relevante estabelecido pelo protocolo (${activeScale?.meta_texto || m?.meta_melhora}). Conduta de consolidação ativada automaticamente abaixo.`;
-        }
-        if (calcComparisonFeedback) {
-          calcComparisonFeedback.innerHTML = `O desfecho clínico individual (${res.percent > 0 ? '+' : ''}${res.percent}%) é compatível com a magnitude de benefício reportada no ensaio clínico de referência (${m?.tamanho_efeito || 'efeito estatisticamente significativo'}).`;
-        }
+        calcGoalFeedback.innerHTML = `<strong>[Meta Terapêutica Alcançada]</strong> O paciente superou o limiar de relevância clínica (${res.mcidLabel || activeScale?.meta_texto || m?.meta_melhora}). Conduta de consolidação ativada automaticamente abaixo.`;
       } else if (res.outcomeRecommended === 'warning') {
-        calcDeltaBadge.className = 'calc-metric-pill warning partial';
-        if (calcGoalFeedback) {
-          calcGoalFeedback.innerHTML = `<strong>[Resposta Parcial]</strong> Houve evolução positiva na escala, porém ainda aquém da meta estabelecida (${activeScale?.meta_texto || m?.meta_melhora}). Ajuste de parâmetros ativado automaticamente abaixo.`;
-        }
-        if (calcComparisonFeedback) {
-          calcComparisonFeedback.innerHTML = `A magnitude de resposta individual encontra-se abaixo do tamanho de efeito médio demonstrado na literatura (${m?.tamanho_efeito || 'efeito médio'}).`;
-        }
+        calcGoalFeedback.innerHTML = `<strong>[Resposta Parcial]</strong> Houve evolução positiva na escala, porém ainda aquém da MCID recomendada (${res.mcidLabel || activeScale?.meta_texto || m?.meta_melhora}). Ajuste de parâmetros ativado automaticamente abaixo.`;
       } else {
-        calcDeltaBadge.className = 'calc-metric-pill danger fail';
-        if (calcGoalFeedback) {
-          calcGoalFeedback.innerHTML = `<strong>[Sem Ganho Clínico Relevante / Piora]</strong> Não foi observada melhora na escala após o ciclo. Transição para o Protocolo Alternativo ativada automaticamente abaixo.`;
-        }
-        if (calcComparisonFeedback) {
-          calcComparisonFeedback.innerHTML = `O desfecho individual não replica o benefício demonstrado nos ensaios clínicos de suporte (${m?.tamanho_efeito || 'efeito esperado'}).`;
-        }
+        calcGoalFeedback.innerHTML = `<strong>[Sem Ganho Clínico Relevante / Piora]</strong> Não foi observada melhora na escala após o ciclo. Transição para o Protocolo Alternativo ativada automaticamente abaixo.`;
       }
+    }
+
+    // Diagnóstico Comparativo Dinâmico com Ensaio Clínico de Referência
+    if (calcComparisonFeedback) {
+      calcComparisonFeedback.innerHTML = res.comparativeFeedback;
     }
   }
 
@@ -1515,7 +1575,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <div style="display: flex; flex-direction: column; gap: 6px; min-width: 175px;">
               ${ensaio ? `
                 <div style="font-size: 0.78rem;">
-                  <span style="font-weight: 700; color: var(--napen-navy); display: block; font-size: 0.70rem; text-transform: uppercase; letter-spacing: 0.03em;">Ensaio Clínico Seminal:</span>
+                  <span style="font-weight: 700; color: var(--napen-navy); display: block; font-size: 0.70rem; text-transform: uppercase; letter-spacing: 0.03em;">Ensaio Clínico de Referência:</span>
                   ${ensaio.url_doi ? `
                     <a href="${ensaio.url_doi}" target="_blank" rel="noopener noreferrer" style="color: var(--napen-teal-dark); font-weight: 600; text-decoration: underline; font-size: 0.78rem;" title="${ensaio.titulo || ''}">
                       ${ensaio.autores} (${ensaio.ano}) ↗

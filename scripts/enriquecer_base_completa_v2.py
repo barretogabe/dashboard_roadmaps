@@ -6,7 +6,7 @@ Aplica:
 1. Substituição de todas as ocorrências de LMR por 'Limiar Motor de Repouso (LMR)'.
 2. Detalhamento neurofisiológico de protocolos TBS (iTBS e cTBS).
 3. Padronização ABNT em Title Case (primeira letra maiúscula, ex: 'Lefaucheur et al., 2020').
-4. Separação explícita entre a Diretriz Internacional (Nível de Evidência) e o Ensaio Clínico Seminal do Protocolo.
+4. Separação explícita entre a Diretriz Internacional (Nível de Evidência) e o Ensaio Clínico de Referência do Protocolo.
 5. Inclusão da estrutura 'escalas_detalhadas' em cada modalidade, permitindo alternância entre múltiplas escalas (ex: BBS e SARA nas Ataxias) e modo ordinal na EAM (0, 1, 1+, 2, 3, 4).
 6. Remoção de qualquer menção a 'beira do leito' ou 'beira leito'.
 """

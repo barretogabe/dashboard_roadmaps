@@ -303,11 +303,11 @@
           <div class="evidence-reference-panel" id="evidenceReferencePanel">
             <div class="evidence-ref-header">
               <span class="evidence-ref-title">Evidência Científica & Referências Formais</span>
-              <span class="evidence-type-badge" id="evidenceTypeBadge">Ensaio Clínico Randomizado Seminal</span>
+              <span class="evidence-type-badge" id="evidenceTypeBadge">Ensaio Clínico Randomizado de Referência</span>
             </div>
             <div class="evidence-ref-body">
               <div class="evidence-block">
-                <span class="evidence-block-label">Ensaio Clínico Seminal do Protocolo (Parâmetros & Desfecho Primário):</span>
+                <span class="evidence-block-label">Ensaio Clínico de Referência do Protocolo (Parâmetros & Desfecho Primário):</span>
                 <p class="evidence-citation" id="evidenceCitationText">—</p>
                 <div class="evidence-doi-row">
                   <span style="font-weight: 700; color: var(--text-muted); font-size: 0.78rem;">Publicação Original:</span>
@@ -430,7 +430,24 @@
                 </div>
 
                 <div class="calc-clinical-result" id="calcClinicalResult">
-                  <div class="calc-metric-pill" id="calcDeltaBadge">Δ = Aguardando dados</div>
+                  <!-- Dashboard de Métricas do Paciente -->
+                  <div class="calc-metrics-dashboard">
+                    <div class="calc-metric-card" id="cardDeltaPoints">
+                      <span class="calc-metric-label">Pontos na Escala</span>
+                      <span class="calc-metric-val" id="calcDeltaPoints">Δ = —</span>
+                    </div>
+                    <div class="calc-metric-card" id="cardDeltaPercent">
+                      <span class="calc-metric-label">Variação Relativa</span>
+                      <span class="calc-metric-val" id="calcDeltaPercent">— %</span>
+                    </div>
+                    <div class="calc-metric-card" id="cardMcidBadge">
+                      <span class="calc-metric-label">Critério MCID</span>
+                      <span class="calc-metric-val calc-mcid-status" id="calcMcidBadge">Aguardando dados</span>
+                    </div>
+                  </div>
+
+                  <div class="calc-metric-pill" id="calcDeltaBadge" style="display: none;">Δ = Aguardando dados</div>
+
                   <div class="calc-goal-feedback" id="calcGoalFeedback">
                     Insira os escores para verificar se o paciente atingiu a meta terapêutica estabelecida no roadmap.
                   </div>
@@ -439,16 +456,38 @@
 
               <!-- Lado 2: Confronto com o Tamanho de Efeito da Evidência -->
               <div class="calc-col-evidence">
-                <span class="calc-col-label">2. Tamanho de Efeito da Literatura de Suporte</span>
+                <span class="calc-col-label">2. Evidência Científica & Tamanho de Efeito</span>
                 <div class="calc-evidence-box">
-                  <div style="font-size: 0.76rem; font-weight: 700; color: var(--napen-navy); text-transform: uppercase;">
-                    Efeito Médio Reportado na Literatura (IC 95%)
+                  <!-- Estudo e Protocolo do Roadmap -->
+                  <div class="calc-study-reference-row">
+                    <span class="calc-study-tag">Ensaio Clínico</span>
+                    <span class="calc-study-name" id="calcStudyRef">—</span>
                   </div>
-                  <div id="calcRoadmapEffectText" style="font-size: 0.88rem; color: var(--text-main); font-weight: 600; margin-top: 4px;">
-                    —
+
+                  <!-- Métricas da Literatura em Grid -->
+                  <div class="calc-evidence-metrics-grid">
+                    <div class="calc-ev-metric-item">
+                      <span class="calc-ev-metric-title">Efeito Médio Esperado (IC 95%)</span>
+                      <span class="calc-ev-metric-num" id="calcRoadmapEffectText">—</span>
+                    </div>
+                    <div class="calc-ev-metric-item">
+                      <span class="calc-ev-metric-title">Tamanho de Efeito Padronizado</span>
+                      <span class="calc-ev-metric-num" id="calcStudyCohen">—</span>
+                    </div>
+                    <div class="calc-ev-metric-item">
+                      <span class="calc-ev-metric-title">MCID da Escala (Diferença Mínima)</span>
+                      <span class="calc-ev-metric-num" id="calcStudyMcid">—</span>
+                    </div>
                   </div>
-                  <div id="calcComparisonFeedback" style="font-size: 0.82rem; color: var(--napen-teal-dark); margin-top: 6px; line-height: 1.45;">
-                    Ao informar os escores, o sistema analisará se o ganho clínico individual é compatível com o intervalo de confiança reportado nos ensaios clínicos controlados.
+
+                  <!-- Diagnóstico Comparativo Inteligente -->
+                  <div class="calc-dynamic-comparison-card" id="calcComparisonBox">
+                    <div class="calc-comparison-header">
+                      <span class="calc-comparison-title">Diagnóstico de Compatibilidade Clínica</span>
+                    </div>
+                    <div id="calcComparisonFeedback" class="calc-comparison-text">
+                      Ao informar os escores, o sistema analisará se o ganho clínico individual é compatível com o intervalo de confiança do ensaio clínico e se superou a MCID da escala.
+                    </div>
                   </div>
                 </div>
               </div>
@@ -645,7 +684,7 @@
       <div class="scale-tab-content" id="scaleTabValidacao">
         <div class="scale-card-highlight">
           <h4 style="font-size: 0.88rem; color: var(--napen-navy); font-weight: 700; margin-bottom: 6px;">
-            Referência Normativa Seminal (Padrão ABNT)
+            Referência Normativa de Diretriz (Padrão ABNT)
           </h4>
           <p class="scale-ref-citation" id="scaleGuideRefAbnt"></p>
           <div style="margin-top: 10px;">

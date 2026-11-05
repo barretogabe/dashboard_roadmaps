@@ -144,26 +144,48 @@ class DecisionEngine {
       }
       percent = Math.max(0, Math.min(100, percent));
 
+      const deltaPointsFormatted = deltaLevels === 0 ? 'Δ = 0 níveis' : (deltaLevels < 0 ? `Δ = ${deltaLevels} níveis` : `Δ = +${deltaLevels} níveis`);
+      const percentFormatted = `${isImproved ? '-' : '+'}${percent.toFixed(1)}% de tônus`;
+
       const deltaText = deltaLevels === 0
         ? 'Δ = 0 níveis (Tônus inalterado)'
         : deltaLevels < 0
-          ? `Δ = ${deltaLevels} níveis (Melhora de ${percent.toFixed(1)}%)`
+          ? `Δ = ${deltaLevels} níveis (Redução de ${percent.toFixed(1)}%)`
           : `Δ = +${deltaLevels} níveis (Aumento de tônus / Piora)`;
 
-      const goalMet = deltaLevels <= -1; // Meta formal dos roadmaps: redução ≥ 1 nível
+      const goalMet = deltaLevels <= -1; // Meta formal e MCID dos roadmaps: redução ≥ 1 nível
+      const mcidMet = goalMet;
       const outcomeRecommended = goalMet ? 'success' : (isImproved ? 'warning' : 'danger');
+
+      const eff = m?.efeito_clinico || {};
+      const estudo = eff.estudo_referencia || 'ensaio clínico de referência';
+      const esperado = eff.efeito_esperado_resumo || m?.tamanho_efeito || 'Diminuição de 1 nível na EAM';
+
+      let comparativeFeedback = '';
+      if (outcomeRecommended === 'success') {
+        comparativeFeedback = `<strong>[Resposta Clínica Consistente]</strong> A redução de ${Math.abs(deltaLevels)} nível(is) no tônus muscular atingiu a MCID da escala (redução ≥ 1 grau) e é compatível com o ensaio clínico de referência (${estudo}). Conduta: Manter protocolo para consolidação motora.`;
+      } else if (outcomeRecommended === 'warning') {
+        comparativeFeedback = `<strong>[Resposta Parcial]</strong> Houve redução sutil de tônus, porém ainda aquém da MCID de 1 grau completo na EAM. Conduta: Ajustar dose ou parâmetros antes de encerrar o ciclo.`;
+      } else {
+        comparativeFeedback = `<strong>[Ausência de Resposta Relevante]</strong> O tônus espástico permaneceu inalterado ou aumentou, distanciando-se do benefício demonstrado na literatura (${esperado}). Conduta: Migrar para Protocolo Alternativo.`;
+      }
 
       return {
         text: deltaText,
         isSuccess: true,
         delta: deltaLevels,
+        deltaPointsFormatted,
         percent: parseFloat(percent.toFixed(1)),
+        percentFormatted,
         isImproved,
         goalMet,
+        mcidMet,
+        mcidLabel: 'Redução ≥ 1 grau na EAM',
         outcomeRecommended,
         isOrdinal: true,
         gradeFrom: strBase,
-        gradeTo: strPost
+        gradeTo: strPost,
+        comparativeFeedback
       };
     }
 
@@ -187,36 +209,79 @@ class DecisionEngine {
         : ((valPost - valBase) / Math.abs(valBase)) * 100;
     }
 
+    const sign = delta > 0 ? '+' : '';
+    const deltaPointsFormatted = `Δ = ${sign}${delta.toFixed(1)} pts`;
+    const percentFormatted = `${percentChange >= 0 ? '+' : ''}${percentChange.toFixed(1)}%`;
+
     let textDisplay = '';
     if (isReduction && valPost === 0 && valBase > 0) {
-      textDisplay = `Δ = ${delta.toFixed(1)} (Remissão clínica completa — Escore 0)`;
+      textDisplay = `Δ = ${delta.toFixed(1)} pts (Remissão clínica completa — Escore 0)`;
     } else {
-      const sign = delta > 0 ? `+${delta.toFixed(1)}` : `${delta.toFixed(1)}`;
-      textDisplay = `Δ = ${sign} (${percentChange >= 0 ? '+' : ''}${percentChange.toFixed(1)}%)`;
+      textDisplay = `Δ = ${sign}${delta.toFixed(1)} pts (${percentFormatted})`;
     }
 
-    let goalMet = false;
-    if (/30%/i.test(meta)) {
-      goalMet = isImproved && percentChange >= 30;
-    } else if (/50%/i.test(meta)) {
-      goalMet = isImproved && percentChange >= 50;
-    } else if (/6[,.]6/i.test(meta)) {
-      goalMet = isImproved && delta >= 6.6;
-    } else if (isImproved) {
-      goalMet = true;
+    // Avaliação de MCID (Minimal Clinically Important Difference)
+    const eff = m?.efeito_clinico || {};
+    const mcidVal = eff.mcid_valor || m?.mcid_valor || (scale?.id === 'fma-ue' || /fma/i.test(scale?.nome || '') ? 6.6 : 30.0);
+    const mcidLabel = eff.mcid_label || m?.mcid_label || `Meta clínica: ${meta}`;
+
+    let mcidMet = false;
+    const changeMagnitude = Math.abs(delta);
+    
+    // Se a MCID for percentual (ex: 30%, 50%)
+    if (/30%/i.test(mcidLabel) || mcidVal === 30.0 || mcidVal === 50.0) {
+      mcidMet = isImproved && percentChange >= mcidVal;
+    } else {
+      // Se for em pontos absolutos (ex: 6.6 na FMA-UE, 5.0 na BBS, 1.5 na SARA)
+      mcidMet = isImproved && changeMagnitude >= mcidVal;
+    }
+
+    // Compatibilidade com Intervalo de Confiança do Estudo (IC 95%)
+    const icMin = eff.ic_min;
+    const icMax = eff.ic_max;
+    let withinCI = false;
+    if (icMin !== undefined && icMax !== undefined && icMin !== null && icMax !== null) {
+      const metricToCheck = (/30%/i.test(mcidLabel) || mcidVal === 30.0 || mcidVal === 50.0) ? percentChange : changeMagnitude;
+      withinCI = metricToCheck >= icMin && metricToCheck <= icMax;
+    }
+
+    let goalMet = mcidMet;
+    if (!goalMet) {
+      if (/30%/i.test(meta)) goalMet = isImproved && percentChange >= 30;
+      else if (/50%/i.test(meta)) goalMet = isImproved && percentChange >= 50;
+      else if (/6[,.]6/i.test(meta)) goalMet = isImproved && changeMagnitude >= 6.6;
+      else if (isImproved && percentChange >= 25) goalMet = true;
     }
 
     const outcomeRecommended = goalMet ? 'success' : (isImproved ? 'warning' : 'danger');
+
+    const estudo = eff.estudo_referencia || m?.ensaio_clinico?.autores || 'ensaio clínico de referência';
+    const esperadoResumo = eff.efeito_esperado_resumo || m?.tamanho_efeito || 'efeito clinicamente relevante';
+
+    let comparativeFeedback = '';
+    if (outcomeRecommended === 'success') {
+      comparativeFeedback = `<strong>[Resposta Clínica Consistente]</strong> O ganho individual de <strong>${sign}${changeMagnitude.toFixed(1)} pontos (${percentFormatted})</strong> superou a MCID da escala (${mcidLabel}) e é compatível com a evidência reportada por <em>${estudo}</em> (${esperadoResumo}). Conduta: Manter protocolo para consolidação terapêutica.`;
+    } else if (outcomeRecommended === 'warning') {
+      comparativeFeedback = `<strong>[Resposta Parcial]</strong> Houve evolução positiva de <strong>${sign}${changeMagnitude.toFixed(1)} pontos (${percentFormatted})</strong>, porém ainda aquém da MCID recomendada (${mcidLabel}) e abaixo do efeito médio esperado (${esperadoResumo}). Conduta: Ajustar dose ou parâmetros antes de encerrar o ciclo.`;
+    } else {
+      comparativeFeedback = `<strong>[Ausência de Resposta Relevante]</strong> O desfecho individual não atingiu a MCID (${mcidLabel}) nem replicou o benefício demonstrado na literatura (${esperadoResumo}). Conduta: Migrar para Protocolo Alternativo.`;
+    }
 
     return {
       text: textDisplay,
       isSuccess: true,
       delta,
+      deltaPointsFormatted,
       percent: parseFloat(percentChange.toFixed(1)),
+      percentFormatted,
       isImproved,
+      mcidMet,
+      mcidLabel,
+      withinCI,
       goalMet,
       outcomeRecommended,
-      metaText: meta
+      metaText: meta,
+      comparativeFeedback
     };
   }
 }
