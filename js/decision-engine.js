@@ -158,12 +158,12 @@ class DecisionEngine {
       const outcomeRecommended = goalMet ? 'success' : (isImproved ? 'warning' : 'danger');
 
       const eff = m?.efeito_clinico || {};
-      const estudo = eff.estudo_referencia || 'ensaio clínico de referência';
+      const estudo = eff.estudo_referencia || 'estudos de referência';
       const esperado = eff.efeito_esperado_resumo || m?.tamanho_efeito || 'Diminuição de 1 nível na EAM';
 
       let comparativeFeedback = '';
       if (outcomeRecommended === 'success') {
-        comparativeFeedback = `<strong>[Resposta Clínica Consistente]</strong> A redução de ${Math.abs(deltaLevels)} nível(is) no tônus muscular atingiu a MCID da escala (redução ≥ 1 grau) e é compatível com o ensaio clínico de referência (${estudo}). Conduta: Manter protocolo para consolidação motora.`;
+        comparativeFeedback = `<strong>[Resposta Clínica Consistente]</strong> A redução de ${Math.abs(deltaLevels)} nível(is) no tônus muscular atingiu a MCID da escala (redução ≥ 1 grau) e é compatível com os estudos de referência (${estudo}). Conduta: Manter protocolo para consolidação motora.`;
       } else if (outcomeRecommended === 'warning') {
         comparativeFeedback = `<strong>[Resposta Parcial]</strong> Houve redução sutil de tônus, porém ainda aquém da MCID de 1 grau completo na EAM. Conduta: Ajustar dose ou parâmetros antes de encerrar o ciclo.`;
       } else {
@@ -255,7 +255,7 @@ class DecisionEngine {
 
     const outcomeRecommended = goalMet ? 'success' : (isImproved ? 'warning' : 'danger');
 
-    const estudo = eff.estudo_referencia || m?.ensaio_clinico?.autores || 'ensaio clínico de referência';
+    const estudo = eff.estudo_referencia || m?.ensaio_clinico?.autores || 'estudos de referência';
     const esperadoResumo = eff.efeito_esperado_resumo || m?.tamanho_efeito || 'efeito clinicamente relevante';
 
     let comparativeFeedback = '';

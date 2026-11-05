@@ -155,8 +155,8 @@ class TestRedeNAPeNPrescriptionPlatform(unittest.TestCase):
         self.assertNotIn('beira do leito', html.lower())
         self.assertNotIn('beira leito', html.lower())
 
-        # Coluna de Evidência Científica (Ensaio & Metanálise) na Matriz de Parâmetros
-        self.assertIn('Evidência Científica (Ensaio & Metanálise)', html)
+        # Coluna de Evidência Científica (Estudos de referência & Metanálise) na Matriz de Parâmetros
+        self.assertIn('Evidência Científica (Estudos de referência & Metanálise)', html)
 
         # Letreiro Rolante de Dicas da Barra de Busca
         self.assertIn('searchPlaceholderMarquee', html)
@@ -460,6 +460,17 @@ class TestRedeNAPeNPrescriptionPlatform(unittest.TestCase):
         self.assertIn('Zheng', fraqueza['efeito_clinico']['estudo_referencia'])
         self.assertIn('cohen_d', fraqueza)
         self.assertIn('mcid_valor', fraqueza)
+
+        # 5. Rigor estatístico na classificação de Cohen (ausência de classificações ambíguas)
+        for filepath in [html_file, app_js, engine_js, json_file]:
+            with open(filepath, 'r', encoding='utf-8') as f:
+                content = f.read().lower()
+            self.assertNotIn('moderado a grande', content, f"Termo híbrido ambíguo 'moderado a grande' encontrado em {filepath}")
+
+        # 6. Nomenclatura atualizada: 'Estudos de referência' e 'Tamanho de Efeito Esperado'
+        self.assertIn('Tamanho de Efeito Esperado', html)
+        self.assertIn('Estudos de referência', html)
+        self.assertNotIn('Ensaio Clínico Randomizado de Referência', html)
 
 if __name__ == '__main__':
     unittest.main()

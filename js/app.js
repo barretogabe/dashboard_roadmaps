@@ -702,7 +702,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (prescMeta) prescMeta.textContent = meta;
     if (prescEscala) prescEscala.textContent = escNome;
 
-    const studyName = effObj.estudo_referencia || m?.ensaio_clinico?.autores || 'Ensaio Clínico de Referência';
+    const studyName = effObj.estudo_referencia || m?.ensaio_clinico?.autores || 'Estudos de referência';
     const studyDetail = effObj.estudo_detalhe ? ` (${effObj.estudo_detalhe})` : '';
     if (calcStudyRef) {
       calcStudyRef.textContent = `${studyName}${studyDetail}`;
@@ -834,10 +834,10 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
 
-    // Painel de Evidências: Ensaio Clínico de Referência vs. Diretriz Internacional
+    // Painel de Evidências: Estudos de referência vs. Diretriz Internacional
     if (m.artigo_referencia) {
       if (evidenceTypeBadge) {
-        evidenceTypeBadge.textContent = m.artigo_referencia.tipo || 'Ensaio Clínico Randomizado de Referência';
+        evidenceTypeBadge.textContent = m.artigo_referencia.tipo || 'Estudos de referência';
       }
       if (evidenceCitationText) {
         evidenceCitationText.innerHTML = `<strong>${m.artigo_referencia.citacao_completa || m.artigo_referencia.autores}</strong> — <em>"${m.artigo_referencia.titulo || ''}"</em> (${m.artigo_referencia.revista || ''})`;
@@ -1575,7 +1575,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <div style="display: flex; flex-direction: column; gap: 6px; min-width: 175px;">
               ${ensaio ? `
                 <div style="font-size: 0.78rem;">
-                  <span style="font-weight: 700; color: var(--napen-navy); display: block; font-size: 0.70rem; text-transform: uppercase; letter-spacing: 0.03em;">Ensaio Clínico de Referência:</span>
+                  <span style="font-weight: 700; color: var(--napen-navy); display: block; font-size: 0.70rem; text-transform: uppercase; letter-spacing: 0.03em;">Estudos de referência:</span>
                   ${ensaio.url_doi ? `
                     <a href="${ensaio.url_doi}" target="_blank" rel="noopener noreferrer" style="color: var(--napen-teal-dark); font-weight: 600; text-decoration: underline; font-size: 0.78rem;" title="${ensaio.titulo || ''}">
                       ${ensaio.autores} (${ensaio.ano}) ↗

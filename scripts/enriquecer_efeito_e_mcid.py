@@ -39,7 +39,7 @@ EFEITO_CONFIGS = {
         'ic_95': '3,6 a 22,7',
         'ic_min': 3.6,
         'ic_max': 22.7,
-        'cohen_d': 'd ≈ 0.74 (Efeito Moderado a Grande)',
+        'cohen_d': 'd ≈ 0.74 (Efeito Moderado)',
         'mcid_valor': 6.6,
         'mcid_label': 'Ganho ≥ 6,6 pontos na FMA-UE (Page et al., 2012)',
         'direcao': 'aumento'
@@ -75,7 +75,7 @@ EFEITO_CONFIGS = {
         'ic_95': '13,0 a 20,0',
         'ic_min': 13.0,
         'ic_max': 20.0,
-        'cohen_d': 'd ≈ 0.70 (Efeito Moderado a Grande)',
+        'cohen_d': 'd ≈ 0.70 (Efeito Moderado)',
         'mcid_valor': 10.0,
         'mcid_label': 'Ganho ≥ 10 pontos ou melhora ≥ 20% no teste de cancelamento',
         'direcao': 'aumento'
@@ -115,7 +115,7 @@ EFEITO_CONFIGS = {
         'ic_95': '20% a 50%',
         'ic_min': 20.0,
         'ic_max': 50.0,
-        'cohen_d': 'd ≈ 0.68 (Efeito Moderado a Grande)',
+        'cohen_d': 'd ≈ 0.68 (Efeito Moderado)',
         'mcid_valor': 25.0,
         'mcid_label': 'Ganho ≥ 25% na precisão de nomeação (Boston Naming Test)',
         'direcao': 'aumento'
@@ -141,7 +141,7 @@ EFEITO_CONFIGS = {
         'ic_95': '0,28 a 4,78',
         'ic_min': 0.28,
         'ic_max': 4.78,
-        'cohen_d': 'd ≈ 0.72 (Efeito Moderado a Grande)',
+        'cohen_d': 'd ≈ 0.72 (Efeito Moderado)',
         'mcid_valor': 1.0,
         'mcid_label': 'Aumento ≥ 1 nível na Escala FOIS (Transição segura de consistência alimentar)',
         'direcao': 'aumento'
@@ -243,7 +243,7 @@ EFEITO_CONFIGS = {
         'ic_95': '38% a 62%',
         'ic_min': 38.0,
         'ic_max': 62.0,
-        'cohen_d': 'd ≈ 0.70 (Efeito Moderado a Grande)',
+        'cohen_d': 'd ≈ 0.70 (Efeito Moderado)',
         'mcid_valor': 50.0,
         'mcid_label': 'Redução ≥ 50% na escala HAM-A (Resposta Clínica)',
         'direcao': 'reducao'
@@ -269,7 +269,7 @@ EFEITO_CONFIGS = {
         'ic_95': '25% a 55%',
         'ic_min': 25.0,
         'ic_max': 55.0,
-        'cohen_d': 'd ≈ 0.72 (Efeito Moderado a Grande)',
+        'cohen_d': 'd ≈ 0.72 (Efeito Moderado)',
         'mcid_valor': 10.0,
         'mcid_label': 'Redução ≥ 10 pontos na PCL-5 (Marx et al., 2022) ou ≥ 30%',
         'direcao': 'reducao'
@@ -295,7 +295,7 @@ EFEITO_CONFIGS = {
         'ic_95': '20% a 42%',
         'ic_min': 20.0,
         'ic_max': 42.0,
-        'cohen_d': 'd ≈ 0.68 (Efeito Moderado a Grande)',
+        'cohen_d': 'd ≈ 0.68 (Efeito Moderado)',
         'mcid_valor': 30.0,
         'mcid_label': 'Redução ≥ 30% ou ≥ 2,0 pontos na EVA (Farrar et al., 2001; IMMPACT)',
         'direcao': 'reducao'
@@ -321,7 +321,7 @@ EFEITO_CONFIGS = {
         'ic_95': '18% a 34%',
         'ic_min': 18.0,
         'ic_max': 34.0,
-        'cohen_d': 'd ≈ 0.70 (Efeito Moderado a Grande)',
+        'cohen_d': 'd ≈ 0.70 (Efeito Moderado)',
         'mcid_valor': 1.5,
         'mcid_label': 'Redução ≥ 1,5 pontos na SARA ou ≥ 20% no ICARS',
         'direcao': 'reducao'
@@ -361,7 +361,7 @@ EFEITO_CONFIGS = {
         'ic_95': '32% a 54%',
         'ic_min': 32.0,
         'ic_max': 54.0,
-        'cohen_d': 'd ≈ 0.72 (Efeito Moderado a Grande)',
+        'cohen_d': 'd ≈ 0.72 (Efeito Moderado)',
         'mcid_valor': 25.0,
         'mcid_label': 'Redução ≥ 25% na subescala de Irritabilidade da ABC',
         'direcao': 'reducao'
@@ -373,7 +373,7 @@ EFEITO_CONFIGS = {
         'ic_95': '22% a 48%',
         'ic_min': 22.0,
         'ic_max': 48.0,
-        'cohen_d': 'd ≈ 0.68 (Efeito Moderado a Grande)',
+        'cohen_d': 'd ≈ 0.68 (Efeito Moderado)',
         'mcid_valor': 25.0,
         'mcid_label': 'Melhora ≥ 25% nos escores de responsividade social (SRS)',
         'direcao': 'aumento'
@@ -411,31 +411,31 @@ EFEITO_CONFIGS = {
         'ic_95': '32% a 68%',
         'ic_min': 32.0,
         'ic_max': 68.0,
-        'cohen_d': 'd ≈ 0.70 (Efeito Moderado a Grande)',
+        'cohen_d': 'd ≈ 0.70 (Efeito Moderado)',
         'mcid_valor': 30.0,
         'mcid_label': 'Redução ≥ 30% ou ≥ 4,0 pontos no NPI',
         'direcao': 'reducao'
     }
 }
 
-# 1. Atualiza e elimina a palavra "seminal" de todo o JSON
-count_seminal = 0
+# 1. Atualiza e padroniza para "Estudos de referência" em todo o JSON
+count_ref = 0
 for cond in data['condicoes']:
     cond_id = cond['id']
     for fat_id, mod in cond.get('modalidades', {}).items():
         # Substitui no artigo_referencia
         art = mod.get('artigo_referencia')
         if art and isinstance(art, dict):
-            if 'tipo' in art and 'seminal' in art['tipo'].lower():
-                art['tipo'] = 'Ensaio Clínico Randomizado de Referência'
-                count_seminal += 1
+            if 'tipo' in art:
+                art['tipo'] = 'Estudos de referência'
+                count_ref += 1
         
         # Substitui no ensaio_clinico
         ec = mod.get('ensaio_clinico')
         if ec and isinstance(ec, dict):
-            if 'tipo' in ec and 'seminal' in ec['tipo'].lower():
-                ec['tipo'] = 'Ensaio Clínico Randomizado de Referência'
-                count_seminal += 1
+            if 'tipo' in ec:
+                ec['tipo'] = 'Estudos de referência'
+                count_ref += 1
         
         # Injeta o efeito clínico enriquecido
         key = (cond_id, fat_id)
@@ -455,12 +455,12 @@ for cond in data['condicoes']:
                     'periodico': 'Journal of Huazhong University of Science and Technology [Medical Sciences], 35(2), 248–254',
                     'doi': '10.1007/s11596-015-1419-0',
                     'url_doi': 'https://doi.org/10.1007/s11596-015-1419-0',
-                    'tipo': 'Ensaio Clínico Randomizado de Referência'
+                    'tipo': 'Estudos de referência'
                 }
                 mod['artigo_referencia'] = mod['ensaio_clinico']
                 mod['tamanho_efeito'] = 'Aumento de 13,2 pontos (IC 95% 3,6 a 22,7) na escala FMA-UE após 24 sessões quando combinado com reabilitação virtual (Zheng et al., 2015)'
 
-print(f"Substituídas {count_seminal} ocorrências de 'seminal' por 'Ensaio Clínico Randomizado de Referência'.")
+print(f"Padronizadas {count_ref} referências para 'Estudos de referência'.")
 
 # 2. Salva o JSON
 with open(JSON_PATH, 'w', encoding='utf-8') as f:
