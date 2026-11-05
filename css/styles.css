@@ -1484,7 +1484,59 @@ body {
   color: var(--text-muted);
 }
 
-/* Desfecho Funcional & Meta Terapêutica */
+/* Painel de Estratificação Neurofisiológica Prévia (PEM) */
+.pem-triage-panel {
+  background-color: #F8FAFC;
+  border: 1.5px solid var(--napen-teal-bar);
+  border-left: 5px solid var(--napen-navy);
+  border-radius: var(--radius-md);
+  padding: 16px 20px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.pem-triage-title {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.pem-triage-buttons {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.btn-pem-choice {
+  flex: 1;
+  min-width: 240px;
+  padding: 10px 16px;
+  font-size: 0.86rem;
+  font-weight: 700;
+  border-radius: var(--radius-md);
+  border: 1.5px solid var(--border-medium);
+  background-color: #FFFFFF;
+  color: var(--napen-navy);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: left;
+}
+
+.btn-pem-choice:hover {
+  border-color: var(--napen-teal-bar);
+  background-color: var(--napen-teal-soft);
+}
+
+.btn-pem-choice.active {
+  background-color: var(--napen-navy);
+  color: #FFFFFF;
+  border-color: var(--napen-navy);
+  box-shadow: 0 2px 8px rgba(44, 48, 112, 0.25);
+}
+
+/* Desfecho Clínico Alvo & Instrumento de Avaliação */
 .scale-efficacy-panel {
   background-color: #F8FAFC;
   border: 1px solid var(--border-subtle);
@@ -1502,6 +1554,31 @@ body {
   align-items: center;
   flex-wrap: wrap;
   gap: 10px;
+}
+
+.scale-panel-kicker {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+  display: block;
+}
+
+.scale-target-outcome {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--napen-navy);
+  margin: 2px 0 0 0;
+  line-height: 1.3;
+}
+
+.scale-instrument-label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  letter-spacing: 0.02em;
 }
 
 .scale-efficacy-title {

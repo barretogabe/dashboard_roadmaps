@@ -218,7 +218,7 @@
           <span class="step-divider">➔</span>
           <div class="step-node current" id="stepNode2">
             <span class="step-num">2</span>
-            <span>Fator Limitante Principal</span>
+            <span>Estratificação Diagnóstica</span>
           </div>
           <span class="step-divider">➔</span>
           <div class="step-node" id="stepNode3">
@@ -228,7 +228,27 @@
           <span class="step-divider">➔</span>
           <div class="step-node" id="stepNode4">
             <span class="step-num">4</span>
-            <span>Desfecho & Protocolo Alternativo</span>
+            <span>Reavaliação & Protocolo Alternativo</span>
+          </div>
+        </div>
+
+        <!-- Painel de Estratificação Neurofisiológica Prévia (PEM no MS) -->
+        <div class="pem-triage-panel" id="pemTriagePanel" style="display: none;">
+          <div class="pem-triage-title">
+            <span style="font-weight: 700; color: var(--napen-navy); font-size: 0.92rem; text-transform: uppercase; letter-spacing: 0.02em;">
+              Estratificação Neurofisiológica: Integridade Corticoespinhal
+            </span>
+            <span style="display: block; font-size: 0.86rem; color: var(--text-muted); margin-top: 2px;">
+              Presença de Potencial Evocado Motor (PEM) no Membro Superior parético?
+            </span>
+          </div>
+          <div class="pem-triage-buttons">
+            <button type="button" class="btn-pem-choice active" id="btnPemSim" data-pem="sim">
+              PEM Presente (SIM) — Trato Corticoespinhal Preservado
+            </button>
+            <button type="button" class="btn-pem-choice" id="btnPemNao" data-pem="nao">
+              PEM Ausente (NÃO) — Lesão Grave / Baixa Integridade
+            </button>
           </div>
         </div>
 
@@ -281,22 +301,24 @@
             </div>
           </div>
 
-          <!-- Desfecho Funcional & Meta Terapêutica (Nomenclatura Oficial Roadmaps NAPeN) -->
+          <!-- Desfecho Clínico Alvo & Instrumento de Avaliação Recomendado (Dissociação Conceitual NAPeN) -->
           <div class="scale-efficacy-panel">
             <div class="scale-efficacy-header">
-              <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
-                <span class="scale-efficacy-title">
-                  Desfecho Funcional & Meta do Ciclo
-                </span>
-                <span class="scale-badge-pill" id="prescEscala">Escala Clínica Validada</span>
+              <div>
+                <span class="scale-panel-kicker">Desfecho Clínico / Foco Funcional Alvo</span>
+                <h4 class="scale-target-outcome" id="prescDesfechoNome">Espasticidade em Membro Superior</h4>
               </div>
-              <button type="button" class="btn-guide-pill" id="btnOpenScaleGuidePresc" title="Como aplicar esta escala no exame clínico">
-                Como Aplicar
-              </button>
+              <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+                <span class="scale-instrument-label">Instrumento de Avaliação:</span>
+                <span class="scale-badge-pill" id="prescEscala">Escala de Ashworth Modificada (EAM)</span>
+                <button type="button" class="btn-guide-pill" id="btnOpenScaleGuidePresc" title="Como aplicar esta escala no exame clínico">
+                  Como Aplicar
+                </button>
+              </div>
             </div>
             <div class="scale-meta-row">
               <div style="font-size: 0.86rem; color: var(--napen-navy);">
-                <strong>Meta Clínica do Protocolo (MCID):</strong> <span id="prescMeta">—</span>
+                <strong>Meta Clínica do Ciclo (MCID):</strong> <span id="prescMeta">—</span>
               </div>
               <a href="#dualCalcContainer" class="shortcut-to-calc" id="btnScrollToCalc">
                 Avaliar Resposta na Calculadora ↓
@@ -350,7 +372,7 @@
                 <span class="monitoring-text" id="monitoringReeval">—</span>
               </div>
               <div class="monitoring-item">
-                <span class="monitoring-label">Ajuste de Parâmetros (Resposta Parcial)</span>
+                <span class="monitoring-label">Conduta na Resposta Insatisfatória</span>
                 <span class="monitoring-text" id="monitoringDoseAdjust">—</span>
               </div>
               <div class="monitoring-item">
@@ -507,11 +529,7 @@
             <div class="outcome-buttons-row">
               <button class="btn-outcome success" id="btnOutcomeSuccess" type="button">
                 <span class="outcome-bullet status-success"></span>
-                <span>Resposta Satisfatória</span>
-              </button>
-              <button class="btn-outcome warning" id="btnOutcomeWarning" type="button">
-                <span class="outcome-bullet status-warning"></span>
-                <span>Ajuste de Parâmetros</span>
+                <span>Resposta Satisfatória (≥ MCID)</span>
               </button>
               <button class="btn-outcome danger" id="btnOutcomeDanger" type="button">
                 <span class="outcome-bullet status-danger"></span>

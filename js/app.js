@@ -18,7 +18,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const state = {
     activeTab: 'prescription', // 'prescription' | 'pocket' | 'method'
     searchQuery: '',
-    selectedConditionId: null
+    selectedConditionId: null,
+    pemStatus: 'sim' // 'sim' | 'nao'
   };
 
   const eamState = {
@@ -68,14 +69,19 @@ document.addEventListener('DOMContentLoaded', () => {
   const prescIntensidade = document.getElementById('prescIntensidade');
   const prescPulsos = document.getElementById('prescPulsos');
   const prescSessoes = document.getElementById('prescSessoes');
+  const prescDesfechoNome = document.getElementById('prescDesfechoNome');
   const prescEscala = document.getElementById('prescEscala');
   const prescEfeito = document.getElementById('prescEfeito');
   const prescMeta = document.getElementById('prescMeta');
   const guidelineBadgeText = document.getElementById('guidelineBadgeText');
 
-  // Botões de Desfecho
+  // Painel de Triagem Neurofisiológica (PEM)
+  const pemTriagePanel = document.getElementById('pemTriagePanel');
+  const btnPemSim = document.getElementById('btnPemSim');
+  const btnPemNao = document.getElementById('btnPemNao');
+
+  // Botões de Desfecho Oficial da Rede NAPeN
   const btnOutcomeSuccess = document.getElementById('btnOutcomeSuccess');
-  const btnOutcomeWarning = document.getElementById('btnOutcomeWarning');
   const btnOutcomeDanger = document.getElementById('btnOutcomeDanger');
   const branchResultPanel = document.getElementById('branchResultPanel');
 
@@ -584,6 +590,17 @@ document.addEventListener('DOMContentLoaded', () => {
       node1QuestionText.textContent = cond.no1_pergunta || 'Qual é o principal fator limitante ou foco de ganho terapêutico?';
     }
 
+    // Gerenciamento da Estratificação Neurofisiológica (PEM no MS para AVC)
+    if (conditionId === 'avc-membro-superior') {
+      if (pemTriagePanel) pemTriagePanel.style.display = 'flex';
+      state.pemStatus = 'sim';
+      if (btnPemSim) btnPemSim.classList.add('active');
+      if (btnPemNao) btnPemNao.classList.remove('active');
+    } else {
+      if (pemTriagePanel) pemTriagePanel.style.display = 'none';
+      state.pemStatus = 'sim';
+    }
+
     document.querySelectorAll('.dropdown-sublink-napen').forEach(link => {
       const cleanName = cond.condicao.replace(/^Acidente Vascular Cerebral\s*(\(AVC\))?\s*—\s*/i, '');
       const isCurrent = link.textContent.includes(cond.condicao) || link.textContent.includes(cleanName);
@@ -626,7 +643,19 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!node1OptionsList) return;
     node1OptionsList.innerHTML = '';
 
-    const factors = cond.fatores_limitantes || [];
+    let factors = cond.fatores_limitantes || [];
+    if (cond.id === 'avc-membro-superior') {
+      if (state.pemStatus === 'nao') {
+        factors = factors.filter(f => f.triagem_pem === 'nao');
+      } else {
+        factors = factors.filter(f => f.triagem_pem !== 'nao');
+      }
+    }
+
+    if (!factors.some(f => f.id === engine.activeFactorId) && factors.length > 0) {
+      engine.setFactor(factors[0].id);
+    }
+
     factors.forEach(f => {
       const btn = document.createElement('button');
       btn.type = 'button';
@@ -640,6 +669,33 @@ document.addEventListener('DOMContentLoaded', () => {
       });
 
       node1OptionsList.appendChild(btn);
+    });
+  }
+
+  // Listeners dos Botões de Triagem Neurofisiológica (PEM)
+  if (btnPemSim) {
+    btnPemSim.addEventListener('click', () => {
+      state.pemStatus = 'sim';
+      btnPemSim.classList.add('active');
+      if (btnPemNao) btnPemNao.classList.remove('active');
+      const cond = engine.getCondition(state.selectedConditionId);
+      if (cond) {
+        renderNode1Options(cond);
+        updatePrescriptionDisplay();
+      }
+    });
+  }
+
+  if (btnPemNao) {
+    btnPemNao.addEventListener('click', () => {
+      state.pemStatus = 'nao';
+      btnPemNao.classList.add('active');
+      if (btnPemSim) btnPemSim.classList.remove('active');
+      const cond = engine.getCondition(state.selectedConditionId);
+      if (cond) {
+        renderNode1Options(cond);
+        updatePrescriptionDisplay();
+      }
     });
   }
 
@@ -800,6 +856,14 @@ document.addEventListener('DOMContentLoaded', () => {
     if (prescIntensidade) prescIntensidade.textContent = `Intensidade: ${m.intensidade || 'Conforme limiar motor/sensorial'}`;
     if (prescPulsos) prescPulsos.textContent = m.pulsos_duracao || '—';
     if (prescSessoes) prescSessoes.textContent = `Dose e Sessões: ${m.sessoes || '—'}`;
+    
+    // Dissociação Conceitual NAPeN: Desfecho Clínico Alvo vs. Instrumento de Avaliação
+    const cond = engine.getCondition(engine.activeConditionId);
+    const activeFactor = cond?.fatores_limitantes?.find(f => f.id === engine.activeFactorId);
+    if (prescDesfechoNome) {
+      prescDesfechoNome.textContent = activeFactor ? activeFactor.label : (cond ? cond.condicao : 'Desfecho Clínico Alvo');
+    }
+
     const activeScale = engine.getActiveScale() || (m.escalas_detalhadas && m.escalas_detalhadas.length > 0 ? m.escalas_detalhadas[0] : null);
     if (prescEscala) prescEscala.textContent = activeScale?.nome || m.escala_recomendada || 'Escala Clínica Validada';
     if (prescEfeito) prescEfeito.textContent = activeScale?.tamanho_efeito || m.tamanho_efeito || 'Eficácia demonstrada em ensaios controlados randomizados.';
@@ -869,13 +933,14 @@ document.addEventListener('DOMContentLoaded', () => {
   // ==========================================================================
   // 6. Assistente de Resposta Clínica (Sem Emojis, Badges Clínicos Sóbrios)
   // ==========================================================================
+  // 6. Atualiza Assistente de Resposta Clínica (Pós-Indução)
+  // ==========================================================================
   function updateOutcomeDisplay() {
     const outcome = engine.activeOutcome;
     const m = engine.getActiveModality();
 
-    btnOutcomeSuccess.classList.toggle('active', outcome === 'success');
-    btnOutcomeWarning.classList.toggle('active', outcome === 'warning');
-    btnOutcomeDanger.classList.toggle('active', outcome === 'danger');
+    if (btnOutcomeSuccess) btnOutcomeSuccess.classList.toggle('active', outcome === 'success');
+    if (btnOutcomeDanger) btnOutcomeDanger.classList.toggle('active', outcome === 'danger');
 
     if (!outcome) {
       branchResultPanel.className = 'branch-result-panel';
@@ -894,20 +959,8 @@ document.addEventListener('DOMContentLoaded', () => {
           [Resposta Clínica Satisfatória Alcançada]
         </div>
         <div style="color: var(--status-success-text); line-height: 1.55;">
-          Paciente atingiu a meta terapêutica estabelecida no protocolo (${m?.escala_recomendada || 'escala clínica'}).
-          <br><strong>Conduta Recomendada:</strong> Prosseguir para o protocolo de consolidação e manutenção periódica (redução programada da frequência para 1 sessão por semana ou quinzenal, mantendo terapia adjuvante e reavaliações periódicas).
-        </div>
-      `;
-    } else if (outcome === 'warning') {
-      branchResultPanel.className = 'branch-result-panel warning visible';
-      branchResultPanel.innerHTML = `
-        <div style="font-weight: 700; margin-bottom: 6px; display: flex; align-items: center; gap: 8px;">
-          <span class="outcome-bullet status-warning"></span>
-          [Resposta Parcial — Ajuste de Parâmetros]
-        </div>
-        <div style="color: var(--status-warning-text); line-height: 1.55;">
-          Evolução positiva porém aquém do limiar mínimo esperado na escala (${m?.escala_recomendada || 'escala'}).
-          <br><strong>Conduta Recomendada:</strong> Estender o bloco de indução em mais 5 sessões diárias, recalibrar o Limiar Motor de Repouso (LMR) ou checar a impedância dos eletrodos, e intensificar a intervenção multiprofissional concomitante.
+          Paciente atingiu ou superou a meta terapêutica estabelecida no protocolo (${m?.escala_recomendada || 'escala clínica'}).
+          <br><strong>Conduta Oficial do Roadmap NAPeN:</strong> Manter o protocolo primário até consolidação do ganho clínico e iniciar transição para manutenção periódica (redução gradual da frequência para 1 sessão por semana ou quinzenal, mantendo terapia multiprofissional concomitante e reavaliações periódicas).
         </div>
       `;
     } else if (outcome === 'danger') {
@@ -920,13 +973,13 @@ document.addEventListener('DOMContentLoaded', () => {
           <div class="alternative-protocol-box">
             <div class="alt-title-line">
               <span style="color: var(--napen-teal-dark); font-weight: 700;">➔</span>
-              ${alt.nome || 'Protocolo Alternativo Sequencial (Próxima Etapa do Algoritmo)'}
+              ${alt.nome || 'Protocolo Alternativo Sequencial (Próxima Etapa da Árvore NAPeN)'}
             </div>
             <div><strong>Técnica:</strong> ${alt.tecnica || '—'}</div>
             <div><strong>Alvo Anatômico:</strong> ${alt.alvo || '—'}</div>
             <div><strong>Parâmetros:</strong> ${alt.parametros || '—'}</div>
             <div class="alt-clinical-notes">
-              <strong>Observações Clínicas e Cuidados do Roadmap:</strong> ${alt.observacoes || 'Transição indicada conforme algoritmo original da Rede NAPeN.'}
+              <strong>Observações Clínicas e Cuidados do Roadmap:</strong> ${alt.observacoes || 'Transição indicada conforme algoritmo sequencial original da Rede NAPeN.'}
             </div>
           </div>
         `;
@@ -944,29 +997,31 @@ document.addEventListener('DOMContentLoaded', () => {
           [Resposta Insatisfatória — Transição para Protocolo Alternativo]
         </div>
         <div style="line-height: 1.55;">
-          Paciente não atingiu o benefício terapêutico mínimo na escala após o ciclo completo de indução.
+          Paciente não atingiu o benefício terapêutico mínimo na escala recomendada após o ciclo de indução (sem melhora quantitativa ou qualitativa).
           Seguindo o algoritmo clínico sequencial oficial da Rede NAPeN:
         </div>
         ${altContent}
+        <div style="margin-top: 12px; font-size: 0.84rem; color: #7F1D1D; background: rgba(239, 68, 68, 0.08); padding: 10px 14px; border-radius: var(--radius-sm); border: 1px dashed #FCA5A5; line-height: 1.5;">
+          <strong>Critério de Falha Terapêutica dos Roadmaps NAPeN:</strong> Configura-se quando o paciente não apresenta nenhum tipo de resposta mesmo após os protocolos alternativos do roadmap. Nesses casos, encerra-se a rota atual de estimulação e encaminha-se para reavaliação clínica e equipe interdisciplinar.
+        </div>
       `;
     }
   }
 
   // Interação manual com os botões de desfecho
-  btnOutcomeSuccess.addEventListener('click', () => {
-    engine.toggleOutcome('success');
-    updateOutcomeDisplay();
-  });
+  if (btnOutcomeSuccess) {
+    btnOutcomeSuccess.addEventListener('click', () => {
+      engine.toggleOutcome('success');
+      updateOutcomeDisplay();
+    });
+  }
 
-  btnOutcomeWarning.addEventListener('click', () => {
-    engine.toggleOutcome('warning');
-    updateOutcomeDisplay();
-  });
-
-  btnOutcomeDanger.addEventListener('click', () => {
-    engine.toggleOutcome('danger');
-    updateOutcomeDisplay();
-  });
+  if (btnOutcomeDanger) {
+    btnOutcomeDanger.addEventListener('click', () => {
+      engine.toggleOutcome('danger');
+      updateOutcomeDisplay();
+    });
+  }
 
   // ==========================================================================
   // 7. Calculadora Dual & Automatismo de Seleção de Desfecho
@@ -1020,7 +1075,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
 
-    const statusClass = res.outcomeRecommended === 'success' ? 'success' : (res.outcomeRecommended === 'warning' ? 'warning' : 'danger');
+    const statusClass = res.outcomeRecommended === 'success' ? 'success' : 'danger';
     if (cardDeltaPoints) cardDeltaPoints.className = `calc-metric-card ${statusClass}`;
     if (cardDeltaPercent) cardDeltaPercent.className = `calc-metric-card ${statusClass}`;
     if (cardMcidBadge) cardMcidBadge.className = `calc-metric-card ${statusClass}`;
@@ -1029,14 +1084,12 @@ document.addEventListener('DOMContentLoaded', () => {
     engine.setOutcome(res.outcomeRecommended);
     updateOutcomeDisplay();
 
-    // Feedback Clínico e Conduta
+    // Feedback Clínico e Conduta Oficial dos Roadmaps da Rede NAPeN
     if (calcGoalFeedback) {
       if (res.outcomeRecommended === 'success') {
-        calcGoalFeedback.innerHTML = `<strong>[Meta Terapêutica Alcançada]</strong> O paciente superou o limiar de relevância clínica (${res.mcidLabel || activeScale?.meta_texto || m?.meta_melhora}). Conduta de consolidação ativada automaticamente abaixo.`;
-      } else if (res.outcomeRecommended === 'warning') {
-        calcGoalFeedback.innerHTML = `<strong>[Resposta Parcial]</strong> Houve evolução positiva na escala, porém ainda aquém da MCID recomendada (${res.mcidLabel || activeScale?.meta_texto || m?.meta_melhora}). Ajuste de parâmetros ativado automaticamente abaixo.`;
+        calcGoalFeedback.innerHTML = `<strong>[Meta Terapêutica Alcançada (≥ MCID)]</strong> O paciente atingiu ou superou o limiar de relevância clínica da escala (${res.mcidLabel || activeScale?.meta_texto || m?.meta_melhora}). Conduta oficial de consolidação e manutenção periódica ativada automaticamente abaixo.`;
       } else {
-        calcGoalFeedback.innerHTML = `<strong>[Sem Ganho Clínico Relevante / Piora]</strong> Não foi observada melhora na escala após o ciclo. Transição para o Protocolo Alternativo ativada automaticamente abaixo.`;
+        calcGoalFeedback.innerHTML = `<strong>[Resposta Insatisfatória (< MCID)]</strong> A evolução clínica na escala permaneceu aquém da meta do protocolo (${res.mcidLabel || activeScale?.meta_texto || m?.meta_melhora}). Transição para o Protocolo Alternativo da árvore sequencial ativada automaticamente abaixo.`;
       }
     }
 

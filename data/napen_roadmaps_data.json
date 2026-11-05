@@ -17,23 +17,33 @@
       "fatores_limitantes": [
         {
           "id": "espasticidade",
-          "label": "Espasticidade em Membro Superior"
+          "label": "Espasticidade em Membro Superior",
+          "triagem_pem": "sim"
         },
         {
           "id": "fraqueza",
-          "label": "Fraqueza Muscular e Paresia"
+          "label": "Fraqueza Muscular e Paresia",
+          "triagem_pem": "sim"
         },
         {
           "id": "dor",
-          "label": "Dor Limitante em Membro Superior"
+          "label": "Dor Limitante em Membro Superior",
+          "triagem_pem": "sim"
         },
         {
           "id": "sensorial",
-          "label": "Déficit Somatossensorial"
+          "label": "Déficit Somatossensorial",
+          "triagem_pem": "sim"
         },
         {
           "id": "negligencia",
-          "label": "Heminegligência Visuoespacial"
+          "label": "Heminegligência Visuoespacial",
+          "triagem_pem": "sim"
+        },
+        {
+          "id": "sem_pem",
+          "label": "Baixa Integridade Corticoespinhal (Sem PEM no MS)",
+          "triagem_pem": "nao"
         }
       ],
       "modalidades": {
@@ -550,6 +560,97 @@
           "mcid_valor": 10.0,
           "mcid_label": "Ganho ≥ 10 pontos ou melhora ≥ 20% no teste de cancelamento",
           "cohen_d": "d ≈ 0.70 (Efeito Moderado)"
+        },
+        "sem_pem": {
+          "tecnica": "rTMS Contralesional Facilitatória + Reabilitação Motora Bobath (Protocolo 4)",
+          "modalidade_sigla": "rTMS",
+          "alvo": "Córtex Motor Primário (M1) contralesional (hemisfério não afetado)",
+          "frequencia": "10 Hz",
+          "intensidade": "100% do Limiar Motor de Repouso (LMR) contralesional",
+          "pulsos_duracao": "1.000 pulsos (100 trens de 10 pulsos, intervalo de 10s)",
+          "sessoes": "21 sessões diárias combinadas com reabilitação individualizada baseada em Bobath",
+          "escala_recomendada": "Fugl-Meyer Extremidade Superior (FMA-UE)",
+          "meta_melhora": "Aumento de pelo menos 3,7 a 6,6 pontos na escala FMA-UE",
+          "tamanho_efeito": "Aumento de 3,7 pontos (IC 95% 2,4 a 5,0) na escala FMA-UE após 21 sessões diárias",
+          "evidencia": "Consolidada (Respaldo em Ensaio Clínico com DTI/Integridade Corticoespinhal)",
+          "linha_fluxograma": "solida",
+          "diretriz_internacional": "Nível B (Pacientes com Ausência de PEM / Lesão Corticoespinhal Extensa)",
+          "protocolo_alternativo": {
+            "nome": "Protocolo Alternativo (rPMS Periférica Contínua/Intermitente + iTBS)",
+            "tecnica": "rPMS 50 Hz em nervo periférico / grupos musculares do membro parético",
+            "alvo": "Sulco do nervo radial no úmero ou músculos com paralisia grave",
+            "parametros": "3 pulsos a 50 Hz repetidos a 5 Hz, 2s estímulo e 8s pausa, 600 pulsos para gerar contração muscular visível",
+            "observacoes": "Indicado quando não há resposta cortical via rTMS contralesional. Conforme RM01, em caso de ausência persistente de resposta após protocolos alternativos, caracteriza-se Falha Terapêutica formal."
+          },
+          "sessoes_ajuste": {
+            "quando_reavaliar": "Reavaliar após a 10ª e 21ª sessões de estimulação combinada com fisioterapia.",
+            "ajuste_dose": "Transição para o protocolo alternativo periférico rPMS se não for observada modulação motora após o ciclo inicial.",
+            "regra_interrupcao": "Interromper e considerar falha terapêutica se não houver ganho motor funcional após os protocolos alternativos."
+          },
+          "contraindicacoes": [
+            "Implantes metálicos cranianos",
+            "Histórico de epilepsia refratária não controlada"
+          ],
+          "notas_clinicas": "Conforme documentado no Roadmap NAPeN (RM01 - Protocolo 4, Wang et al., 2022), em pacientes com ausência de PEM no membro superior a integridade corticoespinhal é baixa, sendo a modulação contralesional de alta frequência associada à reabilitação Bobath a melhor conduta evidenciada.",
+          "artigo_referencia": {
+            "autores": "Wang, L., et al.",
+            "ano": 2022,
+            "titulo": "Effects of corticospinal tract integrity on upper limb motor function recovery in stroke patients treated with repetitive transcranial magnetic stimulation",
+            "periodico": "Journal of Integrative Neuroscience, 21(2), 050",
+            "doi": "10.31083/j.jin2102050",
+            "url_doi": "https://doi.org/10.31083/j.jin2102050",
+            "tipo": "Estudos de referência"
+          },
+          "ensaio_clinico": {
+            "autores": "Wang, L., et al.",
+            "ano": 2022,
+            "periodico": "Journal of Integrative Neuroscience, 21(2), 050",
+            "doi": "10.31083/j.jin2102050",
+            "url_doi": "https://doi.org/10.31083/j.jin2102050"
+          },
+          "meta_analise": {
+            "autores": "Chen, Y., et al.",
+            "ano": 2022,
+            "periodico": "Clinical Rehabilitation, 36(6), 743–755",
+            "doi": "10.1177/02692155211070862",
+            "url_doi": "https://doi.org/10.1177/02692155211070862"
+          },
+          "diretriz_ref": {
+            "nome": "Lefaucheur et al., 2020 (IFCN)",
+            "ano": 2020,
+            "periodico": "Clinical Neurophysiology, 131(2), 474–528",
+            "doi": "10.1016/j.clinph.2019.11.002",
+            "url_doi": "https://doi.org/10.1016/j.clinph.2019.11.002",
+            "autores": "Lefaucheur et al.",
+            "citacao_completa": "Lefaucheur et al., 2020. Clin Neurophysiol, 131(2):474–528."
+          },
+          "escalas_detalhadas": [
+            {
+              "id": "fma-ue",
+              "nome": "Fugl-Meyer Extremidade Superior (FMA-UE)",
+              "sigla": "FMA-UE",
+              "tipo": "continua",
+              "placeholder": "Ex: 14",
+              "direcao_melhora": "aumento",
+              "meta_texto": "Aumento de pelo menos 3,7 a 6,6 pontos na escala FMA-UE",
+              "min": 0,
+              "max": 66,
+              "tamanho_efeito": "Aumento de 3,7 pontos (IC 95% 2,4 a 5,0) na escala FMA-UE após 21 sessões diárias"
+            }
+          ],
+          "cohen_d": "d ≈ 0.65 (Efeito Moderado)",
+          "mcid_valor": 3.7,
+          "mcid_label": "Ganho ≥ 3,7 pontos na FMA-UE",
+          "efeito_clinico": {
+            "cohen_d_esperado": 0.65,
+            "interpretacao_cohen": "Efeito Moderado",
+            "mcid_valor": 3.7,
+            "mcid_label": "Ganho ≥ 3,7 pontos na FMA-UE",
+            "efeito_esperado_resumo": "Aumento de 3,7 pontos (IC 95% 2,4 a 5,0) na FMA-UE",
+            "estudo_referencia": "Wang et al., 2022",
+            "ic_min": 2.4,
+            "ic_max": 5.0
+          }
         }
       },
       "tags_busca": {

@@ -469,13 +469,67 @@ class TestRedeNAPeNPrescriptionPlatform(unittest.TestCase):
                 content = f.read().lower()
             self.assertNotIn('moderado a grande', content, f"Termo híbrido ambíguo 'moderado a grande' encontrado em {filepath}")
 
-        # 6. Nomenclatura atualizada: 'Estudos de referência', 'Resultado Esperado na Literatura' e 'Desfecho Funcional & Meta do Ciclo'
+        # 6. Nomenclatura atualizada: 'Estudos de referência', 'Resultado Esperado na Literatura' e dissociação de desfecho clínico alvo
         self.assertIn('Tamanho de Efeito Esperado (d de Cohen)', html)
         self.assertIn('Resultado Esperado na Literatura (IC 95%)', html)
-        self.assertIn('Desfecho Funcional & Meta do Ciclo', html)
+        self.assertIn('Desfecho Clínico / Foco Funcional Alvo', html)
+        self.assertIn('Instrumento de Avaliação:', html)
         self.assertIn('Estudos de referência', html)
         self.assertNotIn('Tamanho de Efeito Reportado:', html)
         self.assertNotIn('Ensaio Clínico Randomizado de Referência', html)
+
+    def test_13_algoritmo_estratificacao_e_dissociacao_desfechos(self):
+        """Verifica a estratificação real por PEM no AVC, ausência de 'Ajuste de Parâmetros' e dissociação estrita desfecho vs escala."""
+        html_file = os.path.join(BASE_DIR, 'index.html')
+        css_file = os.path.join(BASE_DIR, 'css', 'styles.css')
+        app_js = os.path.join(BASE_DIR, 'js', 'app.js')
+        engine_js = os.path.join(BASE_DIR, 'js', 'decision-engine.js')
+        json_file = os.path.join(BASE_DIR, 'data', 'napen_roadmaps_data.json')
+
+        with open(html_file, 'r', encoding='utf-8') as f:
+            html = f.read()
+
+        # 1. Painel de Triagem Neurofisiológica (PEM)
+        self.assertIn('id="pemTriagePanel"', html)
+        self.assertIn('id="btnPemSim"', html)
+        self.assertIn('id="btnPemNao"', html)
+        self.assertIn('Estratificação Neurofisiológica: Integridade Corticoespinhal', html)
+
+        # 2. Ausência completa de "btnOutcomeWarning" e "Ajuste de Parâmetros" nos botões
+        self.assertNotIn('id="btnOutcomeWarning"', html)
+        self.assertNotIn('<span>Ajuste de Parâmetros</span>', html)
+        self.assertIn('id="btnOutcomeSuccess"', html)
+        self.assertIn('id="btnOutcomeDanger"', html)
+
+        # 3. Dissociação explícita: Desfecho Clínico Alvo vs. Instrumento vs. Meta MCID
+        self.assertIn('id="prescDesfechoNome"', html)
+        self.assertIn('id="prescEscala"', html)
+        self.assertIn('id="prescMeta"', html)
+
+        # 4. Verificação no JSON da modalidade sem_pem (Protocolo 4 do RM01)
+        with open(json_file, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+        avc = next(c for c in data['condicoes'] if c['id'] == 'avc-membro-superior')
+        self.assertIn('sem_pem', avc['modalidades'])
+        sem_pem_mod = avc['modalidades']['sem_pem']
+        self.assertIn('Protocolo 4', sem_pem_mod['tecnica'])
+        self.assertEqual(sem_pem_mod['mcid_valor'], 3.7)
+
+        # 5. CSS dos componentes
+        with open(css_file, 'r', encoding='utf-8') as f:
+            css = f.read()
+        self.assertIn('.pem-triage-panel', css)
+        self.assertIn('.btn-pem-choice', css)
+        self.assertIn('.scale-panel-kicker', css)
+        self.assertIn('.scale-target-outcome', css)
+        self.assertIn('.scale-instrument-label', css)
+
+        # 6. JS: ausência de listener para btnOutcomeWarning
+        with open(app_js, 'r', encoding='utf-8') as f:
+            js = f.read()
+        self.assertNotIn('btnOutcomeWarning.addEventListener', js)
+        self.assertIn('state.pemStatus', js)
+        self.assertIn('prescDesfechoNome', js)
 
 if __name__ == '__main__':
     unittest.main()

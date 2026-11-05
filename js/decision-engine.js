@@ -155,7 +155,7 @@ class DecisionEngine {
 
       const goalMet = deltaLevels <= -1; // Meta formal e MCID dos roadmaps: redução ≥ 1 nível
       const mcidMet = goalMet;
-      const outcomeRecommended = goalMet ? 'success' : (isImproved ? 'warning' : 'danger');
+      const outcomeRecommended = goalMet ? 'success' : 'danger';
 
       const eff = m?.efeito_clinico || {};
       const estudo = eff.estudo_referencia || 'estudos de referência';
@@ -163,11 +163,9 @@ class DecisionEngine {
 
       let comparativeFeedback = '';
       if (outcomeRecommended === 'success') {
-        comparativeFeedback = `<strong>[Resposta Clínica Consistente]</strong> A redução de ${Math.abs(deltaLevels)} nível(is) no tônus muscular atingiu a MCID da escala (redução ≥ 1 grau) e é compatível com os estudos de referência (${estudo}). Conduta: Manter protocolo para consolidação motora.`;
-      } else if (outcomeRecommended === 'warning') {
-        comparativeFeedback = `<strong>[Resposta Parcial]</strong> Houve redução sutil de tônus, porém ainda aquém da MCID de 1 grau completo na EAM. Conduta: Ajustar dose ou parâmetros antes de encerrar o ciclo.`;
+        comparativeFeedback = `<strong>[Resposta Clínica Satisfatória Alcançada]</strong> A redução de ${Math.abs(deltaLevels)} nível(is) no tônus muscular atingiu a MCID da escala (redução ≥ 1 grau) e é compatível com os estudos de referência (${estudo}). <strong>Conduta Oficial NAPeN:</strong> Manter protocolo para consolidação motora e transição para manutenção periódica.`;
       } else {
-        comparativeFeedback = `<strong>[Ausência de Resposta Relevante]</strong> O tônus espástico permaneceu inalterado ou aumentou, distanciando-se do benefício demonstrado na literatura (${esperado}). Conduta: Migrar para Protocolo Alternativo.`;
+        comparativeFeedback = `<strong>[Resposta Clínica Insatisfatória (< MCID)]</strong> A variação de tônus permaneceu aquém da MCID da escala (redução ≥ 1 grau na EAM). <strong>Conduta Oficial NAPeN:</strong> Transição para o Protocolo Alternativo da árvore de decisão. Se persistir sem resposta após os protocolos alternativos, caracteriza-se Falha Terapêutica.`;
       }
 
       return {
@@ -253,18 +251,16 @@ class DecisionEngine {
       else if (isImproved && percentChange >= 25) goalMet = true;
     }
 
-    const outcomeRecommended = goalMet ? 'success' : (isImproved ? 'warning' : 'danger');
+    const outcomeRecommended = goalMet ? 'success' : 'danger';
 
     const estudo = eff.estudo_referencia || m?.ensaio_clinico?.autores || 'estudos de referência';
     const esperadoResumo = eff.efeito_esperado_resumo || m?.tamanho_efeito || 'efeito clinicamente relevante';
 
     let comparativeFeedback = '';
     if (outcomeRecommended === 'success') {
-      comparativeFeedback = `<strong>[Resposta Clínica Consistente]</strong> O ganho individual de <strong>${sign}${changeMagnitude.toFixed(1)} pontos (${percentFormatted})</strong> superou a MCID da escala (${mcidLabel}) e é compatível com a evidência reportada por <em>${estudo}</em> (${esperadoResumo}). Conduta: Manter protocolo para consolidação terapêutica.`;
-    } else if (outcomeRecommended === 'warning') {
-      comparativeFeedback = `<strong>[Resposta Parcial]</strong> Houve evolução positiva de <strong>${sign}${changeMagnitude.toFixed(1)} pontos (${percentFormatted})</strong>, porém ainda aquém da MCID recomendada (${mcidLabel}) e abaixo do efeito médio esperado (${esperadoResumo}). Conduta: Ajustar dose ou parâmetros antes de encerrar o ciclo.`;
+      comparativeFeedback = `<strong>[Resposta Clínica Satisfatória Alcançada]</strong> O ganho individual de <strong>${sign}${changeMagnitude.toFixed(1)} pontos (${percentFormatted})</strong> superou a MCID da escala (${mcidLabel}) e é compatível com os estudos de referência (<em>${estudo}</em>: ${esperadoResumo}). <strong>Conduta Oficial NAPeN:</strong> Prosseguir para o protocolo de consolidação e manutenção periódica com redução gradual das sessões.`;
     } else {
-      comparativeFeedback = `<strong>[Ausência de Resposta Relevante]</strong> O desfecho individual não atingiu a MCID (${mcidLabel}) nem replicou o benefício demonstrado na literatura (${esperadoResumo}). Conduta: Migrar para Protocolo Alternativo.`;
+      comparativeFeedback = `<strong>[Resposta Clínica Insatisfatória (< MCID)]</strong> O ganho individual de <strong>${sign}${changeMagnitude.toFixed(1)} pontos (${percentFormatted})</strong> não atingiu o limiar mínimo de relevância clínica (${mcidLabel}). <strong>Conduta Oficial NAPeN:</strong> Transição para o Protocolo Alternativo da árvore de decisão. Caso persista sem melhora após os protocolos alternativos, caracteriza-se Falha Terapêutica formal.`;
     }
 
     return {
