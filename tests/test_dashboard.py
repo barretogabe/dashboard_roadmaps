@@ -390,12 +390,14 @@ class TestRedeNAPeNPrescriptionPlatform(unittest.TestCase):
         self.assertIn('id="tabBtnCalc"', html)
         self.assertIn('CALCULADORA DE RESPOSTA CLÍNICA', html)
         self.assertIn('id="dropdownCalcList"', html)
-        self.assertIn('id="calcFastTrackBadge"', html)
+        self.assertNotIn('id="calcFastTrackBadge"', html)
+        self.assertNotIn('Reavaliação Direta de Desfecho', html)
+        self.assertNotIn('id="calcDeltaBadge"', html)
 
         with open(css_file, 'r', encoding='utf-8') as f:
             css = f.read()
         self.assertIn('.calc-highlight-pulse', css)
-        self.assertIn('.calc-fast-track-pill', css)
+        self.assertIn('.calc-study-label', css)
         self.assertIn('calcPulseHighlight', css)
         self.assertIn('.dropdown-subsubmenu', css)
         self.assertIn('.dropdown-item-has-subsubmenu', css)

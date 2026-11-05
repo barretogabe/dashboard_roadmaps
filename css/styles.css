@@ -566,17 +566,6 @@ body {
   border-color: var(--napen-teal-dark);
 }
 
-.calc-fast-track-pill {
-  font-size: 0.72rem;
-  background-color: var(--napen-teal-soft);
-  color: var(--napen-teal-dark);
-  padding: 2px 10px;
-  border-radius: var(--radius-pill);
-  font-weight: 700;
-  border: 1px solid var(--napen-teal-bar);
-  letter-spacing: 0.02em;
-}
-
 .dual-calc-header {
   display: flex;
   justify-content: space-between;
@@ -931,15 +920,12 @@ body {
   border-bottom: 1px dashed var(--border-medium);
 }
 
-.calc-study-tag {
-  background-color: var(--napen-teal-soft);
-  color: var(--napen-teal-dark);
-  font-size: 0.68rem;
-  font-weight: 800;
-  padding: 2px 7px;
-  border-radius: var(--radius-pill);
+.calc-study-label {
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: var(--text-muted);
   text-transform: uppercase;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.03em;
   flex-shrink: 0;
 }
 

@@ -81,7 +81,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Evidência Científica e Referências Formais
   const evidenceReferencePanel = document.getElementById('evidenceReferencePanel');
-  const evidenceTypeBadge = document.getElementById('evidenceTypeBadge');
   const evidenceCitationText = document.getElementById('evidenceCitationText');
   const evidenceDoiLink = document.getElementById('evidenceDoiLink');
   const evidenceDoiText = document.getElementById('evidenceDoiText');
@@ -100,7 +99,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const calcValPostLabel = document.getElementById('calcValPostLabel');
   const calcValBase = document.getElementById('calcValBase');
   const calcValPost = document.getElementById('calcValPost');
-  const calcDeltaBadge = document.getElementById('calcDeltaBadge');
   const cardDeltaPoints = document.getElementById('cardDeltaPoints');
   const calcDeltaPoints = document.getElementById('calcDeltaPoints');
   const cardDeltaPercent = document.getElementById('cardDeltaPercent');
@@ -114,7 +112,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const calcRoadmapEffectText = document.getElementById('calcRoadmapEffectText');
   const calcComparisonFeedback = document.getElementById('calcComparisonFeedback');
   const linkComoEfeitoCalculado = document.getElementById('linkComoEfeitoCalculado');
-  const calcFastTrackBadge = document.getElementById('calcFastTrackBadge');
 
   // Tabela de Bolso
   const pocketTableBody = document.getElementById('pocketTableBody');
@@ -367,12 +364,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 5. Atualiza display e calculadora
     updatePrescriptionDisplay();
 
-    // 6. Exibe badge de modo reavaliação direta
-    if (calcFastTrackBadge) {
-      calcFastTrackBadge.style.display = 'inline-block';
-    }
-
-    // 7. Rola suavemente até o início EXATO da calculadora (com respiro abaixo do cabeçalho)
+    // 6. Rola suavemente até o início EXATO da calculadora (com respiro abaixo do cabeçalho)
     setTimeout(() => {
       if (dualCalcContainer) {
         const headerEl = document.querySelector('.site-header');
@@ -616,8 +608,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (algorithmActiveContainer) algorithmActiveContainer.classList.remove('visible');
     if (searchHeroPanel) searchHeroPanel.style.display = 'flex';
 
-    if (calcFastTrackBadge) calcFastTrackBadge.style.display = 'none';
-
     document.querySelectorAll('.dropdown-sublink-napen').forEach(link => {
       link.classList.remove('active-item');
     });
@@ -764,12 +754,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (cardDeltaPercent) cardDeltaPercent.className = 'calc-metric-card';
     if (cardMcidBadge) cardMcidBadge.className = 'calc-metric-card';
 
-    if (calcDeltaBadge) {
-      calcDeltaBadge.textContent = 'Δ = Aguardando dados';
-      calcDeltaBadge.className = 'calc-metric-pill';
-    }
     if (calcComparisonFeedback) {
-      calcComparisonFeedback.textContent = 'Ao informar os escores, o sistema analisará se o ganho clínico individual é compatível com o intervalo de confiança do ensaio clínico e se superou a MCID da escala.';
+      calcComparisonFeedback.textContent = 'Ao informar os escores, o sistema analisará se o ganho clínico individual é compatível com o intervalo de confiança dos estudos de referência e se superou a MCID da escala.';
     }
 
     // Reseta desfecho ao alternar escala ou fator
@@ -836,9 +822,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Painel de Evidências: Estudos de referência vs. Diretriz Internacional
     if (m.artigo_referencia) {
-      if (evidenceTypeBadge) {
-        evidenceTypeBadge.textContent = m.artigo_referencia.tipo || 'Estudos de referência';
-      }
       if (evidenceCitationText) {
         evidenceCitationText.innerHTML = `<strong>${m.artigo_referencia.citacao_completa || m.artigo_referencia.autores}</strong> — <em>"${m.artigo_referencia.titulo || ''}"</em> (${m.artigo_referencia.revista || ''})`;
       }
@@ -1014,15 +997,11 @@ document.addEventListener('DOMContentLoaded', () => {
       if (cardDeltaPercent) cardDeltaPercent.className = 'calc-metric-card';
       if (cardMcidBadge) cardMcidBadge.className = 'calc-metric-card';
 
-      if (calcDeltaBadge) {
-        calcDeltaBadge.textContent = res.text;
-        calcDeltaBadge.className = 'calc-metric-pill';
-      }
       if (calcGoalFeedback) {
         calcGoalFeedback.textContent = `Meta do protocolo: ${activeScale?.meta_texto || m?.meta_melhora || 'Insira os escores para verificar o desfecho.'}`;
       }
       if (calcComparisonFeedback) {
-        calcComparisonFeedback.textContent = 'Ao informar os escores, o sistema analisará se o ganho clínico individual é compatível com o intervalo de confiança do ensaio clínico e se superou a MCID da escala.';
+        calcComparisonFeedback.textContent = 'Ao informar os escores, o sistema analisará se o ganho clínico individual é compatível com o intervalo de confiança dos estudos de referência e se superou a MCID da escala.';
       }
       return;
     }
@@ -1045,11 +1024,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (cardDeltaPoints) cardDeltaPoints.className = `calc-metric-card ${statusClass}`;
     if (cardDeltaPercent) cardDeltaPercent.className = `calc-metric-card ${statusClass}`;
     if (cardMcidBadge) cardMcidBadge.className = `calc-metric-card ${statusClass}`;
-
-    if (calcDeltaBadge) {
-      calcDeltaBadge.textContent = res.text;
-      calcDeltaBadge.className = `calc-metric-pill ${statusClass}`;
-    }
 
     // Automatismo: Seleciona e abre automaticamente o desfecho clínico
     engine.setOutcome(res.outcomeRecommended);
