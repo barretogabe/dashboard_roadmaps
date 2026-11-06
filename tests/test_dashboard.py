@@ -700,6 +700,38 @@ class TestRedeNAPeNPrescriptionPlatform(unittest.TestCase):
         self.assertIn('.pocket-table-container {\n  background-color: transparent;\n  border: none;\n  border-radius: 0;\n  overflow-x: auto;\n  box-shadow: none;\n  width: 100%;', css)
         self.assertIn('.pocket-table th {\n  background-color: var(--napen-teal-dark);\n  color: #FFFFFF;\n  font-weight: 700;\n  padding: 12px 14px;\n  text-align: left;\n  white-space: normal;', css)
 
+    def test_16_lesao_prefrontal_distinct_protocols(self):
+        """Valida diferenciação dos Protocolos 4 (Cerebelar) e 5 (Pré-motor) em Lesão Pré-Frontal."""
+        json_path = os.path.join(BASE_DIR, 'data', 'napen_roadmaps_data.json')
+        with open(json_path, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+
+        avc = next(c for c in data['condicoes'] if c['id'] == 'avc-membro-superior')
+        mods = avc['modalidades']
+
+        # Protocolo 4 - Cerebelar
+        self.assertIn('sem_pem_cerebelar', mods)
+        self.assertIn('Cerebelar', mods['sem_pem_cerebelar']['alvo'])
+        self.assertIn('Wang', mods['sem_pem_cerebelar']['artigo_referencia']['autores'])
+
+        # Protocolo 5 - Pré-Motor
+        self.assertIn('sem_pem_premotor', mods)
+        self.assertIn('Pré-Motor', mods['sem_pem_premotor']['alvo'])
+        self.assertIn('Lefaucheur', mods['sem_pem_premotor']['artigo_referencia']['autores'])
+
+        # Protocolos devem ser clinicamente distintos
+        self.assertNotEqual(mods['sem_pem_cerebelar']['alvo'], mods['sem_pem_premotor']['alvo'])
+        self.assertNotEqual(mods['sem_pem_cerebelar']['tecnica'], mods['sem_pem_premotor']['tecnica'])
+
+        # Validação na árvore topológica
+        tree = avc['arvore_algoritmo']['rtms']
+        lesao_step = next(s for s in tree['etapas'] if s['etapa_id'] == 'lesao_m1')
+        opt_sim = next(o for o in lesao_step['opcoes'] if o['id'] == 'lesao_prefrontal_sim')
+        opt_nao = next(o for o in lesao_step['opcoes'] if o['id'] == 'lesao_prefrontal_nao')
+
+        self.assertEqual(opt_sim['modalidade_chave'], 'sem_pem_cerebelar')
+        self.assertEqual(opt_nao['modalidade_chave'], 'sem_pem_premotor')
+
 if __name__ == '__main__':
     unittest.main()
 

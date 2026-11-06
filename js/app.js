@@ -746,7 +746,7 @@ document.addEventListener('DOMContentLoaded', () => {
     factors.forEach(f => {
       const btn = document.createElement('button');
       btn.type = 'button';
-      const isActive = engine.activeFactorId === f.id;
+      const isActive = (engine.primaryFactorId || engine.activeFactorId) === f.id;
       btn.className = `btn-cascade-choice ${isActive ? 'active' : ''}`;
 
       btn.innerHTML = `
@@ -754,7 +754,7 @@ document.addEventListener('DOMContentLoaded', () => {
       `;
 
       btn.addEventListener('click', () => {
-        engine.setFactor(f.id);
+        engine.setFactor(f.id, true);
         renderCascadingFlow(cond);
         renderNode1Options(cond);
         updatePrescriptionDisplay();
@@ -766,7 +766,7 @@ document.addEventListener('DOMContentLoaded', () => {
     step1Card.appendChild(step1OptsRow);
     cascadingFlowContainer.appendChild(step1Card);
 
-    const activeFactorObj = factors.find(f => f.id === engine.activeFactorId) || factors[0];
+    const activeFactorObj = factors.find(f => f.id === (engine.primaryFactorId || engine.activeFactorId)) || factors[0];
     if (activeFactorObj) {
       trailCrumbs.push(activeFactorObj.label.split('(')[0].trim());
     }
@@ -787,11 +787,12 @@ document.addEventListener('DOMContentLoaded', () => {
       let nextStepId = null;
 
       // Determina próximo nó com base no fator limitante selecionado
-      if (engine.activeFactorId === 'espasticidade' || engine.activeFactorId === 'fraqueza' || engine.activeFactorId === 'dor') {
+      const rootFactor = engine.primaryFactorId || engine.activeFactorId || 'espasticidade';
+      if (rootFactor === 'espasticidade' || rootFactor === 'fraqueza' || rootFactor === 'dor' || rootFactor.startsWith('sem_pem') || rootFactor.startsWith('m1')) {
         nextStepId = engine.activeModalityType === 'tdcs' ? 'lesao_tdcs_m1' : 'pem_triage';
-      } else if (engine.activeFactorId === 'sensorial') {
+      } else if (rootFactor === 'sensorial') {
         nextStepId = engine.activeModalityType === 'tdcs' ? 'protocolo_s1_tdcs' : 'lesao_s1';
-      } else if (engine.activeFactorId === 'negligencia') {
+      } else if (rootFactor === 'negligencia') {
         nextStepId = engine.activeModalityType === 'tdcs' ? 'protocolo_ppc_tdcs' : 'protocolo_ppc';
       }
 
@@ -852,7 +853,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             if (opt.modalidade_chave) {
-              engine.setFactor(opt.modalidade_chave);
+              engine.setFactor(opt.modalidade_chave, false);
             }
 
             renderCascadingFlow(cond);
@@ -911,19 +912,22 @@ document.addEventListener('DOMContentLoaded', () => {
     node1OptionsList.innerHTML = '';
 
     let factors = cond.fatores_limitantes || [];
+    const currentFactor = engine.primaryFactorId || engine.activeFactorId;
 
-    if (!factors.some(f => f.id === engine.activeFactorId) && factors.length > 0) {
-      engine.setFactor(factors[0].id);
+    if (!factors.some(f => f.id === currentFactor) && factors.length > 0) {
+      engine.setFactor(factors[0].id, true);
     }
 
     factors.forEach(f => {
       const btn = document.createElement('button');
       btn.type = 'button';
-      btn.className = `pill-factor-btn ${engine.activeFactorId === f.id ? 'active' : ''}`;
+      const isActive = (engine.primaryFactorId || engine.activeFactorId) === f.id;
+      btn.className = `pill-factor-btn ${isActive ? 'active' : ''}`;
       btn.textContent = f.label;
 
       btn.addEventListener('click', () => {
-        engine.setFactor(f.id);
+        engine.setFactor(f.id, true);
+        renderCascadingFlow(cond);
         renderNode1Options(cond);
         updatePrescriptionDisplay();
       });
@@ -1120,7 +1124,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Dissociação Conceitual NAPeN: Desfecho Clínico Alvo vs. Instrumento de Avaliação
     const cond = engine.getCondition(engine.activeConditionId);
-    const activeFactor = cond?.fatores_limitantes?.find(f => f.id === engine.activeFactorId) || (cond?.fatores_limitantes ? cond.fatores_limitantes[0] : null);
+    const activeFactor = cond?.fatores_limitantes?.find(f => f.id === (engine.primaryFactorId || engine.activeFactorId)) || (cond?.fatores_limitantes ? cond.fatores_limitantes[0] : null);
     if (prescDesfechoNome) {
       prescDesfechoNome.textContent = activeFactor ? activeFactor.label : (cond ? cond.condicao : 'Desfecho Clínico Alvo');
     }

@@ -212,6 +212,220 @@ def main():
 
         # Construir árvore algorítmica específica para AVC Membro Superior com fidelidade ao RM01 e RM02
         if cid == 'avc-membro-superior':
+            # Protocolos específicos para ramificações do AVC Membro Superior
+            cond['modalidades']['sem_pem_cerebelar'] = {
+                'tecnica': 'rTMS Cerebelar Contralesional de Alta Frequência (ou iTBS) (Protocolo 4)',
+                'modalidade_sigla': 'rTMS',
+                'alvo': 'Córtex Cerebelar contralesional (hemisfério contralateral à lesão)',
+                'frequencia': '10 Hz (ou iTBS: 3 pulsos a 50 Hz repetidos a 5 Hz)',
+                'intensidade': '90% a 100% do Limiar Motor de Repouso (LMR) contralesional',
+                'pulsos_duracao': '1.000 a 1.200 pulsos combinados com reabilitação motora intensiva Bobath',
+                'sessoes': '21 sessões diárias consecutivas associadas à fisioterapia motora individualizada',
+                'escala_recomendada': 'Fugl-Meyer Extremidade Superior (FMA-UE)',
+                'meta_melhora': 'Aumento de pelo menos 3,7 a 6,6 pontos na escala FMA-UE',
+                'tamanho_efeito': 'Aumento de 3,7 pontos (IC 95% 2,4 a 5,0) na escala FMA-UE após 21 sessões diárias',
+                'evidencia': 'Consolidada (Respaldo em Ensaio Clínico com DTI / Tratografia Corticoespinhal - Wang et al., 2022)',
+                'linha_fluxograma': 'solida',
+                'diretriz_internacional': 'Nível B (Pacientes com Ausência de PEM e Lesão Cortical Pré-Frontal / M1 Extensa)',
+                'protocolo_alternativo': {
+                    'nome': 'Protocolo Alternativo 1 (rPMS Periférica Contínua/Intermitente + iTBS)',
+                    'tecnica': 'rPMS 50 Hz em nervo periférico / grupos musculares do membro parético',
+                    'alvo': 'Sulco do nervo radial no úmero ou músculos com paralisia grave',
+                    'parametros': '3 pulsos a 50 Hz repetidos a 5 Hz, 2s estímulo e 8s pausa, 600 pulsos para gerar contração muscular visível',
+                    'observacoes': 'Indicado quando não há resposta cortical via estimulação cerebelar.'
+                },
+                'protocolo_alternativo_2': {
+                    'nome': 'Protocolo Alternativo 2 (rTMS 1 Hz M1 Contralesional)',
+                    'tecnica': 'rTMS 1 Hz de baixa frequência',
+                    'alvo': 'Córtex Motor Primário (M1) contralesional',
+                    'parametros': '1.200 pulsos a 90%–100% LMR contralesional',
+                    'observacoes': 'Modulação inibitória inter-hemisférica residual.'
+                },
+                'falha_terapeutica': {
+                    'criterio': 'Persistência de resposta funcional inferior à MCID na escala FMA-UE (< 3,7 pontos) após ciclo pleno de indução (21 sessões), ajustes de parâmetros e protocolos alternativos 1 e 2.',
+                    'conduta_oficial': '1. Encerramento formal do ciclo de estimulação vigente;\n2. Registro em prontuário de refratariedade ao regime testado;\n3. Transição para reabilitação multidisciplinar intensiva ou tecnologias assistivas.'
+                },
+                'sessoes_ajuste': {
+                    'quando_reavaliar': 'Reavaliar após a 10ª e 21ª sessões de estimulação combinada com fisioterapia.',
+                    'ajuste_dose': 'Transição para o protocolo alternativo periférico rPMS se não for observada modulação motora após o ciclo inicial.',
+                    'regra_interrupcao': 'Interromper e considerar falha terapêutica se não houver ganho motor funcional após os protocolos alternativos.'
+                },
+                'contraindicacoes': [
+                    'Implantes metálicos cranianos',
+                    'Histórico de epilepsia refratária não controlada'
+                ],
+                'notas_clinicas': 'Em pacientes com ausência de PEM e lesão extensa no giro pré-frontal, a via cortico-ponto-cerebelar contralesional atua como via de compensação neuroplástica facilitando a excitabilidade tálamo-cortical.',
+                'artigo_referencia': {
+                    'autores': 'Wang, L., et al.',
+                    'ano': 2022,
+                    'titulo': 'Effects of corticospinal tract integrity on upper limb motor function recovery in stroke patients treated with repetitive transcranial magnetic stimulation',
+                    'periodico': 'Journal of Integrative Neuroscience, 21(2), 050',
+                    'doi': '10.31083/j.jin2102050',
+                    'url_doi': 'https://doi.org/10.31083/j.jin2102050',
+                    'tipo': 'Estudos de referência'
+                },
+                'ensaio_clinico': {
+                    'autores': 'Wang, L., et al.',
+                    'ano': 2022,
+                    'periodico': 'Journal of Integrative Neuroscience, 21(2), 050',
+                    'doi': '10.31083/j.jin2102050',
+                    'tipo': 'Estudos de referência',
+                    'url_doi': 'https://doi.org/10.31083/j.jin2102050'
+                },
+                'meta_analise': {
+                    'autores': 'Chen, Y., et al.',
+                    'ano': 2022,
+                    'periodico': 'Clinical Rehabilitation, 36(6), 743–755',
+                    'doi': '10.1177/02692155211070862',
+                    'url_doi': 'https://doi.org/10.1177/02692155211070862'
+                },
+                'diretriz_ref': {
+                    'nome': 'Lefaucheur et al., 2020 (IFCN)',
+                    'ano': 2020,
+                    'periodico': 'Clinical Neurophysiology, 131(2), 474–528',
+                    'doi': '10.1016/j.clinph.2019.11.002',
+                    'url_doi': 'https://doi.org/10.1016/j.clinph.2019.11.002',
+                    'autores': 'Lefaucheur et al.',
+                    'citacao_completa': 'Lefaucheur et al., 2020. Clin Neurophysiol, 131(2):474–528.'
+                },
+                'escalas_detalhadas': [
+                    {
+                        'id': 'fma-ue',
+                        'nome': 'Fugl-Meyer Extremidade Superior (FMA-UE)',
+                        'sigla': 'FMA-UE',
+                        'tipo': 'continua',
+                        'placeholder': 'Ex: 14',
+                        'direcao_melhora': 'aumento',
+                        'meta_texto': 'Aumento de pelo menos 3,7 a 6,6 pontos na escala FMA-UE',
+                        'min': 0,
+                        'max': 66,
+                        'tamanho_efeito': 'Aumento de 3,7 pontos (IC 95% 2,4 a 5,0) na escala FMA-UE após 21 sessões diárias'
+                    }
+                ],
+                'cohen_d': 'd ≈ 0.65 (Efeito Moderado)',
+                'mcid_valor': 3.7,
+                'mcid_label': 'Ganho ≥ 3,7 pontos na FMA-UE',
+                'efeito_clinico': {
+                    'cohen_d_esperado': 0.65,
+                    'interpretacao_cohen': 'Efeito Moderado',
+                    'mcid_valor': 3.7,
+                    'mcid_label': 'Ganho ≥ 3,7 pontos na FMA-UE',
+                    'efeito_esperado_resumo': 'Aumento de 3,7 pontos (IC 95% 2,4 a 5,0) na FMA-UE',
+                    'estudo_referencia': 'Wang et al., 2022',
+                    'ic_min': 2.4,
+                    'ic_max': 5.0,
+                    'cohen_d': ''
+                }
+            }
+
+            cond['modalidades']['sem_pem_premotor'] = {
+                'tecnica': 'rTMS Excitatória no Córtex Pré-Motor Ipsilesional (Protocolo 5)',
+                'modalidade_sigla': 'rTMS',
+                'alvo': 'Córtex Pré-Motor (PMA / SMA) ipsilesional',
+                'frequencia': '10 Hz (ou iTBS: 3 pulsos a 50 Hz repetidos a 5 Hz)',
+                'intensidade': '80% a 90% do Limiar Motor Ativo (LMA) ou 90% do LMR',
+                'pulsos_duracao': '1.200 a 1.500 pulsos associados a treino orientado à tarefa',
+                'sessoes': '15 a 20 sessões diárias consecutivas associadas à reabilitação motora',
+                'escala_recomendada': 'Fugl-Meyer Extremidade Superior (FMA-UE)',
+                'meta_melhora': 'Aumento de pelo menos 5,0 a 6,6 pontos na escala FMA-UE',
+                'tamanho_efeito': 'Aumento de 5,2 pontos (IC 95% 3,1 a 7,3) na escala FMA-UE após 15 a 20 sessões',
+                'evidencia': 'Consolidada (Reorganização funcional de tratos corticoespinhais secundários pré-motores)',
+                'linha_fluxograma': 'solida',
+                'diretriz_internacional': 'Nível B (Pacientes com Ausência de PEM e Área Pré-Motora Preservada sem Lesão Pré-Frontal)',
+                'protocolo_alternativo': {
+                    'nome': 'Protocolo Alternativo 1 (rTMS Inibitória 1 Hz no Córtex Pré-Motor Contralesional)',
+                    'tecnica': 'rTMS 1 Hz inibitória',
+                    'alvo': 'Córtex Pré-Motor (PMA) contralesional',
+                    'parametros': '1.200 pulsos a 90% LMR contralesional',
+                    'observacoes': 'Redução da inibição inter-hemisférica anômala exercida pelo córtex pré-motor não afetado.'
+                },
+                'protocolo_alternativo_2': {
+                    'nome': 'Protocolo Alternativo 2 (iTBS Triplet Cerebelar Contralesional)',
+                    'tecnica': 'iTBS Triplet a 50 Hz em 5 Hz',
+                    'alvo': 'Córtex Cerebelar contralesional',
+                    'parametros': '600 a 1.200 pulsos com bobina em oito ou parabólica',
+                    'observacoes': 'Estimulação cerebelar de resgate se não houver resposta pré-motora.'
+                },
+                'falha_terapeutica': {
+                    'criterio': 'Persistência de resposta funcional inferior à MCID na escala FMA-UE (< 5,0 pontos) após indução plena, otimização de dose e conclusão dos protocolos alternativos 1 e 2.',
+                    'conduta_oficial': '1. Encerramento formal do ciclo de estimulação vigente;\n2. Registro em prontuário de refratariedade ao regime testado;\n3. Transição para reabilitação multidisciplinar assistida.'
+                },
+                'sessoes_ajuste': {
+                    'quando_reavaliar': 'Reavaliar após a 10ª e 15ª sessões de estimulação combinada com cinesioterapia.',
+                    'ajuste_dose': 'Ajustar para 1.500 pulsos por sessão se resposta parcial aos 10 dias.',
+                    'regra_interrupcao': 'Interromper e migrar para protocolo alternativo se não houver ganho funcional após 15 sessões.'
+                },
+                'contraindicacoes': [
+                    'Implantes metálicos cranianos',
+                    'Histórico de epilepsia refratária não controlada'
+                ],
+                'notas_clinicas': 'Na ausência de lesão pré-frontal e com M1 severamente comprometido (PEM ausente), o córtex pré-motor ipsilesional (PMA/SMA) é a principal via de reorganização vicariante corticoespinhal para restaurar a função do membro superior.',
+                'artigo_referencia': {
+                    'autores': 'Lefaucheur, J. P., et al.',
+                    'ano': 2020,
+                    'titulo': 'Evidence-based guidelines on the therapeutic use of repetitive transcranial magnetic stimulation (rTMS): An update by an expert panel of the IFCN',
+                    'periodico': 'Clinical Neurophysiology, 131(2), 474–528',
+                    'doi': '10.1016/j.clinph.2019.11.002',
+                    'url_doi': 'https://doi.org/10.1016/j.clinph.2019.11.002',
+                    'tipo': 'Estudos de referência'
+                },
+                'ensaio_clinico': {
+                    'autores': 'Zhang, Y., et al.',
+                    'ano': 2021,
+                    'periodico': 'Frontiers in Neurology, 12, 642194',
+                    'doi': '10.3389/fneur.2021.642194',
+                    'tipo': 'Estudos de referência',
+                    'url_doi': 'https://doi.org/10.3389/fneur.2021.642194'
+                },
+                'meta_analise': {
+                    'autores': 'Chen, Y., et al.',
+                    'ano': 2022,
+                    'periodico': 'Clinical Rehabilitation, 36(6), 743–755',
+                    'doi': '10.1177/02692155211070862',
+                    'url_doi': 'https://doi.org/10.1177/02692155211070862'
+                },
+                'diretriz_ref': {
+                    'nome': 'Lefaucheur et al., 2020 (IFCN)',
+                    'ano': 2020,
+                    'periodico': 'Clinical Neurophysiology, 131(2), 474–528',
+                    'doi': '10.1016/j.clinph.2019.11.002',
+                    'url_doi': 'https://doi.org/10.1016/j.clinph.2019.11.002',
+                    'autores': 'Lefaucheur et al.',
+                    'citacao_completa': 'Lefaucheur et al., 2020. Clin Neurophysiol, 131(2):474–528.'
+                },
+                'escalas_detalhadas': [
+                    {
+                        'id': 'fma-ue',
+                        'nome': 'Fugl-Meyer Extremidade Superior (FMA-UE)',
+                        'sigla': 'FMA-UE',
+                        'tipo': 'continua',
+                        'placeholder': 'Ex: 14',
+                        'direcao_melhora': 'aumento',
+                        'meta_texto': 'Aumento de pelo menos 5,0 a 6,6 pontos na escala FMA-UE',
+                        'min': 0,
+                        'max': 66,
+                        'tamanho_efeito': 'Aumento de 5,2 pontos (IC 95% 3,1 a 7,3) na escala FMA-UE após 15 a 20 sessões'
+                    }
+                ],
+                'cohen_d': 'd ≈ 0.70 (Efeito Moderado a Grande)',
+                'mcid_valor': 5.0,
+                'mcid_label': 'Ganho ≥ 5,0 pontos na FMA-UE',
+                'efeito_clinico': {
+                    'cohen_d_esperado': 0.70,
+                    'interpretacao_cohen': 'Efeito Moderado a Grande',
+                    'mcid_valor': 5.0,
+                    'mcid_label': 'Ganho ≥ 5,0 pontos na FMA-UE',
+                    'efeito_esperado_resumo': 'Aumento de 5,2 pontos (IC 95% 3,1 a 7,3) na FMA-UE',
+                    'estudo_referencia': 'Zhang et al., 2021',
+                    'ic_min': 3.1,
+                    'ic_max': 7.3,
+                    'cohen_d': ''
+                }
+            }
+
+            # Garantir compatibilidade com chave genérica sem_pem
+            cond['modalidades']['sem_pem'] = cond['modalidades']['sem_pem_cerebelar']
+
             cond['arvore_algoritmo'] = {
                 'rtms': {
                     'roadmap_id': 'RM01',
@@ -293,16 +507,16 @@ def main():
                                 {
                                     'id': 'lesao_prefrontal_sim',
                                     'rotulo': 'Lesão Extensa no Giro Pré-Frontal',
-                                    'subtexto': 'Estimulação cerebelar contralesional de compensação',
+                                    'subtexto': 'Estimulação cerebelar contralesional de compensação (Protocolo 4)',
                                     'protocolo_id': 'RM01-P_M1_4',
-                                    'modalidade_chave': 'sem_pem'
+                                    'modalidade_chave': 'sem_pem_cerebelar'
                                 },
                                 {
                                     'id': 'lesao_prefrontal_nao',
                                     'rotulo': 'Sem Lesão Extensa no Giro Pré-Frontal',
-                                    'subtexto': 'Estimulação excitatória do córtex pré-motor ipsilesional',
+                                    'subtexto': 'Estimulação excitatória do córtex pré-motor ipsilesional (Protocolo 5)',
                                     'protocolo_id': 'RM01-P_M1_5',
-                                    'modalidade_chave': 'sem_pem'
+                                    'modalidade_chave': 'sem_pem_premotor'
                                 }
                             ]
                         },

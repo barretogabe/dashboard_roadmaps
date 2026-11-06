@@ -11,7 +11,8 @@ class DecisionEngine {
     this.activeConditionId = null;
     this.activeModalityType = 'rtms'; // 'rtms' | 'tdcs'
     this.pathChoices = {}; // { [etapaId]: optionId }
-    this.activeFactorId = null;
+    this.primaryFactorId = null; // Fator limitante principal (sintoma clínico inicial)
+    this.activeFactorId = null; // Chave de prescrição resolvida no percurso da árvore
     this.activeScaleId = null;
     this.activeOutcome = null; // 'success' | 'danger' | null
   }
@@ -26,8 +27,10 @@ class DecisionEngine {
     this.pathChoices = {};
     const cond = this.getCondition(conditionId);
     if (cond && cond.fatores_limitantes && cond.fatores_limitantes.length > 0) {
+      this.primaryFactorId = cond.fatores_limitantes[0].id;
       this.activeFactorId = cond.fatores_limitantes[0].id;
     } else {
+      this.primaryFactorId = null;
       this.activeFactorId = null;
     }
     this.activeScaleId = null;
@@ -69,7 +72,7 @@ class DecisionEngine {
     this.activeScaleId = null;
     this.activeOutcome = null;
 
-    // Sincroniza activeFactorId com o primeiro passo se for fator limitante
+    // Sincroniza activeFactorId com o passo escolhido
     const tree = this.getActiveTree();
     if (tree && tree.etapas) {
       const step = tree.etapas.find(s => s.etapa_id === stepId);
@@ -85,6 +88,7 @@ class DecisionEngine {
           } else if (optionId.includes('ppc')) {
             this.activeFactorId = 'negligencia';
           }
+          this.primaryFactorId = this.activeFactorId;
         }
       }
     }
@@ -94,7 +98,10 @@ class DecisionEngine {
     return this.pathChoices[stepId] || null;
   }
 
-  setFactor(factorId) {
+  setFactor(factorId, isPrimary = true) {
+    if (isPrimary) {
+      this.primaryFactorId = factorId;
+    }
     this.activeFactorId = factorId;
     this.activeScaleId = null;
     this.activeOutcome = null;
@@ -133,6 +140,10 @@ class DecisionEngine {
 
     if (this.activeFactorId && cond.modalidades[this.activeFactorId]) {
       return cond.modalidades[this.activeFactorId];
+    }
+
+    if (this.primaryFactorId && cond.modalidades[this.primaryFactorId]) {
+      return cond.modalidades[this.primaryFactorId];
     }
 
     const firstKey = Object.keys(cond.modalidades)[0];
