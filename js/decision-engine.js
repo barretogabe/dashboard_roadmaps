@@ -9,9 +9,11 @@ class DecisionEngine {
   constructor(data) {
     this.data = data;
     this.activeConditionId = null;
+    this.activeModalityType = 'rtms'; // 'rtms' | 'tdcs'
+    this.pathChoices = {}; // { [etapaId]: optionId }
     this.activeFactorId = null;
     this.activeScaleId = null;
-    this.activeOutcome = null; // 'success' | 'warning' | 'danger' | null
+    this.activeOutcome = null; // 'success' | 'danger' | null
   }
 
   getCondition(conditionId) {
@@ -20,6 +22,8 @@ class DecisionEngine {
 
   setCondition(conditionId) {
     this.activeConditionId = conditionId;
+    this.activeModalityType = 'rtms';
+    this.pathChoices = {};
     const cond = this.getCondition(conditionId);
     if (cond && cond.fatores_limitantes && cond.fatores_limitantes.length > 0) {
       this.activeFactorId = cond.fatores_limitantes[0].id;
@@ -28,6 +32,66 @@ class DecisionEngine {
     }
     this.activeScaleId = null;
     this.activeOutcome = null;
+
+    // Inicializa escolhas padrão da árvore se disponível
+    const tree = this.getActiveTree();
+    if (tree && tree.etapas && tree.etapas.length > 0) {
+      const firstEtapa = tree.etapas[0];
+      if (firstEtapa.opcoes && firstEtapa.opcoes.length > 0) {
+        this.setPathChoice(firstEtapa.etapa_id, firstEtapa.opcoes[0].id);
+      }
+    }
+  }
+
+  setModalityType(type) {
+    this.activeModalityType = type;
+    this.pathChoices = {};
+    this.activeScaleId = null;
+    this.activeOutcome = null;
+    const tree = this.getActiveTree();
+    if (tree && tree.etapas && tree.etapas.length > 0) {
+      const firstEtapa = tree.etapas[0];
+      if (firstEtapa.opcoes && firstEtapa.opcoes.length > 0) {
+        this.setPathChoice(firstEtapa.etapa_id, firstEtapa.opcoes[0].id);
+      }
+    }
+  }
+
+  getActiveTree() {
+    if (!this.activeConditionId) return null;
+    const cond = this.getCondition(this.activeConditionId);
+    if (!cond || !cond.arvore_algoritmo) return null;
+    return cond.arvore_algoritmo[this.activeModalityType] || null;
+  }
+
+  setPathChoice(stepId, optionId) {
+    this.pathChoices[stepId] = optionId;
+    this.activeScaleId = null;
+    this.activeOutcome = null;
+
+    // Sincroniza activeFactorId com o primeiro passo se for fator limitante
+    const tree = this.getActiveTree();
+    if (tree && tree.etapas) {
+      const step = tree.etapas.find(s => s.etapa_id === stepId);
+      if (step) {
+        const opt = step.opcoes.find(o => o.id === optionId);
+        if (opt && opt.modalidade_chave) {
+          this.activeFactorId = opt.modalidade_chave;
+        } else if (stepId === 'fator_limitante') {
+          if (optionId.includes('m1')) {
+            this.activeFactorId = 'espasticidade';
+          } else if (optionId.includes('s1')) {
+            this.activeFactorId = 'sensorial';
+          } else if (optionId.includes('ppc')) {
+            this.activeFactorId = 'negligencia';
+          }
+        }
+      }
+    }
+  }
+
+  getPathChoice(stepId) {
+    return this.pathChoices[stepId] || null;
   }
 
   setFactor(factorId) {

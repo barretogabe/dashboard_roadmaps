@@ -8,6 +8,11 @@
   <link rel="icon" type="image/png" href="assets/logos/napen_logo_icon.png">
 
   <!-- Estilos Oficiais NAPeN -->
+  <!-- Tipografia Oficial Rede NAPeN (Montserrat Google Fonts) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap" rel="stylesheet">
+
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
@@ -129,14 +134,14 @@
           </ul>
         </div>
 
-        <!-- Botão 3: Matriz de Protocolos e Parâmetros -->
+        <!-- Botão 3: Biblioteca de Evidências -->
         <div class="nav-item" id="navItemPocket">
           <button class="nav-btn" type="button" id="tabBtnPocket">
-            MATRIZ DE PROTOCOLOS E PARÂMETROS
+            BIBLIOTECA DE EVIDÊNCIAS
           </button>
         </div>
 
-        <!-- Botão 3: Como os Roadmaps de Indicação Foram Desenvolvidos -->
+        <!-- Botão 4: Como os Roadmaps de Indicação Foram Desenvolvidos -->
         <div class="nav-item" id="navItemMethod">
           <button class="nav-btn" type="button" id="tabBtnMethod">
             COMO OS ROADMAPS DE INDICAÇÃO FORAM DESENVOLVIDOS
@@ -153,7 +158,7 @@
   <section class="hero-section">
     <div class="hero-container">
       <h1 class="hero-title">Plataforma Interativa de Prescrição Clínica em Neuromodulação Não Invasiva</h1>
-      <p class="hero-subtitle">Roadmaps e Algoritmos de Decisão Terapêutica Baseados em Evidências</p>
+      <p class="hero-subtitle">Roadmaps e Algoritmos de Decisão Terapêutica Baseados em Evidências. Versão 2025-2026.</p>
     </div>
   </section>
 
@@ -172,7 +177,7 @@
         <div class="search-selector-header">
           <h2 class="search-selector-title">Selecione uma Condição Clínica para Prescrição</h2>
           <p class="search-selector-subtitle">
-            Passe o mouse sobre o botão <strong>PRESCRIÇÃO INTERATIVA</strong> no menu turquesa acima para escolher a condição, ou digite abaixo para buscar um protocolo:
+            Passe o mouse sobre o botão <strong>PRESCRIÇÃO INTERATIVA</strong> no menu acima para escolher a condição, ou digite abaixo para buscar um protocolo:
           </p>
         </div>
 
@@ -182,9 +187,9 @@
             <div class="search-placeholder-marquee" id="searchPlaceholderMarquee" aria-hidden="true">
               <div class="marquee-track">
                 <span class="marquee-content">Busca por diagnóstico, alvo ou técnica (ex: AVC, espasticidade, depressão, dor neuropática, áreas do sistema 10-20 como C3, F3, Cz, marcha, Parkinson, iTBS, EAM, SARA, BBS...)</span>
-                <span class="marquee-separator">✦</span>
+                <span class="marquee-separator">•</span>
                 <span class="marquee-content">Busca por diagnóstico, alvo ou técnica (ex: AVC, espasticidade, depressão, dor neuropática, áreas do sistema 10-20 como C3, F3, Cz, marcha, Parkinson, iTBS, EAM, SARA, BBS...)</span>
-                <span class="marquee-separator">✦</span>
+                <span class="marquee-separator">•</span>
               </div>
             </div>
             <button id="searchClearBtn" class="search-clear-btn" type="button" aria-label="Limpar busca">✕</button>
@@ -232,6 +237,19 @@
           </div>
         </div>
 
+        <!-- Seletor de Modalidade Terapêutica (rTMS vs. tDCS para roadmaps com múltiplas abordagens) -->
+        <div class="modality-selector-bar" id="modalitySelectorBar" style="display: none;">
+          <span class="modality-bar-label">Modalidade de Estimulação:</span>
+          <div class="modality-pills-group" id="modalityPillsGroup">
+            <!-- Abas dinâmicas rTMS / tDCS -->
+          </div>
+        </div>
+
+        <!-- Árvore de Decisão Algorítmica dos Roadmaps (Cascata Progressiva Fluida) -->
+        <div class="cascading-flow-container" id="cascadingFlowContainer">
+          <!-- Renderizado dinamicamente pelo motor de decisão da NAPeN -->
+        </div>
+
         <!-- Painel de Estratificação Neurofisiológica Prévia (PEM no MS) -->
         <div class="pem-triage-panel" id="pemTriagePanel" style="display: none;">
           <div class="pem-triage-title">
@@ -244,16 +262,16 @@
           </div>
           <div class="pem-triage-buttons">
             <button type="button" class="btn-pem-choice active" id="btnPemSim" data-pem="sim">
-              PEM Presente (SIM) — Trato Corticoespinhal Preservado
+              PEM Presente — Trato Corticoespinhal Preservado
             </button>
             <button type="button" class="btn-pem-choice" id="btnPemNao" data-pem="nao">
-              PEM Ausente (NÃO) — Lesão Grave / Baixa Integridade
+              PEM Ausente — Integridade Corticoespinhal Não Preservada
             </button>
           </div>
         </div>
 
-        <!-- Painel Interativo do Fator Limitante Principal -->
-        <div class="node1-panel">
+        <!-- Painel Interativo do Fator Limitante Principal (Sincronizado) -->
+        <div class="node1-panel" id="node1Panel" style="display: none;">
           <div class="node1-title">
             <span style="font-weight: 700; color: var(--napen-navy); font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.02em;">
               Estratificação Clínica: Fator Limitante ou Sintoma-Alvo
@@ -264,6 +282,7 @@
           </div>
           <div class="node1-options-list" id="node1OptionsList"></div>
         </div>
+
 
         <!-- Card de Prescrição Primária -->
         <article class="prescription-details-card">
@@ -547,25 +566,24 @@
     </div>
 
     <!-- ====================================================================
-         Aba 2: Matriz de Protocolos e Parâmetros (Visão de Consulta Operacional)
+         Aba 2: Biblioteca de Evidências
          ==================================================================== -->
     <div id="panePocket" style="display: none;">
-      <div style="margin-bottom: 16px; color: var(--text-muted); font-size: 0.9rem;">
-        Matriz consolidada de protocolos e parâmetros de estimulação para consulta clínica comparativa.
+      <div style="margin-bottom: 18px;">
+        <h2 style="font-size: 1.35rem; font-weight: 700; color: var(--napen-navy); margin-bottom: 4px;">
+          Biblioteca de Evidências
+        </h2>
       </div>
       <div class="pocket-table-container">
         <table class="pocket-table">
           <thead>
             <tr>
-              <th>Condição Clínica</th>
-              <th>Foco / Fator Limitante</th>
-              <th>Técnica Indicada</th>
-              <th>Alvo Anatômico</th>
-              <th>Frequência & Intensidade</th>
-              <th>Dose e Sessões</th>
-              <th>Escala Recomendada</th>
+              <th>Condição Clínica & Eixo</th>
+              <th>Foco / Indicação do Roadmap</th>
               <th>Recomendação Internacional</th>
-              <th>Evidência Científica (Estudos de referência & Metanálise)</th>
+              <th>Ensaio Clínico de Referência</th>
+              <th>Metanálise de Suporte</th>
+              <th>Prescrição no Algoritmo</th>
             </tr>
           </thead>
           <tbody id="pocketTableBody"></tbody>
@@ -624,19 +642,40 @@
   </main>
 
   <!-- ========================================================================
-       Rodapé Institucional Oficial
+       Rodapé Institucional Oficial (Dados Extraídos do Portal Oficial Rede NAPeN)
        ======================================================================== -->
   <footer class="site-footer">
     <div class="footer-inner">
-      <div>
-        <strong>Rede NAPeN</strong> — Rede de Núcleos de Assistência e Pesquisa em Neuromodulação. Todos os direitos reservados.
+      <div class="footer-col-brand">
+        <div class="footer-brand-title">Rede NAPeN</div>
+        <div class="footer-brand-subtitle">Núcleo de Assistência e Pesquisa em Neuromodulação</div>
+        <p class="footer-address-text">
+          Rua Almirante Tamandaré, nº 250, Caixa Postal 202, bairro de Boa Viagem, CEP nº 51030-090, Recife - PE
+        </p>
       </div>
-      <div style="display: flex; align-items: center; gap: 16px;">
-        <span class="footer-version-tag">Versão: 2025–2026</span>
-        <a href="https://www.neuromodulation-net.com/" target="_blank" rel="noopener noreferrer" style="color: var(--napen-teal-dark); font-weight: 700; text-decoration: none;">
-          Portal Oficial da Rede
-        </a>
+
+      <div class="footer-col-contact">
+        <div class="footer-contact-title">Atendimento & Contato</div>
+        <p class="footer-contact-item">
+          <strong>Telefone:</strong> +55 (81) 99109-3455 / (81) 99159-0230
+        </p>
+        <p class="footer-contact-item">
+          <strong>E-mail:</strong> <a href="mailto:rede.napenm@gmail.com" class="footer-mail-link">rede.napenm@gmail.com</a>
+        </p>
       </div>
+
+      <div class="footer-col-links">
+        <div class="footer-links-title">Institucional & Políticas</div>
+        <ul class="footer-nav-list">
+          <li><a href="https://www.neuromodulation-net.com/" target="_blank" rel="noopener noreferrer">Portal Oficial</a></li>
+          <li><a href="https://www.neuromodulation-net.com/quem-somos" target="_blank" rel="noopener noreferrer">Quem Somos</a></li>
+          <li><a href="https://www.neuromodulation-net.com/ensino" target="_blank" rel="noopener noreferrer">Cursos e Treinamentos</a></li>
+          <li><span class="footer-policy-link">Políticas de Entrega, Devolução e Reembolso</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom-bar">
+      <span>© 2018–2026 Rede NAPeN — Todos os direitos reservados. Plataforma de apoio à decisão clínica baseada em evidências.</span>
     </div>
   </footer>
 

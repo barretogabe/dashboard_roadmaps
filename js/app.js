@@ -19,7 +19,8 @@ document.addEventListener('DOMContentLoaded', () => {
     activeTab: 'prescription', // 'prescription' | 'pocket' | 'method'
     searchQuery: '',
     selectedConditionId: null,
-    pemStatus: 'sim' // 'sim' | 'nao'
+    pemStatus: 'sim', // 'sim' | 'nao'
+    therapeuticStage: 'primary' // 'primary' | 'adjustment' | 'alt1' | 'alt2' | 'failure'
   };
 
   const eamState = {
@@ -62,6 +63,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const node1QuestionText = document.getElementById('node1QuestionText');
   const node1OptionsList = document.getElementById('node1OptionsList');
 
+  // Seletores da Nova Cascata e Modalidades V2
+  const modalitySelectorBar = document.getElementById('modalitySelectorBar');
+  const modalityPillsGroup = document.getElementById('modalityPillsGroup');
+  const cascadingFlowContainer = document.getElementById('cascadingFlowContainer');
+
   const prescTecnica = document.getElementById('prescTecnica');
   const prescModalidade = document.getElementById('prescModalidade');
   const prescAlvo = document.getElementById('prescAlvo');
@@ -70,6 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const prescPulsos = document.getElementById('prescPulsos');
   const prescSessoes = document.getElementById('prescSessoes');
   const prescDesfechoNome = document.getElementById('prescDesfechoNome');
+  const prescLinhaPrescricao = document.getElementById('prescLinhaPrescricao');
   const prescEscala = document.getElementById('prescEscala');
   const prescEfeito = document.getElementById('prescEfeito');
   const prescMeta = document.getElementById('prescMeta');
@@ -178,6 +185,12 @@ document.addEventListener('DOMContentLoaded', () => {
       dropdownConditionsList.querySelectorAll('.dropdown-item-has-submenu').forEach(item => {
         item.classList.remove('submenu-open');
       });
+      dropdownConditionsList.querySelectorAll('.dropdown-item-has-subsubmenu').forEach(item => {
+        item.classList.remove('subsubmenu-open');
+      });
+      dropdownConditionsList.querySelectorAll('.open-left').forEach(item => {
+        item.classList.remove('open-left');
+      });
       dropdownConditionsList.classList.add('dropdown-force-closed');
       setTimeout(() => {
         dropdownConditionsList.classList.remove('dropdown-force-closed');
@@ -208,6 +221,12 @@ document.addEventListener('DOMContentLoaded', () => {
     if (dropdownCalcList) {
       dropdownCalcList.querySelectorAll('.dropdown-item-has-submenu').forEach(item => {
         item.classList.remove('submenu-open');
+      });
+      dropdownCalcList.querySelectorAll('.dropdown-item-has-subsubmenu').forEach(item => {
+        item.classList.remove('subsubmenu-open');
+      });
+      dropdownCalcList.querySelectorAll('.open-left').forEach(item => {
+        item.classList.remove('open-left');
       });
       dropdownCalcList.classList.add('dropdown-force-closed');
       setTimeout(() => {
@@ -474,8 +493,17 @@ document.addEventListener('DOMContentLoaded', () => {
           cleanTitle = cleanTitle.replace(/^Acidente Vascular Cerebral\s*(\(AVC\))?\s*—\s*/i, '');
         }
 
+        // Resumo dos focos clínicos da condição (mimetizado da Prescrição Interativa)
+        const factorsSummary = (c.fatores_limitantes || [])
+          .map(f => f.label.split('(')[0].trim())
+          .slice(0, 3)
+          .join(' • ');
+
         aCond.innerHTML = `
-          <span class="dropdown-sublink-title">${cleanTitle}</span>
+          <div style="display: flex; flex-direction: column; gap: 2px;">
+            <span class="dropdown-sublink-title">${cleanTitle}</span>
+            <span class="dropdown-sublink-sub">${factorsSummary}</span>
+          </div>
           <span class="axis-arrow-icon" style="font-size: 0.95rem; font-weight: 700; margin-left: 10px; color: var(--napen-teal-bar); transition: transform 0.25s ease; display: inline-block;">›</span>
         `;
 
@@ -577,8 +605,12 @@ document.addEventListener('DOMContentLoaded', () => {
   // ==========================================================================
   // 2. Abertura do Algoritmo Clínico Sob Demanda
   // ==========================================================================
+  // ==========================================================================
+  // 2. Abertura do Algoritmo Clínico Sob Demanda & Cascata dos Roadmaps
+  // ==========================================================================
   function openConditionAlgorithm(conditionId) {
     state.selectedConditionId = conditionId;
+    state.therapeuticStage = 'primary';
     engine.setCondition(conditionId);
 
     const cond = engine.getCondition(conditionId);
@@ -590,9 +622,9 @@ document.addEventListener('DOMContentLoaded', () => {
       node1QuestionText.textContent = cond.no1_pergunta || 'Qual é o principal fator limitante ou foco de ganho terapêutico?';
     }
 
-    // Gerenciamento da Estratificação Neurofisiológica (PEM no MS para AVC)
+    // Gerenciamento de compatibilidade da Estratificação Neurofisiológica (PEM no MS para AVC)
     if (conditionId === 'avc-membro-superior') {
-      if (pemTriagePanel) pemTriagePanel.style.display = 'flex';
+      if (pemTriagePanel) pemTriagePanel.style.display = 'none'; // Agora integrado visualmente na cascata fluida
       state.pemStatus = 'sim';
       if (btnPemSim) btnPemSim.classList.add('active');
       if (btnPemNao) btnPemNao.classList.remove('active');
@@ -616,6 +648,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     window.scrollTo({ top: 180, behavior: 'smooth' });
 
+    renderModalitySelector(cond);
+    renderCascadingFlow(cond);
     renderNode1Options(cond);
     updatePrescriptionDisplay();
   }
@@ -637,20 +671,246 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ==========================================================================
-  // 3. Renderiza Pills do Fator Limitante Principal
+  // 3a. Seletor de Modalidade Terapêutica (rTMS vs. tDCS)
+  // ==========================================================================
+  function renderModalitySelector(cond) {
+    if (!modalitySelectorBar || !modalityPillsGroup) return;
+
+    const mods = cond.modalidades_suportadas || [];
+    if (mods.length <= 1) {
+      modalitySelectorBar.style.display = 'none';
+      modalityPillsGroup.innerHTML = '';
+      return;
+    }
+
+    modalitySelectorBar.style.display = 'flex';
+    modalityPillsGroup.innerHTML = '';
+
+    mods.forEach(m => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      const isActive = engine.activeModalityType === m.id;
+      btn.className = `btn-modality-pill ${isActive ? 'active' : ''}`;
+      btn.textContent = m.nome;
+
+      btn.addEventListener('click', () => {
+        engine.setModalityType(m.id);
+        renderModalitySelector(cond);
+        renderCascadingFlow(cond);
+        renderNode1Options(cond);
+        updatePrescriptionDisplay();
+      });
+
+      modalityPillsGroup.appendChild(btn);
+    });
+  }
+
+  // ==========================================================================
+  // 3b. Árvore de Decisão Algorítmica em Cascata Progressiva
+  // Conecta sequencialmente: Fator Limitante ➔ Modalidade ➔ Estratificação ➔ Protocolo
+  // ==========================================================================
+  function renderCascadingFlow(cond) {
+    if (!cascadingFlowContainer) return;
+    cascadingFlowContainer.innerHTML = '';
+    cascadingFlowContainer.style.display = 'flex';
+
+    const node1Panel = document.getElementById('node1Panel');
+    if (node1Panel) node1Panel.style.display = 'none';
+
+    let currentStepNum = 0;
+    const trailCrumbs = [];
+
+    // ------------------------------------------------------------------------
+    // ETAPA 1: Fator Limitante Principal / Foco Clínico Alvo (Queixa Funcional)
+    // Determina o Desfecho Clínico Alvo, Escala Recomendada e Linha de Prescrição
+    // ------------------------------------------------------------------------
+    currentStepNum += 1;
+    const step1Card = document.createElement('div');
+    step1Card.className = 'cascading-step-card active-step';
+
+    const step1Header = document.createElement('div');
+    step1Header.className = 'cascading-step-header';
+    step1Header.innerHTML = `
+      <span class="cascading-step-badge">Etapa ${currentStepNum}</span>
+      <div class="cascading-step-title-box">
+        <h4 class="cascading-step-question">${cond.no1_pergunta || 'Qual é o principal fator limitante ou queixa funcional do paciente?'}</h4>
+        <span class="cascading-step-subtext">A seleção do fator limitante define o Desfecho Clínico Alvo, o Instrumento de Avaliação (Escala) e a Linha de Prescrição Cortical.</span>
+      </div>
+    `;
+    step1Card.appendChild(step1Header);
+
+    const step1OptsRow = document.createElement('div');
+    step1OptsRow.className = 'cascading-options-row';
+
+    const factors = cond.fatores_limitantes || [];
+    factors.forEach(f => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      const isActive = engine.activeFactorId === f.id;
+      btn.className = `btn-cascade-choice ${isActive ? 'active' : ''}`;
+
+      btn.innerHTML = `
+        <span>${f.label}</span>
+      `;
+
+      btn.addEventListener('click', () => {
+        engine.setFactor(f.id);
+        renderCascadingFlow(cond);
+        renderNode1Options(cond);
+        updatePrescriptionDisplay();
+      });
+
+      step1OptsRow.appendChild(btn);
+    });
+
+    step1Card.appendChild(step1OptsRow);
+    cascadingFlowContainer.appendChild(step1Card);
+
+    const activeFactorObj = factors.find(f => f.id === engine.activeFactorId) || factors[0];
+    if (activeFactorObj) {
+      trailCrumbs.push(activeFactorObj.label.split('(')[0].trim());
+    }
+
+    // Modalidade Terapêutica ativa registrada na trilha clínica (seleção centralizada na barra oficial)
+    const mods = cond.modalidades_suportadas || [];
+    const activeModObj = mods.find(m => m.id === engine.activeModalityType) || mods[0];
+    if (activeModObj) {
+      trailCrumbs.push(activeModObj.id.toUpperCase());
+    }
+
+    // ------------------------------------------------------------------------
+    // ETAPAS 2+: Árvore de Decisão Neurofisiológica / Anatômica do Roadmap
+    // ------------------------------------------------------------------------
+    const tree = engine.getActiveTree();
+    if (tree && tree.etapas && tree.etapas.length > 1) {
+      // Começa da segunda etapa da árvore (após o fator limitante macro)
+      let nextStepId = null;
+
+      // Determina próximo nó com base no fator limitante selecionado
+      if (engine.activeFactorId === 'espasticidade' || engine.activeFactorId === 'fraqueza' || engine.activeFactorId === 'dor') {
+        nextStepId = engine.activeModalityType === 'tdcs' ? 'lesao_tdcs_m1' : 'pem_triage';
+      } else if (engine.activeFactorId === 'sensorial') {
+        nextStepId = engine.activeModalityType === 'tdcs' ? 'protocolo_s1_tdcs' : 'lesao_s1';
+      } else if (engine.activeFactorId === 'negligencia') {
+        nextStepId = engine.activeModalityType === 'tdcs' ? 'protocolo_ppc_tdcs' : 'protocolo_ppc';
+      }
+
+      while (nextStepId) {
+        const step = tree.etapas.find(s => s.etapa_id === nextStepId);
+        if (!step) break;
+
+        currentStepNum += 1;
+
+        const connectorSub = document.createElement('div');
+        connectorSub.className = 'cascading-connector-line';
+        cascadingFlowContainer.appendChild(connectorSub);
+
+        const subCard = document.createElement('div');
+        subCard.className = 'cascading-step-card active-step';
+
+        const currentChoiceId = engine.getPathChoice(step.etapa_id) || (step.opcoes && step.opcoes[0] ? step.opcoes[0].id : null);
+        if (!engine.getPathChoice(step.etapa_id) && currentChoiceId) {
+          engine.setPathChoice(step.etapa_id, currentChoiceId);
+        }
+
+        const subHeader = document.createElement('div');
+        subHeader.className = 'cascading-step-header';
+        subHeader.innerHTML = `
+          <span class="cascading-step-badge">Etapa ${currentStepNum}</span>
+          <div class="cascading-step-title-box">
+            <h4 class="cascading-step-question">${step.pergunta}</h4>
+            ${step.subtitulo ? `<span class="cascading-step-subtext">${step.subtitulo}</span>` : ''}
+          </div>
+        `;
+        subCard.appendChild(subHeader);
+
+        const subOptsRow = document.createElement('div');
+        subOptsRow.className = 'cascading-options-row';
+
+        step.opcoes.forEach(opt => {
+          const btnOpt = document.createElement('button');
+          btnOpt.type = 'button';
+          const isOptActive = currentChoiceId === opt.id;
+          btnOpt.className = `btn-cascade-choice ${isOptActive ? 'active' : ''}`;
+
+          btnOpt.innerHTML = `
+            <span>${opt.rotulo}</span>
+            ${opt.subtexto ? `<span class="btn-cascade-sub">${opt.subtexto}</span>` : ''}
+          `;
+
+          btnOpt.addEventListener('click', () => {
+            engine.setPathChoice(step.etapa_id, opt.id);
+
+            if (opt.id === 'pem_sim') {
+              state.pemStatus = 'sim';
+              if (btnPemSim) btnPemSim.classList.add('active');
+              if (btnPemNao) btnPemNao.classList.remove('active');
+            } else if (opt.id === 'pem_nao') {
+              state.pemStatus = 'nao';
+              if (btnPemNao) btnPemNao.classList.add('active');
+              if (btnPemSim) btnPemSim.classList.remove('active');
+            }
+
+            if (opt.modalidade_chave) {
+              engine.setFactor(opt.modalidade_chave);
+            }
+
+            renderCascadingFlow(cond);
+            renderNode1Options(cond);
+            updatePrescriptionDisplay();
+          });
+
+          subOptsRow.appendChild(btnOpt);
+        });
+
+        subCard.appendChild(subOptsRow);
+        cascadingFlowContainer.appendChild(subCard);
+
+        const chosenOpt = step.opcoes.find(o => o.id === currentChoiceId);
+        if (chosenOpt) {
+          trailCrumbs.push(chosenOpt.rotulo.split('(')[0].trim());
+          nextStepId = chosenOpt.proxima_etapa || null;
+        } else {
+          nextStepId = null;
+        }
+      }
+    }
+
+    // ------------------------------------------------------------------------
+    // Painel Resumo do Percurso Clínico Selecionado
+    // ------------------------------------------------------------------------
+    if (trailCrumbs.length > 0) {
+      const summaryBox = document.createElement('div');
+      summaryBox.className = 'cascading-active-path-summary';
+      const m = engine.getActiveModality();
+      const protName = m?.tecnica || 'Protocolo Primário Recomendado';
+
+      summaryBox.innerHTML = `
+        <div style="display: flex; flex-direction: column; gap: 4px;">
+          <span class="cascading-path-label">Percurso Clínico do Roadmap Selecionado:</span>
+          <div class="cascading-path-trail">
+            ${trailCrumbs.map((c, i) => `
+              <span class="cascading-path-crumb">${c}</span>
+              ${i < trailCrumbs.length - 1 ? '<span class="cascading-path-arrow">➔</span>' : ''}
+            `).join('')}
+          </div>
+        </div>
+        <div class="cascading-path-protocol-badge">
+          ${protName}
+        </div>
+      `;
+      cascadingFlowContainer.appendChild(summaryBox);
+    }
+  }
+
+  // ==========================================================================
+  // 3c. Renderiza Pills do Fator Limitante Principal (Sincronização)
   // ==========================================================================
   function renderNode1Options(cond) {
     if (!node1OptionsList) return;
     node1OptionsList.innerHTML = '';
 
     let factors = cond.fatores_limitantes || [];
-    if (cond.id === 'avc-membro-superior') {
-      if (state.pemStatus === 'nao') {
-        factors = factors.filter(f => f.triagem_pem === 'nao');
-      } else {
-        factors = factors.filter(f => f.triagem_pem !== 'nao');
-      }
-    }
 
     if (!factors.some(f => f.id === engine.activeFactorId) && factors.length > 0) {
       engine.setFactor(factors[0].id);
@@ -698,6 +958,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
+
 
   // ==========================================================================
   // 4. Renderiza Calculadora para a Escala Ativa (Suporte a Múltiplas Escalas e EAM)
@@ -859,11 +1120,10 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Dissociação Conceitual NAPeN: Desfecho Clínico Alvo vs. Instrumento de Avaliação
     const cond = engine.getCondition(engine.activeConditionId);
-    const activeFactor = cond?.fatores_limitantes?.find(f => f.id === engine.activeFactorId);
+    const activeFactor = cond?.fatores_limitantes?.find(f => f.id === engine.activeFactorId) || (cond?.fatores_limitantes ? cond.fatores_limitantes[0] : null);
     if (prescDesfechoNome) {
       prescDesfechoNome.textContent = activeFactor ? activeFactor.label : (cond ? cond.condicao : 'Desfecho Clínico Alvo');
     }
-
     const activeScale = engine.getActiveScale() || (m.escalas_detalhadas && m.escalas_detalhadas.length > 0 ? m.escalas_detalhadas[0] : null);
     if (prescEscala) prescEscala.textContent = activeScale?.nome || m.escala_recomendada || 'Escala Clínica Validada';
     if (prescEfeito) prescEfeito.textContent = activeScale?.tamanho_efeito || m.tamanho_efeito || 'Eficácia demonstrada em ensaios controlados randomizados.';
@@ -887,13 +1147,16 @@ document.addEventListener('DOMContentLoaded', () => {
     // Painel de Evidências: Estudos de referência vs. Diretriz Internacional
     if (m.artigo_referencia) {
       if (evidenceCitationText) {
-        evidenceCitationText.innerHTML = `<strong>${m.artigo_referencia.citacao_completa || m.artigo_referencia.autores}</strong> — <em>"${m.artigo_referencia.titulo || ''}"</em> (${m.artigo_referencia.revista || ''})`;
+        const periodicalText = m.artigo_referencia.periodico || m.artigo_referencia.revista || '';
+        const periodicalFormatted = periodicalText ? ` (${periodicalText})` : '';
+        evidenceCitationText.innerHTML = `<strong>${m.artigo_referencia.citacao_completa || m.artigo_referencia.autores}</strong> — <em>"${m.artigo_referencia.titulo || ''}"</em>${periodicalFormatted}`;
       }
       if (evidenceDoiLink) {
-        evidenceDoiLink.href = m.artigo_referencia.url_doi || '#';
+        const fullDoiUrl = m.artigo_referencia.url_doi || (m.artigo_referencia.doi ? (m.artigo_referencia.doi.startsWith('http') ? m.artigo_referencia.doi : `https://doi.org/${m.artigo_referencia.doi}`) : '#');
+        evidenceDoiLink.href = fullDoiUrl;
       }
       if (evidenceDoiText) {
-        evidenceDoiText.textContent = m.artigo_referencia.doi ? `DOI: ${m.artigo_referencia.doi}` : 'Acessar Artigo Oficial';
+        evidenceDoiText.textContent = m.artigo_referencia.doi ? `DOI: ${m.artigo_referencia.doi.replace('https://doi.org/', '')}` : 'Acessar Artigo Oficial';
       }
     }
 
@@ -901,10 +1164,11 @@ document.addEventListener('DOMContentLoaded', () => {
       evidenceGuidelineText.innerHTML = `<strong>${gInfo.recomendacao}</strong> — Diretriz Internacional IFCN / Consenso (${gInfo.autores || 'IFCN'}, ${gInfo.ano || '2020'}).`;
     }
     if (evidenceGuidelineDoiLink) {
-      evidenceGuidelineDoiLink.href = gInfo.url || '#';
+      const fullGuideUrl = gInfo.url || (gInfo.doi ? (gInfo.doi.startsWith('http') ? gInfo.doi : `https://doi.org/${gInfo.doi}`) : '#');
+      evidenceGuidelineDoiLink.href = fullGuideUrl;
     }
     if (evidenceGuidelineDoiText) {
-      evidenceGuidelineDoiText.textContent = gInfo.doi ? `DOI: ${gInfo.doi}` : 'Acessar Diretriz Oficial';
+      evidenceGuidelineDoiText.textContent = gInfo.doi ? `DOI: ${gInfo.doi.replace('https://doi.org/', '')}` : 'Acessar Diretriz Oficial';
     }
 
 
@@ -965,46 +1229,151 @@ document.addEventListener('DOMContentLoaded', () => {
       `;
     } else if (outcome === 'danger') {
       branchResultPanel.className = 'branch-result-panel danger visible';
-      const alt = m?.protocolo_alternativo;
+      const alt1 = m?.protocolo_alternativo;
+      const alt2 = m?.protocolo_alternativo_2;
+      const aj = m?.ajuste_parametros;
+      const falha = m?.falha_terapeutica;
 
-      let altContent = '';
-      if (alt) {
-        altContent = `
-          <div class="alternative-protocol-box">
-            <div class="alt-title-line">
-              <span style="color: var(--napen-teal-dark); font-weight: 700;">➔</span>
-              ${alt.nome || 'Protocolo Alternativo Sequencial (Próxima Etapa da Árvore NAPeN)'}
+      let stageHtml = '';
+
+      if (state.therapeuticStage === 'primary') {
+        stageHtml = `
+          <div style="font-weight: 700; margin-bottom: 6px; display: flex; align-items: center; gap: 8px;">
+            <span class="outcome-bullet status-danger"></span>
+            [Resposta Insatisfatória — Pós-Indução de 1ª Linha]
+          </div>
+          <div style="line-height: 1.55; margin-bottom: 12px;">
+            Paciente não atingiu o benefício terapêutico mínimo (ganho inferior à MCID na escala recomendada).
+            Conforme a árvore clínica de decisão da Rede NAPeN, selecione a próxima conduta na esteira terapêutica:
+          </div>
+          <div class="adjustment-actions-row">
+            <button type="button" class="btn-step-action secondary" id="btnGoAdjustment">
+              Otimizar Parâmetros e Tolerabilidade
+            </button>
+            <button type="button" class="btn-step-action primary" id="btnGoAlt1">
+              Transitar para Protocolo Alternativo 1 ➔
+            </button>
+          </div>
+        `;
+      } else if (state.therapeuticStage === 'adjustment') {
+        stageHtml = `
+          <div class="adjustment-step-card">
+            <div class="adjustment-step-title">
+              ${aj?.titulo || 'Diretrizes de Otimização e Ajuste de Parâmetros (NAPeN)'}
             </div>
-            <div><strong>Técnica:</strong> ${alt.tecnica || '—'}</div>
-            <div><strong>Alvo Anatômico:</strong> ${alt.alvo || '—'}</div>
-            <div><strong>Parâmetros:</strong> ${alt.parametros || '—'}</div>
-            <div class="alt-clinical-notes">
-              <strong>Observações Clínicas e Cuidados do Roadmap:</strong> ${alt.observacoes || 'Transição indicada conforme algoritmo sequencial original da Rede NAPeN.'}
+            <div class="adjustment-step-body">
+              <p><strong>1. Tolerabilidade e Intensidade:</strong> ${aj?.tolerabilidade || 'Reduzir para 80% do LMR e progredir gradualmente conforme tolerância até 90-100% LMR.'}</p>
+              <p style="margin-top: 6px;"><strong>2. Dose de Pulsos:</strong> ${aj?.dose_pulsos || 'Ajustar para até 1.500 pulsos por sessão conforme evidências de dose-resposta.'}</p>
+              <p style="margin-top: 6px;"><strong>3. Limiar Motor:</strong> ${aj?.calibracao_limiar || 'Calibrar estimulação baseando-se no Limiar Motor Ativo (LMA a 70%–80%) na ausência de LMR.'}</p>
+            </div>
+            <div class="adjustment-actions-row">
+              <button type="button" class="btn-step-action secondary" id="btnBackPrimary">
+                ← Retornar à 1ª Linha
+              </button>
+              <button type="button" class="btn-step-action primary" id="btnGoAlt1">
+                Sem Ganho Após Ajustes ➔ Transitar para Protocolo Alternativo 1
+              </button>
             </div>
           </div>
         `;
-      } else {
-        altContent = `
-          <div class="alternative-protocol-box">
-            <div>Consulte o comitê clínico interdisciplinar para reestratificação diagnóstica.</div>
+      } else if (state.therapeuticStage === 'alt1') {
+        stageHtml = `
+          <div class="alternative-protocol-box" style="margin-top: 6px;">
+            <div class="alt-title-line" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+              <span><strong>Etapa 2 da Linha de Cuidado:</strong> ${alt1?.nome || 'Protocolo Alternativo 1'}</span>
+              <span class="failure-badge" style="background-color: var(--napen-teal-dark);">Alternativo 1</span>
+            </div>
+            <div style="margin-top: 6px;"><strong>Técnica:</strong> ${alt1?.tecnica || '—'}</div>
+            <div><strong>Alvo Anatômico:</strong> ${alt1?.alvo || '—'}</div>
+            <div><strong>Parâmetros:</strong> ${alt1?.parametros || '—'}</div>
+            <div class="alt-clinical-notes" style="margin-top: 8px;">
+              <strong>Observações Clínicas do Roadmap:</strong> ${alt1?.observacoes || 'Transição sequencial indicada conforme o algoritmo do roadmap.'}
+            </div>
+            <div class="adjustment-actions-row" style="margin-top: 14px;">
+              <button type="button" class="btn-step-action secondary" id="btnBackPrimary">
+                ← 1ª Linha
+              </button>
+              <button type="button" class="btn-step-action primary" id="btnGoAlt2">
+                Alternativo 1 Sem Resposta ➔ Avançar para Protocolo Alternativo 2
+              </button>
+            </div>
+          </div>
+        `;
+      } else if (state.therapeuticStage === 'alt2') {
+        stageHtml = `
+          <div class="alternative-protocol-box" style="margin-top: 6px;">
+            <div class="alt-title-line" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+              <span><strong>Etapa 3 da Linha de Cuidado:</strong> ${alt2?.nome || 'Protocolo Alternativo 2'}</span>
+              <span class="failure-badge" style="background-color: var(--napen-navy);">Alternativo 2</span>
+            </div>
+            <div style="margin-top: 6px;"><strong>Técnica:</strong> ${alt2?.tecnica || '—'}</div>
+            <div><strong>Alvo Anatômico:</strong> ${alt2?.alvo || '—'}</div>
+            <div><strong>Parâmetros:</strong> ${alt2?.parametros || '—'}</div>
+            <div class="alt-clinical-notes" style="margin-top: 8px;">
+              <strong>Observações Clínicas do Roadmap:</strong> ${alt2?.observacoes || 'Protocolo sequencial prévio à caracterização de falha.'}
+            </div>
+            <div class="adjustment-actions-row" style="margin-top: 14px;">
+              <button type="button" class="btn-step-action secondary" id="btnGoAlt1">
+                ← Alternativo 1
+              </button>
+              <button type="button" class="btn-step-action danger" id="btnGoFailure">
+                Alternativo 2 Sem Resposta ➔ Declarar Falha Terapêutica Formal
+              </button>
+            </div>
+          </div>
+        `;
+      } else if (state.therapeuticStage === 'failure') {
+        stageHtml = `
+          <div class="failure-therapeutic-card">
+            <div class="failure-head">
+              <span class="failure-badge">Desfecho do Algoritmo</span>
+              <span class="failure-title">Falha Terapêutica Formal Constatada (Roadmaps NAPeN)</span>
+            </div>
+            <div class="failure-description">
+              ${falha?.criterio || 'Paciente concluiu o ciclo de indução pleno, ajustes de parâmetros/tolerabilidade e protocolos alternativos sequenciais sem apresentar resposta clínica mínima relevante (&lt; MCID).'}
+            </div>
+            <div class="failure-conduct-box">
+              <div class="failure-conduct-title">Conduta Clínica Sistematizada da Rede NAPeN:</div>
+              <div style="white-space: pre-line;">${falha?.conduta_oficial || '1. Encerramento formal do ciclo de estimulação vigente;\n2. Investigação de fatores biológicos de resistência;\n3. Discussão interdisciplinar para migração de modalidade.'}</div>
+            </div>
+            <div class="adjustment-actions-row" style="margin-top: 14px;">
+              <button type="button" class="btn-step-action secondary" id="btnBackPrimary">
+                ← Reiniciar Ciclo / Retornar à 1ª Linha
+              </button>
+            </div>
           </div>
         `;
       }
 
-      branchResultPanel.innerHTML = `
-        <div style="font-weight: 700; margin-bottom: 6px; display: flex; align-items: center; gap: 8px;">
-          <span class="outcome-bullet status-danger"></span>
-          [Resposta Insatisfatória — Transição para Protocolo Alternativo]
-        </div>
-        <div style="line-height: 1.55;">
-          Paciente não atingiu o benefício terapêutico mínimo na escala recomendada após o ciclo de indução (sem melhora quantitativa ou qualitativa).
-          Seguindo o algoritmo clínico sequencial oficial da Rede NAPeN:
-        </div>
-        ${altContent}
-        <div style="margin-top: 12px; font-size: 0.84rem; color: #7F1D1D; background: rgba(239, 68, 68, 0.08); padding: 10px 14px; border-radius: var(--radius-sm); border: 1px dashed #FCA5A5; line-height: 1.5;">
-          <strong>Critério de Falha Terapêutica dos Roadmaps NAPeN:</strong> Configura-se quando o paciente não apresenta nenhum tipo de resposta mesmo após os protocolos alternativos do roadmap. Nesses casos, encerra-se a rota atual de estimulação e encaminha-se para reavaliação clínica e equipe interdisciplinar.
-        </div>
-      `;
+      branchResultPanel.innerHTML = stageHtml;
+
+      // Listeners dos botões de avanço da esteira
+      function switchTherapeuticStage(stage) {
+        state.therapeuticStage = stage;
+        updateOutcomeDisplay();
+      }
+
+      const btnGoAdjustment = document.getElementById('btnGoAdjustment');
+      const btnBackPrimary = document.getElementById('btnBackPrimary');
+      const btnGoAlt1 = document.getElementById('btnGoAlt1');
+      const btnGoAlt2 = document.getElementById('btnGoAlt2');
+      const btnGoFailure = document.getElementById('btnGoFailure');
+
+      if (btnGoAdjustment) {
+        btnGoAdjustment.addEventListener('click', () => switchTherapeuticStage('adjustment'));
+      }
+      if (btnBackPrimary) {
+        btnBackPrimary.addEventListener('click', () => switchTherapeuticStage('primary'));
+      }
+      if (btnGoAlt1) {
+        btnGoAlt1.addEventListener('click', () => switchTherapeuticStage('alt1'));
+      }
+      if (btnGoAlt2) {
+        btnGoAlt2.addEventListener('click', () => switchTherapeuticStage('alt2'));
+      }
+      if (btnGoFailure) {
+        btnGoFailure.addEventListener('click', () => switchTherapeuticStage('failure'));
+      }
     }
   }
 
@@ -1553,7 +1922,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <div>
             <div class="search-res-title">${c.condicao}</div>
             <div class="search-res-eixo">${c.eixo}</div>
-            ${matchReason ? `<div class="search-res-match-tag">🎯 ${matchReason}</div>` : ''}
+            ${matchReason ? `<div class="search-res-match-tag">${matchReason}</div>` : ''}
           </div>
           <span style="color: var(--napen-teal-dark); font-weight: 700; font-size: 0.95rem;">➔</span>
         `;
@@ -1588,7 +1957,8 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // ==========================================================================
-  // 9. Matriz de Protocolos e Parâmetros (Tabela)
+  // ==========================================================================
+  // 9. Biblioteca de Evidências & Metanálises (Repositório Científico)
   // ==========================================================================
   function renderPocketTable() {
     if (!pocketTableBody) return;
@@ -1603,54 +1973,74 @@ document.addEventListener('DOMContentLoaded', () => {
         const ensaio = m.ensaio_clinico || m.artigo_referencia;
         const meta = m.meta_analise;
 
+        let condLabel = c.condicao.replace(/\s*\([A-Z0-9]+\)/g, '');
+        let eixoLabel = (c.eixo || '').replace(/\s*\([A-Z0-9]+\)/g, '');
+        if (condLabel.startsWith(eixoLabel + ' — ')) {
+          condLabel = condLabel.replace(eixoLabel + ' — ', '');
+        }
+
         const tr = document.createElement('tr');
         tr.innerHTML = `
           <td>
-            <strong style="color: var(--napen-navy);">${c.condicao}</strong>
-            <div style="font-size: 0.75rem; color: var(--text-faint);">${c.eixo}</div>
-          </td>
-          <td><span style="background: var(--napen-teal-soft); color: var(--napen-teal-dark); padding: 3px 8px; border-radius: 4px; font-weight: 600; font-size: 0.78rem;">${f.label}</span></td>
-          <td><strong>${m.tecnica || '—'}</strong></td>
-          <td>${m.alvo || '—'}</td>
-          <td>
-            <div>${m.frequencia || '—'}</div>
-            <div style="font-size: 0.78rem; color: var(--text-muted);">${m.intensidade || '—'}</div>
+            <strong style="color: var(--napen-navy); font-size: 0.90rem;">${condLabel}</strong>
+            <div style="font-size: 0.75rem; color: var(--text-faint); margin-top: 2px;">${eixoLabel}</div>
           </td>
           <td>
-            <div>${m.pulsos_duracao || '—'}</div>
-            <div style="font-size: 0.78rem; color: var(--text-muted);">${m.sessoes || '—'}</div>
+            <span style="background: var(--napen-teal-soft); color: var(--napen-teal-dark); padding: 4px 9px; border-radius: 4px; font-weight: 600; font-size: 0.78rem;">
+              ${f.label}
+            </span>
           </td>
-          <td><span class="scale-badge-pill" style="font-size: 0.75rem;">${m.escala_recomendada || '—'}</span></td>
           <td>
-            <span style="font-weight: 700; color: var(--napen-teal-dark); font-size: 0.8rem;">
+            <span style="font-weight: 700; color: var(--napen-teal-dark); font-size: 0.82rem;">
               ${m.diretriz_internacional || 'Recomendação Consensual NAPeN'}
             </span>
           </td>
           <td>
-            <div style="display: flex; flex-direction: column; gap: 6px; min-width: 175px;">
-              ${ensaio ? `
-                <div style="font-size: 0.78rem;">
-                  <span style="font-weight: 700; color: var(--napen-navy); display: block; font-size: 0.70rem; text-transform: uppercase; letter-spacing: 0.03em;">Estudos de referência:</span>
-                  ${ensaio.url_doi ? `
-                    <a href="${ensaio.url_doi}" target="_blank" rel="noopener noreferrer" style="color: var(--napen-teal-dark); font-weight: 600; text-decoration: underline; font-size: 0.78rem;" title="${ensaio.titulo || ''}">
-                      ${ensaio.autores} (${ensaio.ano}) ↗
-                    </a>
-                  ` : `<span style="color: var(--text-muted); font-size: 0.75rem;">${ensaio.autores || '—'}</span>`}
-                </div>
-              ` : '<span style="color: var(--text-faint); font-size: 0.75rem;">—</span>'}
-              ${meta ? `
-                <div style="font-size: 0.78rem; border-top: 1px dashed var(--border-subtle); padding-top: 4px;">
-                  <span style="font-weight: 700; color: var(--text-muted); display: block; font-size: 0.70rem; text-transform: uppercase; letter-spacing: 0.03em;">Metanálise de Suporte:</span>
-                  ${meta.url_doi ? `
-                    <a href="${meta.url_doi}" target="_blank" rel="noopener noreferrer" style="color: var(--text-muted); font-weight: 600; text-decoration: underline; font-size: 0.78rem;" title="${meta.titulo || ''}">
-                      ${meta.autores} (${meta.ano}) ↗
-                    </a>
-                  ` : `<span style="color: var(--text-muted); font-size: 0.75rem;">${meta.autores || '—'}</span>`}
-                </div>
-              ` : ''}
-            </div>
+            ${ensaio ? `
+              <div style="font-size: 0.80rem; line-height: 1.4;">
+                <div style="font-weight: 700; color: var(--text-main);">${ensaio.autores} (${ensaio.ano})</div>
+                <div style="font-size: 0.74rem; color: var(--text-muted); margin-top: 2px;">${ensaio.titulo || ''}</div>
+                ${ensaio.url_doi ? `
+                  <a href="${ensaio.url_doi}" target="_blank" rel="noopener noreferrer" style="color: var(--napen-teal-dark); font-weight: 700; text-decoration: underline; font-size: 0.76rem; display: inline-block; margin-top: 4px;">
+                    Acessar Estudo via DOI ↗
+                  </a>
+                ` : ''}
+              </div>
+            ` : '<span style="color: var(--text-faint); font-size: 0.75rem;">—</span>'}
+          </td>
+          <td>
+            ${meta ? `
+              <div style="font-size: 0.80rem; line-height: 1.4;">
+                <div style="font-weight: 700; color: var(--text-muted);">${meta.autores} (${meta.ano})</div>
+                <div style="font-size: 0.74rem; color: var(--text-muted); margin-top: 2px;">${meta.titulo || ''}</div>
+                ${meta.url_doi ? `
+                  <a href="${meta.url_doi}" target="_blank" rel="noopener noreferrer" style="color: var(--napen-teal-dark); font-weight: 700; text-decoration: underline; font-size: 0.76rem; display: inline-block; margin-top: 4px;">
+                    Acessar Metanálise via DOI ↗
+                  </a>
+                ` : ''}
+              </div>
+            ` : '<span style="color: var(--text-faint); font-size: 0.75rem;">—</span>'}
+          </td>
+          <td style="text-align: center; vertical-align: middle;">
+            <button type="button" class="btn-evidence-goto" data-condition-id="${c.id}" data-factor-id="${f.id}">
+              Prescrever no Algoritmo ➔
+            </button>
           </td>
         `;
+
+        const btnGoto = tr.querySelector('.btn-evidence-goto');
+        if (btnGoto) {
+          btnGoto.addEventListener('click', () => {
+            switchTab('prescription');
+            openConditionAlgorithm(c.id);
+            if (f.id) {
+              engine.setFactor(f.id);
+              if (typeof renderCascadingFlow === 'function') renderCascadingFlow();
+              if (typeof updateOutcomeDisplay === 'function') updateOutcomeDisplay();
+            }
+          });
+        }
+
         pocketTableBody.appendChild(tr);
       });
     });

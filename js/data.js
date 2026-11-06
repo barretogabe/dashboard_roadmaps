@@ -1,7 +1,5 @@
-/**
- * Base de Dados Unificada dos 13 Roadmaps Oficiais da Rede NAPeN (2026-2027)
- * Exportada dinamicamente para consumo no navegador.
- */
+// Rede NAPeN — Base de Dados dos Roadmaps Clínicos (Auto-gerada)
+// Integrada com topologia V2 e padronização terminológica estrita
 window.NAPEN_DATA = {
   "versao": "2025-2026",
   "data_extracao": "2026-11-04",
@@ -11,8 +9,8 @@ window.NAPEN_DATA = {
   "condicoes": [
     {
       "id": "avc-membro-superior",
-      "condicao": "Acidente Vascular Cerebral (AVC) — Membro Superior",
-      "eixo": "Doenças Cerebrovasculares (AVC)",
+      "condicao": "Acidente Vascular Cerebral — Membro Superior",
+      "eixo": "Doenças Cerebrovasculares",
       "roadmap_id": "RM01",
       "svg_file": "RM01.svg",
       "status_auditoria": "Consolidado (Meta-análise)",
@@ -22,32 +20,42 @@ window.NAPEN_DATA = {
         {
           "id": "espasticidade",
           "label": "Espasticidade em Membro Superior",
-          "triagem_pem": "sim"
+          "triagem_pem": "sim",
+          "linha_prescricao": "Córtex Motor Primário (M1)",
+          "escala_recomendada": "Escala de Ashworth Modificada (EAM)",
+          "meta_melhora": "Redução de pelo menos 1 nível na EAM para flexores de punho e dedos"
         },
         {
           "id": "fraqueza",
           "label": "Fraqueza Muscular e Paresia",
-          "triagem_pem": "sim"
+          "triagem_pem": "sim",
+          "linha_prescricao": "Córtex Motor Primário (M1)",
+          "escala_recomendada": "Escala Fugl-Meyer de Avaliação Motora (FMA-UE)",
+          "meta_melhora": "Ganho clinicamente importante ≥ 6,6 pontos na FMA-UE"
         },
         {
           "id": "dor",
           "label": "Dor Limitante em Membro Superior",
-          "triagem_pem": "sim"
+          "triagem_pem": "sim",
+          "linha_prescricao": "Córtex Motor Primário (M1)",
+          "escala_recomendada": "Escala Visual Analógica de Dor (EVA) e DN4",
+          "meta_melhora": "Redução ≥ 30% na intensidade da dor na escala EVA"
         },
         {
           "id": "sensorial",
           "label": "Déficit Somatossensorial",
-          "triagem_pem": "sim"
+          "triagem_pem": "sim",
+          "linha_prescricao": "Córtex Somatossensorial Primário (S1)",
+          "escala_recomendada": "Revised Nottingham Sensory Assessment (rNSA)",
+          "meta_melhora": "Ganho significativo no escore rNSA tátil e proprioceptivo"
         },
         {
           "id": "negligencia",
           "label": "Heminegligência Visuoespacial",
-          "triagem_pem": "sim"
-        },
-        {
-          "id": "sem_pem",
-          "label": "Baixa Integridade Corticoespinhal (Sem PEM no MS)",
-          "triagem_pem": "nao"
+          "triagem_pem": "sim",
+          "linha_prescricao": "Córtex Parietal Posterior (PPC)",
+          "escala_recomendada": "Behavioural Inattention Test (BIT) / Teste de Cancelamento de Estrelas",
+          "meta_melhora": "Ganho clinicamente significativo no teste BIT e cancelamento de linhas"
         }
       ],
       "modalidades": {
@@ -162,7 +170,24 @@ window.NAPEN_DATA = {
           },
           "mcid_valor": 1.0,
           "mcid_label": "Redução ≥ 1 grau na EAM (MCID Clássica)",
-          "cohen_d": "d ≈ 0.65 (Efeito Moderado)"
+          "cohen_d": "d ≈ 0.65 (Efeito Moderado)",
+          "ajuste_parametros": {
+            "titulo": "Diretrizes de Otimização e Ajuste de Parâmetros (Rede NAPeN)",
+            "tolerabilidade": "Em caso de desconforto ou dor local, reduzir temporariamente a intensidade para 80% do LMR e progredir gradualmente conforme tolerância até a dose plena prevista (Nota N10).",
+            "dose_pulsos": "Recomenda-se ajustar o número de pulsos para 1.500 por sessão, conforme evidências metanalíticas de maior magnitude de ganho com doses superiores (Nota N23).",
+            "calibracao_limiar": "Na ausência de identificação do limiar motor de repouso (LMR), calibrar a estimulação baseando-se no Limiar Motor Ativo (LMA a 70%–80%) (Nota N13)."
+          },
+          "protocolo_alternativo_2": {
+            "nome": "Protocolo Alternativo 2 (iTBS Cortical + rPMS Periférica Contínua)",
+            "tecnica": "iTBS (Triplets a 50 Hz em 5 Hz) + rPMS Periférica",
+            "alvo": "M1 ipsilesional + Músculos flexores espásticos do punho/dedos",
+            "parametros": "iTBS cortical: 1.200 pulsos a 80% LMA seguido de rPMS contínua: 600 pulsos a 5 Hz sobre flexores (Nota N19)",
+            "observacoes": "Bobina perpendicular às fibras com intensidade para contração visível (Nota N20). Separar sessão por 10 min."
+          },
+          "falha_terapeutica": {
+            "criterio": "Persistência de resposta funcional inferior à MCID na escala clínica validada após o ciclo pleno de indução, realização dos ajustes de parâmetros/tolerabilidade e conclusão dos protocolos alternativos 1 e 2 do roadmap.",
+            "conduta_oficial": "1. Encerramento formal do ciclo de estimulação vigente;\n2. Registro em prontuário de refratariedade ao regime testado;\n3. Investigação multiprofissional de fatores biológicos de resistência (uso concomitante de benzodiazepínicos/antiepilépticos, lesão corticoespinhal estrutural completa);\n4. Transição para modalidade alternativa (ex.: tDCS domiciliar associada a telerreabilitação intensiva, bloqueio neuromuscular focal com toxina botulínica ou reabilitação motora assistida por robótica/RV)."
+          }
         },
         "fraqueza": {
           "tecnica": "rPMS Intermitente + rTMS Excitatória",
@@ -260,7 +285,24 @@ window.NAPEN_DATA = {
           },
           "mcid_valor": 6.6,
           "mcid_label": "Ganho ≥ 6,6 pontos na FMA-UE (Page et al., 2012)",
-          "cohen_d": "d ≈ 0.74 (Efeito Moderado)"
+          "cohen_d": "d ≈ 0.74 (Efeito Moderado)",
+          "ajuste_parametros": {
+            "titulo": "Diretrizes de Otimização e Ajuste de Parâmetros (Rede NAPeN)",
+            "tolerabilidade": "Em caso de desconforto ou dor local, reduzir temporariamente a intensidade para 80% do LMR e progredir gradualmente conforme tolerância até a dose plena prevista (Nota N10).",
+            "dose_pulsos": "Recomenda-se ajustar o número de pulsos para 1.500 por sessão, conforme evidências metanalíticas de maior magnitude de ganho com doses superiores (Nota N23).",
+            "calibracao_limiar": "Na ausência de identificação do limiar motor de repouso (LMR), calibrar a estimulação baseando-se no Limiar Motor Ativo (LMA a 70%–80%) (Nota N13)."
+          },
+          "protocolo_alternativo_2": {
+            "nome": "Protocolo Alternativo 2 (iTBS Intermitente + rPMS Intermitente em Músculos Fracos)",
+            "tecnica": "iTBS Excitatório + rPMS em modo intermitente",
+            "alvo": "M1 ipsilesional + Extensor radial do carpo / deltóide",
+            "parametros": "iTBS 1.200 pulsos + rPMS: 3 pulsos a 50 Hz a cada 2s de estímulo e 8s pausa, 600 pulsos por músculo (Nota N18)",
+            "observacoes": "Associar imediatamente à terapia convencional para o membro superior (Nota N08)."
+          },
+          "falha_terapeutica": {
+            "criterio": "Persistência de resposta funcional inferior à MCID na escala clínica validada após o ciclo pleno de indução, realização dos ajustes de parâmetros/tolerabilidade e conclusão dos protocolos alternativos 1 e 2 do roadmap.",
+            "conduta_oficial": "1. Encerramento formal do ciclo de estimulação vigente;\n2. Registro em prontuário de refratariedade ao regime testado;\n3. Investigação multiprofissional de fatores biológicos de resistência (uso concomitante de benzodiazepínicos/antiepilépticos, lesão corticoespinhal estrutural completa);\n4. Transição para modalidade alternativa (ex.: tDCS domiciliar associada a telerreabilitação intensiva, bloqueio neuromuscular focal com toxina botulínica ou reabilitação motora assistida por robótica/RV)."
+          }
         },
         "dor": {
           "tecnica": "rTMS Excitatória (Alta Frequência)",
@@ -369,7 +411,24 @@ window.NAPEN_DATA = {
           },
           "mcid_valor": 30.0,
           "mcid_label": "Redução ≥ 30% na EVA (Critério IMMPACT de Relevância Clínica)",
-          "cohen_d": "d ≈ 0.58 (Efeito Moderado)"
+          "cohen_d": "d ≈ 0.58 (Efeito Moderado)",
+          "ajuste_parametros": {
+            "titulo": "Diretrizes de Otimização e Ajuste de Parâmetros (Rede NAPeN)",
+            "tolerabilidade": "Em caso de desconforto ou dor local, reduzir temporariamente a intensidade para 80% do LMR e progredir gradualmente conforme tolerância até a dose plena prevista (Nota N10).",
+            "dose_pulsos": "Recomenda-se ajustar o número de pulsos para 1.500 por sessão, conforme evidências metanalíticas de maior magnitude de ganho com doses superiores (Nota N23).",
+            "calibracao_limiar": "Na ausência de identificação do limiar motor de repouso (LMR), calibrar a estimulação baseando-se no Limiar Motor Ativo (LMA a 70%–80%) (Nota N13)."
+          },
+          "protocolo_alternativo_2": {
+            "nome": "Protocolo Alternativo 2 Sequencial (Cerebelar / Pré-Motor)",
+            "tecnica": "iTBS / rTMS 10 Hz",
+            "alvo": "Cerebelo contralesional ou Córtex Pré-motor",
+            "parametros": "600 a 1.000 pulsos conforme tolerabilidade clínica",
+            "observacoes": "Aplicação com bobina duplo-cone ou parabólica se direcionada ao cerebelo (Nota N11)."
+          },
+          "falha_terapeutica": {
+            "criterio": "Persistência de resposta funcional inferior à MCID na escala clínica validada após o ciclo pleno de indução, realização dos ajustes de parâmetros/tolerabilidade e conclusão dos protocolos alternativos 1 e 2 do roadmap.",
+            "conduta_oficial": "1. Encerramento formal do ciclo de estimulação vigente;\n2. Registro em prontuário de refratariedade ao regime testado;\n3. Investigação multiprofissional de fatores biológicos de resistência (uso concomitante de benzodiazepínicos/antiepilépticos, lesão corticoespinhal estrutural completa);\n4. Transição para modalidade alternativa (ex.: tDCS domiciliar associada a telerreabilitação intensiva, bloqueio neuromuscular focal com toxina botulínica ou reabilitação motora assistida por robótica/RV)."
+          }
         },
         "sensorial": {
           "tecnica": "tDCS Bi-hemisférica / rTMS Sensorial",
@@ -466,7 +525,24 @@ window.NAPEN_DATA = {
           },
           "mcid_valor": 4.0,
           "mcid_label": "Ganho ≥ 4,0 pontos na escala rNSA",
-          "cohen_d": "d ≈ 0.62 (Efeito Moderado)"
+          "cohen_d": "d ≈ 0.62 (Efeito Moderado)",
+          "ajuste_parametros": {
+            "titulo": "Diretrizes de Otimização e Ajuste de Parâmetros (Rede NAPeN)",
+            "tolerabilidade": "Em caso de desconforto ou dor local, reduzir temporariamente a intensidade para 80% do LMR e progredir gradualmente conforme tolerância até a dose plena prevista (Nota N10).",
+            "dose_pulsos": "Recomenda-se ajustar o número de pulsos para 1.500 por sessão, conforme evidências metanalíticas de maior magnitude de ganho com doses superiores (Nota N23).",
+            "calibracao_limiar": "Na ausência de identificação do limiar motor de repouso (LMR), calibrar a estimulação baseando-se no Limiar Motor Ativo (LMA a 70%–80%) (Nota N13)."
+          },
+          "protocolo_alternativo_2": {
+            "nome": "Protocolo Alternativo 2 Sequencial (Cerebelar / Pré-Motor)",
+            "tecnica": "iTBS / rTMS 10 Hz",
+            "alvo": "Cerebelo contralesional ou Córtex Pré-motor",
+            "parametros": "600 a 1.000 pulsos conforme tolerabilidade clínica",
+            "observacoes": "Aplicação com bobina duplo-cone ou parabólica se direcionada ao cerebelo (Nota N11)."
+          },
+          "falha_terapeutica": {
+            "criterio": "Persistência de resposta funcional inferior à MCID na escala clínica validada após o ciclo pleno de indução, realização dos ajustes de parâmetros/tolerabilidade e conclusão dos protocolos alternativos 1 e 2 do roadmap.",
+            "conduta_oficial": "1. Encerramento formal do ciclo de estimulação vigente;\n2. Registro em prontuário de refratariedade ao regime testado;\n3. Investigação multiprofissional de fatores biológicos de resistência (uso concomitante de benzodiazepínicos/antiepilépticos, lesão corticoespinhal estrutural completa);\n4. Transição para modalidade alternativa (ex.: tDCS domiciliar associada a telerreabilitação intensiva, bloqueio neuromuscular focal com toxina botulínica ou reabilitação motora assistida por robótica/RV)."
+          }
         },
         "negligencia": {
           "tecnica": "tDCS Parietal / rTMS Posterior",
@@ -563,7 +639,24 @@ window.NAPEN_DATA = {
           },
           "mcid_valor": 10.0,
           "mcid_label": "Ganho ≥ 10 pontos ou melhora ≥ 20% no teste de cancelamento",
-          "cohen_d": "d ≈ 0.70 (Efeito Moderado)"
+          "cohen_d": "d ≈ 0.70 (Efeito Moderado)",
+          "ajuste_parametros": {
+            "titulo": "Diretrizes de Otimização e Ajuste de Parâmetros (Rede NAPeN)",
+            "tolerabilidade": "Em caso de desconforto ou dor local, reduzir temporariamente a intensidade para 80% do LMR e progredir gradualmente conforme tolerância até a dose plena prevista (Nota N10).",
+            "dose_pulsos": "Recomenda-se ajustar o número de pulsos para 1.500 por sessão, conforme evidências metanalíticas de maior magnitude de ganho com doses superiores (Nota N23).",
+            "calibracao_limiar": "Na ausência de identificação do limiar motor de repouso (LMR), calibrar a estimulação baseando-se no Limiar Motor Ativo (LMA a 70%–80%) (Nota N13)."
+          },
+          "protocolo_alternativo_2": {
+            "nome": "Protocolo Alternativo 2 Sequencial (Cerebelar / Pré-Motor)",
+            "tecnica": "iTBS / rTMS 10 Hz",
+            "alvo": "Cerebelo contralesional ou Córtex Pré-motor",
+            "parametros": "600 a 1.000 pulsos conforme tolerabilidade clínica",
+            "observacoes": "Aplicação com bobina duplo-cone ou parabólica se direcionada ao cerebelo (Nota N11)."
+          },
+          "falha_terapeutica": {
+            "criterio": "Persistência de resposta funcional inferior à MCID na escala clínica validada após o ciclo pleno de indução, realização dos ajustes de parâmetros/tolerabilidade e conclusão dos protocolos alternativos 1 e 2 do roadmap.",
+            "conduta_oficial": "1. Encerramento formal do ciclo de estimulação vigente;\n2. Registro em prontuário de refratariedade ao regime testado;\n3. Investigação multiprofissional de fatores biológicos de resistência (uso concomitante de benzodiazepínicos/antiepilépticos, lesão corticoespinhal estrutural completa);\n4. Transição para modalidade alternativa (ex.: tDCS domiciliar associada a telerreabilitação intensiva, bloqueio neuromuscular focal com toxina botulínica ou reabilitação motora assistida por robótica/RV)."
+          }
         },
         "sem_pem": {
           "tecnica": "rTMS Contralesional Facilitatória + Reabilitação Motora Bobath (Protocolo 4)",
@@ -610,7 +703,8 @@ window.NAPEN_DATA = {
             "ano": 2022,
             "periodico": "Journal of Integrative Neuroscience, 21(2), 050",
             "doi": "10.31083/j.jin2102050",
-            "url_doi": "https://doi.org/10.31083/j.jin2102050"
+            "url_doi": "https://doi.org/10.31083/j.jin2102050",
+            "tipo": "Estudos de referência"
           },
           "meta_analise": {
             "autores": "Chen, Y., et al.",
@@ -653,7 +747,25 @@ window.NAPEN_DATA = {
             "efeito_esperado_resumo": "Aumento de 3,7 pontos (IC 95% 2,4 a 5,0) na FMA-UE",
             "estudo_referencia": "Wang et al., 2022",
             "ic_min": 2.4,
-            "ic_max": 5.0
+            "ic_max": 5.0,
+            "cohen_d": ""
+          },
+          "ajuste_parametros": {
+            "titulo": "Diretrizes de Otimização e Ajuste de Parâmetros (Rede NAPeN)",
+            "tolerabilidade": "Em caso de desconforto ou dor local, reduzir temporariamente a intensidade para 80% do LMR e progredir gradualmente conforme tolerância até a dose plena prevista (Nota N10).",
+            "dose_pulsos": "Recomenda-se ajustar o número de pulsos para 1.500 por sessão, conforme evidências metanalíticas de maior magnitude de ganho com doses superiores (Nota N23).",
+            "calibracao_limiar": "Na ausência de identificação do limiar motor de repouso (LMR), calibrar a estimulação baseando-se no Limiar Motor Ativo (LMA a 70%–80%) (Nota N13)."
+          },
+          "protocolo_alternativo_2": {
+            "nome": "Protocolo Alternativo 2 Sequencial (Cerebelar / Pré-Motor)",
+            "tecnica": "iTBS / rTMS 10 Hz",
+            "alvo": "Cerebelo contralesional ou Córtex Pré-motor",
+            "parametros": "600 a 1.000 pulsos conforme tolerabilidade clínica",
+            "observacoes": "Aplicação com bobina duplo-cone ou parabólica se direcionada ao cerebelo (Nota N11)."
+          },
+          "falha_terapeutica": {
+            "criterio": "Persistência de resposta funcional inferior à MCID na escala clínica validada após o ciclo pleno de indução, realização dos ajustes de parâmetros/tolerabilidade e conclusão dos protocolos alternativos 1 e 2 do roadmap.",
+            "conduta_oficial": "1. Encerramento formal do ciclo de estimulação vigente;\n2. Registro em prontuário de refratariedade ao regime testado;\n3. Investigação multiprofissional de fatores biológicos de resistência (uso concomitante de benzodiazepínicos/antiepilépticos, lesão corticoespinhal estrutural completa);\n4. Transição para modalidade alternativa (ex.: tDCS domiciliar associada a telerreabilitação intensiva, bloqueio neuromuscular focal com toxina botulínica ou reabilitação motora assistida por robótica/RV)."
           }
         }
       },
@@ -707,12 +819,282 @@ window.NAPEN_DATA = {
           "tDCS Anódica",
           "tDCS Catódica"
         ]
+      },
+      "modalidades_suportadas": [
+        {
+          "id": "rtms",
+          "nome": "rTMS (Estimulação Magnética Repetitiva)",
+          "roadmap_id": "RM01",
+          "padrao": true
+        },
+        {
+          "id": "tdcs",
+          "nome": "tDCS (Estimulação Transcraniana por Corrente Contínua)",
+          "roadmap_id": "RM02",
+          "padrao": false
+        }
+      ],
+      "arvore_algoritmo": {
+        "rtms": {
+          "roadmap_id": "RM01",
+          "titulo": "AVC — Membro Superior (rTMS / TBS)",
+          "macro_desfecho": "Uso do membro superior nas AVDs",
+          "etapas": [
+            {
+              "etapa_id": "fator_limitante",
+              "pergunta": "Qual é o principal fator limitante do membro superior?",
+              "opcoes": [
+                {
+                  "id": "m1_group",
+                  "rotulo": "Perda de Sinergia / Espasticidade / Fraqueza Muscular",
+                  "subtexto": "Disfunção motora ou sensorial associada ao Córtex Motor",
+                  "linha_prescricao": "Córtex Motor Primário (M1)",
+                  "proxima_etapa": "pem_triage"
+                },
+                {
+                  "id": "s1_group",
+                  "rotulo": "Disfunção Sensorial Isolada / Predominante",
+                  "subtexto": "Déficit tátil e proprioceptivo somatossensorial",
+                  "linha_prescricao": "Córtex Somatossensorial Primário (S1)",
+                  "proxima_etapa": "lesao_s1"
+                },
+                {
+                  "id": "ppc_group",
+                  "rotulo": "Heminegligência Visuoespacial",
+                  "subtexto": "Negligência hemiespacial contralateral à lesão",
+                  "linha_prescricao": "Córtex Parietal Posterior (PPC)",
+                  "proxima_etapa": "protocolo_ppc"
+                }
+              ]
+            },
+            {
+              "etapa_id": "pem_triage",
+              "pergunta": "Presença de Potencial Evocado Motor (PEM) no Membro Superior parético?",
+              "subtitulo": "Avaliação neurofisiológica da integridade do trato corticoespinhal",
+              "opcoes": [
+                {
+                  "id": "pem_sim",
+                  "rotulo": "PEM Presente",
+                  "subtexto": "Trato corticoespinhal preservado",
+                  "proxima_etapa": "gravidade_fma"
+                },
+                {
+                  "id": "pem_nao",
+                  "rotulo": "PEM Ausente",
+                  "subtexto": "Integridade corticoespinhal não preservada",
+                  "proxima_etapa": "lesao_m1"
+                }
+              ]
+            },
+            {
+              "etapa_id": "gravidade_fma",
+              "pergunta": "Comprometimento motor pela escala Fugl-Meyer (FMA-UE)?",
+              "subtitulo": "Estratificação da gravidade do déficit motor",
+              "opcoes": [
+                {
+                  "id": "fma_leve_mod",
+                  "rotulo": "Comprometimento Leve a Moderado (> 35 pontos)",
+                  "subtexto": "Capacidade motora residual para tarefas motoras",
+                  "protocolo_id": "RM01-P_M1_1",
+                  "modalidade_chave": "fraqueza"
+                },
+                {
+                  "id": "fma_grave",
+                  "rotulo": "Comprometimento Grave (≤ 35 pontos)",
+                  "subtexto": "Déficit severo / hipertonia / espasticidade predominante",
+                  "protocolo_id": "RM01-P_M1_2_B",
+                  "modalidade_chave": "espasticidade"
+                }
+              ]
+            },
+            {
+              "etapa_id": "lesao_m1",
+              "pergunta": "Lesão cortical extensa no giro pré-frontal?",
+              "subtitulo": "Avaliação de neuroimagem estrutural (TC/RM)",
+              "opcoes": [
+                {
+                  "id": "lesao_prefrontal_sim",
+                  "rotulo": "Lesão Extensa no Giro Pré-Frontal",
+                  "subtexto": "Estimulação cerebelar contralesional de compensação",
+                  "protocolo_id": "RM01-P_M1_4",
+                  "modalidade_chave": "sem_pem"
+                },
+                {
+                  "id": "lesao_prefrontal_nao",
+                  "rotulo": "Sem Lesão Extensa no Giro Pré-Frontal",
+                  "subtexto": "Estimulação excitatória do córtex pré-motor ipsilesional",
+                  "protocolo_id": "RM01-P_M1_5",
+                  "modalidade_chave": "sem_pem"
+                }
+              ]
+            },
+            {
+              "etapa_id": "lesao_s1",
+              "pergunta": "Lesão cortical extensa no giro pós-frontal (S1)?",
+              "subtitulo": "Avaliação de integridade estrutural do córtex somatossensorial",
+              "opcoes": [
+                {
+                  "id": "lesao_s1_nao",
+                  "rotulo": "Sem Lesão Extensa em S1",
+                  "subtexto": "Estimulação excitatória direta de S1 ipsilesional",
+                  "protocolo_id": "RM01-P_S1_1",
+                  "modalidade_chave": "sensorial"
+                },
+                {
+                  "id": "lesao_s1_sim",
+                  "rotulo": "Lesão Extensa em S1",
+                  "subtexto": "Reentrar na via motora corticoespinhal (M1 / PEM)",
+                  "proxima_etapa": "pem_triage"
+                }
+              ]
+            },
+            {
+              "etapa_id": "protocolo_ppc",
+              "pergunta": "Conduta para Heminegligência:",
+              "subtitulo": "Modulação parietal para recuperação da atenção espacial",
+              "opcoes": [
+                {
+                  "id": "ppc_padrao",
+                  "rotulo": "Estimulação de Alta Frequência em PPC Esquerdo",
+                  "subtexto": "Protocolo 1 rTMS PPC (10 Hz, 90% LMR, 1.000 pulsos)",
+                  "protocolo_id": "RM01-P_PPC_1",
+                  "modalidade_chave": "negligencia"
+                }
+              ]
+            }
+          ],
+          "ajuste_parametros": {
+            "titulo": "Diretrizes de Otimização e Ajuste de Parâmetros (Rede NAPeN)",
+            "tolerabilidade": "Em caso de desconforto ou dor local, reduzir temporariamente a intensidade para 80% do LMR e progredir gradualmente conforme tolerância até a dose plena prevista (Nota N10).",
+            "dose_pulsos": "Recomenda-se ajustar o número de pulsos para 1.500 por sessão, conforme evidências metanalíticas de maior magnitude de ganho com doses superiores (Nota N23).",
+            "calibracao_limiar": "Na ausência de identificação do limiar motor de repouso (LMR), calibrar a estimulação baseando-se no Limiar Motor Ativo (LMA a 70%–80%) (Nota N13)."
+          },
+          "protocolo_alternativo_2": {
+            "id": "RM01-ALT2",
+            "nome": "Protocolo Alternativo 2 (iTBS Cortical + rPMS Periférica)",
+            "tecnica": "iTBS (Triplets a 50 Hz em 5 Hz) + rPMS Periférica Contínua/Intermitente",
+            "alvo": "M1 ipsilesional + Músculos flexores espásticos ou extensores fracos",
+            "parametros": "iTBS cortical: 1.200 pulsos a 80% LMA seguido de rPMS contínua (600 pulsos a 5 Hz sobre flexores) ou intermitente (extensores) (Notas N18, N19)",
+            "observacoes": "Bobina perpendicular às fibras com intensidade para contração visível (Nota N20). Separar sessão por 10 min."
+          },
+          "falha_terapeutica": {
+            "id": "RM01-FALHA",
+            "titulo": "Declaração Formal de Falha Terapêutica em Neuromodulação (Rede NAPeN)",
+            "descricao": "Critérios diagnósticos e condutas padronizadas para não-resposta clínica comprovada após esgotamento de todas as linhas e alternativas do roadmap.",
+            "criterios_definicao": "Persistência de variação clínica funcional inferior à MCID na escala clínica validada após indução completa (mínimo de 10 a 20 sessões), esgotamento das diretrizes de ajuste de parâmetros/tolerabilidade e ausência de resposta aos Protocolos Alternativos 1 e 2.",
+            "condutas": [
+              "Interromper o ciclo de neuromodulação não invasiva na modalidade e alvo vigentes;",
+              "Encaminhar o paciente para reavaliação médica e funcional multidisciplinar ampliada;",
+              "Considerar reavaliação neurofisiológica aprofundada (ressonância funcional ou mapeamento cortical de conectividade);",
+              "Avaliar transição para modalidades sinérgicas ou intervenções adjuvantes recomendadas pela Rede NAPeN."
+            ]
+          }
+        },
+        "tdcs": {
+          "roadmap_id": "RM02",
+          "titulo": "AVC — Membro Superior (tDCS / taVNS)",
+          "macro_desfecho": "Uso do membro superior nas AVDs",
+          "etapas": [
+            {
+              "etapa_id": "fator_limitante",
+              "pergunta": "Qual é o principal fator limitante com indicação para tDCS?",
+              "opcoes": [
+                {
+                  "id": "m1_tdcs",
+                  "rotulo": "Disfunção Motora / Espasticidade",
+                  "subtexto": "Aplicação sobre o Córtex Motor Primário (M1)",
+                  "linha_prescricao": "Córtex Motor Primário (M1)",
+                  "proxima_etapa": "lesao_tdcs_m1"
+                },
+                {
+                  "id": "s1_tdcs",
+                  "rotulo": "Disfunção Sensorial Somestésica",
+                  "subtexto": "Aplicação sobre o Córtex Somatossensorial (S1)",
+                  "linha_prescricao": "Córtex Somatosensorial Primário (S1)",
+                  "proxima_etapa": "protocolo_s1_tdcs"
+                },
+                {
+                  "id": "ppc_tdcs",
+                  "rotulo": "Heminegligência",
+                  "subtexto": "Aplicação sobre Córtex Parietal (P3/P4)",
+                  "linha_prescricao": "Córtex Parietal (P3/P4)",
+                  "proxima_etapa": "protocolo_ppc_tdcs"
+                }
+              ]
+            },
+            {
+              "etapa_id": "lesao_tdcs_m1",
+              "pergunta": "Lesão cortical extensa no giro pré-frontal?",
+              "opcoes": [
+                {
+                  "id": "lesao_tdcs_sim",
+                  "rotulo": "Lesão Cortical no Giro Pré-Frontal",
+                  "subtexto": "Avaliar capacidade residual de extensão dos dedos",
+                  "proxima_etapa": "extensao_dedos"
+                },
+                {
+                  "id": "lesao_tdcs_nao",
+                  "rotulo": "Sem Lesão Extensa no Giro Pré-Frontal",
+                  "subtexto": "Protocolo 1 tDCS: 1,5 mA, 30 min, ânodo ipsilesional",
+                  "protocolo_id": "RM02-P-L012",
+                  "modalidade_chave": "fraqueza"
+                }
+              ]
+            },
+            {
+              "etapa_id": "extensao_dedos",
+              "pergunta": "Comprometimento motor leve/moderado (extensão ativa ≥10° de dedos/polegar)?",
+              "opcoes": [
+                {
+                  "id": "extensao_sim",
+                  "rotulo": "Extensão Presente ≥ 10°",
+                  "subtexto": "Protocolo 5 tDCS: 1,0 mA, 30 min, córtex pré-motor",
+                  "protocolo_id": "RM02-P-L016",
+                  "modalidade_chave": "fraqueza"
+                },
+                {
+                  "id": "extensao_nao",
+                  "rotulo": "Extensão Ausente < 10°",
+                  "subtexto": "Protocolo 4 tDCS: 1,75 mA, 20 min, ânodo contralesional",
+                  "protocolo_id": "RM02-P-L017",
+                  "modalidade_chave": "espasticidade"
+                }
+              ]
+            },
+            {
+              "etapa_id": "protocolo_s1_tdcs",
+              "pergunta": "Protocolo para Disfunção Sensorial:",
+              "opcoes": [
+                {
+                  "id": "s1_tdcs_prot",
+                  "rotulo": "tDCS Anodal em S1",
+                  "subtexto": "1,0 mA, 20 min, 25 cm², ânodo sobre S1 ipsilesional",
+                  "protocolo_id": "RM02-P-L011",
+                  "modalidade_chave": "sensorial"
+                }
+              ]
+            },
+            {
+              "etapa_id": "protocolo_ppc_tdcs",
+              "pergunta": "Protocolo para Heminegligência:",
+              "opcoes": [
+                {
+                  "id": "ppc_tdcs_prot",
+                  "rotulo": "tDCS Bipolar Parietal",
+                  "subtexto": "1,0 mA, 20 min, 35 cm², ânodo em P4 e cátodo em FP1",
+                  "protocolo_id": "RM02-P-L009",
+                  "modalidade_chave": "negligencia"
+                }
+              ]
+            }
+          ]
+        }
       }
     },
     {
       "id": "avc-mobilidade",
-      "condicao": "Acidente Vascular Cerebral (AVC) — Mobilidade e Marcha",
-      "eixo": "Doenças Cerebrovasculares (AVC)",
+      "condicao": "Acidente Vascular Cerebral — Mobilidade e Marcha",
+      "eixo": "Doenças Cerebrovasculares",
       "roadmap_id": "RM03",
       "svg_file": "RM03.svg",
       "status_auditoria": "Consolidado (Meta-análise)",
@@ -721,11 +1103,17 @@ window.NAPEN_DATA = {
       "fatores_limitantes": [
         {
           "id": "equilibrio",
-          "label": "Instabilidade Postural e Equilíbrio"
+          "label": "Instabilidade Postural e Equilíbrio",
+          "linha_prescricao": "Córtex Motor Primário (M1 de MMII)",
+          "escala_recomendada": "Escala de Equilíbrio de Berg (BBS)",
+          "meta_melhora": "Aumento clinicamente relevante na pontuação BBS"
         },
         {
           "id": "velocidade_marcha",
-          "label": "Velocidade e Cadência da Marcha"
+          "label": "Velocidade e Cadência da Marcha",
+          "linha_prescricao": "Córtex Motor Primário (M1 de MMII)",
+          "escala_recomendada": "Teste de Caminhada de 10 Metros (TC10m)",
+          "meta_melhora": "Redução clinicamente significativa no tempo do TC10m"
         }
       ],
       "modalidades": {
@@ -824,7 +1212,24 @@ window.NAPEN_DATA = {
           },
           "mcid_valor": 5.0,
           "mcid_label": "Ganho ≥ 5,0 pontos na BBS (Donoghue et al., 2009)",
-          "cohen_d": "d ≈ 0.82 (Efeito Grande)"
+          "cohen_d": "d ≈ 0.82 (Efeito Grande)",
+          "ajuste_parametros": {
+            "titulo": "Diretrizes de Otimização e Ajuste de Parâmetros (Rede NAPeN)",
+            "tolerabilidade": "Em caso de desconforto ou dor local, reduzir temporariamente a intensidade para 80% do LMR e progredir gradualmente conforme tolerância até a dose plena prevista (Nota N10).",
+            "dose_pulsos": "Recomenda-se ajustar o número de pulsos para 1.500 por sessão, conforme evidências metanalíticas de maior magnitude de ganho com doses superiores (Nota N23).",
+            "calibracao_limiar": "Na ausência de identificação do limiar motor de repouso (LMR), calibrar a estimulação baseando-se no Limiar Motor Ativo (LMA a 70%–80%) (Nota N13)."
+          },
+          "protocolo_alternativo_2": {
+            "nome": "Protocolo Alternativo 2 (Ajuste de Alvo / Parâmetros)",
+            "tecnica": "Modulação Alternativa Padronizada",
+            "alvo": "Alvo de compensação de rede neural",
+            "parametros": "Dose e frequência ajustadas conforme tolerância do paciente",
+            "observacoes": "Indicado após reavaliação clínica que comprove persistência de déficit sem ganho mínimo."
+          },
+          "falha_terapeutica": {
+            "criterio": "Persistência de resposta funcional inferior à MCID na escala clínica validada após o ciclo pleno de indução, realização dos ajustes de parâmetros/tolerabilidade e conclusão dos protocolos alternativos 1 e 2 do roadmap.",
+            "conduta_oficial": "1. Encerramento formal do ciclo de estimulação vigente;\n2. Registro em prontuário de refratariedade ao regime testado;\n3. Investigação multiprofissional de fatores biológicos de resistência (uso concomitante de benzodiazepínicos/antiepilépticos, lesão corticoespinhal estrutural completa);\n4. Transição para modalidade alternativa (ex.: tDCS domiciliar associada a telerreabilitação intensiva, bloqueio neuromuscular focal com toxina botulínica ou reabilitação motora assistida por robótica/RV)."
+          }
         },
         "velocidade_marcha": {
           "tecnica": "Estimulação Magnética Transcraniana por Theta Burst Intermitente (iTBS)",
@@ -921,7 +1326,24 @@ window.NAPEN_DATA = {
           },
           "mcid_valor": 3.0,
           "mcid_label": "Redução ≥ 3,0 s no TUG ou ganho ≥ 0,16 m/s na velocidade",
-          "cohen_d": "d ≈ 0.60 (Efeito Moderado)"
+          "cohen_d": "d ≈ 0.60 (Efeito Moderado)",
+          "ajuste_parametros": {
+            "titulo": "Diretrizes de Otimização e Ajuste de Parâmetros (Rede NAPeN)",
+            "tolerabilidade": "Em caso de desconforto ou dor local, reduzir temporariamente a intensidade para 80% do LMR e progredir gradualmente conforme tolerância até a dose plena prevista (Nota N10).",
+            "dose_pulsos": "Recomenda-se ajustar o número de pulsos para 1.500 por sessão, conforme evidências metanalíticas de maior magnitude de ganho com doses superiores (Nota N23).",
+            "calibracao_limiar": "Na ausência de identificação do limiar motor de repouso (LMR), calibrar a estimulação baseando-se no Limiar Motor Ativo (LMA a 70%–80%) (Nota N13)."
+          },
+          "protocolo_alternativo_2": {
+            "nome": "Protocolo Alternativo 2 (Ajuste de Alvo / Parâmetros)",
+            "tecnica": "Modulação Alternativa Padronizada",
+            "alvo": "Alvo de compensação de rede neural",
+            "parametros": "Dose e frequência ajustadas conforme tolerância do paciente",
+            "observacoes": "Indicado após reavaliação clínica que comprove persistência de déficit sem ganho mínimo."
+          },
+          "falha_terapeutica": {
+            "criterio": "Persistência de resposta funcional inferior à MCID na escala clínica validada após o ciclo pleno de indução, realização dos ajustes de parâmetros/tolerabilidade e conclusão dos protocolos alternativos 1 e 2 do roadmap.",
+            "conduta_oficial": "1. Encerramento formal do ciclo de estimulação vigente;\n2. Registro em prontuário de refratariedade ao regime testado;\n3. Investigação multiprofissional de fatores biológicos de resistência (uso concomitante de benzodiazepínicos/antiepilépticos, lesão corticoespinhal estrutural completa);\n4. Transição para modalidade alternativa (ex.: tDCS domiciliar associada a telerreabilitação intensiva, bloqueio neuromuscular focal com toxina botulínica ou reabilitação motora assistida por robótica/RV)."
+          }
         }
       },
       "tags_busca": {
@@ -971,12 +1393,26 @@ window.NAPEN_DATA = {
           "tDCS",
           "tDCS Anódica"
         ]
-      }
+      },
+      "modalidades_suportadas": [
+        {
+          "id": "rtms",
+          "nome": "rTMS (Estimulação Magnética Repetitiva)",
+          "roadmap_id": "RM03",
+          "padrao": true
+        },
+        {
+          "id": "tdcs",
+          "nome": "tDCS (Estimulação Transcraniana por Corrente Contínua)",
+          "roadmap_id": "RM04",
+          "padrao": false
+        }
+      ]
     },
     {
       "id": "avc-afasia",
-      "condicao": "Acidente Vascular Cerebral (AVC) — Afasia de Expressão e Compreensão",
-      "eixo": "Doenças Cerebrovasculares (AVC)",
+      "condicao": "Acidente Vascular Cerebral — Afasia de Expressão e Compreensão",
+      "eixo": "Doenças Cerebrovasculares",
       "roadmap_id": "RM09",
       "svg_file": "RM09.svg",
       "status_auditoria": "Consolidado (Meta-análise)",
@@ -985,11 +1421,17 @@ window.NAPEN_DATA = {
       "fatores_limitantes": [
         {
           "id": "expressao",
-          "label": "Afasia Não-Fluente e Nomeação"
+          "label": "Afasia Não-Fluente e Nomeação",
+          "linha_prescricao": "Área de Broca / Giro Frontal Inferior (IFG)",
+          "escala_recomendada": "Teste de Nomeação de Boston (BNT) e Fluência Verbal",
+          "meta_melhora": "Ganho substancial na nomeação de substantivos e itens treinados"
         },
         {
           "id": "compreensao",
-          "label": "Afasia Fluente e Compreensão"
+          "label": "Afasia Fluente e Compreensão",
+          "linha_prescricao": "Área de Wernicke / Giro Temporal Superior",
+          "escala_recomendada": "Western Aphasia Battery (WAB) / Teste Token",
+          "meta_melhora": "Melhora na compreensão auditiva e associação semântica de objetos"
         }
       ],
       "modalidades": {
@@ -1100,7 +1542,24 @@ window.NAPEN_DATA = {
           },
           "mcid_valor": 25.0,
           "mcid_label": "Ganho ≥ 25% na precisão de nomeação (Boston Naming Test)",
-          "cohen_d": "d ≈ 0.68 (Efeito Moderado)"
+          "cohen_d": "d ≈ 0.68 (Efeito Moderado)",
+          "ajuste_parametros": {
+            "titulo": "Diretrizes de Otimização e Ajuste de Parâmetros (Rede NAPeN)",
+            "tolerabilidade": "Em caso de desconforto ou dor local, reduzir temporariamente a intensidade para 80% do LMR e progredir gradualmente conforme tolerância até a dose plena prevista (Nota N10).",
+            "dose_pulsos": "Recomenda-se ajustar o número de pulsos para 1.500 por sessão, conforme evidências metanalíticas de maior magnitude de ganho com doses superiores (Nota N23).",
+            "calibracao_limiar": "Na ausência de identificação do limiar motor de repouso (LMR), calibrar a estimulação baseando-se no Limiar Motor Ativo (LMA a 70%–80%) (Nota N13)."
+          },
+          "protocolo_alternativo_2": {
+            "nome": "Protocolo Alternativo 2 (Ajuste de Alvo / Parâmetros)",
+            "tecnica": "Modulação Alternativa Padronizada",
+            "alvo": "Alvo de compensação de rede neural",
+            "parametros": "Dose e frequência ajustadas conforme tolerância do paciente",
+            "observacoes": "Indicado após reavaliação clínica que comprove persistência de déficit sem ganho mínimo."
+          },
+          "falha_terapeutica": {
+            "criterio": "Persistência de resposta funcional inferior à MCID na escala clínica validada após o ciclo pleno de indução, realização dos ajustes de parâmetros/tolerabilidade e conclusão dos protocolos alternativos 1 e 2 do roadmap.",
+            "conduta_oficial": "1. Encerramento formal do ciclo de estimulação vigente;\n2. Registro em prontuário de refratariedade ao regime testado;\n3. Investigação multiprofissional de fatores biológicos de resistência (uso concomitante de benzodiazepínicos/antiepilépticos, lesão corticoespinhal estrutural completa);\n4. Transição para modalidade alternativa (ex.: tDCS domiciliar associada a telerreabilitação intensiva, bloqueio neuromuscular focal com toxina botulínica ou reabilitação motora assistida por robótica/RV)."
+          }
         },
         "compreensao": {
           "tecnica": "tDCS Anodal / rTMS Temporoparietal",
@@ -1209,7 +1668,24 @@ window.NAPEN_DATA = {
           },
           "mcid_valor": 20.0,
           "mcid_label": "Ganho ≥ 20% na acurácia do teste de compreensão",
-          "cohen_d": "d ≈ 0.64 (Efeito Moderado)"
+          "cohen_d": "d ≈ 0.64 (Efeito Moderado)",
+          "ajuste_parametros": {
+            "titulo": "Diretrizes de Otimização e Ajuste de Parâmetros (Rede NAPeN)",
+            "tolerabilidade": "Em caso de desconforto ou dor local, reduzir temporariamente a intensidade para 80% do LMR e progredir gradualmente conforme tolerância até a dose plena prevista (Nota N10).",
+            "dose_pulsos": "Recomenda-se ajustar o número de pulsos para 1.500 por sessão, conforme evidências metanalíticas de maior magnitude de ganho com doses superiores (Nota N23).",
+            "calibracao_limiar": "Na ausência de identificação do limiar motor de repouso (LMR), calibrar a estimulação baseando-se no Limiar Motor Ativo (LMA a 70%–80%) (Nota N13)."
+          },
+          "protocolo_alternativo_2": {
+            "nome": "Protocolo Alternativo 2 (Ajuste de Alvo / Parâmetros)",
+            "tecnica": "Modulação Alternativa Padronizada",
+            "alvo": "Alvo de compensação de rede neural",
+            "parametros": "Dose e frequência ajustadas conforme tolerância do paciente",
+            "observacoes": "Indicado após reavaliação clínica que comprove persistência de déficit sem ganho mínimo."
+          },
+          "falha_terapeutica": {
+            "criterio": "Persistência de resposta funcional inferior à MCID na escala clínica validada após o ciclo pleno de indução, realização dos ajustes de parâmetros/tolerabilidade e conclusão dos protocolos alternativos 1 e 2 do roadmap.",
+            "conduta_oficial": "1. Encerramento formal do ciclo de estimulação vigente;\n2. Registro em prontuário de refratariedade ao regime testado;\n3. Investigação multiprofissional de fatores biológicos de resistência (uso concomitante de benzodiazepínicos/antiepilépticos, lesão corticoespinhal estrutural completa);\n4. Transição para modalidade alternativa (ex.: tDCS domiciliar associada a telerreabilitação intensiva, bloqueio neuromuscular focal com toxina botulínica ou reabilitação motora assistida por robótica/RV)."
+          }
         }
       },
       "tags_busca": {
@@ -1259,12 +1735,26 @@ window.NAPEN_DATA = {
           "tDCS Anódica",
           "tDCS Catódica"
         ]
-      }
+      },
+      "modalidades_suportadas": [
+        {
+          "id": "rtms",
+          "nome": "rTMS (Estimulação Magnética Repetitiva)",
+          "roadmap_id": "RM09",
+          "padrao": true
+        },
+        {
+          "id": "tdcs",
+          "nome": "tDCS (Estimulação Transcraniana por Corrente Contínua)",
+          "roadmap_id": "RM08",
+          "padrao": false
+        }
+      ]
     },
     {
       "id": "avc-disfagia",
-      "condicao": "Acidente Vascular Cerebral (AVC) — Disfagia Orofaríngea",
-      "eixo": "Doenças Cerebrovasculares (AVC)",
+      "condicao": "Acidente Vascular Cerebral — Disfagia Orofaríngea",
+      "eixo": "Doenças Cerebrovasculares",
       "roadmap_id": "RM07",
       "svg_file": "RM07.svg",
       "status_auditoria": "Consolidado (Meta-análise)",
@@ -1273,11 +1763,17 @@ window.NAPEN_DATA = {
       "fatores_limitantes": [
         {
           "id": "orofaringea",
-          "label": "Disfagia Orofaríngea e Risco Aspirativo"
+          "label": "Disfagia Orofaríngea e Risco Aspirativo",
+          "linha_prescricao": "Córtex Motor da Deglutição (Hemisfério Intacto)",
+          "escala_recomendada": "Functional Oral Intake Scale (FOIS) e Escala DOSS",
+          "meta_melhora": "Evolução na escala FOIS com liberação segura de consistências orais"
         },
         {
           "id": "tempo_transito",
-          "label": "Atraso no Trânsito Oral e Faríngeo"
+          "label": "Atraso no Trânsito Oral e Faríngeo",
+          "linha_prescricao": "Córtex Sensório-Motor",
+          "escala_recomendada": "Fiberoptic Endoscopic Dysphagia Severity Scale (FEDSS) e DOSS",
+          "meta_melhora": "Redução no tempo de trânsito oral e faríngeo à videoendoscopia"
         }
       ],
       "modalidades": {
@@ -1377,7 +1873,24 @@ window.NAPEN_DATA = {
           },
           "mcid_valor": 1.0,
           "mcid_label": "Aumento ≥ 1 nível na Escala FOIS (Transição segura de consistência alimentar)",
-          "cohen_d": "d ≈ 0.72 (Efeito Moderado)"
+          "cohen_d": "d ≈ 0.72 (Efeito Moderado)",
+          "ajuste_parametros": {
+            "titulo": "Diretrizes de Otimização e Ajuste de Parâmetros (Rede NAPeN)",
+            "tolerabilidade": "Em caso de desconforto ou dor local, reduzir temporariamente a intensidade para 80% do LMR e progredir gradualmente conforme tolerância até a dose plena prevista (Nota N10).",
+            "dose_pulsos": "Recomenda-se ajustar o número de pulsos para 1.500 por sessão, conforme evidências metanalíticas de maior magnitude de ganho com doses superiores (Nota N23).",
+            "calibracao_limiar": "Na ausência de identificação do limiar motor de repouso (LMR), calibrar a estimulação baseando-se no Limiar Motor Ativo (LMA a 70%–80%) (Nota N13)."
+          },
+          "protocolo_alternativo_2": {
+            "nome": "Protocolo Alternativo 2 (Ajuste de Alvo / Parâmetros)",
+            "tecnica": "Modulação Alternativa Padronizada",
+            "alvo": "Alvo de compensação de rede neural",
+            "parametros": "Dose e frequência ajustadas conforme tolerância do paciente",
+            "observacoes": "Indicado após reavaliação clínica que comprove persistência de déficit sem ganho mínimo."
+          },
+          "falha_terapeutica": {
+            "criterio": "Persistência de resposta funcional inferior à MCID na escala clínica validada após o ciclo pleno de indução, realização dos ajustes de parâmetros/tolerabilidade e conclusão dos protocolos alternativos 1 e 2 do roadmap.",
+            "conduta_oficial": "1. Encerramento formal do ciclo de estimulação vigente;\n2. Registro em prontuário de refratariedade ao regime testado;\n3. Investigação multiprofissional de fatores biológicos de resistência (uso concomitante de benzodiazepínicos/antiepilépticos, lesão corticoespinhal estrutural completa);\n4. Transição para modalidade alternativa (ex.: tDCS domiciliar associada a telerreabilitação intensiva, bloqueio neuromuscular focal com toxina botulínica ou reabilitação motora assistida por robótica/RV)."
+          }
         },
         "tempo_transito": {
           "tecnica": "tDCS Anodal sobre Córtex Faríngeo",
@@ -1474,7 +1987,24 @@ window.NAPEN_DATA = {
           },
           "mcid_valor": 1.0,
           "mcid_label": "Redução ≥ 1 ponto na escala FEDSS",
-          "cohen_d": "d ≈ 0.66 (Efeito Moderado)"
+          "cohen_d": "d ≈ 0.66 (Efeito Moderado)",
+          "ajuste_parametros": {
+            "titulo": "Diretrizes de Otimização e Ajuste de Parâmetros (Rede NAPeN)",
+            "tolerabilidade": "Em caso de desconforto ou dor local, reduzir temporariamente a intensidade para 80% do LMR e progredir gradualmente conforme tolerância até a dose plena prevista (Nota N10).",
+            "dose_pulsos": "Recomenda-se ajustar o número de pulsos para 1.500 por sessão, conforme evidências metanalíticas de maior magnitude de ganho com doses superiores (Nota N23).",
+            "calibracao_limiar": "Na ausência de identificação do limiar motor de repouso (LMR), calibrar a estimulação baseando-se no Limiar Motor Ativo (LMA a 70%–80%) (Nota N13)."
+          },
+          "protocolo_alternativo_2": {
+            "nome": "Protocolo Alternativo 2 (Ajuste de Alvo / Parâmetros)",
+            "tecnica": "Modulação Alternativa Padronizada",
+            "alvo": "Alvo de compensação de rede neural",
+            "parametros": "Dose e frequência ajustadas conforme tolerância do paciente",
+            "observacoes": "Indicado após reavaliação clínica que comprove persistência de déficit sem ganho mínimo."
+          },
+          "falha_terapeutica": {
+            "criterio": "Persistência de resposta funcional inferior à MCID na escala clínica validada após o ciclo pleno de indução, realização dos ajustes de parâmetros/tolerabilidade e conclusão dos protocolos alternativos 1 e 2 do roadmap.",
+            "conduta_oficial": "1. Encerramento formal do ciclo de estimulação vigente;\n2. Registro em prontuário de refratariedade ao regime testado;\n3. Investigação multiprofissional de fatores biológicos de resistência (uso concomitante de benzodiazepínicos/antiepilépticos, lesão corticoespinhal estrutural completa);\n4. Transição para modalidade alternativa (ex.: tDCS domiciliar associada a telerreabilitação intensiva, bloqueio neuromuscular focal com toxina botulínica ou reabilitação motora assistida por robótica/RV)."
+          }
         }
       },
       "tags_busca": {
@@ -1513,7 +2043,21 @@ window.NAPEN_DATA = {
           "tDCS Anódica",
           "PES"
         ]
-      }
+      },
+      "modalidades_suportadas": [
+        {
+          "id": "rtms",
+          "nome": "rTMS (Estimulação Magnética Repetitiva)",
+          "roadmap_id": "RM07",
+          "padrao": true
+        },
+        {
+          "id": "tdcs",
+          "nome": "tDCS (Estimulação Transcraniana por Corrente Contínua)",
+          "roadmap_id": "RM06",
+          "padrao": false
+        }
+      ]
     },
     {
       "id": "doenca-parkinson",
@@ -1527,15 +2071,24 @@ window.NAPEN_DATA = {
       "fatores_limitantes": [
         {
           "id": "funcao_global",
-          "label": "Sintomas Motores Globais (Rigidez e Bradicinesia)"
+          "label": "Sintomas Motores Globais (Rigidez e Bradicinesia)",
+          "linha_prescricao": "Área Motora Suplementar (SMA) e M1",
+          "escala_recomendada": "MDS-UPDRS Parte III (Escala de Avaliação Motora no estado OFF)",
+          "meta_melhora": "Redução clinicamente significativa na pontuação motora UPDRS-III"
         },
         {
           "id": "fog",
-          "label": "Freezing of Gait (Congelamento da Marcha)"
+          "label": "Freezing of Gait (Congelamento da Marcha)",
+          "linha_prescricao": "Área Motora Suplementar (SMA)",
+          "escala_recomendada": "Freezing of Gait Questionnaire (FOGQ)",
+          "meta_melhora": "Redução na frequência e duração dos episódios de congelamento"
         },
         {
           "id": "mobilidade",
-          "label": "Mobilidade Funcional e Risco de Quedas"
+          "label": "Mobilidade Funcional e Risco de Quedas",
+          "linha_prescricao": "Córtex Motor Primário / DLPFC",
+          "escala_recomendada": "Timed Up and Go (TUG)",
+          "meta_melhora": "Redução clinicamente significativa no tempo de execução do TUG"
         }
       ],
       "modalidades": {
@@ -1635,7 +2188,24 @@ window.NAPEN_DATA = {
           },
           "mcid_valor": 3.5,
           "mcid_label": "Redução ≥ 3,5 a 5,0 pontos na UPDRS-III (Schrag et al., 2006)",
-          "cohen_d": "d ≈ 0.55 (Efeito Moderado)"
+          "cohen_d": "d ≈ 0.55 (Efeito Moderado)",
+          "ajuste_parametros": {
+            "titulo": "Diretrizes de Otimização e Ajuste de Parâmetros (Rede NAPeN)",
+            "tolerabilidade": "Em caso de desconforto ou dor local, reduzir temporariamente a intensidade para 80% do LMR e progredir gradualmente conforme tolerância até a dose plena prevista (Nota N10).",
+            "dose_pulsos": "Recomenda-se ajustar o número de pulsos para 1.500 por sessão, conforme evidências metanalíticas de maior magnitude de ganho com doses superiores (Nota N23).",
+            "calibracao_limiar": "Na ausência de identificação do limiar motor de repouso (LMR), calibrar a estimulação baseando-se no Limiar Motor Ativo (LMA a 70%–80%) (Nota N13)."
+          },
+          "protocolo_alternativo_2": {
+            "nome": "Protocolo Alternativo 2 (Ajuste de Alvo / Parâmetros)",
+            "tecnica": "Modulação Alternativa Padronizada",
+            "alvo": "Alvo de compensação de rede neural",
+            "parametros": "Dose e frequência ajustadas conforme tolerância do paciente",
+            "observacoes": "Indicado após reavaliação clínica que comprove persistência de déficit sem ganho mínimo."
+          },
+          "falha_terapeutica": {
+            "criterio": "Persistência de resposta funcional inferior à MCID na escala clínica validada após o ciclo pleno de indução, realização dos ajustes de parâmetros/tolerabilidade e conclusão dos protocolos alternativos 1 e 2 do roadmap.",
+            "conduta_oficial": "1. Encerramento formal do ciclo de estimulação vigente;\n2. Registro em prontuário de refratariedade ao regime testado;\n3. Investigação multiprofissional de fatores biológicos de resistência (uso concomitante de benzodiazepínicos/antiepilépticos, lesão corticoespinhal estrutural completa);\n4. Transição para modalidade alternativa (ex.: tDCS domiciliar associada a telerreabilitação intensiva, bloqueio neuromuscular focal com toxina botulínica ou reabilitação motora assistida por robótica/RV)."
+          }
         },
         "fog": {
           "tecnica": "rTMS de Alta Frequência sobre Área Motora Suplementar (AMS)",
@@ -1732,7 +2302,24 @@ window.NAPEN_DATA = {
           },
           "mcid_valor": 2.5,
           "mcid_label": "Redução ≥ 2,5 pontos no FOGQ",
-          "cohen_d": "d ≈ 0.52 (Efeito Moderado)"
+          "cohen_d": "d ≈ 0.52 (Efeito Moderado)",
+          "ajuste_parametros": {
+            "titulo": "Diretrizes de Otimização e Ajuste de Parâmetros (Rede NAPeN)",
+            "tolerabilidade": "Em caso de desconforto ou dor local, reduzir temporariamente a intensidade para 80% do LMR e progredir gradualmente conforme tolerância até a dose plena prevista (Nota N10).",
+            "dose_pulsos": "Recomenda-se ajustar o número de pulsos para 1.500 por sessão, conforme evidências metanalíticas de maior magnitude de ganho com doses superiores (Nota N23).",
+            "calibracao_limiar": "Na ausência de identificação do limiar motor de repouso (LMR), calibrar a estimulação baseando-se no Limiar Motor Ativo (LMA a 70%–80%) (Nota N13)."
+          },
+          "protocolo_alternativo_2": {
+            "nome": "Protocolo Alternativo 2 (Ajuste de Alvo / Parâmetros)",
+            "tecnica": "Modulação Alternativa Padronizada",
+            "alvo": "Alvo de compensação de rede neural",
+            "parametros": "Dose e frequência ajustadas conforme tolerância do paciente",
+            "observacoes": "Indicado após reavaliação clínica que comprove persistência de déficit sem ganho mínimo."
+          },
+          "falha_terapeutica": {
+            "criterio": "Persistência de resposta funcional inferior à MCID na escala clínica validada após o ciclo pleno de indução, realização dos ajustes de parâmetros/tolerabilidade e conclusão dos protocolos alternativos 1 e 2 do roadmap.",
+            "conduta_oficial": "1. Encerramento formal do ciclo de estimulação vigente;\n2. Registro em prontuário de refratariedade ao regime testado;\n3. Investigação multiprofissional de fatores biológicos de resistência (uso concomitante de benzodiazepínicos/antiepilépticos, lesão corticoespinhal estrutural completa);\n4. Transição para modalidade alternativa (ex.: tDCS domiciliar associada a telerreabilitação intensiva, bloqueio neuromuscular focal com toxina botulínica ou reabilitação motora assistida por robótica/RV)."
+          }
         },
         "mobilidade": {
           "tecnica": "rTMS / tDCS sobre Córtex Motor",
@@ -1829,7 +2416,24 @@ window.NAPEN_DATA = {
           },
           "mcid_valor": 15.0,
           "mcid_label": "Melhora ≥ 15% no teste TUG ou no comprimento da passada",
-          "cohen_d": "d ≈ 0.60 (Efeito Moderado)"
+          "cohen_d": "d ≈ 0.60 (Efeito Moderado)",
+          "ajuste_parametros": {
+            "titulo": "Diretrizes de Otimização e Ajuste de Parâmetros (Rede NAPeN)",
+            "tolerabilidade": "Em caso de desconforto ou dor local, reduzir temporariamente a intensidade para 80% do LMR e progredir gradualmente conforme tolerância até a dose plena prevista (Nota N10).",
+            "dose_pulsos": "Recomenda-se ajustar o número de pulsos para 1.500 por sessão, conforme evidências metanalíticas de maior magnitude de ganho com doses superiores (Nota N23).",
+            "calibracao_limiar": "Na ausência de identificação do limiar motor de repouso (LMR), calibrar a estimulação baseando-se no Limiar Motor Ativo (LMA a 70%–80%) (Nota N13)."
+          },
+          "protocolo_alternativo_2": {
+            "nome": "Protocolo Alternativo 2 (Ajuste de Alvo / Parâmetros)",
+            "tecnica": "Modulação Alternativa Padronizada",
+            "alvo": "Alvo de compensação de rede neural",
+            "parametros": "Dose e frequência ajustadas conforme tolerância do paciente",
+            "observacoes": "Indicado após reavaliação clínica que comprove persistência de déficit sem ganho mínimo."
+          },
+          "falha_terapeutica": {
+            "criterio": "Persistência de resposta funcional inferior à MCID na escala clínica validada após o ciclo pleno de indução, realização dos ajustes de parâmetros/tolerabilidade e conclusão dos protocolos alternativos 1 e 2 do roadmap.",
+            "conduta_oficial": "1. Encerramento formal do ciclo de estimulação vigente;\n2. Registro em prontuário de refratariedade ao regime testado;\n3. Investigação multiprofissional de fatores biológicos de resistência (uso concomitante de benzodiazepínicos/antiepilépticos, lesão corticoespinhal estrutural completa);\n4. Transição para modalidade alternativa (ex.: tDCS domiciliar associada a telerreabilitação intensiva, bloqueio neuromuscular focal com toxina botulínica ou reabilitação motora assistida por robótica/RV)."
+          }
         }
       },
       "tags_busca": {
@@ -1880,11 +2484,19 @@ window.NAPEN_DATA = {
           "iTBS",
           "tDCS Anódica"
         ]
-      }
+      },
+      "modalidades_suportadas": [
+        {
+          "id": "rtms",
+          "nome": "rTMS (Estimulação Magnética Repetitiva)",
+          "roadmap_id": "RM17",
+          "padrao": true
+        }
+      ]
     },
     {
       "id": "depressao-maior",
-      "condicao": "Depressão Maior (Transtorno Depressivo Maior)",
+      "condicao": "Depressão Maior",
       "eixo": "Psiquiatria & Saúde Mental",
       "roadmap_id": "RM10",
       "svg_file": "RM10.svg",
@@ -1894,15 +2506,24 @@ window.NAPEN_DATA = {
       "fatores_limitantes": [
         {
           "id": "moderada_grave",
-          "label": "Sintomas Depressivos Moderados a Graves"
+          "label": "Sintomas Depressivos Moderados a Graves",
+          "linha_prescricao": "Córtex Pré-Frontal Dorsolateral Esquerdo (DLPFC-E)",
+          "escala_recomendada": "HAMD-17 / HDRS-21 ou MADRS",
+          "meta_melhora": "Redução ≥ 50% na escala HAMD (critério de resposta clínica da NAPeN) ou escore ≤ 7 (remissão)"
         },
         {
           "id": "tempo_reduzido",
-          "label": "Demanda por Tempo Reduzido (Protocolo Acelerado)"
+          "label": "Demanda por Tempo Reduzido (Protocolo Acelerado)",
+          "linha_prescricao": "DLPFC Esquerdo (iTBS intermitente acelerado)",
+          "escala_recomendada": "HAMD-17",
+          "meta_melhora": "Redução ≥ 50% na pontuação HAMD-17"
         },
         {
           "id": "comorbidade_ansiedade",
-          "label": "Depressão com Comorbidade Ansiosa"
+          "label": "Depressão com Comorbidade Ansiosa",
+          "linha_prescricao": "DLPFC Bilateral (10 Hz esquerdo / 1 Hz direito)",
+          "escala_recomendada": "HAMD-17 + Escala de Ansiedade de Hamilton (HAM-A)",
+          "meta_melhora": "Redução combinada nas escalas de depressão e ansiedade"
         }
       ],
       "modalidades": {
@@ -2014,7 +2635,24 @@ window.NAPEN_DATA = {
           },
           "mcid_valor": 50.0,
           "mcid_label": "Redução ≥ 50% na escala HAM-D ou MADRS (Critério Consensual de Resposta)",
-          "cohen_d": "d ≈ 0.78 (Efeito Grande)"
+          "cohen_d": "d ≈ 0.78 (Efeito Grande)",
+          "ajuste_parametros": {
+            "titulo": "Diretrizes de Otimização e Ajuste de Parâmetros (Rede NAPeN)",
+            "tolerabilidade": "Em caso de desconforto ou dor local, reduzir temporariamente a intensidade para 80% do LMR e progredir gradualmente conforme tolerância até a dose plena prevista (Nota N10).",
+            "dose_pulsos": "Recomenda-se ajustar o número de pulsos para 1.500 por sessão, conforme evidências metanalíticas de maior magnitude de ganho com doses superiores (Nota N23).",
+            "calibracao_limiar": "Na ausência de identificação do limiar motor de repouso (LMR), calibrar a estimulação baseando-se no Limiar Motor Ativo (LMA a 70%–80%) (Nota N13)."
+          },
+          "protocolo_alternativo_2": {
+            "nome": "Protocolo Alternativo 2 (Ajuste de Alvo / Parâmetros)",
+            "tecnica": "Modulação Alternativa Padronizada",
+            "alvo": "Alvo de compensação de rede neural",
+            "parametros": "Dose e frequência ajustadas conforme tolerância do paciente",
+            "observacoes": "Indicado após reavaliação clínica que comprove persistência de déficit sem ganho mínimo."
+          },
+          "falha_terapeutica": {
+            "criterio": "Persistência de resposta funcional inferior à MCID na escala clínica validada após o ciclo pleno de indução, realização dos ajustes de parâmetros/tolerabilidade e conclusão dos protocolos alternativos 1 e 2 do roadmap.",
+            "conduta_oficial": "1. Encerramento formal do ciclo de estimulação vigente;\n2. Registro em prontuário de refratariedade ao regime testado;\n3. Investigação multiprofissional de fatores biológicos de resistência (uso concomitante de benzodiazepínicos/antiepilépticos, lesão corticoespinhal estrutural completa);\n4. Transição para modalidade alternativa (ex.: tDCS domiciliar associada a telerreabilitação intensiva, bloqueio neuromuscular focal com toxina botulínica ou reabilitação motora assistida por robótica/RV)."
+          }
         },
         "tempo_reduzido": {
           "tecnica": "Estimulação Magnética Transcraniana por Theta Burst Intermitente (iTBS)",
@@ -2123,7 +2761,24 @@ window.NAPEN_DATA = {
           },
           "mcid_valor": 50.0,
           "mcid_label": "Redução ≥ 50% na HAMD-17",
-          "cohen_d": "d ≈ 0.76 (Efeito Grande)"
+          "cohen_d": "d ≈ 0.76 (Efeito Grande)",
+          "ajuste_parametros": {
+            "titulo": "Diretrizes de Otimização e Ajuste de Parâmetros (Rede NAPeN)",
+            "tolerabilidade": "Em caso de desconforto ou dor local, reduzir temporariamente a intensidade para 80% do LMR e progredir gradualmente conforme tolerância até a dose plena prevista (Nota N10).",
+            "dose_pulsos": "Recomenda-se ajustar o número de pulsos para 1.500 por sessão, conforme evidências metanalíticas de maior magnitude de ganho com doses superiores (Nota N23).",
+            "calibracao_limiar": "Na ausência de identificação do limiar motor de repouso (LMR), calibrar a estimulação baseando-se no Limiar Motor Ativo (LMA a 70%–80%) (Nota N13)."
+          },
+          "protocolo_alternativo_2": {
+            "nome": "Protocolo Alternativo 2 (Ajuste de Alvo / Parâmetros)",
+            "tecnica": "Modulação Alternativa Padronizada",
+            "alvo": "Alvo de compensação de rede neural",
+            "parametros": "Dose e frequência ajustadas conforme tolerância do paciente",
+            "observacoes": "Indicado após reavaliação clínica que comprove persistência de déficit sem ganho mínimo."
+          },
+          "falha_terapeutica": {
+            "criterio": "Persistência de resposta funcional inferior à MCID na escala clínica validada após o ciclo pleno de indução, realização dos ajustes de parâmetros/tolerabilidade e conclusão dos protocolos alternativos 1 e 2 do roadmap.",
+            "conduta_oficial": "1. Encerramento formal do ciclo de estimulação vigente;\n2. Registro em prontuário de refratariedade ao regime testado;\n3. Investigação multiprofissional de fatores biológicos de resistência (uso concomitante de benzodiazepínicos/antiepilépticos, lesão corticoespinhal estrutural completa);\n4. Transição para modalidade alternativa (ex.: tDCS domiciliar associada a telerreabilitação intensiva, bloqueio neuromuscular focal com toxina botulínica ou reabilitação motora assistida por robótica/RV)."
+          }
         },
         "comorbidade_ansiedade": {
           "tecnica": "rTMS Inibitória Direita ou Bilateral",
@@ -2232,7 +2887,24 @@ window.NAPEN_DATA = {
           },
           "mcid_valor": 35.0,
           "mcid_label": "Redução ≥ 35% na pontuação de ansiedade e depressão",
-          "cohen_d": "d ≈ 0.65 (Efeito Moderado)"
+          "cohen_d": "d ≈ 0.65 (Efeito Moderado)",
+          "ajuste_parametros": {
+            "titulo": "Diretrizes de Otimização e Ajuste de Parâmetros (Rede NAPeN)",
+            "tolerabilidade": "Em caso de desconforto ou dor local, reduzir temporariamente a intensidade para 80% do LMR e progredir gradualmente conforme tolerância até a dose plena prevista (Nota N10).",
+            "dose_pulsos": "Recomenda-se ajustar o número de pulsos para 1.500 por sessão, conforme evidências metanalíticas de maior magnitude de ganho com doses superiores (Nota N23).",
+            "calibracao_limiar": "Na ausência de identificação do limiar motor de repouso (LMR), calibrar a estimulação baseando-se no Limiar Motor Ativo (LMA a 70%–80%) (Nota N13)."
+          },
+          "protocolo_alternativo_2": {
+            "nome": "Protocolo Alternativo 2 (Ajuste de Alvo / Parâmetros)",
+            "tecnica": "Modulação Alternativa Padronizada",
+            "alvo": "Alvo de compensação de rede neural",
+            "parametros": "Dose e frequência ajustadas conforme tolerância do paciente",
+            "observacoes": "Indicado após reavaliação clínica que comprove persistência de déficit sem ganho mínimo."
+          },
+          "falha_terapeutica": {
+            "criterio": "Persistência de resposta funcional inferior à MCID na escala clínica validada após o ciclo pleno de indução, realização dos ajustes de parâmetros/tolerabilidade e conclusão dos protocolos alternativos 1 e 2 do roadmap.",
+            "conduta_oficial": "1. Encerramento formal do ciclo de estimulação vigente;\n2. Registro em prontuário de refratariedade ao regime testado;\n3. Investigação multiprofissional de fatores biológicos de resistência (uso concomitante de benzodiazepínicos/antiepilépticos, lesão corticoespinhal estrutural completa);\n4. Transição para modalidade alternativa (ex.: tDCS domiciliar associada a telerreabilitação intensiva, bloqueio neuromuscular focal com toxina botulínica ou reabilitação motora assistida por robótica/RV)."
+          }
         }
       },
       "tags_busca": {
@@ -2276,7 +2948,15 @@ window.NAPEN_DATA = {
           "LF-rTMS 1Hz",
           "tDCS Anódica"
         ]
-      }
+      },
+      "modalidades_suportadas": [
+        {
+          "id": "rtms",
+          "nome": "rTMS (Estimulação Magnética Repetitiva)",
+          "roadmap_id": "RM10",
+          "padrao": true
+        }
+      ]
     },
     {
       "id": "ansiedade-generalizada",
@@ -2290,11 +2970,17 @@ window.NAPEN_DATA = {
       "fatores_limitantes": [
         {
           "id": "moderada_alta",
-          "label": "Sintomas Ansiosos Moderados a Severos"
+          "label": "Sintomas Ansiosos Moderados a Severos",
+          "linha_prescricao": "Córtex Pré-Frontal Dorsolateral Direito (DLPFC-D)",
+          "escala_recomendada": "Escala Hamilton de Nível de Ansiedade (HAM-A)",
+          "meta_melhora": "Redução clínica clinicamente relevante no escore HAM-A"
         },
         {
           "id": "comorbidade_depressiva",
-          "label": "Ansiedade com Comorbidade Depressiva"
+          "label": "Ansiedade com Comorbidade Depressiva",
+          "linha_prescricao": "DLPFC Bilateral",
+          "escala_recomendada": "HAM-A e HAMD-17",
+          "meta_melhora": "Redução concomitante de sintomas depressivos e ansiosos"
         }
       ],
       "modalidades": {
@@ -2393,7 +3079,24 @@ window.NAPEN_DATA = {
           },
           "mcid_valor": 50.0,
           "mcid_label": "Redução ≥ 50% na escala HAM-A (Resposta Clínica)",
-          "cohen_d": "d ≈ 0.70 (Efeito Moderado)"
+          "cohen_d": "d ≈ 0.70 (Efeito Moderado)",
+          "ajuste_parametros": {
+            "titulo": "Diretrizes de Otimização e Ajuste de Parâmetros (Rede NAPeN)",
+            "tolerabilidade": "Em caso de desconforto ou dor local, reduzir temporariamente a intensidade para 80% do LMR e progredir gradualmente conforme tolerância até a dose plena prevista (Nota N10).",
+            "dose_pulsos": "Recomenda-se ajustar o número de pulsos para 1.500 por sessão, conforme evidências metanalíticas de maior magnitude de ganho com doses superiores (Nota N23).",
+            "calibracao_limiar": "Na ausência de identificação do limiar motor de repouso (LMR), calibrar a estimulação baseando-se no Limiar Motor Ativo (LMA a 70%–80%) (Nota N13)."
+          },
+          "protocolo_alternativo_2": {
+            "nome": "Protocolo Alternativo 2 (Ajuste de Alvo / Parâmetros)",
+            "tecnica": "Modulação Alternativa Padronizada",
+            "alvo": "Alvo de compensação de rede neural",
+            "parametros": "Dose e frequência ajustadas conforme tolerância do paciente",
+            "observacoes": "Indicado após reavaliação clínica que comprove persistência de déficit sem ganho mínimo."
+          },
+          "falha_terapeutica": {
+            "criterio": "Persistência de resposta funcional inferior à MCID na escala clínica validada após o ciclo pleno de indução, realização dos ajustes de parâmetros/tolerabilidade e conclusão dos protocolos alternativos 1 e 2 do roadmap.",
+            "conduta_oficial": "1. Encerramento formal do ciclo de estimulação vigente;\n2. Registro em prontuário de refratariedade ao regime testado;\n3. Investigação multiprofissional de fatores biológicos de resistência (uso concomitante de benzodiazepínicos/antiepilépticos, lesão corticoespinhal estrutural completa);\n4. Transição para modalidade alternativa (ex.: tDCS domiciliar associada a telerreabilitação intensiva, bloqueio neuromuscular focal com toxina botulínica ou reabilitação motora assistida por robótica/RV)."
+          }
         },
         "comorbidade_depressiva": {
           "tecnica": "rTMS Bilateral Sequencial (F3 + F4)",
@@ -2490,7 +3193,24 @@ window.NAPEN_DATA = {
           },
           "mcid_valor": 35.0,
           "mcid_label": "Redução ≥ 35% nos escores de ansiedade e humor",
-          "cohen_d": "d ≈ 0.64 (Efeito Moderado)"
+          "cohen_d": "d ≈ 0.64 (Efeito Moderado)",
+          "ajuste_parametros": {
+            "titulo": "Diretrizes de Otimização e Ajuste de Parâmetros (Rede NAPeN)",
+            "tolerabilidade": "Em caso de desconforto ou dor local, reduzir temporariamente a intensidade para 80% do LMR e progredir gradualmente conforme tolerância até a dose plena prevista (Nota N10).",
+            "dose_pulsos": "Recomenda-se ajustar o número de pulsos para 1.500 por sessão, conforme evidências metanalíticas de maior magnitude de ganho com doses superiores (Nota N23).",
+            "calibracao_limiar": "Na ausência de identificação do limiar motor de repouso (LMR), calibrar a estimulação baseando-se no Limiar Motor Ativo (LMA a 70%–80%) (Nota N13)."
+          },
+          "protocolo_alternativo_2": {
+            "nome": "Protocolo Alternativo 2 (Ajuste de Alvo / Parâmetros)",
+            "tecnica": "Modulação Alternativa Padronizada",
+            "alvo": "Alvo de compensação de rede neural",
+            "parametros": "Dose e frequência ajustadas conforme tolerância do paciente",
+            "observacoes": "Indicado após reavaliação clínica que comprove persistência de déficit sem ganho mínimo."
+          },
+          "falha_terapeutica": {
+            "criterio": "Persistência de resposta funcional inferior à MCID na escala clínica validada após o ciclo pleno de indução, realização dos ajustes de parâmetros/tolerabilidade e conclusão dos protocolos alternativos 1 e 2 do roadmap.",
+            "conduta_oficial": "1. Encerramento formal do ciclo de estimulação vigente;\n2. Registro em prontuário de refratariedade ao regime testado;\n3. Investigação multiprofissional de fatores biológicos de resistência (uso concomitante de benzodiazepínicos/antiepilépticos, lesão corticoespinhal estrutural completa);\n4. Transição para modalidade alternativa (ex.: tDCS domiciliar associada a telerreabilitação intensiva, bloqueio neuromuscular focal com toxina botulínica ou reabilitação motora assistida por robótica/RV)."
+          }
         }
       },
       "tags_busca": {
@@ -2531,7 +3251,15 @@ window.NAPEN_DATA = {
           "tDCS Catódica",
           "iTBS"
         ]
-      }
+      },
+      "modalidades_suportadas": [
+        {
+          "id": "rtms",
+          "nome": "rTMS (Estimulação Magnética Repetitiva)",
+          "roadmap_id": "RM11",
+          "padrao": true
+        }
+      ]
     },
     {
       "id": "tept",
@@ -2545,11 +3273,17 @@ window.NAPEN_DATA = {
       "fatores_limitantes": [
         {
           "id": "sintomas_gerais",
-          "label": "Hipervigilância, Revivência e Intrusão"
+          "label": "Hipervigilância, Revivência e Intrusão",
+          "linha_prescricao": "DLPFC Direito (inibitório) / DLPFC Esquerdo (excitatório)",
+          "escala_recomendada": "PCL-5 (Posttraumatic Stress Disorder Checklist)",
+          "meta_melhora": "Redução expressiva na pontuação total da PCL-5"
         },
         {
           "id": "comorbidade_depressiva",
-          "label": "TEPT com Comorbidade Depressiva"
+          "label": "TEPT com Comorbidade Depressiva",
+          "linha_prescricao": "DLPFC Bilateral",
+          "escala_recomendada": "PCL-5 e HAMD-17",
+          "meta_melhora": "Redução concomitante de reatividade ao estresse e humor deprimido"
         }
       ],
       "modalidades": {
@@ -2649,7 +3383,24 @@ window.NAPEN_DATA = {
           },
           "mcid_valor": 10.0,
           "mcid_label": "Redução ≥ 10 pontos na PCL-5 (Marx et al., 2022) ou ≥ 30%",
-          "cohen_d": "d ≈ 0.72 (Efeito Moderado)"
+          "cohen_d": "d ≈ 0.72 (Efeito Moderado)",
+          "ajuste_parametros": {
+            "titulo": "Diretrizes de Otimização e Ajuste de Parâmetros (Rede NAPeN)",
+            "tolerabilidade": "Em caso de desconforto ou dor local, reduzir temporariamente a intensidade para 80% do LMR e progredir gradualmente conforme tolerância até a dose plena prevista (Nota N10).",
+            "dose_pulsos": "Recomenda-se ajustar o número de pulsos para 1.500 por sessão, conforme evidências metanalíticas de maior magnitude de ganho com doses superiores (Nota N23).",
+            "calibracao_limiar": "Na ausência de identificação do limiar motor de repouso (LMR), calibrar a estimulação baseando-se no Limiar Motor Ativo (LMA a 70%–80%) (Nota N13)."
+          },
+          "protocolo_alternativo_2": {
+            "nome": "Protocolo Alternativo 2 (Ajuste de Alvo / Parâmetros)",
+            "tecnica": "Modulação Alternativa Padronizada",
+            "alvo": "Alvo de compensação de rede neural",
+            "parametros": "Dose e frequência ajustadas conforme tolerância do paciente",
+            "observacoes": "Indicado após reavaliação clínica que comprove persistência de déficit sem ganho mínimo."
+          },
+          "falha_terapeutica": {
+            "criterio": "Persistência de resposta funcional inferior à MCID na escala clínica validada após o ciclo pleno de indução, realização dos ajustes de parâmetros/tolerabilidade e conclusão dos protocolos alternativos 1 e 2 do roadmap.",
+            "conduta_oficial": "1. Encerramento formal do ciclo de estimulação vigente;\n2. Registro em prontuário de refratariedade ao regime testado;\n3. Investigação multiprofissional de fatores biológicos de resistência (uso concomitante de benzodiazepínicos/antiepilépticos, lesão corticoespinhal estrutural completa);\n4. Transição para modalidade alternativa (ex.: tDCS domiciliar associada a telerreabilitação intensiva, bloqueio neuromuscular focal com toxina botulínica ou reabilitação motora assistida por robótica/RV)."
+          }
         },
         "comorbidade_depressiva": {
           "tecnica": "rTMS 1 Hz ou Bilateral",
@@ -2746,7 +3497,24 @@ window.NAPEN_DATA = {
           },
           "mcid_valor": 30.0,
           "mcid_label": "Redução ≥ 30% na PCL e na escala de humor",
-          "cohen_d": "d ≈ 0.62 (Efeito Moderado)"
+          "cohen_d": "d ≈ 0.62 (Efeito Moderado)",
+          "ajuste_parametros": {
+            "titulo": "Diretrizes de Otimização e Ajuste de Parâmetros (Rede NAPeN)",
+            "tolerabilidade": "Em caso de desconforto ou dor local, reduzir temporariamente a intensidade para 80% do LMR e progredir gradualmente conforme tolerância até a dose plena prevista (Nota N10).",
+            "dose_pulsos": "Recomenda-se ajustar o número de pulsos para 1.500 por sessão, conforme evidências metanalíticas de maior magnitude de ganho com doses superiores (Nota N23).",
+            "calibracao_limiar": "Na ausência de identificação do limiar motor de repouso (LMR), calibrar a estimulação baseando-se no Limiar Motor Ativo (LMA a 70%–80%) (Nota N13)."
+          },
+          "protocolo_alternativo_2": {
+            "nome": "Protocolo Alternativo 2 (Ajuste de Alvo / Parâmetros)",
+            "tecnica": "Modulação Alternativa Padronizada",
+            "alvo": "Alvo de compensação de rede neural",
+            "parametros": "Dose e frequência ajustadas conforme tolerância do paciente",
+            "observacoes": "Indicado após reavaliação clínica que comprove persistência de déficit sem ganho mínimo."
+          },
+          "falha_terapeutica": {
+            "criterio": "Persistência de resposta funcional inferior à MCID na escala clínica validada após o ciclo pleno de indução, realização dos ajustes de parâmetros/tolerabilidade e conclusão dos protocolos alternativos 1 e 2 do roadmap.",
+            "conduta_oficial": "1. Encerramento formal do ciclo de estimulação vigente;\n2. Registro em prontuário de refratariedade ao regime testado;\n3. Investigação multiprofissional de fatores biológicos de resistência (uso concomitante de benzodiazepínicos/antiepilépticos, lesão corticoespinhal estrutural completa);\n4. Transição para modalidade alternativa (ex.: tDCS domiciliar associada a telerreabilitação intensiva, bloqueio neuromuscular focal com toxina botulínica ou reabilitação motora assistida por robótica/RV)."
+          }
         }
       },
       "tags_busca": {
@@ -2786,7 +3554,15 @@ window.NAPEN_DATA = {
           "HF-rTMS",
           "tDCS Anódica / Catódica"
         ]
-      }
+      },
+      "modalidades_suportadas": [
+        {
+          "id": "rtms",
+          "nome": "rTMS (Estimulação Magnética Repetitiva)",
+          "roadmap_id": "RM18",
+          "padrao": true
+        }
+      ]
     },
     {
       "id": "dor-neuropatica",
@@ -2800,11 +3576,17 @@ window.NAPEN_DATA = {
       "fatores_limitantes": [
         {
           "id": "geral",
-          "label": "Dor Neuropática Geral e Central Pós-AVC"
+          "label": "Dor Neuropática Geral e Central Pós-AVC",
+          "linha_prescricao": "Córtex Motor Primário (M1 contralateral à dor)",
+          "escala_recomendada": "Escala Visual Analógica de Dor (EVA) e DN4",
+          "meta_melhora": "Redução clinicamente significativa ≥ 30% na escala EVA de dor"
         },
         {
           "id": "espinhal",
-          "label": "Dor Neuropática Espinhal e Radicular"
+          "label": "Dor Neuropática Espinhal e Radicular",
+          "linha_prescricao": "Córtex Motor Primário / Medular (tsDCS)",
+          "escala_recomendada": "Escala Visual Analógica (EVA)",
+          "meta_melhora": "Alívio da dor radicular e lombar/cervical"
         }
       ],
       "modalidades": {
@@ -2915,7 +3697,24 @@ window.NAPEN_DATA = {
           },
           "mcid_valor": 30.0,
           "mcid_label": "Redução ≥ 30% ou ≥ 2,0 pontos na EVA (Farrar et al., 2001; IMMPACT)",
-          "cohen_d": "d ≈ 0.68 (Efeito Moderado)"
+          "cohen_d": "d ≈ 0.68 (Efeito Moderado)",
+          "ajuste_parametros": {
+            "titulo": "Diretrizes de Otimização e Ajuste de Parâmetros (Rede NAPeN)",
+            "tolerabilidade": "Em caso de desconforto ou dor local, reduzir temporariamente a intensidade para 80% do LMR e progredir gradualmente conforme tolerância até a dose plena prevista (Nota N10).",
+            "dose_pulsos": "Recomenda-se ajustar o número de pulsos para 1.500 por sessão, conforme evidências metanalíticas de maior magnitude de ganho com doses superiores (Nota N23).",
+            "calibracao_limiar": "Na ausência de identificação do limiar motor de repouso (LMR), calibrar a estimulação baseando-se no Limiar Motor Ativo (LMA a 70%–80%) (Nota N13)."
+          },
+          "protocolo_alternativo_2": {
+            "nome": "Protocolo Alternativo 2 (Ajuste de Alvo / Parâmetros)",
+            "tecnica": "Modulação Alternativa Padronizada",
+            "alvo": "Alvo de compensação de rede neural",
+            "parametros": "Dose e frequência ajustadas conforme tolerância do paciente",
+            "observacoes": "Indicado após reavaliação clínica que comprove persistência de déficit sem ganho mínimo."
+          },
+          "falha_terapeutica": {
+            "criterio": "Persistência de resposta funcional inferior à MCID na escala clínica validada após o ciclo pleno de indução, realização dos ajustes de parâmetros/tolerabilidade e conclusão dos protocolos alternativos 1 e 2 do roadmap.",
+            "conduta_oficial": "1. Encerramento formal do ciclo de estimulação vigente;\n2. Registro em prontuário de refratariedade ao regime testado;\n3. Investigação multiprofissional de fatores biológicos de resistência (uso concomitante de benzodiazepínicos/antiepilépticos, lesão corticoespinhal estrutural completa);\n4. Transição para modalidade alternativa (ex.: tDCS domiciliar associada a telerreabilitação intensiva, bloqueio neuromuscular focal com toxina botulínica ou reabilitação motora assistida por robótica/RV)."
+          }
         },
         "espinhal": {
           "tecnica": "tsDCS (Estimulação Espinhal Transcutânea por Corrente Contínua)",
@@ -3024,7 +3823,24 @@ window.NAPEN_DATA = {
           },
           "mcid_valor": 25.0,
           "mcid_label": "Redução ≥ 25% na intensidade da dor na escala EVA",
-          "cohen_d": "d ≈ 0.54 (Efeito Moderado)"
+          "cohen_d": "d ≈ 0.54 (Efeito Moderado)",
+          "ajuste_parametros": {
+            "titulo": "Diretrizes de Otimização e Ajuste de Parâmetros (Rede NAPeN)",
+            "tolerabilidade": "Em caso de desconforto ou dor local, reduzir temporariamente a intensidade para 80% do LMR e progredir gradualmente conforme tolerância até a dose plena prevista (Nota N10).",
+            "dose_pulsos": "Recomenda-se ajustar o número de pulsos para 1.500 por sessão, conforme evidências metanalíticas de maior magnitude de ganho com doses superiores (Nota N23).",
+            "calibracao_limiar": "Na ausência de identificação do limiar motor de repouso (LMR), calibrar a estimulação baseando-se no Limiar Motor Ativo (LMA a 70%–80%) (Nota N13)."
+          },
+          "protocolo_alternativo_2": {
+            "nome": "Protocolo Alternativo 2 (Ajuste de Alvo / Parâmetros)",
+            "tecnica": "Modulação Alternativa Padronizada",
+            "alvo": "Alvo de compensação de rede neural",
+            "parametros": "Dose e frequência ajustadas conforme tolerância do paciente",
+            "observacoes": "Indicado após reavaliação clínica que comprove persistência de déficit sem ganho mínimo."
+          },
+          "falha_terapeutica": {
+            "criterio": "Persistência de resposta funcional inferior à MCID na escala clínica validada após o ciclo pleno de indução, realização dos ajustes de parâmetros/tolerabilidade e conclusão dos protocolos alternativos 1 e 2 do roadmap.",
+            "conduta_oficial": "1. Encerramento formal do ciclo de estimulação vigente;\n2. Registro em prontuário de refratariedade ao regime testado;\n3. Investigação multiprofissional de fatores biológicos de resistência (uso concomitante de benzodiazepínicos/antiepilépticos, lesão corticoespinhal estrutural completa);\n4. Transição para modalidade alternativa (ex.: tDCS domiciliar associada a telerreabilitação intensiva, bloqueio neuromuscular focal com toxina botulínica ou reabilitação motora assistida por robótica/RV)."
+          }
         }
       },
       "tags_busca": {
@@ -3067,7 +3883,21 @@ window.NAPEN_DATA = {
           "HF-rTMS 20Hz",
           "tDCS Anódica M1"
         ]
-      }
+      },
+      "modalidades_suportadas": [
+        {
+          "id": "rtms",
+          "nome": "rTMS (Estimulação Magnética Repetitiva)",
+          "roadmap_id": "RM05",
+          "padrao": true
+        },
+        {
+          "id": "tdcs",
+          "nome": "tDCS (Estimulação Transcraniana por Corrente Contínua)",
+          "roadmap_id": "RM05",
+          "padrao": false
+        }
+      ]
     },
     {
       "id": "ataxia-cerebelar",
@@ -3081,11 +3911,17 @@ window.NAPEN_DATA = {
       "fatores_limitantes": [
         {
           "id": "severidade_motora",
-          "label": "Severidade Motora e Destreza Manual"
+          "label": "Severidade Motora e Destreza Manual",
+          "linha_prescricao": "Córtex Cerebelar Bilateral",
+          "escala_recomendada": "Scale for Assessment and Rating of Ataxia (SARA) e 9-Hole Peg Test (9HPT)",
+          "meta_melhora": "Redução clinicamente perceptível na pontuação SARA"
         },
         {
           "id": "equilibrio",
-          "label": "Equilíbrio e Marcha Atáxica"
+          "label": "Equilíbrio e Marcha Atáxica",
+          "linha_prescricao": "Cerebelo / Vermis Cerebelar",
+          "escala_recomendada": "Berg Balance Scale (BBS) e SARA",
+          "meta_melhora": "Melhora no equilíbrio estático e tempo de caminhada de 10 metros"
         }
       ],
       "modalidades": {
@@ -3196,7 +4032,24 @@ window.NAPEN_DATA = {
           },
           "mcid_valor": 1.5,
           "mcid_label": "Redução ≥ 1,5 pontos na SARA ou ≥ 20% no ICARS",
-          "cohen_d": "d ≈ 0.70 (Efeito Moderado)"
+          "cohen_d": "d ≈ 0.70 (Efeito Moderado)",
+          "ajuste_parametros": {
+            "titulo": "Diretrizes de Otimização e Ajuste de Parâmetros (Rede NAPeN)",
+            "tolerabilidade": "Em caso de desconforto ou dor local, reduzir temporariamente a intensidade para 80% do LMR e progredir gradualmente conforme tolerância até a dose plena prevista (Nota N10).",
+            "dose_pulsos": "Recomenda-se ajustar o número de pulsos para 1.500 por sessão, conforme evidências metanalíticas de maior magnitude de ganho com doses superiores (Nota N23).",
+            "calibracao_limiar": "Na ausência de identificação do limiar motor de repouso (LMR), calibrar a estimulação baseando-se no Limiar Motor Ativo (LMA a 70%–80%) (Nota N13)."
+          },
+          "protocolo_alternativo_2": {
+            "nome": "Protocolo Alternativo 2 (Ajuste de Alvo / Parâmetros)",
+            "tecnica": "Modulação Alternativa Padronizada",
+            "alvo": "Alvo de compensação de rede neural",
+            "parametros": "Dose e frequência ajustadas conforme tolerância do paciente",
+            "observacoes": "Indicado após reavaliação clínica que comprove persistência de déficit sem ganho mínimo."
+          },
+          "falha_terapeutica": {
+            "criterio": "Persistência de resposta funcional inferior à MCID na escala clínica validada após o ciclo pleno de indução, realização dos ajustes de parâmetros/tolerabilidade e conclusão dos protocolos alternativos 1 e 2 do roadmap.",
+            "conduta_oficial": "1. Encerramento formal do ciclo de estimulação vigente;\n2. Registro em prontuário de refratariedade ao regime testado;\n3. Investigação multiprofissional de fatores biológicos de resistência (uso concomitante de benzodiazepínicos/antiepilépticos, lesão corticoespinhal estrutural completa);\n4. Transição para modalidade alternativa (ex.: tDCS domiciliar associada a telerreabilitação intensiva, bloqueio neuromuscular focal com toxina botulínica ou reabilitação motora assistida por robótica/RV)."
+          }
         },
         "equilibrio": {
           "tecnica": "tDCS Cerebelar (ctDCS)",
@@ -3305,7 +4158,24 @@ window.NAPEN_DATA = {
           },
           "mcid_valor": 4.0,
           "mcid_label": "Aumento ≥ 4,0 pontos na BBS ou redução ≥ 1,5 na SARA",
-          "cohen_d": "d ≈ 0.62 (Efeito Moderado)"
+          "cohen_d": "d ≈ 0.62 (Efeito Moderado)",
+          "ajuste_parametros": {
+            "titulo": "Diretrizes de Otimização e Ajuste de Parâmetros (Rede NAPeN)",
+            "tolerabilidade": "Em caso de desconforto ou dor local, reduzir temporariamente a intensidade para 80% do LMR e progredir gradualmente conforme tolerância até a dose plena prevista (Nota N10).",
+            "dose_pulsos": "Recomenda-se ajustar o número de pulsos para 1.500 por sessão, conforme evidências metanalíticas de maior magnitude de ganho com doses superiores (Nota N23).",
+            "calibracao_limiar": "Na ausência de identificação do limiar motor de repouso (LMR), calibrar a estimulação baseando-se no Limiar Motor Ativo (LMA a 70%–80%) (Nota N13)."
+          },
+          "protocolo_alternativo_2": {
+            "nome": "Protocolo Alternativo 2 (Ajuste de Alvo / Parâmetros)",
+            "tecnica": "Modulação Alternativa Padronizada",
+            "alvo": "Alvo de compensação de rede neural",
+            "parametros": "Dose e frequência ajustadas conforme tolerância do paciente",
+            "observacoes": "Indicado após reavaliação clínica que comprove persistência de déficit sem ganho mínimo."
+          },
+          "falha_terapeutica": {
+            "criterio": "Persistência de resposta funcional inferior à MCID na escala clínica validada após o ciclo pleno de indução, realização dos ajustes de parâmetros/tolerabilidade e conclusão dos protocolos alternativos 1 e 2 do roadmap.",
+            "conduta_oficial": "1. Encerramento formal do ciclo de estimulação vigente;\n2. Registro em prontuário de refratariedade ao regime testado;\n3. Investigação multiprofissional de fatores biológicos de resistência (uso concomitante de benzodiazepínicos/antiepilépticos, lesão corticoespinhal estrutural completa);\n4. Transição para modalidade alternativa (ex.: tDCS domiciliar associada a telerreabilitação intensiva, bloqueio neuromuscular focal com toxina botulínica ou reabilitação motora assistida por robótica/RV)."
+          }
         }
       },
       "tags_busca": {
@@ -3349,11 +4219,19 @@ window.NAPEN_DATA = {
           "rTMS Cerebelar",
           "iTBS"
         ]
-      }
+      },
+      "modalidades_suportadas": [
+        {
+          "id": "rtms",
+          "nome": "rTMS (Estimulação Magnética Repetitiva)",
+          "roadmap_id": "RM16",
+          "padrao": true
+        }
+      ]
     },
     {
       "id": "paralisia-cerebral",
-      "condicao": "Paralisia Cerebral (PC)",
+      "condicao": "Paralisia Cerebral",
       "eixo": "Neurodesenvolvimento",
       "roadmap_id": "RM14",
       "svg_file": "RM14.svg",
@@ -3363,7 +4241,10 @@ window.NAPEN_DATA = {
       "fatores_limitantes": [
         {
           "id": "deficits_motores",
-          "label": "Controle Motor e Hemiparesia Espástica"
+          "label": "Controle Motor e Hemiparesia Espástica",
+          "linha_prescricao": "Córtex Motor Primário (M1)",
+          "escala_recomendada": "Gross Motor Function Measure (GMFM) e Escala de Ashworth Modificada",
+          "meta_melhora": "Ganho observável na função motora grossa e redução da espasticidade"
         }
       ],
       "modalidades": {
@@ -3462,7 +4343,24 @@ window.NAPEN_DATA = {
           },
           "mcid_valor": 4.0,
           "mcid_label": "Ganho ≥ 4,0 pontos na GMFM ou melhora ≥ 20% na estabilidade",
-          "cohen_d": "d ≈ 0.65 (Efeito Moderado)"
+          "cohen_d": "d ≈ 0.65 (Efeito Moderado)",
+          "ajuste_parametros": {
+            "titulo": "Diretrizes de Otimização e Ajuste de Parâmetros (Rede NAPeN)",
+            "tolerabilidade": "Em caso de desconforto ou dor local, reduzir temporariamente a intensidade para 80% do LMR e progredir gradualmente conforme tolerância até a dose plena prevista (Nota N10).",
+            "dose_pulsos": "Recomenda-se ajustar o número de pulsos para 1.500 por sessão, conforme evidências metanalíticas de maior magnitude de ganho com doses superiores (Nota N23).",
+            "calibracao_limiar": "Na ausência de identificação do limiar motor de repouso (LMR), calibrar a estimulação baseando-se no Limiar Motor Ativo (LMA a 70%–80%) (Nota N13)."
+          },
+          "protocolo_alternativo_2": {
+            "nome": "Protocolo Alternativo 2 (Ajuste de Alvo / Parâmetros)",
+            "tecnica": "Modulação Alternativa Padronizada",
+            "alvo": "Alvo de compensação de rede neural",
+            "parametros": "Dose e frequência ajustadas conforme tolerância do paciente",
+            "observacoes": "Indicado após reavaliação clínica que comprove persistência de déficit sem ganho mínimo."
+          },
+          "falha_terapeutica": {
+            "criterio": "Persistência de resposta funcional inferior à MCID na escala clínica validada após o ciclo pleno de indução, realização dos ajustes de parâmetros/tolerabilidade e conclusão dos protocolos alternativos 1 e 2 do roadmap.",
+            "conduta_oficial": "1. Encerramento formal do ciclo de estimulação vigente;\n2. Registro em prontuário de refratariedade ao regime testado;\n3. Investigação multiprofissional de fatores biológicos de resistência (uso concomitante de benzodiazepínicos/antiepilépticos, lesão corticoespinhal estrutural completa);\n4. Transição para modalidade alternativa (ex.: tDCS domiciliar associada a telerreabilitação intensiva, bloqueio neuromuscular focal com toxina botulínica ou reabilitação motora assistida por robótica/RV)."
+          }
         }
       },
       "tags_busca": {
@@ -3502,11 +4400,19 @@ window.NAPEN_DATA = {
           "tDCS Anódica M1",
           "rTMS"
         ]
-      }
+      },
+      "modalidades_suportadas": [
+        {
+          "id": "rtms",
+          "nome": "rTMS (Estimulação Magnética Repetitiva)",
+          "roadmap_id": "RM14",
+          "padrao": true
+        }
+      ]
     },
     {
       "id": "transtorno-espectro-autista",
-      "condicao": "Transtorno do Espectro Autista (TEA)",
+      "condicao": "Transtorno do Espectro Autista",
       "eixo": "Neurodesenvolvimento",
       "roadmap_id": "RM15",
       "svg_file": "RM15.svg",
@@ -3516,11 +4422,17 @@ window.NAPEN_DATA = {
       "fatores_limitantes": [
         {
           "id": "comportamental",
-          "label": "Déficits Comportamentais e Irritabilidade"
+          "label": "Déficits Comportamentais e Irritabilidade",
+          "linha_prescricao": "Córtex Pré-Frontal Dorsolateral Bilateral",
+          "escala_recomendada": "Aberrant Behavior Checklist (ABC) — Subescala de Irritabilidade",
+          "meta_melhora": "Redução clinicamente relevante na irritabilidade e estereotipias"
         },
         {
           "id": "social",
-          "label": "Comunicação Social e Interação"
+          "label": "Comunicação Social e Interação",
+          "linha_prescricao": "DLPFC / Sulco Temporal Superior (STS)",
+          "escala_recomendada": "Social Responsiveness Scale-2 (SRS-2) e ATEC",
+          "meta_melhora": "Evolução nas tarefas de reconhecimento facial e cognição social"
         }
       ],
       "modalidades": {
@@ -3619,7 +4531,24 @@ window.NAPEN_DATA = {
           },
           "mcid_valor": 25.0,
           "mcid_label": "Redução ≥ 25% na subescala de Irritabilidade da ABC",
-          "cohen_d": "d ≈ 0.72 (Efeito Moderado)"
+          "cohen_d": "d ≈ 0.72 (Efeito Moderado)",
+          "ajuste_parametros": {
+            "titulo": "Diretrizes de Otimização e Ajuste de Parâmetros (Rede NAPeN)",
+            "tolerabilidade": "Em caso de desconforto ou dor local, reduzir temporariamente a intensidade para 80% do LMR e progredir gradualmente conforme tolerância até a dose plena prevista (Nota N10).",
+            "dose_pulsos": "Recomenda-se ajustar o número de pulsos para 1.500 por sessão, conforme evidências metanalíticas de maior magnitude de ganho com doses superiores (Nota N23).",
+            "calibracao_limiar": "Na ausência de identificação do limiar motor de repouso (LMR), calibrar a estimulação baseando-se no Limiar Motor Ativo (LMA a 70%–80%) (Nota N13)."
+          },
+          "protocolo_alternativo_2": {
+            "nome": "Protocolo Alternativo 2 (Ajuste de Alvo / Parâmetros)",
+            "tecnica": "Modulação Alternativa Padronizada",
+            "alvo": "Alvo de compensação de rede neural",
+            "parametros": "Dose e frequência ajustadas conforme tolerância do paciente",
+            "observacoes": "Indicado após reavaliação clínica que comprove persistência de déficit sem ganho mínimo."
+          },
+          "falha_terapeutica": {
+            "criterio": "Persistência de resposta funcional inferior à MCID na escala clínica validada após o ciclo pleno de indução, realização dos ajustes de parâmetros/tolerabilidade e conclusão dos protocolos alternativos 1 e 2 do roadmap.",
+            "conduta_oficial": "1. Encerramento formal do ciclo de estimulação vigente;\n2. Registro em prontuário de refratariedade ao regime testado;\n3. Investigação multiprofissional de fatores biológicos de resistência (uso concomitante de benzodiazepínicos/antiepilépticos, lesão corticoespinhal estrutural completa);\n4. Transição para modalidade alternativa (ex.: tDCS domiciliar associada a telerreabilitação intensiva, bloqueio neuromuscular focal com toxina botulínica ou reabilitação motora assistida por robótica/RV)."
+          }
         },
         "social": {
           "tecnica": "rTMS / tDCS sobre Córtex Pré-Frontal ou TPJ",
@@ -3716,7 +4645,24 @@ window.NAPEN_DATA = {
           },
           "mcid_valor": 25.0,
           "mcid_label": "Melhora ≥ 25% nos escores de responsividade social (SRS)",
-          "cohen_d": "d ≈ 0.68 (Efeito Moderado)"
+          "cohen_d": "d ≈ 0.68 (Efeito Moderado)",
+          "ajuste_parametros": {
+            "titulo": "Diretrizes de Otimização e Ajuste de Parâmetros (Rede NAPeN)",
+            "tolerabilidade": "Em caso de desconforto ou dor local, reduzir temporariamente a intensidade para 80% do LMR e progredir gradualmente conforme tolerância até a dose plena prevista (Nota N10).",
+            "dose_pulsos": "Recomenda-se ajustar o número de pulsos para 1.500 por sessão, conforme evidências metanalíticas de maior magnitude de ganho com doses superiores (Nota N23).",
+            "calibracao_limiar": "Na ausência de identificação do limiar motor de repouso (LMR), calibrar a estimulação baseando-se no Limiar Motor Ativo (LMA a 70%–80%) (Nota N13)."
+          },
+          "protocolo_alternativo_2": {
+            "nome": "Protocolo Alternativo 2 (Ajuste de Alvo / Parâmetros)",
+            "tecnica": "Modulação Alternativa Padronizada",
+            "alvo": "Alvo de compensação de rede neural",
+            "parametros": "Dose e frequência ajustadas conforme tolerância do paciente",
+            "observacoes": "Indicado após reavaliação clínica que comprove persistência de déficit sem ganho mínimo."
+          },
+          "falha_terapeutica": {
+            "criterio": "Persistência de resposta funcional inferior à MCID na escala clínica validada após o ciclo pleno de indução, realização dos ajustes de parâmetros/tolerabilidade e conclusão dos protocolos alternativos 1 e 2 do roadmap.",
+            "conduta_oficial": "1. Encerramento formal do ciclo de estimulação vigente;\n2. Registro em prontuário de refratariedade ao regime testado;\n3. Investigação multiprofissional de fatores biológicos de resistência (uso concomitante de benzodiazepínicos/antiepilépticos, lesão corticoespinhal estrutural completa);\n4. Transição para modalidade alternativa (ex.: tDCS domiciliar associada a telerreabilitação intensiva, bloqueio neuromuscular focal com toxina botulínica ou reabilitação motora assistida por robótica/RV)."
+          }
         }
       },
       "tags_busca": {
@@ -3757,11 +4703,19 @@ window.NAPEN_DATA = {
           "tDCS Anódica DLPFC",
           "iTBS"
         ]
-      }
+      },
+      "modalidades_suportadas": [
+        {
+          "id": "rtms",
+          "nome": "rTMS (Estimulação Magnética Repetitiva)",
+          "roadmap_id": "RM15",
+          "padrao": true
+        }
+      ]
     },
     {
       "id": "alzheimer-ccl",
-      "condicao": "Doença de Alzheimer e Declínio Cognitivo Leve (CCL)",
+      "condicao": "Doença de Alzheimer e Declínio Cognitivo Leve",
       "eixo": "Cognição & Demências",
       "roadmap_id": "RM12",
       "svg_file": "RM12.svg",
@@ -3771,15 +4725,24 @@ window.NAPEN_DATA = {
       "fatores_limitantes": [
         {
           "id": "alzheimer_memoria",
-          "label": "Comprometimento de Memória e Cognição Global"
+          "label": "Comprometimento de Memória e Cognição Global",
+          "linha_prescricao": "DLPFC Bilateral e Pré-Cúneo",
+          "escala_recomendada": "ADAS-cog e Mini-Exame do Estado Mental (MEEM)",
+          "meta_melhora": "Estabilização ou melhora mensurável nos domínios de memória e orientação"
         },
         {
           "id": "ccl_cognicao",
-          "label": "Declínio da Memória Episódica (CCL)"
+          "label": "Declínio da Memória Episódica (CCL)",
+          "linha_prescricao": "DLPFC Esquerdo",
+          "escala_recomendada": "MEEM e Rivermead Behavioural Memory Test",
+          "meta_melhora": "Ganho percentual significativo na recordação tardia e atenção executiva"
         },
         {
           "id": "sintomas_neuropsiquiatricos",
-          "label": "Sintomas Neuropsiquiátricos (Apatia e Agitação)"
+          "label": "Sintomas Neuropsiquiátricos (Apatia e Agitação)",
+          "linha_prescricao": "DLPFC Bilateral",
+          "escala_recomendada": "Inventário Neuropsiquiátrico (NPI) e Escala de Depressão de Cornell",
+          "meta_melhora": "Alívio expressivo da apatia e sintomas depressivos associados à demência"
         }
       ],
       "modalidades": {
@@ -3890,7 +4853,24 @@ window.NAPEN_DATA = {
           },
           "mcid_valor": 3.0,
           "mcid_label": "Melhora ≥ 3,0 pontos na ADAS-Cog (Schrag et al.)",
-          "cohen_d": "d ≈ 0.65 (Efeito Moderado)"
+          "cohen_d": "d ≈ 0.65 (Efeito Moderado)",
+          "ajuste_parametros": {
+            "titulo": "Diretrizes de Otimização e Ajuste de Parâmetros (Rede NAPeN)",
+            "tolerabilidade": "Em caso de desconforto ou dor local, reduzir temporariamente a intensidade para 80% do LMR e progredir gradualmente conforme tolerância até a dose plena prevista (Nota N10).",
+            "dose_pulsos": "Recomenda-se ajustar o número de pulsos para 1.500 por sessão, conforme evidências metanalíticas de maior magnitude de ganho com doses superiores (Nota N23).",
+            "calibracao_limiar": "Na ausência de identificação do limiar motor de repouso (LMR), calibrar a estimulação baseando-se no Limiar Motor Ativo (LMA a 70%–80%) (Nota N13)."
+          },
+          "protocolo_alternativo_2": {
+            "nome": "Protocolo Alternativo 2 (Ajuste de Alvo / Parâmetros)",
+            "tecnica": "Modulação Alternativa Padronizada",
+            "alvo": "Alvo de compensação de rede neural",
+            "parametros": "Dose e frequência ajustadas conforme tolerância do paciente",
+            "observacoes": "Indicado após reavaliação clínica que comprove persistência de déficit sem ganho mínimo."
+          },
+          "falha_terapeutica": {
+            "criterio": "Persistência de resposta funcional inferior à MCID na escala clínica validada após o ciclo pleno de indução, realização dos ajustes de parâmetros/tolerabilidade e conclusão dos protocolos alternativos 1 e 2 do roadmap.",
+            "conduta_oficial": "1. Encerramento formal do ciclo de estimulação vigente;\n2. Registro em prontuário de refratariedade ao regime testado;\n3. Investigação multiprofissional de fatores biológicos de resistência (uso concomitante de benzodiazepínicos/antiepilépticos, lesão corticoespinhal estrutural completa);\n4. Transição para modalidade alternativa (ex.: tDCS domiciliar associada a telerreabilitação intensiva, bloqueio neuromuscular focal com toxina botulínica ou reabilitação motora assistida por robótica/RV)."
+          }
         },
         "ccl_cognicao": {
           "tecnica": "tDCS Anodal sobre CPFDL",
@@ -3999,7 +4979,24 @@ window.NAPEN_DATA = {
           },
           "mcid_valor": 2.0,
           "mcid_label": "Ganho ≥ 2,0 pontos no MEEM ou MoCA",
-          "cohen_d": "d ≈ 0.58 (Efeito Moderado)"
+          "cohen_d": "d ≈ 0.58 (Efeito Moderado)",
+          "ajuste_parametros": {
+            "titulo": "Diretrizes de Otimização e Ajuste de Parâmetros (Rede NAPeN)",
+            "tolerabilidade": "Em caso de desconforto ou dor local, reduzir temporariamente a intensidade para 80% do LMR e progredir gradualmente conforme tolerância até a dose plena prevista (Nota N10).",
+            "dose_pulsos": "Recomenda-se ajustar o número de pulsos para 1.500 por sessão, conforme evidências metanalíticas de maior magnitude de ganho com doses superiores (Nota N23).",
+            "calibracao_limiar": "Na ausência de identificação do limiar motor de repouso (LMR), calibrar a estimulação baseando-se no Limiar Motor Ativo (LMA a 70%–80%) (Nota N13)."
+          },
+          "protocolo_alternativo_2": {
+            "nome": "Protocolo Alternativo 2 (Ajuste de Alvo / Parâmetros)",
+            "tecnica": "Modulação Alternativa Padronizada",
+            "alvo": "Alvo de compensação de rede neural",
+            "parametros": "Dose e frequência ajustadas conforme tolerância do paciente",
+            "observacoes": "Indicado após reavaliação clínica que comprove persistência de déficit sem ganho mínimo."
+          },
+          "falha_terapeutica": {
+            "criterio": "Persistência de resposta funcional inferior à MCID na escala clínica validada após o ciclo pleno de indução, realização dos ajustes de parâmetros/tolerabilidade e conclusão dos protocolos alternativos 1 e 2 do roadmap.",
+            "conduta_oficial": "1. Encerramento formal do ciclo de estimulação vigente;\n2. Registro em prontuário de refratariedade ao regime testado;\n3. Investigação multiprofissional de fatores biológicos de resistência (uso concomitante de benzodiazepínicos/antiepilépticos, lesão corticoespinhal estrutural completa);\n4. Transição para modalidade alternativa (ex.: tDCS domiciliar associada a telerreabilitação intensiva, bloqueio neuromuscular focal com toxina botulínica ou reabilitação motora assistida por robótica/RV)."
+          }
         },
         "sintomas_neuropsiquiatricos": {
           "tecnica": "tDCS / rTMS sobre Córtex Temporoparietal",
@@ -4102,7 +5099,24 @@ window.NAPEN_DATA = {
           },
           "mcid_valor": 30.0,
           "mcid_label": "Redução ≥ 30% ou ≥ 4,0 pontos no NPI",
-          "cohen_d": "d ≈ 0.70 (Efeito Moderado)"
+          "cohen_d": "d ≈ 0.70 (Efeito Moderado)",
+          "ajuste_parametros": {
+            "titulo": "Diretrizes de Otimização e Ajuste de Parâmetros (Rede NAPeN)",
+            "tolerabilidade": "Em caso de desconforto ou dor local, reduzir temporariamente a intensidade para 80% do LMR e progredir gradualmente conforme tolerância até a dose plena prevista (Nota N10).",
+            "dose_pulsos": "Recomenda-se ajustar o número de pulsos para 1.500 por sessão, conforme evidências metanalíticas de maior magnitude de ganho com doses superiores (Nota N23).",
+            "calibracao_limiar": "Na ausência de identificação do limiar motor de repouso (LMR), calibrar a estimulação baseando-se no Limiar Motor Ativo (LMA a 70%–80%) (Nota N13)."
+          },
+          "protocolo_alternativo_2": {
+            "nome": "Protocolo Alternativo 2 (Ajuste de Alvo / Parâmetros)",
+            "tecnica": "Modulação Alternativa Padronizada",
+            "alvo": "Alvo de compensação de rede neural",
+            "parametros": "Dose e frequência ajustadas conforme tolerância do paciente",
+            "observacoes": "Indicado após reavaliação clínica que comprove persistência de déficit sem ganho mínimo."
+          },
+          "falha_terapeutica": {
+            "criterio": "Persistência de resposta funcional inferior à MCID na escala clínica validada após o ciclo pleno de indução, realização dos ajustes de parâmetros/tolerabilidade e conclusão dos protocolos alternativos 1 e 2 do roadmap.",
+            "conduta_oficial": "1. Encerramento formal do ciclo de estimulação vigente;\n2. Registro em prontuário de refratariedade ao regime testado;\n3. Investigação multiprofissional de fatores biológicos de resistência (uso concomitante de benzodiazepínicos/antiepilépticos, lesão corticoespinhal estrutural completa);\n4. Transição para modalidade alternativa (ex.: tDCS domiciliar associada a telerreabilitação intensiva, bloqueio neuromuscular focal com toxina botulínica ou reabilitação motora assistida por robótica/RV)."
+          }
         }
       },
       "tags_busca": {
@@ -4148,7 +5162,21 @@ window.NAPEN_DATA = {
           "tACS 40Hz Gamma",
           "tDCS Anódica DLPFC"
         ]
-      }
+      },
+      "modalidades_suportadas": [
+        {
+          "id": "rtms",
+          "nome": "rTMS (Estimulação Magnética Repetitiva)",
+          "roadmap_id": "RM12",
+          "padrao": true
+        },
+        {
+          "id": "tdcs",
+          "nome": "tDCS (Estimulação Transcraniana por Corrente Contínua)",
+          "roadmap_id": "RM13",
+          "padrao": false
+        }
+      ]
     }
   ]
 };

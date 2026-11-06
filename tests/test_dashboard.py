@@ -100,7 +100,8 @@ class TestRedeNAPeNPrescriptionPlatform(unittest.TestCase):
 
         # Itens do Menu na Barra Turquesa Oficial (SEM emojis e SEM ?)
         self.assertIn('PRESCRIÇÃO INTERATIVA', html)
-        self.assertIn('MATRIZ DE PROTOCOLOS E PARÂMETROS', html)
+        self.assertIn('BIBLIOTECA DE EVIDÊNCIAS', html)
+        self.assertNotIn('BIBLIOTECA DE EVIDÊNCIAS & METANÁLISES', html)
         self.assertIn('COMO OS ROADMAPS DE INDICAÇÃO FORAM DESENVOLVIDOS', html)
         # Ausência expressa de ponto de interrogação no título da metodologia e navegação
         self.assertNotIn('como os roadmaps de indicação foram desenvolvidos?', html.lower())
@@ -116,8 +117,8 @@ class TestRedeNAPeNPrescriptionPlatform(unittest.TestCase):
         self.assertNotIn('youtube', html.lower())
         self.assertNotIn('🇧🇷 pt', html.lower())
 
-        # Versão no Rodapé
-        self.assertIn('Versão: 2025–2026', html)
+        # Versão Editorial Integrada no Subtítulo
+        self.assertIn('Versão 2025-2026.', html)
 
         # Ausência de termos banidos e jargões técnicos
         self.assertNotIn('posologia', html.lower())
@@ -155,8 +156,9 @@ class TestRedeNAPeNPrescriptionPlatform(unittest.TestCase):
         self.assertNotIn('beira do leito', html.lower())
         self.assertNotIn('beira leito', html.lower())
 
-        # Coluna de Evidência Científica (Estudos de referência & Metanálise) na Matriz de Parâmetros
-        self.assertIn('Evidência Científica (Estudos de referência & Metanálise)', html)
+        # Colunas de Evidência Científica na Biblioteca de Evidências
+        self.assertIn('Ensaio Clínico de Referência', html)
+        self.assertIn('Metanálise de Suporte', html)
 
         # Letreiro Rolante de Dicas da Barra de Busca
         self.assertIn('searchPlaceholderMarquee', html)
@@ -531,6 +533,175 @@ class TestRedeNAPeNPrescriptionPlatform(unittest.TestCase):
         self.assertIn('state.pemStatus', js)
         self.assertIn('prescDesfechoNome', js)
 
+    def test_14_cascata_algoritmo_e_modalidades_v2(self):
+        """Valida a árvore de decisão em cascata progressiva, suporte a rTMS/tDCS e higienização dos roadmaps."""
+        html_file = os.path.join(BASE_DIR, 'index.html')
+        css_file = os.path.join(BASE_DIR, 'css', 'styles.css')
+        app_js = os.path.join(BASE_DIR, 'js', 'app.js')
+        engine_js = os.path.join(BASE_DIR, 'js', 'decision-engine.js')
+        json_file = os.path.join(BASE_DIR, 'data', 'napen_roadmaps_data.json')
+
+        with open(html_file, 'r', encoding='utf-8') as f:
+            html = f.read()
+        with open(css_file, 'r', encoding='utf-8') as f:
+            css = f.read()
+        with open(app_js, 'r', encoding='utf-8') as f:
+            js = f.read()
+        with open(engine_js, 'r', encoding='utf-8') as f:
+            engine_code = f.read()
+        with open(json_file, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+
+        # 1. Elementos no HTML
+        self.assertIn('id="modalitySelectorBar"', html)
+        self.assertIn('id="modalityPillsGroup"', html)
+        self.assertIn('id="cascadingFlowContainer"', html)
+        self.assertIn('id="prescAlvo"', html)
+        self.assertIn('Montserrat', html)
+        self.assertIn('Rua Almirante Tamandaré', html)
+        self.assertIn('rede.napenm@gmail.com', html)
+        self.assertIn('PEM Presente — Trato Corticoespinhal Preservado', html)
+        self.assertIn('PEM Ausente — Integridade Corticoespinhal Não Preservada', html)
+
+        # 2. Classes de Estilo no CSS
+        self.assertIn('.modality-selector-bar', css)
+        self.assertIn('.btn-modality-pill', css)
+        self.assertIn('.cascading-flow-container', css)
+        self.assertIn('.cascading-step-card', css)
+        self.assertIn('.cascading-connector-line', css)
+        self.assertIn('.cascading-active-path-summary', css)
+        self.assertIn('Montserrat', css)
+
+        # 3. Métodos no DecisionEngine
+        self.assertIn('setModalityType', engine_code)
+        self.assertIn('getActiveTree', engine_code)
+        self.assertIn('setPathChoice', engine_code)
+        self.assertIn('getPathChoice', engine_code)
+
+        # 4. Funções no app.js
+        self.assertIn('renderModalitySelector', js)
+        self.assertIn('renderCascadingFlow', js)
+        self.assertIn('prescAlvo', js)
+
+        # 5. Estrutura de dados da árvore e suporte rTMS/tDCS no JSON
+        avc = next(c for c in data['condicoes'] if c['id'] == 'avc-membro-superior')
+        self.assertIn('modalidades_suportadas', avc)
+        mods = [m['id'] for m in avc['modalidades_suportadas']]
+        self.assertIn('rtms', mods)
+        self.assertIn('tdcs', mods)
+
+        self.assertIn('arvore_algoritmo', avc)
+        self.assertIn('rtms', avc['arvore_algoritmo'])
+        self.assertIn('tdcs', avc['arvore_algoritmo'])
+
+        rtms_tree = avc['arvore_algoritmo']['rtms']
+        self.assertEqual(rtms_tree['roadmap_id'], 'RM01')
+        etapas_ids = [e['etapa_id'] for e in rtms_tree['etapas']]
+        self.assertIn('fator_limitante', etapas_ids)
+        self.assertIn('pem_triage', etapas_ids)
+        self.assertIn('gravidade_fma', etapas_ids)
+        self.assertIn('lesao_m1', etapas_ids)
+        self.assertIn('lesao_s1', etapas_ids)
+
+        tdcs_tree = avc['arvore_algoritmo']['tdcs']
+        self.assertEqual(tdcs_tree['roadmap_id'], 'RM02')
+        tdcs_etapas = [e['etapa_id'] for e in tdcs_tree['etapas']]
+        self.assertIn('fator_limitante', tdcs_etapas)
+        self.assertIn('lesao_tdcs_m1', tdcs_etapas)
+        self.assertIn('extensao_dedos', tdcs_etapas)
+
+        # 6. Rigor terminológico estrito: sem 'seminal', sem 'moderado a grande', e sem '(sim)'/ '(não)' redundantes no PEM
+        for filepath in [html_file, css_file, app_js, engine_js, json_file]:
+            with open(filepath, 'r', encoding='utf-8') as f:
+                content = f.read().lower()
+            self.assertNotIn('seminal', content, f"Termo 'seminal' encontrado indevidamente em {filepath}")
+            self.assertNotIn('moderado a grande', content, f"Termo 'moderado a grande' encontrado indevidamente em {filepath}")
+        
+        # Validação da ausência de PEM com (SIM)/(NÃO)
+        self.assertNotIn('pem presente (sim)', html.lower())
+        self.assertNotIn('pem ausente (não)', html.lower())
+
+        # 7. Validação de ausência de pseudo-fatores limitantes (PEM é teste de estratificação, não queixa funcional)
+        avc_fatores_ids = [f['id'] for f in avc['fatores_limitantes']]
+        self.assertNotIn('sem_pem', avc_fatores_ids)
+        for f in avc['fatores_limitantes']:
+            self.assertNotIn('baixa integridade corticoespinhal', f['label'].lower())
+            self.assertNotIn('sem pem', f['label'].lower())
+
+    def test_15_ui_refinement_anti_ai_and_therapeutic_cascade(self):
+        """Verifica as correções visuais anti-IA, badges institucionais e o algoritmo terapêutico completo."""
+        html_file = os.path.join(BASE_DIR, 'index.html')
+        css_file = os.path.join(BASE_DIR, 'css', 'styles.css')
+        app_js = os.path.join(BASE_DIR, 'js', 'app.js')
+        json_file = os.path.join(BASE_DIR, 'data', 'napen_roadmaps_data.json')
+
+        with open(html_file, 'r', encoding='utf-8') as f:
+            html = f.read()
+        with open(css_file, 'r', encoding='utf-8') as f:
+            css = f.read()
+        with open(app_js, 'r', encoding='utf-8') as f:
+            js = f.read()
+        with open(json_file, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+
+        # 1. Versão Editorial no Hero e ausência de caixas artificiais
+        self.assertIn('Roadmaps e Algoritmos de Decisão Terapêutica Baseados em Evidências. Versão 2025-2026.', html)
+        self.assertNotIn('hero-version-badge', html)
+        self.assertNotIn('footer-version-tag', html)
+        self.assertNotIn('menu turquesa acima', html.lower())
+
+        # 2. Design Anti-IA, tokens refinados e ausência de molduras externas nos dropdowns
+        self.assertIn('--radius-pill: 4px;', css)
+        self.assertNotIn('.hero-version-badge', css)
+        self.assertIn('.dropdown-submenu .axis-arrow-icon', css)
+        self.assertIn('.adjustment-step-card', css)
+        self.assertIn('.failure-therapeutic-card', css)
+        self.assertIn('.btn-evidence-goto', css)
+        self.assertIn('border: none !important;', css)
+        self.assertIn('1pt solid', css)
+
+        # 3. JavaScript - Pipeline completa sem ícones de IA
+        self.assertNotIn('⚙', js)
+        self.assertNotIn('⚠️', js)
+        self.assertNotIn('🎯', js)
+        self.assertIn("therapeuticStage: 'primary'", js)
+        self.assertIn('switchTherapeuticStage', js)
+        self.assertIn('closeDropdown', js)
+        self.assertIn('closeCalcDropdown', js)
+        self.assertIn('falha_terapeutica', js)
+        self.assertIn('ajuste_parametros', js)
+
+        # 4. JSON - Topologia completa do RM01 (AVC rTMS)
+        avc = next(c for c in data['condicoes'] if c['id'] == 'avc-membro-superior')
+        rtms = avc['arvore_algoritmo']['rtms']
+        self.assertIn('ajuste_parametros', rtms)
+        self.assertIn('protocolo_alternativo_2', rtms)
+        self.assertIn('falha_terapeutica', rtms)
+
+        falha = rtms['falha_terapeutica']
+        self.assertEqual(falha['id'], 'RM01-FALHA')
+        self.assertIn('critérios', falha.get('descricao', '').lower() or falha.get('criterios_definicao', '').lower())
+        self.assertIn('condutas', falha)
+        self.assertTrue(len(falha['condutas']) >= 3)
+
+        # 5. Título Estrito da Biblioteca de Evidências e Higienização de Siglas
+        self.assertIn('Biblioteca de Evidências', html)
+        self.assertNotIn('Biblioteca de Evidências & Metanálises', html)
+        self.assertNotIn('Tabela de Bolso', html)
+
+        for cond in data['condicoes']:
+            self.assertNotIn('(AVC)', cond['condicao'])
+            self.assertNotIn('(Transtorno Depressivo Maior)', cond['condicao'])
+            self.assertNotIn('(PC)', cond['condicao'])
+            self.assertNotIn('(TEA)', cond['condicao'])
+            self.assertNotIn('(CCL)', cond['condicao'])
+
+        # 6. Extinção de Cards e Otimização de Margens Laterais no CSS
+        self.assertIn('.pocket-table-container {\n  background-color: transparent;\n  border: none;\n  border-radius: 0;\n  overflow-x: auto;\n  box-shadow: none;\n  width: 100%;', css)
+        self.assertIn('.pocket-table th {\n  background-color: var(--napen-teal-dark);\n  color: #FFFFFF;\n  font-weight: 700;\n  padding: 12px 14px;\n  text-align: left;\n  white-space: normal;', css)
+
 if __name__ == '__main__':
     unittest.main()
+
+
 

@@ -23,9 +23,9 @@
   --text-muted: #475569;
   --text-faint: #64748B;
 
-  /* Tipografia Oficial (Lato / Montserrat) */
-  --font-family-nav: "Lato", "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-family-base: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  /* Tipografia Oficial (Montserrat / Lato) */
+  --font-family-nav: "Montserrat", "Lato", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-family-base: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 
   /* Estados Clínicos */
   --status-success-bg: #ECFDF5;
@@ -40,11 +40,11 @@
   --status-danger-border: #EF4444;
   --status-danger-text: #991B1B;
 
-  /* Raios e Sombras */
+  /* Raios e Sombras Padronizados (Design Clínico e Editorial) */
   --radius-sm: 4px;
   --radius-md: 6px;
   --radius-lg: 8px;
-  --radius-pill: 9999px;
+  --radius-pill: 4px;
   --shadow-sm: 0 1px 2px 0 rgba(15, 23, 42, 0.05);
   --shadow-md: 0 4px 6px -1px rgba(15, 23, 42, 0.08), 0 2px 4px -2px rgba(15, 23, 42, 0.04);
   --shadow-dropdown: 0 12px 24px -4px rgba(10, 106, 110, 0.15), 0 4px 8px -2px rgba(0, 0, 0, 0.06);
@@ -73,6 +73,9 @@ body {
   position: sticky;
   top: 0;
   z-index: 1000;
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: clip;
 }
 
 /* 1. Barra Superior Branca (Proporção Exata ~1.85:1 vs Barra Turquesa) */
@@ -85,10 +88,10 @@ body {
 }
 
 .header-top-inner {
-  max-width: 1320px;
+  max-width: 100%;
   width: 100%;
   margin: 0 auto;
-  padding: 0 24px;
+  padding: 0 32px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -130,13 +133,15 @@ body {
   height: 74px;
   display: flex;
   align-items: stretch;
+  width: 100%;
+  max-width: 100%;
 }
 
 .header-nav-container {
-  max-width: 1320px;
+  max-width: 100%;
   width: 100%;
   margin: 0 auto;
-  padding: 0 24px;
+  padding: 0 32px;
   display: flex;
   align-items: stretch;
   justify-content: center; /* Centralização solicitada da barra turquesa */
@@ -152,19 +157,22 @@ body {
 .nav-btn {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 0 18px;
+  justify-content: center;
+  gap: 6px;
+  padding: 0 14px;
   background-color: transparent;
   border: none;
   color: #FFFFFF;
   font-family: var(--font-family-nav);
-  font-size: 0.88rem;
+  font-size: 0.82rem;
   font-weight: 700;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.01em;
   text-transform: uppercase;
   cursor: pointer;
   transition: background-color 0.4s ease, color 0.4s ease;
-  white-space: nowrap;
+  white-space: normal;
+  text-align: center;
+  line-height: 1.25;
   height: 100%;
 }
 
@@ -194,8 +202,8 @@ body {
   left: 0;
   min-width: 320px;
   background-color: #FFFFFF;
-  border: 1px solid var(--napen-teal-bar);
-  box-shadow: var(--shadow-dropdown);
+  border: none !important;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.12);
   z-index: 2000;
   list-style: none;
   border-radius: 0 0 var(--radius-md) var(--radius-md);
@@ -224,7 +232,7 @@ body {
 
 .dropdown-item-napen {
   position: relative;
-  border-bottom: 1px solid var(--napen-border-line);
+  border-bottom: 1pt solid var(--border-subtle);
 }
 
 .dropdown-item-napen:last-child {
@@ -273,12 +281,21 @@ body {
   min-width: 380px;
   max-width: 460px;
   background-color: #FFFFFF;
-  border: 1px solid var(--napen-teal-bar);
-  box-shadow: var(--shadow-dropdown);
+  border: none !important;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.12);
   z-index: 2200;
   list-style: none;
   border-radius: 0 var(--radius-md) var(--radius-md) var(--radius-md);
   animation: dropdownFadeIn 0.2s ease;
+}
+
+.dropdown-submenu > li {
+  position: relative;
+  border-bottom: 1pt solid var(--border-subtle);
+}
+
+.dropdown-submenu > li:last-child {
+  border-bottom: none;
 }
 
 .dropdown-item-has-submenu:hover > .dropdown-submenu,
@@ -286,12 +303,27 @@ body {
   display: block;
 }
 
+/* Seta do 1º Nível vira branca e gira apenas para o item ativo do 1º nível */
 .dropdown-item-has-submenu:hover > .dropdown-link-napen .axis-arrow-icon,
 .dropdown-item-has-submenu.submenu-open .axis-arrow-icon,
-.dropdown-item-has-submenu.submenu-open > .dropdown-link-napen .axis-arrow-icon,
-.dropdown-item-has-submenu.submenu-open > .axis-arrow-icon {
+.dropdown-item-has-submenu.submenu-open > .dropdown-link-napen .axis-arrow-icon {
   transform: rotate(90deg);
   color: #FFFFFF !important;
+}
+
+/* Proteção estrita do 2º nível: evita que a seta do 2º nível herde o branco do 1º nível */
+.dropdown-submenu .axis-arrow-icon {
+  transform: rotate(0deg) !important;
+  color: var(--napen-teal-bar) !important;
+}
+
+/* Seta base (1º e 2º níveis) sempre visível em turquesa oficial */
+.axis-arrow-icon {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--napen-teal-bar);
+  transition: transform 0.25s ease, color 0.2s ease;
+  display: inline-block;
 }
 
 /* 3º Nível em Cascata: Desfechos e Escalas Clínicas */
@@ -315,12 +347,21 @@ body {
   min-width: 320px;
   max-width: 440px;
   background-color: #FFFFFF;
-  border: 1px solid var(--napen-teal-bar);
-  box-shadow: var(--shadow-dropdown);
+  border: none !important;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.12);
   z-index: 2400;
   list-style: none;
   border-radius: 0 var(--radius-md) var(--radius-md) var(--radius-md);
   animation: dropdownFadeIn 0.2s ease;
+}
+
+.dropdown-subsubmenu > li {
+  position: relative;
+  border-bottom: 1pt solid var(--border-subtle);
+}
+
+.dropdown-subsubmenu > li:last-child {
+  border-bottom: none;
 }
 
 .dropdown-item-has-subsubmenu:hover > .dropdown-subsubmenu,
@@ -328,6 +369,7 @@ body {
   display: block;
 }
 
+/* Seta do 2º Nível vira branca e gira apenas no hover ou abertura do 2º nível */
 .dropdown-item-has-subsubmenu:hover > .dropdown-sublink-napen .axis-arrow-icon,
 .dropdown-item-has-subsubmenu.subsubmenu-open > .dropdown-sublink-napen .axis-arrow-icon {
   transform: rotate(90deg);
@@ -345,13 +387,13 @@ body {
   flex-direction: column;
   gap: 2px;
   padding: 11px 18px;
-  color: var(--napen-navy);
+  color: var(--napen-teal-dark);
   text-decoration: none;
   font-family: var(--font-family-nav);
-  font-size: 0.85rem;
-  font-weight: 600;
+  font-size: 0.88rem;
+  font-weight: 700;
   background-color: #FFFFFF;
-  border-bottom: 1px solid var(--border-subtle);
+  border-bottom: none;
   transition: background-color 0.25s ease, color 0.25s ease, padding-left 0.2s ease;
   cursor: pointer;
 }
@@ -1008,9 +1050,10 @@ body {
 }
 
 .hero-container {
-  max-width: 1320px;
+  max-width: 100%;
+  width: 100%;
   margin: 0 auto;
-  padding: 0 24px;
+  padding: 0 32px;
 }
 
 .hero-title {
@@ -1030,10 +1073,12 @@ body {
    Conteúdo Principal da Plataforma (Standalone)
    ========================================================================== */
 .main-wrapper {
-  max-width: 1320px;
-  margin: 28px auto 48px auto;
-  padding: 0 24px;
-  min-height: 600px;
+  max-width: 100%;
+  width: 100%;
+  margin: 16px 0 40px 0;
+  padding: 0 32px;
+  min-height: auto;
+  box-sizing: border-box;
 }
 
 /* ==========================================================================
@@ -1042,19 +1087,20 @@ body {
 .prescription-view-container {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 20px;
 }
 
 /* Estado Inicial: Painel de Seleção e Busca Limpa */
 .search-selector-hero {
-  background-color: #FFFFFF;
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-lg);
-  padding: 32px;
-  box-shadow: var(--shadow-sm);
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 10px 0 24px 0;
+  box-shadow: none;
+  border-bottom: 1px solid var(--border-subtle);
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 16px;
 }
 
 .search-selector-header {
@@ -1247,11 +1293,12 @@ body {
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 12px;
-  background-color: #FFFFFF;
-  border: 1px solid var(--border-subtle);
-  padding: 16px 22px;
-  border-radius: var(--radius-md);
-  box-shadow: var(--shadow-sm);
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid var(--border-subtle);
+  padding: 10px 0 16px 0;
+  border-radius: 0;
+  box-shadow: none;
 }
 
 .algo-header-info {
@@ -1356,12 +1403,12 @@ body {
 
 /* Painel Interativo do Nó 1 (Fator Limitante) */
 .node1-panel {
-  background-color: #FFFFFF;
-  border: 1px solid var(--border-subtle);
-  border-left: 4px solid var(--napen-teal-bar);
-  border-radius: var(--radius-lg);
-  padding: 22px;
-  box-shadow: var(--shadow-sm);
+  background-color: transparent;
+  border: none;
+  border-left: 3px solid var(--napen-teal-bar);
+  border-radius: 0;
+  padding: 12px 18px;
+  box-shadow: none;
   display: flex;
   flex-direction: column;
   gap: 14px;
@@ -1407,16 +1454,16 @@ body {
   box-shadow: var(--shadow-sm);
 }
 
-/* Card de Prescrição Primária */
+/* Painel de Prescrição Primária (Layout Plano Oficial) */
 .prescription-details-card {
-  background-color: #FFFFFF;
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-lg);
-  padding: 26px;
-  box-shadow: var(--shadow-sm);
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 16px 0;
+  box-shadow: none;
   display: flex;
   flex-direction: column;
-  gap: 22px;
+  gap: 20px;
 }
 
 .prescription-top-header {
@@ -1456,10 +1503,11 @@ body {
 }
 
 .param-box {
-  background-color: var(--bg-page);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-md);
-  padding: 16px;
+  background-color: transparent;
+  border: none;
+  border-left: 2.5px solid var(--napen-teal-bar);
+  border-radius: 0;
+  padding: 10px 14px;
   display: flex;
   flex-direction: column;
   gap: 4px;
@@ -1766,36 +1814,52 @@ body {
 }
 
 /* ==========================================================================
-   Aba 2: Guia Rápido de Parâmetros e Alvos (Tabela de Bolso)
+   Aba 2: Biblioteca de Evidências (Tabela Completa sem Scroll Forçado no Desktop)
    ========================================================================== */
 .pocket-table-container {
-  background-color: #FFFFFF;
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-lg);
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
   overflow-x: auto;
-  box-shadow: var(--shadow-sm);
+  box-shadow: none;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  -webkit-overflow-scrolling: touch;
 }
 
 .pocket-table {
   width: 100%;
   border-collapse: collapse;
   font-size: 0.86rem;
+  background-color: #FFFFFF;
 }
 
 .pocket-table th {
   background-color: var(--napen-teal-dark);
   color: #FFFFFF;
   font-weight: 700;
-  padding: 14px 18px;
+  padding: 12px 14px;
   text-align: left;
-  white-space: nowrap;
+  white-space: normal;
+  line-height: 1.35;
+  font-size: 0.82rem;
+  vertical-align: middle;
 }
 
 .pocket-table td {
-  padding: 14px 18px;
+  padding: 14px 14px;
   border-bottom: 1px solid var(--border-subtle);
   vertical-align: top;
+  line-height: 1.45;
 }
+
+.pocket-table th:nth-child(1), .pocket-table td:nth-child(1) { width: 17%; min-width: 150px; }
+.pocket-table th:nth-child(2), .pocket-table td:nth-child(2) { width: 15%; min-width: 140px; }
+.pocket-table th:nth-child(3), .pocket-table td:nth-child(3) { width: 15%; min-width: 130px; }
+.pocket-table th:nth-child(4), .pocket-table td:nth-child(4) { width: 22%; min-width: 190px; }
+.pocket-table th:nth-child(5), .pocket-table td:nth-child(5) { width: 21%; min-width: 180px; }
+.pocket-table th:nth-child(6), .pocket-table td:nth-child(6) { width: 10%; min-width: 130px; text-align: center; }
 
 .pocket-table tbody tr:hover {
   background-color: var(--bg-page);
@@ -1805,13 +1869,13 @@ body {
    Aba 3: Metodologia ("Como os Roadmaps de indicação foram desenvolvidos")
    ========================================================================== */
 .methodology-container {
-  background-color: #FFFFFF;
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-lg);
-  padding: 38px 42px;
-  max-width: 960px;
-  margin: 0 auto;
-  box-shadow: var(--shadow-sm);
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 10px 0;
+  max-width: 100%;
+  margin: 0;
+  box-shadow: none;
   display: flex;
   flex-direction: column;
   gap: 24px;
@@ -1829,36 +1893,120 @@ body {
 }
 
 /* ==========================================================================
-   Rodapé Institucional Oficial
+   Rodapé Institucional Oficial (Identidade e Dados da Rede NAPeN)
    ========================================================================== */
 .site-footer {
-  background-color: #FFFFFF;
-  border-top: 1px solid var(--border-subtle);
+  background-color: var(--napen-navy);
+  color: #FFFFFF;
   margin-top: 56px;
-  padding: 24px 0;
-  font-size: 0.82rem;
-  color: var(--text-muted);
+  border-top: 4px solid var(--napen-teal-bar);
+  padding: 40px 0 0 0;
+  font-family: var(--font-family-base);
 }
 
 .footer-inner {
-  max-width: 1320px;
+  max-width: 100%;
+  width: 100%;
   margin: 0 auto;
-  padding: 0 24px;
+  padding: 0 32px 32px 32px;
+  display: grid;
+  grid-template-columns: 1.8fr 1.4fr 1.2fr;
+  gap: 36px;
+}
+
+.footer-col-brand .footer-brand-title {
+  font-size: 1.35rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: #FFFFFF;
+}
+
+.footer-col-brand .footer-brand-subtitle {
+  font-size: 0.88rem;
+  color: var(--napen-teal-bar);
+  font-weight: 600;
+  margin-top: 4px;
+}
+
+.footer-address-text {
+  font-size: 0.84rem;
+  color: rgba(255, 255, 255, 0.75);
+  line-height: 1.6;
+  margin-top: 12px;
+  max-width: 380px;
+}
+
+.footer-contact-title,
+.footer-links-title {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: #FFFFFF;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.footer-contact-item {
+  font-size: 0.84rem;
+  color: rgba(255, 255, 255, 0.82);
+  margin-bottom: 8px;
+  line-height: 1.5;
+}
+
+.footer-mail-link {
+  color: var(--napen-teal-bar);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.footer-mail-link:hover {
+  text-decoration: underline;
+}
+
+.footer-nav-list {
+  list-style: none;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 16px;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 0.84rem;
+  padding: 0;
+  margin: 0 0 12px 0;
+}
+
+.footer-nav-list a {
+  color: rgba(255, 255, 255, 0.82);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.footer-nav-list a:hover {
+  color: var(--napen-teal-bar);
+  text-decoration: underline;
+}
+
+.footer-policy-link {
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 0.78rem;
 }
 
 .footer-version-tag {
-  background-color: var(--bg-page);
-  border: 1px solid var(--border-subtle);
-  color: var(--napen-navy);
+  display: inline-block;
+  background-color: rgba(24, 193, 192, 0.15);
+  border: 1px solid var(--napen-teal-bar);
+  color: #FFFFFF;
   padding: 4px 12px;
   border-radius: var(--radius-pill);
   font-weight: 700;
+  font-size: 0.76rem;
+}
+
+.footer-bottom-bar {
+  background-color: rgba(10, 15, 35, 0.65);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 16px 24px;
+  text-align: center;
   font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.65);
 }
 
 @keyframes fadeIn {
@@ -2359,6 +2507,415 @@ body {
   opacity: 0.92;
 }
 
+/* ==========================================================================
+   Seletor de Modalidade Terapêutica (rTMS vs. tDCS)
+   ========================================================================== */
+.modality-selector-bar {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background-color: transparent;
+  border: none;
+  border-left: 3px solid var(--napen-navy);
+  border-radius: 0;
+  padding: 10px 16px;
+  box-shadow: none;
+  flex-wrap: wrap;
+}
+
+.modality-bar-label {
+  font-size: 0.88rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--napen-navy);
+}
+
+.modality-pills-group {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.btn-modality-pill {
+  background-color: var(--bg-page);
+  border: 1px solid var(--border-medium);
+  color: var(--text-main);
+  padding: 8px 16px;
+  border-radius: var(--radius-md);
+  font-size: 0.86rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: var(--font-family-base);
+}
+
+.btn-modality-pill:hover {
+  border-color: var(--napen-teal-bar);
+  color: var(--napen-teal-dark);
+  background-color: var(--napen-teal-soft);
+}
+
+.btn-modality-pill.active {
+  background-color: var(--napen-teal-dark);
+  border-color: var(--napen-teal-dark);
+  color: #FFFFFF;
+  box-shadow: none;
+}
+
+/* ==========================================================================
+   Árvore de Decisão Algorítmica em Cascata Progressiva
+   ========================================================================== */
+.cascading-flow-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  position: relative;
+}
+
+.cascading-step-card {
+  background-color: transparent;
+  border: none;
+  border-left: 3px solid var(--napen-teal-bar);
+  border-radius: 0;
+  padding: 14px 18px;
+  box-shadow: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: all 0.25s ease;
+  position: relative;
+}
+
+.cascading-step-card.completed-step {
+  border-left-color: #CBD5E1;
+  background-color: transparent;
+}
+
+.cascading-step-card.active-step {
+  border-left-color: var(--napen-teal-dark);
+  background-color: #FAFCFC;
+  box-shadow: none;
+}
+
+.cascading-step-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.cascading-step-badge {
+  background-color: var(--napen-teal-dark);
+  color: #FFFFFF;
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 12px;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.cascading-step-title-box {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.cascading-step-question {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--napen-navy);
+  margin: 0;
+  line-height: 1.35;
+}
+
+.cascading-step-subtext {
+  font-size: 0.84rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+
+.cascading-options-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.btn-cascade-choice {
+  background-color: var(--bg-page);
+  border: 1.5px solid var(--border-medium);
+  color: var(--text-main);
+  padding: 10px 18px;
+  border-radius: var(--radius-sm);
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 3px;
+  text-align: left;
+  font-family: var(--font-family-base);
+}
+
+.btn-cascade-choice:hover {
+  border-color: var(--napen-teal-dark);
+  background-color: var(--napen-teal-dark);
+  color: #FFFFFF;
+}
+
+.btn-cascade-choice:hover .btn-cascade-sub {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.btn-cascade-choice.active {
+  background-color: var(--napen-teal-dark);
+  border-color: var(--napen-teal-dark);
+  color: #FFFFFF;
+  box-shadow: none;
+}
+
+.btn-cascade-choice.active .btn-cascade-sub {
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.btn-cascade-sub {
+  font-size: 0.76rem;
+  font-weight: normal;
+  color: var(--text-muted);
+  transition: color 0.2s ease;
+}
+
+/* Conector vertical entre etapas */
+.cascading-connector-line {
+  width: 2px;
+  height: 16px;
+  background-color: var(--napen-teal-bar);
+  margin-left: 28px;
+  opacity: 0.6;
+}
+
+/* Resumo da Linha de Prescrição Ativa */
+.cascading-active-path-summary {
+  background: linear-gradient(135deg, rgba(18, 140, 126, 0.08) 0%, rgba(10, 49, 97, 0.05) 100%);
+  border: 1px solid rgba(18, 140, 126, 0.25);
+  border-radius: var(--radius-md);
+  padding: 12px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.cascading-path-label {
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: var(--napen-navy);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.cascading-path-trail {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  font-size: 0.86rem;
+}
+
+.cascading-path-crumb {
+  background-color: #FFFFFF;
+  border: 1px solid var(--border-subtle);
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-weight: 600;
+  color: var(--napen-navy);
+}
+
+.cascading-path-arrow {
+  color: var(--napen-teal-bar);
+  font-weight: 700;
+}
+
+.cascading-path-protocol-badge {
+  background-color: var(--napen-teal-dark);
+  color: #FFFFFF;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 0.82rem;
+  letter-spacing: 0.02em;
+}
+
+/* ==========================================================================
+   Esteira Completa do Algoritmo Clínico: Ajustes e Falha Terapêutica
+   ========================================================================== */
+.adjustment-step-card {
+  background-color: transparent;
+  border: none;
+  border-left: 3px solid #D97706;
+  border-radius: 0;
+  padding: 12px 18px;
+  margin-top: 14px;
+}
+
+.adjustment-step-title {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--napen-navy);
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.adjustment-step-body {
+  font-size: 0.86rem;
+  color: var(--text-main);
+  line-height: 1.55;
+  margin-bottom: 12px;
+}
+
+.adjustment-actions-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.btn-step-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-family-nav);
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 1.5px solid transparent;
+  background-color: transparent;
+}
+
+.btn-step-action.primary {
+  background-color: transparent;
+  border: 1.5px solid var(--napen-teal-dark);
+  color: var(--napen-teal-dark);
+}
+
+.btn-step-action.primary:hover {
+  background-color: var(--napen-teal-dark);
+  color: #FFFFFF;
+}
+
+.btn-step-action.secondary {
+  background-color: transparent;
+  border: 1.5px solid var(--napen-navy);
+  color: var(--napen-navy);
+}
+
+.btn-step-action.secondary:hover {
+  background-color: var(--napen-navy);
+  color: #FFFFFF;
+}
+
+.btn-step-action.danger {
+  background-color: transparent;
+  border: 1.5px solid #991B1B;
+  color: #991B1B;
+}
+
+.btn-step-action.danger:hover {
+  background-color: #991B1B;
+  color: #FFFFFF;
+}
+
+/* Botão de ação da Biblioteca de Evidências & Metanálises */
+.btn-evidence-goto {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background-color: transparent;
+  color: var(--napen-teal-dark);
+  border: 1.5px solid var(--napen-teal-dark);
+  padding: 6px 14px;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-family-nav);
+  font-size: 0.80rem;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.btn-evidence-goto:hover {
+  background-color: var(--napen-teal-dark);
+  color: #FFFFFF;
+}
+
+/* Painel Formal de Falha Terapêutica */
+.failure-therapeutic-card {
+  background-color: transparent;
+  border: none;
+  border-left: 3px solid #DC2626;
+  border-radius: 0;
+  padding: 14px 18px;
+  margin-top: 14px;
+}
+
+.failure-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.failure-badge {
+  background-color: #DC2626;
+  color: #FFFFFF;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: var(--radius-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.failure-title {
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: #991B1B;
+}
+
+.failure-description {
+  font-size: 0.86rem;
+  color: #7F1D1D;
+  line-height: 1.55;
+  margin-bottom: 12px;
+}
+
+.failure-conduct-box {
+  background-color: #FFFFFF;
+  border: 1px solid #FECACA;
+  border-radius: var(--radius-sm);
+  padding: 12px 16px;
+  font-size: 0.84rem;
+  color: #450A0A;
+  line-height: 1.5;
+}
+
+.failure-conduct-title {
+  font-weight: 700;
+  color: #991B1B;
+  margin-bottom: 4px;
+}
+
 @media (max-width: 768px) {
   .header-top-bar {
     height: 88px;
@@ -2372,6 +2929,13 @@ body {
   }
   .header-nav-container {
     padding: 0 12px;
+  }
+  .hero-container {
+    padding: 0 16px;
+  }
+  .main-wrapper {
+    padding: 0 14px;
+    margin: 12px 0 28px 0;
   }
   .nav-btn {
     padding: 0 14px;
@@ -2387,13 +2951,31 @@ body {
     grid-template-columns: 1fr;
   }
   .methodology-container {
-    padding: 24px 18px;
+    padding: 18px 12px;
   }
   .header-top-actions {
     gap: 10px;
   }
+  .footer-inner {
+    grid-template-columns: 1fr;
+    gap: 28px;
+    padding: 0 16px 28px 16px;
+  }
   .scale-guide-drawer {
     width: 100vw;
   }
+  .pocket-table th, .pocket-table td {
+    padding: 10px 8px;
+    font-size: 0.78rem;
+  }
+  .btn-evidence-goto {
+    padding: 8px 10px;
+    font-size: 0.72rem;
+    white-space: normal;
+  }
+  .btn-step-action, .btn-cascade-choice {
+    min-height: 42px;
+  }
 }
+
 
