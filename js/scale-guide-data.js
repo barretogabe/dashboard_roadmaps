@@ -1,6 +1,6 @@
 /**
  * Rede NAPeN — Base de Dados de Guias Clínicos de Aplicação de Escalas
- * Exportação automática para uso pelo front-end.
+ * Exportação automática alinhada às diretrizes clínicas da Rede NAPeN.
  */
 window.NAPEN_SCALE_GUIDE = {
   "eam": {
@@ -374,7 +374,7 @@ window.NAPEN_SCALE_GUIDE = {
     "referencia_abnt": "Hamilton, M. (1959). The assessment of anxiety states by rating. British Journal of Medical Psychology, 32(1), 50-55.",
     "doi": "10.1111/j.2044-8341.1959.tb00467.x",
     "link_artigo": "https://doi.org/10.1111/j.2044-8341.1959.tb00467.x",
-    "validacao_brasil": "Freire, M. A., et al. (2014). Propriedades psicométricas das versões brasileiras das escalas de ansiedade de Hamilton e Beck. Revista Brasileira de Psiquiatria."
+    "validacao_brasil": "Recomenda-se usar em conjunto BAI, GAD-7 ou DASS-21, pois a HAM-A não possui validação psicométrica para populações brasileiras."
   },
   "pcl_5": {
     "id": "pcl_5",
@@ -605,8 +605,8 @@ window.NAPEN_SCALE_GUIDE = {
   },
   "updrs_iii": {
     "id": "updrs_iii",
-    "sigla": "MDS-UPDRS-III",
-    "nome": "MDS-UPDRS Parte III (Exame Motor)",
+    "sigla": "MDS-UPDRS-III (ON)",
+    "nome": "MDS-UPDRS Parte III (Exame Motor no Estado ON)",
     "nome_en": "MDS-UPDRS Part III (Motor Examination)",
     "dominio": "Sinais Motores da Doença de Parkinson",
     "tempo_aplicacao": "15 a 25 minutos",
@@ -615,8 +615,8 @@ window.NAPEN_SCALE_GUIDE = {
     "procedimento_passo_a_passo": [
       {
         "passo": 1,
-        "titulo": "Definição do Estado Clínico (ON vs OFF)",
-        "descricao": "Registre se a avaliação está sendo realizada em estado OFF (sem medicação dopaminérgica há pelo menos 12 horas) ou em estado ON medicamentoso."
+        "titulo": "Padronização no Estado Clínico ON",
+        "descricao": "Recomenda-se aplicar TODOS os protocolos de Doença de Parkinson no estado \"ON\" da medicação dopaminérgica (efeito ótimo da levodopa), garantindo reprodutibilidade entre as reavaliações semanais."
       },
       {
         "passo": 2,
@@ -642,14 +642,14 @@ window.NAPEN_SCALE_GUIDE = {
     "criterios_pontuacao": [
       {
         "grau": "0 a 132 pontos",
-        "descricao": "Cada um dos 33 itens/subitens motores é pontuado de 0 (normal) a 4 (severo)."
+        "descricao": "Cada um dos 33 itens motores é pontuado de 0 (normal) a 4 (severo) no estado ON."
       },
       {
-        "grau": "MCID",
-        "descricao": "Redução de pelo menos 3.25 a 4.5 pontos para melhora clinicamente importante no estado OFF (Horváth et al., 2015)."
+        "grau": "MCID (Estado ON)",
+        "descricao": "Redução ≥ 3,25 a 4,5 pontos ou -15% a -25% no estado ON após 10 a 20 sessões."
       }
     ],
-    "interpretacao_clinica": "Na estimulação de M1 ou DLPFC na Doença de Parkinson, a redução no MDS-UPDRS-III indica melhora objetiva da bradicinesia e rigidez.",
+    "interpretacao_clinica": "Conforme evidência clínica de referência (Zhang et al., 2022), aplicar sempre no estado \"ON\". Redução na MDS-UPDRS-III reflete melhora de bradicinesia e rigidez.",
     "mcid": "Redução de 3.25 a 4.5 pontos no escore total (Shulman et al., 2010).",
     "referencia_abnt": "Goetz, C. G., Tilley, B. C., Shaftman, S. R., Stebbins, G. T., Fahn, S., Martinez-Martin, P., ... & LaPelle, N. (2008). Movement Disorder Society-sponsored revision of the Unified Parkinson's Disease Rating Scale (MDS-UPDRS): scale presentation and clinimetric testing results. Movement Disorders, 23(15), 2129-2170.",
     "doi": "10.1002/mds.22340",
@@ -1204,5 +1204,1036 @@ window.NAPEN_SCALE_GUIDE = {
     "doi": "10.1177/153944928500500102",
     "link_artigo": "https://doi.org/10.1177/153944928500500102",
     "validacao_brasil": "Oxford Grice, K., et al. (2003); Normas brasileiras em Oliveira, C. S., et al. (2012)."
+  },
+  "mal_brazil": {
+    "id": "mal_brazil",
+    "sigla": "MAL-Brazil",
+    "nome": "Motor Activity Log — Versão Brasileira (MAL-Brazil)",
+    "nome_en": "Motor Activity Log (MAL)",
+    "dominio": "Uso Real do Membro Superior Parético nas AVDs",
+    "tempo_aplicacao": "10 a 15 minutos",
+    "publico_alvo": "Pacientes pós-AVC em reabilitação do membro superior.",
+    "materiais": "Formulário estruturado com 30 atividades cotidianas e cartões de escalas de Quantidade (QOM) e Qualidade (AOU) de uso (0 a 5).",
+    "procedimento_passo_a_passo": [
+      {
+        "passo": 1,
+        "titulo": "Entrevista Estruturada por Tarefa",
+        "descricao": "Investigar quanto (AOU) e quão bem (QOM) o paciente utilizou espontaneamente o membro parético em 30 tarefas cotidianas."
+      },
+      {
+        "passo": 2,
+        "titulo": "Pontuação Dupla (0 a 5)",
+        "descricao": "Atribuir escores de 0 (não usa) a 5 (como antes do AVC), evitando superestimação pelo examinador."
+      },
+      {
+        "passo": 3,
+        "titulo": "Cálculo das Médias",
+        "descricao": "Calcular média das tarefas aplicáveis para Quantidade e Qualidade de Movimento."
+      }
+    ],
+    "criterios_pontuacao": [
+      {
+        "grau": "0 a 5 pontos (média)",
+        "descricao": "Pontuação média de uso espontâneo e qualidade funcional nas AVDs."
+      }
+    ],
+    "interpretacao_clinica": "Instrumento central de desfecho nas atividades de vida diária para reabilitação do membro superior pós-AVC.",
+    "mcid": "Ganho médio ≥ 0,5 a 1,0 ponto nas subescalas AOU/QOM.",
+    "referencia_abnt": "Saliba, V. A., et al. (2011). Adaptação transcultural e análise das propriedades psicométricas da versão brasileira do instrumento Motor Activity Log. Revista Panamericana de Salud Pública, 30(3), 262-271.",
+    "doi": "10.1590/S1020-49892011000900011",
+    "link_artigo": "https://doi.org/10.1590/S1020-49892011000900011",
+    "validacao_brasil": "Validada para português brasileiro por Saliba et al. (2011)."
+  },
+  "catherine_bergego": {
+    "id": "catherine_bergego",
+    "sigla": "CBS",
+    "nome": "Escala Catherine Bergego",
+    "nome_en": "Catherine Bergego Scale (CBS)",
+    "dominio": "Heminegligência Espacial Unilateral em AVDs",
+    "tempo_aplicacao": "10 minutos (observação)",
+    "publico_alvo": "Pacientes pós-AVC com suspeita de heminegligência espacial unilateral.",
+    "materiais": "Checklist observacional de 10 situações funcionais cotidianas (higiene, vestuário, alimentação, deslocamento).",
+    "procedimento_passo_a_passo": [
+      {
+        "passo": 1,
+        "titulo": "Observação Ecológica em 10 Domínios",
+        "descricao": "Observar negligência lateral em autocuidado, leitura espacial, atenção ao hemicorpo e colisões em deslocamento."
+      },
+      {
+        "passo": 2,
+        "titulo": "Graduação de Gravidade (0 a 3 por item)",
+        "descricao": "Pontuar 0 (sem negligência), 1 (leve), 2 (moderada) ou 3 (grave)."
+      },
+      {
+        "passo": 3,
+        "titulo": "Índice de Anosognosia",
+        "descricao": "Comparar escore do avaliador com autoavaliação do paciente para mensurar consciência do déficit."
+      }
+    ],
+    "criterios_pontuacao": [
+      {
+        "grau": "0 pontos",
+        "descricao": "Sem heminegligência observável."
+      },
+      {
+        "grau": "1–10 / 11–20 / 21–30",
+        "descricao": "Negligência leve, moderada ou grave."
+      }
+    ],
+    "interpretacao_clinica": "Avalia impacto ecológico da heminegligência após estimulação parietal posterior (P3/P4) ou frontal (F5).",
+    "mcid": "Redução ≥ 3 pontos no escore total observacional.",
+    "referencia_abnt": "Azouvi, P., et al. (2003). Behavioral assessment of unilateral neglect: study of the psychometric properties of the Catherine Bergego Scale. Arch Phys Med Rehabil, 84(1), 51-57.",
+    "doi": "10.1053/apmr.2003.50062",
+    "link_artigo": "https://doi.org/10.1053/apmr.2003.50062",
+    "validacao_brasil": "Amplamente adotada na clínica brasileira de neuroreabilitação em conjunto com testes de cancelamento."
+  },
+  "fma_le": {
+    "id": "fma_le",
+    "sigla": "FMA-LE",
+    "nome": "Escala de Fugl-Meyer — Extremidade Inferior",
+    "nome_en": "Fugl-Meyer Assessment Lower Extremity (FMA-LE)",
+    "dominio": "Recuperação Motora e Sensorial do Membro Inferior",
+    "tempo_aplicacao": "15 a 20 minutos",
+    "publico_alvo": "Pacientes pós-AVC avaliados para mobilidade e função motora de membros inferiores.",
+    "materiais": "Martelo de reflexos e maca de avaliação neurológica.",
+    "procedimento_passo_a_passo": [
+      {
+        "passo": 1,
+        "titulo": "Avaliação Reflexa e Sinérgica",
+        "descricao": "Testar reflexos aquileu/patelar e sinergias flexora e extensora de quadril, joelho e tornozelo."
+      },
+      {
+        "passo": 2,
+        "titulo": "Coordenação e Velocidade",
+        "descricao": "Executar teste calcanhar-joelho bilateralmente comparando velocidade e dismetria."
+      },
+      {
+        "passo": 3,
+        "titulo": "Subescala Sensorial",
+        "descricao": "Avaliar sensibilidade tátil e proprioceptiva em quadril, joelho, tornozelo e hálux."
+      }
+    ],
+    "criterios_pontuacao": [
+      {
+        "grau": "0 a 34 pontos (Motor MMII)",
+        "descricao": "Pontuação motora máxima da extremidade inferior."
+      }
+    ],
+    "interpretacao_clinica": "Quantifica controle motor seletivo e ganhos somatossensoriais de MMII após M1, cerebelo ou S1.",
+    "mcid": "Ganho mínimo de 4 a 6 pontos no escore motor da extremidade inferior.",
+    "referencia_abnt": "Fugl-Meyer, A. R., et al. (1975). The post-stroke hemiplegic patient. Scand J Rehabil Med, 7(1), 13-31.",
+    "doi": "",
+    "link_artigo": "",
+    "validacao_brasil": "Versão brasileira validada por Maki et al. (2006)."
+  },
+  "npsi": {
+    "id": "npsi",
+    "sigla": "NPSI",
+    "nome": "Inventário de Sintomas de Dor Neuropática",
+    "nome_en": "Neuropathic Pain Symptom Inventory (NPSI)",
+    "dominio": "Dimensões Qualitativas da Dor Neuropática e Alodinia",
+    "tempo_aplicacao": "5 a 8 minutos",
+    "publico_alvo": "Pacientes com dor neuropática crônica em acompanhamento clínico.",
+    "materiais": "Questionário de 12 itens (10 descritores 0–10 + 2 itens temporais).",
+    "procedimento_passo_a_passo": [
+      {
+        "passo": 1,
+        "titulo": "Avaliação dos Descritores",
+        "descricao": "Pontuar de 0 a 10 dor em queimação, aperto/pressão, choque elétrico, pontada/agulhada e evocada (escovação/pressão/frio)."
+      },
+      {
+        "passo": 2,
+        "titulo": "Soma das 5 Dimensões",
+        "descricao": "Agrupar queimação espontânea, dor profunda, paroxística, evocada e parestesia/disestesia (0–100)."
+      }
+    ],
+    "criterios_pontuacao": [
+      {
+        "grau": "0 a 100 pontos",
+        "descricao": "Maior pontuação indica maior gravidade neuropática; subescores captam resposta em alodinia mesmo sem queda da EVA."
+      }
+    ],
+    "interpretacao_clinica": "Essencial na dor neuropática para detectar melhora em alodinia, hiperalgesia ou hiperpatia quando a intensidade bruta da dor pouco oscila.",
+    "mcid": "Redução de ~30% no escore total (Protocolo 3 rPMS/alodinia: -32% após 3 sessões).",
+    "referencia_abnt": "Bouhassira, D., et al. (2004). Development and validation of the Neuropathic Pain Symptom Inventory. Pain, 108(3), 248-257.",
+    "doi": "10.1016/j.pain.2003.12.024",
+    "link_artigo": "https://doi.org/10.1016/j.pain.2003.12.024",
+    "validacao_brasil": "Validado em português brasileiro por de Andrade et al. (2011)."
+  },
+  "bpi": {
+    "id": "bpi",
+    "sigla": "BPI",
+    "nome": "Inventário Breve de Dor",
+    "nome_en": "Brief Pain Inventory (BPI)",
+    "dominio": "Instrumento Multidimensional de Intensidade e Interferência da Dor",
+    "tempo_aplicacao": "5 a 10 minutos",
+    "publico_alvo": "Pacientes com dor crônica neuropática ou oncológica.",
+    "materiais": "Formulário com diagrama corporal, escalas 0–10 de intensidade e 7 itens de interferência (sono, humor, trabalho, relações).",
+    "procedimento_passo_a_passo": [
+      {
+        "passo": 1,
+        "titulo": "Mapa Corporal e Intensidade",
+        "descricao": "Registrar localização da dor e piores/menores/médias intensidades nas últimas 24h."
+      },
+      {
+        "passo": 2,
+        "titulo": "Interferência Funcional e Emocional",
+        "descricao": "Avaliar de 0 a 10 o impacto em atividade geral, humor, locomoção, sono e prazer de viver."
+      }
+    ],
+    "criterios_pontuacao": [
+      {
+        "grau": "0 a 10 pontos (média)",
+        "descricao": "Subescores de Severidade e de Interferência na qualidade de vida, sono e humor."
+      }
+    ],
+    "interpretacao_clinica": "Recomendado na dor neuropática como instrumento multidimensional para captar ganhos em sono, humor e sofrimento.",
+    "mcid": "Redução ≥ 1,0 a 1,5 ponto na média de interferência.",
+    "referencia_abnt": "Cleeland, C. S., & Ryan, K. M. (1994). Pain assessment: global use of the Brief Pain Inventory. Ann Acad Med Singapore, 23(2), 129-138.",
+    "doi": "",
+    "link_artigo": "",
+    "validacao_brasil": "Validado em português brasileiro por Ferreira et al. (2011)."
+  },
+  "ssa": {
+    "id": "ssa",
+    "sigla": "SSA",
+    "nome": "Standardized Swallowing Assessment",
+    "nome_en": "Standardized Swallowing Assessment (SSA)",
+    "dominio": "Triagem Clínica Padronizada da Deglutição",
+    "tempo_aplicacao": "10 minutos",
+    "publico_alvo": "Pacientes pós-AVC com disfagia neurogênica.",
+    "materiais": "Copo graduado de água, colher de chá e estetoscópio clínico.",
+    "procedimento_passo_a_passo": [
+      {
+        "passo": 1,
+        "titulo": "Pré-Requisitos Clínicos",
+        "descricao": "Checar nível de alerta, controle postural de tronco/cabeça e reflexo de tosse voluntária."
+      },
+      {
+        "passo": 2,
+        "titulo": "Teste de Água por Etapas",
+        "descricao": "Ofertar 3 colheres de chá de água e, se seguro, meio copo d’água observando tosse, engasgo ou voz molhada."
+      }
+    ],
+    "criterios_pontuacao": [
+      {
+        "grau": "18 a 46 pontos (variações clínicas)",
+        "descricao": "Quanto menor a pontuação, mais segura e próxima do normal encontra-se a deglutição."
+      }
+    ],
+    "interpretacao_clinica": "Usada junto à avaliação fonoaudiológica por consistência alimentar antes de classificar resposta aos 5 dias.",
+    "mcid": "Redução significativa do escore combinada à progressão por consistências.",
+    "referencia_abnt": "Perry, L. (2001). Screening swallowing function of patients with acute stroke. Part one: Identification, implementation and initial evaluation of a screening tool for use by nurses. J Clin Nurs, 10(4), 463-473.",
+    "doi": "10.1046/j.1365-2702.2001.00501.x",
+    "link_artigo": "https://doi.org/10.1046/j.1365-2702.2001.00501.x",
+    "validacao_brasil": "Aplicar exclusivamente com acompanhamento fonoaudiológico especializado em disfagia."
+  },
+  "doss": {
+    "id": "doss",
+    "sigla": "DOSS",
+    "nome": "Dysphagia Outcome and Severity Scale",
+    "nome_en": "Dysphagia Outcome and Severity Scale (DOSS)",
+    "dominio": "Gravidade Clínica e Independência Funcional da Deglutição",
+    "tempo_aplicacao": "5 a 10 minutos (pós-avaliação)",
+    "publico_alvo": "Pacientes com disfagia orofaríngea pós-AVC.",
+    "materiais": "Registro clínico e/ou videodeglutograma com testagem de múltiplas consistências alimentares.",
+    "procedimento_passo_a_passo": [
+      {
+        "passo": 1,
+        "titulo": "Testar Todas as Consistências",
+        "descricao": "Avaliar líquidos ralos, néctar, pastosos e sólidos observando retenção, penetração e aspiração."
+      },
+      {
+        "passo": 2,
+        "titulo": "Classificação nos 7 Níveis",
+        "descricao": "Graduar de 7 (deglutição normal) a 1 (disfagia grave — nada por via oral)."
+      }
+    ],
+    "criterios_pontuacao": [
+      {
+        "grau": "Nível 6–7",
+        "descricao": "Deglutição normal ou dentro dos limites funcionais."
+      },
+      {
+        "grau": "Nível 3–5",
+        "descricao": "Disfagia leve a moderada com restrição de consistências."
+      },
+      {
+        "grau": "Nível 1–2",
+        "descricao": "Disfagia moderada-grave a grave (risco aspirativo)."
+      }
+    ],
+    "interpretacao_clinica": "Fundamental antes de declarar falha nos primeiros 5 dias: avaliar resposta em CADA consistência alimentar.",
+    "mcid": "Progressão ≥ 1 nível na DOSS.",
+    "referencia_abnt": "O'Neil, K. H., et al. (1999). The Dysphagia Outcome and Severity Scale. Dysphagia, 14(3), 139-145.",
+    "doi": "10.1007/PL00009595",
+    "link_artigo": "https://doi.org/10.1007/PL00009595",
+    "validacao_brasil": "Utilizada rotineiramente em conjunto com FOIS e videodeglutograma."
+  },
+  "masa": {
+    "id": "masa",
+    "sigla": "MASA",
+    "nome": "Mann Assessment of Swallowing Ability",
+    "nome_en": "Mann Assessment of Swallowing Ability (MASA)",
+    "dominio": "Avaliação Clínica Multidimensional da Deglutição",
+    "tempo_aplicacao": "15 minutos",
+    "publico_alvo": "Pacientes com disfagia pós-AVC.",
+    "materiais": "Protocolo clínico estruturado com 24 itens motores orofaríngeos e função craniana.",
+    "procedimento_passo_a_passo": [
+      {
+        "passo": 1,
+        "titulo": "Exame Motor e Craniano Oral",
+        "descricao": "Avaliar alerta, respiração, vedamento labial, língua, elevação laríngea e reflexo faríngeo."
+      },
+      {
+        "passo": 2,
+        "titulo": "Somatória de 200 Pontos",
+        "descricao": "Pontuar os 24 domínios para quantificar risco de disfagia e aspiração."
+      }
+    ],
+    "criterios_pontuacao": [
+      {
+        "grau": "178–200",
+        "descricao": "Sem disfagia significativa."
+      },
+      {
+        "grau": "< 178 / < 168",
+        "descricao": "Disfagia leve a moderada/grave."
+      }
+    ],
+    "interpretacao_clinica": "Instrumento clínico quantitativo sensível para acompanhamento pré e pós-intervenção fonoaudiológica.",
+    "mcid": "Aumento ≥ 10 pontos com progressão de consistência segura.",
+    "referencia_abnt": "Mann, G. (2002). MASA: The Mann Assessment of Swallowing Ability. Singular/Thomson Learning.",
+    "doi": "10.1016/j.jstrokecerebrovasdis.2009.03.007",
+    "link_artigo": "https://doi.org/10.1016/j.jstrokecerebrovasdis.2009.03.007",
+    "validacao_brasil": "Conduzir por fonoaudiólogo especializado em disfagia."
+  },
+  "mtl_brasil": {
+    "id": "mtl_brasil",
+    "sigla": "MTL-Brasil",
+    "nome": "Bateria Montreal-Toulouse de Avaliação da Linguagem",
+    "nome_en": "Montreal-Toulouse Language Assessment Battery (MTL-BR)",
+    "dominio": "Avaliação Abrangente de Expressão e Compreensão na Afasia (Recomendação Brasil)",
+    "tempo_aplicacao": "30 a 45 minutos (ou subtestes por microdesfecho)",
+    "publico_alvo": "Pacientes brasileiros com afasia pós-AVC de expressão ou compreensão.",
+    "materiais": "Manual e cadernos de estímulos validados da Bateria MTL-Brasil.",
+    "procedimento_passo_a_passo": [
+      {
+        "passo": 1,
+        "titulo": "Seleção dos Subtestes por Microdesfecho",
+        "descricao": "Aplicar subtestes correspondentes ao sintoma limitante (discurso espontâneo, nomeação/anomia, repetição ou compreensão oral)."
+      },
+      {
+        "passo": 2,
+        "titulo": "Comparação com Normas Brasileiras",
+        "descricao": "Interpretar escores ajustados por faixa etária e escolaridade brasileira."
+      }
+    ],
+    "criterios_pontuacao": [
+      {
+        "grau": "Escore por subteste",
+        "descricao": "Valores abaixo dos pontos de corte normativos de idade e escolaridade indicam déficit específico."
+      }
+    ],
+    "interpretacao_clinica": "Adaptação Clínica (Brasil): substitui as baterias internacionais dos ensaios originais na prática clínica nacional.",
+    "mcid": "Melhora mensurável nos microdesfechos-alvo após 5 a 15 sessões combinadas à fonoterapia.",
+    "referencia_abnt": "Parente, M. A. M. P., Fonseca, R. P., Pagliarin, K. C., et al. (2016). Bateria Montreal-Toulouse de Avaliação da Linguagem (MTL-Brasil). Vetor Editora.",
+    "doi": "10.3109/02687038.2014.919315",
+    "link_artigo": "https://doi.org/10.3109/02687038.2014.919315",
+    "validacao_brasil": "Adaptada e normatizada para a população brasileira (Parente, Fonseca, Pagliarin et al.)."
+  },
+  "token_test": {
+    "id": "token_test",
+    "sigla": "Token Test",
+    "nome": "Token Test (Compreensão Verbal)",
+    "nome_en": "Token Test",
+    "dominio": "Compreensão Auditiva e Sintática",
+    "tempo_aplicacao": "10 a 15 minutos",
+    "publico_alvo": "Pacientes com afasia de compreensão pós-AVC.",
+    "materiais": "20 fichas geométricas em 2 formas, 2 tamanhos e 5 cores padronizadas.",
+    "procedimento_passo_a_passo": [
+      {
+        "passo": 1,
+        "titulo": "Comandos Crescentes",
+        "descricao": "Solicitar manipulação das fichas em 5 ou 6 partes de complexidade linguística progressiva."
+      },
+      {
+        "passo": 2,
+        "titulo": "Registro de Acertos",
+        "descricao": "Pontuar acertos em comandos simples e relacionais."
+      }
+    ],
+    "criterios_pontuacao": [
+      {
+        "grau": "0 a 36 pontos (versão reduzida)",
+        "descricao": "Escore mais elevado representa melhor compreensão verbal."
+      }
+    ],
+    "interpretacao_clinica": "Complementa a MTL-Brasil na quantificação da compreensão sintática auditiva.",
+    "mcid": "Aumento ≥ 3 pontos na compreensão verbal.",
+    "referencia_abnt": "De Renzi, E., & Faglioni, P. (1978). Normative data and screening power of a shortened version of the Token Test. Cortex, 14(1), 41-49.",
+    "doi": "",
+    "link_artigo": "",
+    "validacao_brasil": "Versão reduzida normatizada e utilizada na prática fonoaudiológica e neuropsicológica no Brasil."
+  },
+  "hdrs_21": {
+    "id": "hdrs_21",
+    "sigla": "HDRS-21",
+    "nome": "Escala de Depressão de Hamilton — 21 Itens",
+    "nome_en": "Hamilton Depression Rating Scale — 21 items (HDRS-21)",
+    "dominio": "Gravidade Clínica da Depressão Maior",
+    "tempo_aplicacao": "15 a 20 minutos",
+    "publico_alvo": "Pacientes com depressão moderada a grave em avaliação para TMS.",
+    "materiais": "Roteiro clínico semiestruturado de 21 itens.",
+    "procedimento_passo_a_passo": [
+      {
+        "passo": 1,
+        "titulo": "Entrevista Semiestruturada",
+        "descricao": "Avaliar humor deprimido, culpa, ideação suicida, insônia, retardo/agitação, ansiedade e sintomas somáticos/variação diurna."
+      },
+      {
+        "passo": 2,
+        "titulo": "Limiares Clínicos",
+        "descricao": "HDRS-21 ≥ 18 define depressão moderada a grave elegível ao tratamento."
+      }
+    ],
+    "criterios_pontuacao": [
+      {
+        "grau": "≥ 18 pontos",
+        "descricao": "Critério clínico de entrada (depressão moderada a grave)."
+      },
+      {
+        "grau": "≤ 7 pontos",
+        "descricao": "Remissão clínica."
+      }
+    ],
+    "interpretacao_clinica": "Protocolo 1 Convencional para Depressão espera redução média de 55% (DP 16,4%) na HDRS-21.",
+    "mcid": "Redução ≥ 50% do escore basal (Protocolo 1: 55%).",
+    "referencia_abnt": "Hamilton, M. (1960). A rating scale for depression. J Neurol Neurosurg Psychiatry, 23(1), 56-62.",
+    "doi": "10.1136/jnnp.23.1.56",
+    "link_artigo": "https://doi.org/10.1136/jnnp.23.1.56",
+    "validacao_brasil": "Versão brasileira adaptada por Moreno & Moreno (1998)."
+  },
+  "madrs": {
+    "id": "madrs",
+    "sigla": "MADRS",
+    "nome": "Escala de Depressão de Montgomery-Asberg",
+    "nome_en": "Montgomery-Asberg Depression Rating Scale (MADRS)",
+    "dominio": "Sensibilidade à Mudança Terapêutica na Depressão",
+    "tempo_aplicacao": "15 minutos",
+    "publico_alvo": "Pacientes com depressão moderada a grave em regimes convencionais e acelerados.",
+    "materiais": "Guia de entrevista clínica com 10 itens pontuados de 0 a 6.",
+    "procedimento_passo_a_passo": [
+      {
+        "passo": 1,
+        "titulo": "Avaliação dos 10 Domínios",
+        "descricao": "Investigar tristeza aparente/relatada, tensão interna, redução do sono/apetite, concentração, lassidão, incapacidade de sentir e pessimismo."
+      },
+      {
+        "passo": 2,
+        "titulo": "Critério de Gravidade",
+        "descricao": "MADRS ≥ 20 indica quadro moderado a grave para indicação terapêutica."
+      }
+    ],
+    "criterios_pontuacao": [
+      {
+        "grau": "≥ 20 pontos",
+        "descricao": "Depressão moderada a grave."
+      },
+      {
+        "grau": "≤ 10 pontos",
+        "descricao": "Remissão sintomática."
+      }
+    ],
+    "interpretacao_clinica": "Protocolo SNT Acelerado espera redução média de 52,5% na MADRS.",
+    "mcid": "Redução ≥ 50% (Protocolo SNT Acelerado: 52,5%).",
+    "referencia_abnt": "Montgomery, S. A., & Asberg, M. (1979). A new depression scale designed to be sensitive to change. Br J Psychiatry, 134, 382-389.",
+    "doi": "10.1002/mpr.1388",
+    "link_artigo": "https://doi.org/10.1002/mpr.1388",
+    "validacao_brasil": "Quilty et al. (2013) · Crosswalk HRSD/MADRS (Chen et al., 2025)."
+  },
+  "bai": {
+    "id": "bai",
+    "sigla": "BAI",
+    "nome": "Inventário de Ansiedade de Beck",
+    "nome_en": "Beck Anxiety Inventory (BAI)",
+    "dominio": "Sintomas Somáticos e Subjetivos de Ansiedade (Validado no Brasil)",
+    "tempo_aplicacao": "5 a 10 minutos",
+    "publico_alvo": "Pacientes com Transtorno de Ansiedade Generalizada acompanhados por TMS.",
+    "materiais": "Questionário autoaplicável de 21 itens (escala 0–3).",
+    "procedimento_passo_a_passo": [
+      {
+        "passo": 1,
+        "titulo": "Aplicação Conjunta à HAM-A",
+        "descricao": "Aplicar em conjunto à HAM-A (que não é validada no Brasil)."
+      },
+      {
+        "passo": 2,
+        "titulo": "Somatória de 0 a 63",
+        "descricao": "Graduar ansiedade mínima (0–10), leve (11–19), moderada (20–30) ou grave (31–63)."
+      }
+    ],
+    "criterios_pontuacao": [
+      {
+        "grau": "20–30 / 31–63 pontos",
+        "descricao": "Ansiedade moderada a grave."
+      }
+    ],
+    "interpretacao_clinica": "Instrumento validado no Brasil recomendado para suprir ausência de validação nacional da HAM-A.",
+    "mcid": "Redução ≥ 25% a 50% do escore basal.",
+    "referencia_abnt": "Beck, A. T., et al. (1988). An inventory for measuring clinical anxiety: psychometric properties. J Consult Clin Psychol, 56(6), 893-897.",
+    "doi": "",
+    "link_artigo": "",
+    "validacao_brasil": "Validada para a população brasileira (Cunha, 2001)."
+  },
+  "gad_7": {
+    "id": "gad_7",
+    "sigla": "GAD-7",
+    "nome": "Generalized Anxiety Disorder 7",
+    "nome_en": "Generalized Anxiety Disorder 7-item Scale (GAD-7)",
+    "dominio": "Rastreio e Gravidade do Transtorno de Ansiedade Generalizada",
+    "tempo_aplicacao": "3 a 5 minutos",
+    "publico_alvo": "Pacientes com TAG em acompanhamento por TMS.",
+    "materiais": "Questionário de 7 itens referentes às últimas 2 semanas (0–21).",
+    "procedimento_passo_a_passo": [
+      {
+        "passo": 1,
+        "titulo": "Pontuação dos 7 Itens",
+        "descricao": "Avaliar preocupação excessiva, inquietação, dificuldade de relaxar e irritabilidade (0–3 cada)."
+      },
+      {
+        "passo": 2,
+        "titulo": "Uso Conjunto à HAM-A",
+        "descricao": "Recomendada como métrica validada complementar à HAM-A no Brasil."
+      }
+    ],
+    "criterios_pontuacao": [
+      {
+        "grau": "≥ 10 / ≥ 15 pontos",
+        "descricao": "Ansiedade moderada (10–14) ou grave (15–21)."
+      }
+    ],
+    "interpretacao_clinica": "Alta sensibilidade à mudança ao longo de 10–25 sessões de rTMS/cTBS em F4 ou P4.",
+    "mcid": "Redução ≥ 4 pontos ou queda para faixa < 10 pontos.",
+    "referencia_abnt": "Spitzer, R. L., et al. (2006). A brief measure for assessing generalized anxiety disorder: the GAD-7. Arch Intern Med, 166(10), 1092-1097.",
+    "doi": "10.1001/archinte.166.10.1092",
+    "link_artigo": "https://doi.org/10.1001/archinte.166.10.1092",
+    "validacao_brasil": "Validada para português brasileiro (Moreno et al., 2016)."
+  },
+  "dass_21": {
+    "id": "dass_21",
+    "sigla": "DASS-21",
+    "nome": "Escala de Depressão, Ansiedade e Estresse — 21 Itens",
+    "nome_en": "Depression, Anxiety and Stress Scale (DASS-21)",
+    "dominio": "Triagem Integrada de Ansiedade, Depressão e Estresse no Brasil",
+    "tempo_aplicacao": "5 a 10 minutos",
+    "publico_alvo": "Pacientes com TAG e sintomas depressivos associados.",
+    "materiais": "Questionário autoaplicável de 21 itens (7 por subescala; multiplicar soma por 2).",
+    "procedimento_passo_a_passo": [
+      {
+        "passo": 1,
+        "titulo": "Cálculo das 3 Subescalas",
+        "descricao": "Calcular separadamente Depressão, Ansiedade e Estresse multiplicando cada soma por 2."
+      },
+      {
+        "passo": 2,
+        "titulo": "Uso Conjunto à HAM-A",
+        "descricao": "Recomendada em conjunto com a HAM-A para monitorar ansiedade e depressão comórbida no Brasil."
+      }
+    ],
+    "criterios_pontuacao": [
+      {
+        "grau": "Ansiedade ≥ 10 / ≥ 15",
+        "descricao": "Faixas moderada e grave na subescala de ansiedade."
+      }
+    ],
+    "interpretacao_clinica": "Diferencia evolução da ansiedade versus depressão comórbida ao longo do tratamento.",
+    "mcid": "Mudança para faixa clínica inferior (redução ≥ 25%–50%).",
+    "referencia_abnt": "Vignola, R. C. B., & Tucci, A. M. (2014). Adaptation and validation of the Depression, Anxiety and Stress Scale (DASS) to Brazilian Portuguese. J Affect Disord, 155, 104-109.",
+    "doi": "10.1016/j.jad.2013.10.031",
+    "link_artigo": "https://doi.org/10.1016/j.jad.2013.10.031",
+    "validacao_brasil": "Validada no Brasil por Vignola & Tucci (2014)."
+  },
+  "moca": {
+    "id": "moca",
+    "sigla": "MoCA",
+    "nome": "Montreal Cognitive Assessment",
+    "nome_en": "Montreal Cognitive Assessment (MoCA)",
+    "dominio": "Rastreio Cognitivo Global no CCL e Doença de Alzheimer",
+    "tempo_aplicacao": "10 a 15 minutos",
+    "publico_alvo": "Pacientes com Declínio Cognitivo Leve (CCL) ou Doença de Alzheimer inicial.",
+    "materiais": "Formulário MoCA e cronômetro.",
+    "procedimento_passo_a_passo": [
+      {
+        "passo": 1,
+        "titulo": "Avaliação de 8 Domínios",
+        "descricao": "Testar função visuoespacial/executiva, nomeação, atenção, linguagem, abstração, evocação tardia e orientação."
+      },
+      {
+        "passo": 2,
+        "titulo": "Ajuste de Escolaridade",
+        "descricao": "Adicionar 1 ponto se escolaridade ≤ 12 anos (conforme manual oficial)."
+      }
+    ],
+    "criterios_pontuacao": [
+      {
+        "grau": "≥ 26 pontos",
+        "descricao": "Faixa de normalidade (pontos de corte brasileiros ajustados por escolaridade)."
+      }
+    ],
+    "interpretacao_clinica": "Mais sensível que o MMSE para detecção e acompanhamento no Declínio Cognitivo Leve.",
+    "mcid": "Aumento ≥ 2 pontos ou estabilização do declínio cognitivo.",
+    "referencia_abnt": "Nasreddine, Z. S., et al. (2005). The Montreal Cognitive Assessment, MoCA: a brief screening tool for mild cognitive impairment. J Am Geriatr Soc, 53(4), 695-699.",
+    "doi": "10.1111/j.1532-5415.2005.53221.x",
+    "link_artigo": "https://doi.org/10.1111/j.1532-5415.2005.53221.x",
+    "validacao_brasil": "Validada no Brasil por Memória et al. (2013)."
+  },
+  "cornell": {
+    "id": "cornell",
+    "sigla": "Cornell",
+    "nome": "Escala de Depressão de Cornell na Demência",
+    "nome_en": "Cornell Scale for Depression in Dementia (CSDD)",
+    "dominio": "Sintomas Depressivos em Pacientes com Demência / Alzheimer",
+    "tempo_aplicacao": "15 a 20 minutos (paciente + cuidador)",
+    "publico_alvo": "Pacientes com Doença de Alzheimer com apatia, humor deprimido ou sintomas neuropsiquiátricos.",
+    "materiais": "Entrevista dupla (cuidador + paciente) com 19 itens graduados de 0 a 2.",
+    "procedimento_passo_a_passo": [
+      {
+        "passo": 1,
+        "titulo": "Entrevista Integrada com Cuidador",
+        "descricao": "Coletar sinais relacionados ao humor, perturbações comportamentais, sinais físicos, funções cíclicas e distúrbios ideacionais."
+      },
+      {
+        "passo": 2,
+        "titulo": "Reconciliação de Escores",
+        "descricao": "Pontuar cada item (0–2) considerando observação direta e relato do cuidador."
+      }
+    ],
+    "criterios_pontuacao": [
+      {
+        "grau": "> 10 pontos",
+        "descricao": "Provável depressão maior associada à demência."
+      }
+    ],
+    "interpretacao_clinica": "Protocolo 2 Temporoparietal de tDCS obteve melhora média de 43,3% na Escala de Cornell após 10 sessões.",
+    "mcid": "Redução ≥ 30% a 43% no escore total.",
+    "referencia_abnt": "Alexopoulos, G. S., et al. (1988). Cornell Scale for Depression in Dementia. Biol Psychiatry, 23(3), 271-284.",
+    "doi": "10.1016/0006-3223(88)90038-8",
+    "link_artigo": "https://doi.org/10.1016/0006-3223(88)90038-8",
+    "validacao_brasil": "Validada no Brasil por Carthery-Goulart et al. (2007)."
+  },
+  "d2_psico": {
+    "id": "d2_psico",
+    "sigla": "D2",
+    "nome": "Teste de Atenção Concentrada (D2) — Uso Privativo de Psicólogos",
+    "nome_en": "d2 Test of Attention",
+    "dominio": "Atenção Concentrada e Velocidade de Processamento (Uso Privativo de Psicólogos)",
+    "tempo_aplicacao": "5 a 8 minutos",
+    "publico_alvo": "Pacientes com CCL ou Alzheimer em protocolo pré-frontal — aplicação exclusiva por psicólogo.",
+    "materiais": "Caderno padronizado do Teste D2 e cronômetro (fornecimento restrito a psicólogos inscritos no CRP).",
+    "procedimento_passo_a_passo": [
+      {
+        "passo": 1,
+        "titulo": "Reserva Legal (Lei nº 4.119/1962)",
+        "descricao": "Confirmar que a aplicação e correção estão sendo conduzidas por psicólogo regularmente habilitado (SATEPSI/CFP)."
+      },
+      {
+        "passo": 2,
+        "titulo": "Rastreio Cronometrado (20 s/linha)",
+        "descricao": "Solicitar marcação rápida dos estímulos-alvo ao longo das 14 linhas."
+      }
+    ],
+    "criterios_pontuacao": [
+      {
+        "grau": "Percentis normativos",
+        "descricao": "Resultados líquidos (RL) interpretados segundo tabelas normativas brasileiras por idade/escolaridade."
+      }
+    ],
+    "interpretacao_clinica": "Instrumento neuropsicológico de uso privativo de psicólogos.",
+    "mcid": "Melhora de percentil de atenção concentrada após ciclo em CPFDL.",
+    "referencia_abnt": "Brickenkamp, R. Teste D2 — Atenção Concentrada. Adaptação brasileira (SATEPSI / Vetor).",
+    "doi": "",
+    "link_artigo": "",
+    "validacao_brasil": "Instrumento psicológico privativo aprovado para uso exclusivo de psicólogos no Brasil.",
+    "uso_privativo_psicologo": true,
+    "nota_uso_privativo": "Uso privativo de psicólogos no Brasil (CFP/SATEPSI)."
+  },
+  "wais_digitos": {
+    "id": "wais_digitos",
+    "sigla": "WAIS-IV",
+    "nome": "WAIS-IV / WASI — Subteste Dígitos (Span) — Uso Privativo de Psicólogos",
+    "nome_en": "WAIS-IV / WASI Digit Span",
+    "dominio": "Atenção e Memória de Trabalho (Uso Privativo de Psicólogos)",
+    "tempo_aplicacao": "5 a 10 minutos",
+    "publico_alvo": "Pacientes com Alzheimer ou CCL — aplicação exclusiva por psicólogo.",
+    "materiais": "Manual e protocolo de registro WAIS-IV ou WASI (uso restrito a psicólogos).",
+    "procedimento_passo_a_passo": [
+      {
+        "passo": 1,
+        "titulo": "Reserva Profissional (Lei nº 4.119/1962)",
+        "descricao": "Aplicação privativa de psicólogos; profissionais não psicólogos devem utilizar testes não privativos alternativos (ex.: N-back)."
+      },
+      {
+        "passo": 2,
+        "titulo": "Ordem Direta, Inversa e Sequencial",
+        "descricao": "Aplicar séries numéricas crescentes até critério de interrupção do manual."
+      }
+    ],
+    "criterios_pontuacao": [
+      {
+        "grau": "Escore Ponderado",
+        "descricao": "Interpretação segundo normas brasileiras padronizadas do manual WAIS-IV."
+      }
+    ],
+    "interpretacao_clinica": "Medida padronizada de atenção e memória de trabalho (uso privativo de psicólogos).",
+    "mcid": "Aumento ≥ 1 ponto ponderado no subteste Dígitos.",
+    "referencia_abnt": "Nascimento, E. (2004/2015). Adaptação e padronização brasileira da Escala de Inteligência Wechsler para Adultos (WAIS). Casa do Psicólogo / Pearson.",
+    "doi": "",
+    "link_artigo": "",
+    "validacao_brasil": "Instrumento privativo de psicólogos regulamentado no Brasil (CFP/SATEPSI).",
+    "uso_privativo_psicologo": true,
+    "nota_uso_privativo": "Uso privativo de psicólogos no Brasil (CFP/SATEPSI)."
+  },
+  "teste_trilhas": {
+    "id": "teste_trilhas",
+    "sigla": "Trilhas",
+    "nome": "Teste de Trilhas (Partes A e B) — Uso Privativo de Psicólogos",
+    "nome_en": "Trail Making Test / Teste de Trilhas",
+    "dominio": "Função Executiva e Flexibilidade Cognitiva (Uso Privativo de Psicólogos)",
+    "tempo_aplicacao": "5 a 10 minutos",
+    "publico_alvo": "Pacientes com Alzheimer ou CCL — atenção à restrição profissional conforme versão SATEPSI.",
+    "materiais": "Folhas padronizadas de estímulos numéricos e alfanuméricos e cronômetro.",
+    "procedimento_passo_a_passo": [
+      {
+        "passo": 1,
+        "titulo": "Restrição Profissional (Lei nº 4.119/1962)",
+        "descricao": "O Teste de Trilhas possui aplicação privativa de psicólogos regularmente habilitados (CFP/SATEPSI)."
+      },
+      {
+        "passo": 2,
+        "titulo": "Sequência e Alternância",
+        "descricao": "Mensurar tempo de execução e erros nas conexões sequenciais e alternadas."
+      }
+    ],
+    "criterios_pontuacao": [
+      {
+        "grau": "Escore padrão / Tempo (s)",
+        "descricao": "Menor tempo e ausência de erros de alternância indicam melhor função executiva."
+      }
+    ],
+    "interpretacao_clinica": "Em não-psicólogos, priorizar alternativas não privativas como Go/No-Go, BDEFS ou Torre de Hanói.",
+    "mcid": "Redução no tempo de execução da Parte B / flexibilidade executiva.",
+    "referencia_abnt": "Montiel, J. M., & Seabra, A. G. (2012). Teste de Trilhas (Partes A e B). Memnon / Avaliação Neuropsicológica.",
+    "doi": "",
+    "link_artigo": "",
+    "validacao_brasil": "Instrumento de uso privativo de psicólogos no Brasil.",
+    "uso_privativo_psicologo": true,
+    "nota_uso_privativo": "Uso privativo de psicólogos no Brasil (CFP/SATEPSI)."
+  },
+  "pdms_fm": {
+    "id": "pdms_fm",
+    "sigla": "PDMS-FM",
+    "nome": "Peabody Developmental Motor Scales — Fine Motor",
+    "nome_en": "PDMS-FM",
+    "dominio": "Desenvolvimento Motor Fino na Paralisia Cerebral",
+    "tempo_aplicacao": "20 a 30 minutos",
+    "publico_alvo": "Crianças com Paralisia Cerebral hemiparética espástica.",
+    "materiais": "Kit padronizado PDMS-2 (blocos, pinos, papel, tesoura).",
+    "procedimento_passo_a_passo": [
+      {
+        "passo": 1,
+        "titulo": "Subtestes Preensão e Integração Visuomotora",
+        "descricao": "Aplicar itens adequados à idade motora da criança até alcançar teto."
+      },
+      {
+        "passo": 2,
+        "titulo": "Conversão em Escore Bruto e Quociente",
+        "descricao": "Registrar pontos em cada subteste de motricidade fina."
+      }
+    ],
+    "criterios_pontuacao": [
+      {
+        "grau": "Percentil / Escore Padrão",
+        "descricao": "Quantifica melhora em manipulação fina; Protocolo 1 rTMS relata +49,7%."
+      }
+    ],
+    "interpretacao_clinica": "Escala de referência nas Habilidades Manipulativas da Paralisia Cerebral.",
+    "mcid": "Aumento relevante na pontuação bruta e quociente motor fino.",
+    "referencia_abnt": "Folio, M. R., & Fewell, R. R. (2000). Peabody Developmental Motor Scales (2nd ed.). Pro-Ed.",
+    "doi": "",
+    "link_artigo": "",
+    "validacao_brasil": "Instrumento internacional utilizado em reabilitação pediátrica no Brasil."
+  },
+  "quest": {
+    "id": "quest",
+    "sigla": "QUEST",
+    "nome": "Quality of Upper Extremity Skills Test",
+    "nome_en": "Quality of Upper Extremity Skills Test (QUEST)",
+    "dominio": "Qualidade do Movimento dos Membros Superiores na Paralisia Cerebral",
+    "tempo_aplicacao": "25 a 35 minutos",
+    "publico_alvo": "Crianças com Paralisia Cerebral espástica.",
+    "materiais": "Cubos, bola pequena, folha de papel, lápis e formulário QUEST.",
+    "procedimento_passo_a_passo": [
+      {
+        "passo": 1,
+        "titulo": "4 Domínios de Qualidade Motora",
+        "descricao": "Avaliar movimentos dissociados, preensão, descarga de peso e extensão protetora."
+      },
+      {
+        "passo": 2,
+        "titulo": "Escore Percentual Global",
+        "descricao": "Converter pontuações padronizadas para índice percentual (0 a 100%)."
+      }
+    ],
+    "criterios_pontuacao": [
+      {
+        "grau": "0 a 100%",
+        "descricao": "Quanto maior o percentual, melhor a qualidade dissociada do membro superior."
+      }
+    ],
+    "interpretacao_clinica": "Protocolo 3 rTMS Priming (Gupta et al., 2023) apresentou melhora de 11,7% no escore QUEST após 10 sessões.",
+    "mcid": "Ganho ≥ 4,9 a 11,7 pontos percentuais.",
+    "referencia_abnt": "DeMatteo, C., et al. (1993). The reliability and validity of the Quality of Upper Extremity Skills Test. Phys Occup Ther Pediatr, 13(2), 1-18.",
+    "doi": "10.1080/J006v13n02_01",
+    "link_artigo": "https://doi.org/10.1080/J006v13n02_01",
+    "validacao_brasil": "Instrumento padrão-ouro na avaliação qualitativa bimanual em Paralisia Cerebral."
+  },
+  "bbt": {
+    "id": "bbt",
+    "sigla": "BBT",
+    "nome": "Box and Block Test",
+    "nome_en": "Box and Block Test (BBT)",
+    "dominio": "Destreza Manual Grosseira Unilateral",
+    "tempo_aplicacao": "5 minutos",
+    "publico_alvo": "Crianças com Paralisia Cerebral e adultos com ataxia cerebelar.",
+    "materiais": "Caixa bipartida padronizada com 150 blocos de madeira (2,5 cm) e cronômetro de 60 s.",
+    "procedimento_passo_a_passo": [
+      {
+        "passo": 1,
+        "titulo": "Treino de 15 Segundos",
+        "descricao": "Permitir familiarização rápida com a tarefa de transpor blocos além da divisória central."
+      },
+      {
+        "passo": 2,
+        "titulo": "Contagem em 60 Segundos",
+        "descricao": "Contar quantos blocos atravessam a divisória em 1 minuto para cada mão."
+      }
+    ],
+    "criterios_pontuacao": [
+      {
+        "grau": "Blocos / minuto",
+        "descricao": "Maior número de blocos transferidos indica maior destreza manual."
+      }
+    ],
+    "interpretacao_clinica": "Protocolo 2 tDCS na hemiparesia pediátrica relata aumento de 14,1% na pontuação do BBT após 5 sessões.",
+    "mcid": "Aumento ≥ 5,5 blocos/minuto (~14% em pediatria).",
+    "referencia_abnt": "Mathiowetz, V., et al. (1985). Adult norms for the Box and Block Test of manual dexterity. Am J Occup Ther, 39(6), 386-391.",
+    "doi": "10.5014/ajot.39.6.386",
+    "link_artigo": "https://doi.org/10.5014/ajot.39.6.386",
+    "validacao_brasil": "Instrumento amplamente validado e normatizado na terapia ocupacional brasileira."
+  },
+  "pbs": {
+    "id": "pbs",
+    "sigla": "PBS",
+    "nome": "Pediatric Balance Scale",
+    "nome_en": "Pediatric Balance Scale (PBS)",
+    "dominio": "Equilíbrio Funcional Pediátrico em Tarefas do Dia a Dia",
+    "tempo_aplicacao": "15 a 20 minutos",
+    "publico_alvo": "Crianças com Paralisia Cerebral em avaliação de habilidades estabilizadoras.",
+    "materiais": "Banco sem encosto ajustável, escada de um degrau, fita métrica e cronômetro.",
+    "procedimento_passo_a_passo": [
+      {
+        "passo": 1,
+        "titulo": "14 Tarefas Funcionais Adaptadas",
+        "descricao": "Testar transições sentado-em pé, apoio unipodal, giro 360°, degraus e alcance anterior (0–4 por item)."
+      },
+      {
+        "passo": 2,
+        "titulo": "Escore Total (0–56)",
+        "descricao": "Registrar o total funcional e observar segurança postural."
+      }
+    ],
+    "criterios_pontuacao": [
+      {
+        "grau": "0 a 56 pontos",
+        "descricao": "Maior pontuação indica melhor controle postural funcional."
+      }
+    ],
+    "interpretacao_clinica": "Em Habilidades Estabilizadoras na Diparesia Espástica (Protocolo 1), tDCS gerou +11,9% na PBS após 10 sessões.",
+    "mcid": "Aumento ≥ 3,6 pontos (~10%–12% em pediatria).",
+    "referencia_abnt": "Franjoine, M. R., et al. (2003). Pediatric Balance Scale: a modified version of the Berg Balance Scale for the school-age child with mild to moderate motor impairment. Pediatr Phys Ther, 15(2), 114-128.",
+    "doi": "10.1097/01.PEP.0000068117.48023.18",
+    "link_artigo": "https://doi.org/10.1097/01.PEP.0000068117.48023.18",
+    "validacao_brasil": "Versão brasileira validada por Ries et al. (2012)."
+  },
+  "rbs_r": {
+    "id": "rbs_r",
+    "sigla": "RBS-R",
+    "nome": "Repetitive Behavior Scale-Revised",
+    "nome_en": "Repetitive Behavior Scale-Revised (RBS-R)",
+    "dominio": "Comportamentos Repetitivos, Estereotipias e Compulsões no TEA",
+    "tempo_aplicacao": "10 a 15 minutos",
+    "publico_alvo": "Crianças, adolescentes e adultos com TEA em protocolo comportamental/repetitivo.",
+    "materiais": "Escala de 43 itens preenchida por cuidadores em escala Likert 0–3.",
+    "procedimento_passo_a_passo": [
+      {
+        "passo": 1,
+        "titulo": "6 Subescalas Clínicas",
+        "descricao": "Avaliar comportamento estereotipado, autolesivo, compulsivo, ritualístico, insistência na mesmice e interesses restritos."
+      },
+      {
+        "passo": 2,
+        "titulo": "Monitoramento Pré e Pós",
+        "descricao": "Aplicar no início e após 10–18 sessões de rTMS/HD-tDCS."
+      }
+    ],
+    "criterios_pontuacao": [
+      {
+        "grau": "0 a 129 pontos",
+        "descricao": "Redução do escore total ou da subescala Compulsive indica melhora clínica."
+      }
+    ],
+    "interpretacao_clinica": "Protocolos 1 e 2 de rTMS no TEA obtiveram ~35% de redução na RBS-R; HD-tDCS CP5/CP6 reduziu 21,9% em Compulsive Behavior.",
+    "mcid": "Redução ≥ 20% a 35% na RBS-R.",
+    "referencia_abnt": "Bodfish, J. W., et al. (2000). Varieties of repetitive behavior in autism: comparisons to mental retardation. J Autism Dev Disord, 30(3), 237-243.",
+    "doi": "10.1023/A:1005596502855",
+    "link_artigo": "https://doi.org/10.1023/A:1005596502855",
+    "validacao_brasil": "Traduzida e utilizada em serviços brasileiros de neurodesenvolvimento e TEA."
+  },
+  "atec": {
+    "id": "atec",
+    "sigla": "ATEC",
+    "nome": "Autism Treatment Evaluation Checklist",
+    "nome_en": "Autism Treatment Evaluation Checklist (ATEC)",
+    "dominio": "Regulação Multidimensional no Transtorno do Espectro Autista",
+    "tempo_aplicacao": "10 minutos",
+    "publico_alvo": "Indivíduos com TEA acompanhados ao longo de ciclos de rTMS ou tDCS.",
+    "materiais": "Questionário de 77 itens dividido em 4 subescalas (Fala/Linguagem, Sociabilidade, Consciência Sensorial/Cognitiva e Saúde/Comportamento).",
+    "procedimento_passo_a_passo": [
+      {
+        "passo": 1,
+        "titulo": "Preenchimento por Cuidadores/Clínico",
+        "descricao": "Pontuar os 4 domínios multidimensionalmente antes e após o ciclo."
+      },
+      {
+        "passo": 2,
+        "titulo": "Subescala Sociabilidade / Saúde",
+        "descricao": "Avaliar evolução tanto no escore global quanto nos subdomínios de Sociabilidade e Problemas Comportamentais."
+      }
+    ],
+    "criterios_pontuacao": [
+      {
+        "grau": "0 a 179 pontos",
+        "descricao": "Pontuações menores indicam menor gravidade sintomática e melhor adaptação."
+      }
+    ],
+    "interpretacao_clinica": "Protocolo 1 tDCS social reduziu 12,5% no total ATEC e Protocolo 4 reduziu 23,5% em Sociabilidade.",
+    "mcid": "Redução ≥ 12% a 23% no total ou domínio-alvo da ATEC.",
+    "referencia_abnt": "Rimland, B., & Edelson, S. M. (1999). Autism Treatment Evaluation Checklist (ATEC). Autism Research Institute.",
+    "doi": "10.3390/children5020025",
+    "link_artigo": "https://doi.org/10.3390/children5020025",
+    "validacao_brasil": "Amplamente empregada em estudos clínicos e seguimento longitudinal no Brasil."
+  },
+  "icars": {
+    "id": "icars",
+    "sigla": "ICARS",
+    "nome": "International Cooperative Ataxia Rating Scale",
+    "nome_en": "International Cooperative Ataxia Rating Scale (ICARS)",
+    "dominio": "Gravidade da Ataxia em Postura/Marcha, Funções Cinéticas, Fala e Oculomotricidade",
+    "tempo_aplicacao": "15 a 20 minutos",
+    "publico_alvo": "Pacientes com ataxia cerebelar degenerativa ou adquirida.",
+    "materiais": "Roteiro clínico de 19 itens dividido em 4 subescalas (0–100 pontos).",
+    "procedimento_passo_a_passo": [
+      {
+        "passo": 1,
+        "titulo": "Avaliação dos 4 Subgrupos",
+        "descricao": "Testar marcha/postura, decomposição cinética de MMSS/MMII, disartria atáxica e motricidade ocular."
+      },
+      {
+        "passo": 2,
+        "titulo": "Subitens de Disartria",
+        "descricao": "Utilizar subitens específicos de fala na presença de queixa associada de disartria atáxica."
+      }
+    ],
+    "criterios_pontuacao": [
+      {
+        "grau": "0 a 100 pontos",
+        "descricao": "Maior escore indica maior gravidade atáxica."
+      }
+    ],
+    "interpretacao_clinica": "Protocolo 1 csDCS (Benussi et al., 2021) reduziu ICARS de 46,9 para 33,7 (-13,2 pts / ~28%).",
+    "mcid": "Redução ≥ 3,5 a 5 pontos na ICARS.",
+    "referencia_abnt": "Trouillas, P., et al. (1997). International Cooperative Ataxia Rating Scale for pharmacological assessment of the cerebellar syndrome. J Neurol Sci, 145(2), 205-211.",
+    "doi": "10.1016/s0022-510x(96)00231-6",
+    "link_artigo": "https://doi.org/10.1016/s0022-510x(96)00231-6",
+    "validacao_brasil": "Referência internacional utilizada em conjunto com a escala SARA."
+  },
+  "nfog_q": {
+    "id": "nfog_q",
+    "sigla": "NFOG-Q",
+    "nome": "New Freezing of Gait Questionnaire (Versão Atualizada)",
+    "nome_en": "New Freezing of Gait Questionnaire (NFOG-Q)",
+    "dominio": "Frequência e Impacto Funcional do Congelamento da Marcha",
+    "tempo_aplicacao": "5 a 8 minutos",
+    "publico_alvo": "Pacientes com Doença de Parkinson apresentando episódios de freezing.",
+    "materiais": "Questionário de 9 itens (com apoio visual opcional) avaliando frequência, duração e limitação cotidiana.",
+    "procedimento_passo_a_passo": [
+      {
+        "passo": 1,
+        "titulo": "Triagem Inicial do Episódio",
+        "descricao": "Confirmar ocorrência de freezing no último mês."
+      },
+      {
+        "passo": 2,
+        "titulo": "Quantificação de Gravidade e Impacto",
+        "descricao": "Pontuar frequência, duração dos piores episódios de hesitação inicial/em giros e interferência nas AVDs (0–28)."
+      }
+    ],
+    "criterios_pontuacao": [
+      {
+        "grau": "0 a 28 pontos",
+        "descricao": "Quanto menor o escore após 10 sessões, maior redução do congelamento."
+      }
+    ],
+    "interpretacao_clinica": "Reduções esperadas na FOGQ/NFOG-Q: 9,24% (P5 AMS), 15,59%–21,32% (P6 M1 contralateral ao dimídio mais comprometido) e 23,02% (P7 M1+tsMS).",
+    "mcid": "Redução ≥ 15% a 23% no escore total.",
+    "referencia_abnt": "Nieuwboer, A., et al. (2009). Reliability of the new freezing of gait questionnaire: agreement between patients with Parkinson's disease and their carers. Gait & Posture, 30(4), 459-463.",
+    "doi": "10.1016/j.gaitpost.2009.07.108",
+    "link_artigo": "https://doi.org/10.1016/j.gaitpost.2009.07.108",
+    "validacao_brasil": "Versão atualizada adotada na prática clínica especializada em Doença de Parkinson."
+  },
+  "caps": {
+    "id": "caps",
+    "sigla": "CAPS",
+    "nome": "Clinician-Administered PTSD Scale",
+    "nome_en": "Clinician-Administered PTSD Scale (CAPS-5)",
+    "dominio": "Diagnóstico e Gravidade Clínica do TEPT por Entrevista Estruturada",
+    "tempo_aplicacao": "30 a 45 minutos",
+    "publico_alvo": "Pacientes com diagnóstico ou suspeita clínica de TEPT (Critério inicial: CAPS ≥ 13).",
+    "materiais": "Entrevista clínica estruturada de 30 itens avaliando frequência e intensidade dos 20 sintomas DSM-5 + impacto funcional.",
+    "procedimento_passo_a_passo": [
+      {
+        "passo": 1,
+        "titulo": "Triagem de Entrada (CAPS ≥ 13)",
+        "descricao": "Confirmar presença clínica dos critérios diagnósticos de TEPT segundo o DSM-5."
+      },
+      {
+        "passo": 2,
+        "titulo": "Critério de Resposta Insatisfatória (< 25%)",
+        "descricao": "Considerar resposta insatisfatória redução < 25% na CAPS ou PCL-5 ao término do protocolo."
+      }
+    ],
+    "criterios_pontuacao": [
+      {
+        "grau": "≥ 13 pontos",
+        "descricao": "Limiar clínico de inclusão sintomática no TEPT; meta de redução ≥ 25%."
+      }
+    ],
+    "interpretacao_clinica": "Resultados < 25% na CAPS ou PCL-5 indicam reavaliação diagnóstica, comorbidades (borderline, substâncias) e contexto social.",
+    "mcid": "Redução ≥ 25% do escore basal ao fim do protocolo.",
+    "referencia_abnt": "Weathers, F. W., et al. (2018). The Clinician-Administered PTSD Scale for DSM-5 (CAPS-5): Development and initial psychometric evaluation in military veterans. Psychol Assess, 30(3), 383-395.",
+    "doi": "10.1037/pas0000486",
+    "link_artigo": "https://doi.org/10.1037/pas0000486",
+    "validacao_brasil": "Padrão-ouro clínico em português brasileiro para acompanhamento de TEPT."
   }
 };

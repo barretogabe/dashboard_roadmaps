@@ -20,7 +20,10 @@ document.addEventListener('DOMContentLoaded', () => {
     searchQuery: '',
     selectedConditionId: null,
     pemStatus: 'sim', // 'sim' | 'nao'
-    therapeuticStage: 'primary' // 'primary' | 'adjustment' | 'alt1' | 'alt2' | 'failure'
+    therapeuticStage: 'primary', // 'primary' | 'alt1' | 'alt2' | 'failure'
+    homeEntryMode: 'new', // 'new' | 'returning'
+    homeSelectedConditionId: null,
+    homeSelectedModality: 'rtms'
   };
 
   const eamState = {
@@ -30,27 +33,35 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Elementos de Navegação da Barra Turquesa
   const navItemPrescription = document.getElementById('navItemPrescription');
-  const navItemCalc = document.getElementById('navItemCalc');
   const navItemPocket = document.getElementById('navItemPocket');
   const navItemMethod = document.getElementById('navItemMethod');
 
   const tabBtnPrescription = document.getElementById('tabBtnPrescription');
-  const tabBtnCalc = document.getElementById('tabBtnCalc');
   const tabBtnPocket = document.getElementById('tabBtnPocket');
   const tabBtnMethod = document.getElementById('tabBtnMethod');
 
   const dropdownConditionsList = document.getElementById('dropdownConditionsList');
-  const dropdownCalcList = document.getElementById('dropdownCalcList');
 
   // Painéis das Abas
   const panePrescription = document.getElementById('panePrescription');
   const panePocket = document.getElementById('panePocket');
   const paneMethod = document.getElementById('paneMethod');
 
-  // Elementos da Prescrição Interativa
+  // Elementos da Prescrição Interativa & Triagem Inicial na Homepage
   const searchHeroPanel = document.getElementById('searchHeroPanel');
+  const homeContinuityPanel = document.getElementById('homeContinuityPanel');
+  const btnHomeEntryNew = document.getElementById('btnHomeEntryNew');
+  const btnHomeEntryReturning = document.getElementById('btnHomeEntryReturning');
+  const homeContinuityQuickPanel = document.getElementById('homeContinuityQuickPanel');
+  const homeContCondition = document.getElementById('homeContCondition');
+  const homeContModalityWrap = document.getElementById('homeContModalityWrap');
+  const homeContModality = document.getElementById('homeContModality');
+  const homeContProtocol = document.getElementById('homeContProtocol');
+  const homeContStageShortcuts = document.getElementById('homeContStageShortcuts');
+
   const algorithmActiveContainer = document.getElementById('algorithmActiveContainer');
   const btnClearSelection = document.getElementById('btnClearSelection');
+  const btnSwitchToContinuing = document.getElementById('btnSwitchToContinuing');
 
   const globalSearchInput = document.getElementById('globalSearchInput');
   const searchPlaceholderMarquee = document.getElementById('searchPlaceholderMarquee');
@@ -63,9 +74,17 @@ document.addEventListener('DOMContentLoaded', () => {
   const node1QuestionText = document.getElementById('node1QuestionText');
   const node1OptionsList = document.getElementById('node1OptionsList');
 
+  // Barra de Continuidade Clínica Interna (Etapa 0 quando em modo retorno)
+  const continuityEntryBar = document.getElementById('continuityEntryBar');
+  const continuityCompactBar = document.getElementById('continuityCompactBar');
+  const continuityInlineContext = document.getElementById('continuityInlineContext');
+  const continuingStageFocusSlot = document.getElementById('continuingStageFocusSlot');
+  const prescriptionDetailsCard = document.getElementById('prescriptionDetailsCard');
+
   // Seletores da Nova Cascata e Modalidades V2
   const modalitySelectorBar = document.getElementById('modalitySelectorBar');
   const modalityPillsGroup = document.getElementById('modalityPillsGroup');
+  const preTriagemObservationsSlot = document.getElementById('preTriagemObservationsSlot');
   const cascadingFlowContainer = document.getElementById('cascadingFlowContainer');
 
   const prescTecnica = document.getElementById('prescTecnica');
@@ -75,6 +94,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const prescIntensidade = document.getElementById('prescIntensidade');
   const prescPulsos = document.getElementById('prescPulsos');
   const prescSessoes = document.getElementById('prescSessoes');
+  const prescObsTecnica = document.getElementById('prescObsTecnica');
+  const prescObsAlvo = document.getElementById('prescObsAlvo');
+  const prescObsIntensidade = document.getElementById('prescObsIntensidade');
+  const prescObsSessoes = document.getElementById('prescObsSessoes');
+  const prescObsEscala = document.getElementById('prescObsEscala');
   const prescDesfechoNome = document.getElementById('prescDesfechoNome');
   const prescLinhaPrescricao = document.getElementById('prescLinhaPrescricao');
   const prescEscala = document.getElementById('prescEscala');
@@ -92,16 +116,28 @@ document.addEventListener('DOMContentLoaded', () => {
   const btnOutcomeDanger = document.getElementById('btnOutcomeDanger');
   const branchResultPanel = document.getElementById('branchResultPanel');
 
-  // Evidência Científica e Referências Formais
+  // Evidência Científica e Referências Formais (+ AMSTAR 2 / GRADE)
   const evidenceReferencePanel = document.getElementById('evidenceReferencePanel');
+  const evidenceSummaryGradeBadge = document.getElementById('evidenceSummaryGradeBadge');
+  const evidenceSummaryAmstarBadge = document.getElementById('evidenceSummaryAmstarBadge');
+  const btnScrollToEvidence = document.getElementById('btnScrollToEvidence');
   const evidenceCitationText = document.getElementById('evidenceCitationText');
   const evidenceDoiLink = document.getElementById('evidenceDoiLink');
   const evidenceDoiText = document.getElementById('evidenceDoiText');
+  const evidenceMetaBlock = document.getElementById('evidenceMetaBlock');
+  const evidenceMetaCitationText = document.getElementById('evidenceMetaCitationText');
+  const evidenceMetaDoiLink = document.getElementById('evidenceMetaDoiLink');
+  const evidenceMetaDoiText = document.getElementById('evidenceMetaDoiText');
+  const evidenceAmstarBadge = document.getElementById('evidenceAmstarBadge');
+  const evidenceAmstarRationale = document.getElementById('evidenceAmstarRationale');
+  const evidenceGradeBadge = document.getElementById('evidenceGradeBadge');
+  const evidenceGradeRationale = document.getElementById('evidenceGradeRationale');
   const evidenceGuidelineText = document.getElementById('evidenceGuidelineText');
   const evidenceGuidelineDoiLink = document.getElementById('evidenceGuidelineDoiLink');
   const evidenceGuidelineDoiText = document.getElementById('evidenceGuidelineDoiText');
+  const evidencePemGuide = document.getElementById('evidencePemGuide');
 
-  // Calculadora Dual (Clínica & Comparador de Efeito)
+  // Calculadora Dual (Clínica & Comparador de Efeito + Tolerabilidade)
   const dualCalcContainer = document.getElementById('dualCalcContainer');
   const calcScaleTabs = document.getElementById('calcScaleTabs');
   const calcEamBox = document.getElementById('calcEamBox');
@@ -112,6 +148,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const calcValPostLabel = document.getElementById('calcValPostLabel');
   const calcValBase = document.getElementById('calcValBase');
   const calcValPost = document.getElementById('calcValPost');
+  const tolerabilityOptionsGrid = document.getElementById('tolerabilityOptionsGrid');
+  const tolerabilityContextNote = document.getElementById('tolerabilityContextNote');
   const cardDeltaPoints = document.getElementById('cardDeltaPoints');
   const calcDeltaPoints = document.getElementById('calcDeltaPoints');
   const cardDeltaPercent = document.getElementById('cardDeltaPercent');
@@ -119,6 +157,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const cardMcidBadge = document.getElementById('cardMcidBadge');
   const calcMcidBadge = document.getElementById('calcMcidBadge');
   const calcStudyRef = document.getElementById('calcStudyRef');
+  const calcGradeBadge = document.getElementById('calcGradeBadge');
+  const calcAmstarBadge = document.getElementById('calcAmstarBadge');
   const calcStudyCohen = document.getElementById('calcStudyCohen');
   const calcStudyMcid = document.getElementById('calcStudyMcid');
   const calcGoalFeedback = document.getElementById('calcGoalFeedback');
@@ -133,11 +173,18 @@ document.addEventListener('DOMContentLoaded', () => {
   const stepNode3 = document.getElementById('stepNode3');
   const stepNode4 = document.getElementById('stepNode4');
 
-  // Elementos do Painel de Monitoramento Clínico
+  // Elementos do Painel de Monitoramento Clínico & Guia Estratégico de Tolerabilidade/Dose
   const monitoringReeval = document.getElementById('monitoringReeval');
   const monitoringDoseAdjust = document.getElementById('monitoringDoseAdjust');
   const monitoringStopRule = document.getElementById('monitoringStopRule');
   const monitoringNotesText = document.getElementById('monitoringNotesText');
+  const tolerabilityDoseGuidePanel = document.getElementById('tolerabilityDoseGuidePanel');
+  const tolGuideTitle = document.getElementById('tolGuideTitle');
+  const tolGuideBankLink = document.getElementById('tolGuideBankLink');
+  const tolGuideTolerance = document.getElementById('tolGuideTolerance');
+  const tolGuideDose = document.getElementById('tolGuideDose');
+  const tolGuideCalibration = document.getElementById('tolGuideCalibration');
+  const btnScrollToTolGuide = document.getElementById('btnScrollToTolGuide');
 
   // Widget de Idioma Retrátil Oficial (Mimetização Estrita do Portal Rede NAPeN)
   const langDropdownWrapper = document.getElementById('langDropdownWrapper');
@@ -199,7 +246,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function openDropdown() {
-    closeCalcDropdown();
     if (navItemPrescription) {
       navItemPrescription.classList.add('dropdown-open');
     }
@@ -214,46 +260,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  function closeCalcDropdown() {
-    if (navItemCalc) {
-      navItemCalc.classList.remove('dropdown-open');
-    }
-    if (dropdownCalcList) {
-      dropdownCalcList.querySelectorAll('.dropdown-item-has-submenu').forEach(item => {
-        item.classList.remove('submenu-open');
-      });
-      dropdownCalcList.querySelectorAll('.dropdown-item-has-subsubmenu').forEach(item => {
-        item.classList.remove('subsubmenu-open');
-      });
-      dropdownCalcList.querySelectorAll('.open-left').forEach(item => {
-        item.classList.remove('open-left');
-      });
-      dropdownCalcList.classList.add('dropdown-force-closed');
-      setTimeout(() => {
-        dropdownCalcList.classList.remove('dropdown-force-closed');
-      }, 300);
-    }
-  }
-
-  function openCalcDropdown() {
-    closeDropdown();
-    if (navItemCalc) {
-      navItemCalc.classList.add('dropdown-open');
-    }
-  }
-
-  function toggleCalcDropdown() {
-    if (!navItemCalc) return;
-    if (navItemCalc.classList.contains('dropdown-open')) {
-      closeCalcDropdown();
-    } else {
-      openCalcDropdown();
-    }
-  }
-
   function closeAllDropdowns() {
     closeDropdown();
-    closeCalcDropdown();
   }
 
   function populateDropdownMenu() {
@@ -364,257 +372,43 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ==========================================================================
-  // 1b. Popula Dropdown da Calculadora de Resposta Clínica (3 Níveis em Cascata)
-  // Eixo ➔ Condição / Foco ➔ Desfechos & Escala Direta
-  // ==========================================================================
-  function navigateToCalculator(conditionId, factorId, scaleId) {
-    // 1. Alterna para a visualização de prescrição/algoritmo
-    switchTab('prescription');
-
-    // 2. Abre a condição selecionada
-    openConditionAlgorithm(conditionId);
-
-    // 3. Define o fator limitante (medida) específico
-    if (factorId) {
-      engine.setFactor(factorId);
-      const cond = engine.getCondition(conditionId);
-      renderNode1Options(cond);
-    }
-
-    // 4. Se houver escala específica selecionada (ex: SARA ou BBS)
-    if (scaleId) {
-      engine.setActiveScale(scaleId);
-    }
-
-    // 5. Atualiza display e calculadora
-    updatePrescriptionDisplay();
-
-    // 6. Rola suavemente até o início EXATO da calculadora (com respiro abaixo do cabeçalho)
-    setTimeout(() => {
-      if (dualCalcContainer) {
-        const headerEl = document.querySelector('.site-header');
-        const headerHeight = headerEl ? headerEl.offsetHeight : 140;
-        const rect = dualCalcContainer.getBoundingClientRect();
-        const targetScrollY = window.pageYOffset + rect.top - headerHeight - 16;
-
-        window.scrollTo({
-          top: Math.max(0, targetScrollY),
-          behavior: 'smooth'
-        });
-
-        dualCalcContainer.classList.add('calc-highlight-pulse');
-        setTimeout(() => {
-          dualCalcContainer.classList.remove('calc-highlight-pulse');
-        }, 2500);
-      }
-    }, 180);
-
-    // 8. Fecha os menus dropdowns
-    closeAllDropdowns();
-  }
-
-  function populateCalcDropdown() {
-    if (!dropdownCalcList) return;
-    dropdownCalcList.innerHTML = '';
-
-    const axesOrder = [
-      'Acidente Vascular Cerebral',
-      'Distúrbios do Movimento',
-      'Psiquiatria & Saúde Mental',
-      'Dor Crônica & Neuropática',
-      'Neurodesenvolvimento',
-      'Cognição & Demências'
-    ];
-
-    const axesMap = {};
-    axesOrder.forEach(axis => { axesMap[axis] = []; });
-
-    data.condicoes.forEach(c => {
-      let axis = c.eixo || 'Outros';
-      if (axis.includes('Cerebrovasculares') || axis.includes('AVC')) {
-        axis = 'Acidente Vascular Cerebral';
-      }
-      if (!axesMap[axis]) axesMap[axis] = [];
-      axesMap[axis].push(c);
-    });
-
-    axesOrder.forEach(axisName => {
-      const conditionsInAxis = axesMap[axisName] || [];
-      if (conditionsInAxis.length === 0) return;
-
-      // Item do 1º Nível (Eixo Clínico)
-      const liAxis = document.createElement('li');
-      liAxis.className = 'dropdown-item-napen dropdown-item-has-submenu';
-
-      const aAxis = document.createElement('a');
-      aAxis.className = 'dropdown-link-napen';
-      aAxis.href = '#';
-      aAxis.innerHTML = `
-        <span>${axisName}</span>
-        <span class="axis-arrow-icon" style="font-size: 0.95rem; font-weight: 700; margin-left: 12px; color: var(--napen-teal-bar); transition: transform 0.25s ease; display: inline-block;">›</span>
-      `;
-
-      // Alterna submenu (2º Nível) no clique
-      aAxis.addEventListener('click', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        const wasOpen = liAxis.classList.contains('submenu-open');
-        dropdownCalcList.querySelectorAll('.dropdown-item-has-submenu').forEach(item => {
-          item.classList.remove('submenu-open');
-        });
-        if (!wasOpen) {
-          liAxis.classList.add('submenu-open');
-        }
-      });
-
-      // Abre submenu no hover no desktop
-      liAxis.addEventListener('mouseenter', () => {
-        dropdownCalcList.querySelectorAll('.dropdown-item-has-submenu').forEach(item => {
-          if (item !== liAxis) item.classList.remove('submenu-open');
-        });
-        liAxis.classList.add('submenu-open');
-      });
-
-      // Submenu do 2º Nível (Condições / Focos do Eixo)
-      const ulSub = document.createElement('ul');
-      ulSub.className = 'dropdown-submenu';
-
-      conditionsInAxis.forEach(c => {
-        const liCond = document.createElement('li');
-        liCond.className = 'dropdown-item-napen dropdown-item-has-subsubmenu';
-
-        const aCond = document.createElement('a');
-        aCond.className = 'dropdown-sublink-napen dropdown-sublink-has-subsubmenu';
-        aCond.href = '#';
-
-        // Título limpo da condição (remove prefixos redundantes)
-        let cleanTitle = c.condicao;
-        if (axisName === 'Acidente Vascular Cerebral' || axisName === 'Doenças Cerebrovasculares (AVC)') {
-          cleanTitle = cleanTitle.replace(/^Acidente Vascular Cerebral\s*(\(AVC\))?\s*—\s*/i, '');
-        }
-
-        // Resumo dos focos clínicos da condição (mimetizado da Prescrição Interativa)
-        const factorsSummary = (c.fatores_limitantes || [])
-          .map(f => f.label.split('(')[0].trim())
-          .slice(0, 3)
-          .join(' • ');
-
-        aCond.innerHTML = `
-          <div style="display: flex; flex-direction: column; gap: 2px;">
-            <span class="dropdown-sublink-title">${cleanTitle}</span>
-            <span class="dropdown-sublink-sub">${factorsSummary}</span>
-          </div>
-          <span class="axis-arrow-icon" style="font-size: 0.95rem; font-weight: 700; margin-left: 10px; color: var(--napen-teal-bar); transition: transform 0.25s ease; display: inline-block;">›</span>
-        `;
-
-        // Submenu do 3º Nível (Desfechos e Escalas Diretas)
-        const ulSubSub = document.createElement('ul');
-        ulSubSub.className = 'dropdown-subsubmenu';
-
-        const factors = c.fatores_limitantes || [];
-        factors.forEach(f => {
-          const m = c.modalidades ? c.modalidades[f.id] : null;
-          if (!m) return;
-
-          const measureTitle = f.label.split('(')[0].trim();
-
-          // Se houver múltiplas escalas detalhadas (ex: SARA e BBS nas Ataxias)
-          if (m.escalas_detalhadas && m.escalas_detalhadas.length > 1) {
-            m.escalas_detalhadas.forEach(sc => {
-              const liMeasure = document.createElement('li');
-              const aMeasure = document.createElement('a');
-              aMeasure.className = 'dropdown-sublink-napen';
-              aMeasure.href = '#';
-              const scaleName = sc.nome_escala || sc.id.toUpperCase();
-              aMeasure.innerHTML = `
-                <span class="dropdown-sublink-title">${measureTitle}</span>
-                <span class="dropdown-sublink-sub" style="color: var(--napen-teal-dark); font-weight: 600;">${scaleName}</span>
-              `;
-              aMeasure.addEventListener('click', (e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                navigateToCalculator(c.id, f.id, sc.id);
-              });
-              liMeasure.appendChild(aMeasure);
-              ulSubSub.appendChild(liMeasure);
-            });
-          } else {
-            const liMeasure = document.createElement('li');
-            const aMeasure = document.createElement('a');
-            aMeasure.className = 'dropdown-sublink-napen';
-            aMeasure.href = '#';
-            const scaleName = m.escala_recomendada || 'Escala de Avaliação Clínica';
-            aMeasure.innerHTML = `
-              <span class="dropdown-sublink-title">${measureTitle}</span>
-              <span class="dropdown-sublink-sub" style="color: var(--napen-teal-dark); font-weight: 600;">${scaleName}</span>
-            `;
-            aMeasure.addEventListener('click', (e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              navigateToCalculator(c.id, f.id, null);
-            });
-            liMeasure.appendChild(aMeasure);
-            ulSubSub.appendChild(liMeasure);
-          }
-        });
-
-        // Alterna o 3º nível no clique (mobile e touch)
-        aCond.addEventListener('click', (e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          const wasOpen = liCond.classList.contains('subsubmenu-open');
-          ulSub.querySelectorAll('.dropdown-item-has-subsubmenu').forEach(item => {
-            item.classList.remove('subsubmenu-open');
-          });
-          if (!wasOpen) {
-            liCond.classList.add('subsubmenu-open');
-            const subRect = ulSubSub.getBoundingClientRect();
-            if (subRect.right > window.innerWidth - 10) {
-              ulSubSub.classList.add('open-left');
-            } else {
-              ulSubSub.classList.remove('open-left');
-            }
-          }
-        });
-
-        // Hover suave no desktop
-        liCond.addEventListener('mouseenter', () => {
-          ulSub.querySelectorAll('.dropdown-item-has-subsubmenu').forEach(item => {
-            if (item !== liCond) item.classList.remove('subsubmenu-open');
-          });
-          liCond.classList.add('subsubmenu-open');
-          const subRect = ulSubSub.getBoundingClientRect();
-          if (subRect.right > window.innerWidth - 10) {
-            ulSubSub.classList.add('open-left');
-          } else {
-            ulSubSub.classList.remove('open-left');
-          }
-        });
-
-        liCond.appendChild(aCond);
-        liCond.appendChild(ulSubSub);
-        ulSub.appendChild(liCond);
-      });
-
-      liAxis.appendChild(aAxis);
-      liAxis.appendChild(ulSub);
-      dropdownCalcList.appendChild(liAxis);
-    });
-  }
-
-  // ==========================================================================
   // 2. Abertura do Algoritmo Clínico Sob Demanda
   // ==========================================================================
   // ==========================================================================
   // 2. Abertura do Algoritmo Clínico Sob Demanda & Cascata dos Roadmaps
   // ==========================================================================
-  function openConditionAlgorithm(conditionId) {
+  function openConditionAlgorithm(conditionId, opts = {}) {
     state.selectedConditionId = conditionId;
-    state.therapeuticStage = 'primary';
-    engine.setCondition(conditionId);
+
+    const targetEntryMode = opts.forceEntryMode
+      || (state.homeEntryMode === 'returning' ? 'returning' : 'new');
+    const targetStage = opts.continuingStage
+      || (targetEntryMode === 'returning' ? 'evaluation' : 'primary');
+
+    engine.setCondition(conditionId, {
+      preserveEntryMode: true,
+      entryMode: targetEntryMode,
+      modalityType: opts.modalityType || 'rtms',
+      continuingStage: targetStage
+    });
 
     const cond = engine.getCondition(conditionId);
     if (!cond) return;
+
+    if (opts.factorKey) {
+      const pKey = opts.primaryKey || opts.factorKey;
+      engine.setFactor(pKey, true);
+      if (opts.factorKey !== pKey) {
+        engine.setFactor(opts.factorKey, false);
+      }
+    }
+
+    if (targetEntryMode === 'returning' && targetStage !== 'evaluation' && targetStage !== 'primary') {
+      state.therapeuticStage = targetStage;
+      engine.setOutcome('danger');
+    } else {
+      state.therapeuticStage = 'primary';
+    }
 
     if (algoCondEixo) algoCondEixo.textContent = cond.eixo;
     if (algoCondTitle) algoCondTitle.textContent = cond.condicao;
@@ -648,16 +442,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
     window.scrollTo({ top: 180, behavior: 'smooth' });
 
+    renderContinuityBar(cond);
     renderModalitySelector(cond);
     renderCascadingFlow(cond);
     renderNode1Options(cond);
+    renderTolerabilityUI();
     updatePrescriptionDisplay();
+    if (state.therapeuticStage !== 'primary') {
+      updateOutcomeDisplay();
+    }
   }
 
   function clearSelectedCondition() {
     state.selectedConditionId = null;
     if (algorithmActiveContainer) algorithmActiveContainer.classList.remove('visible');
     if (searchHeroPanel) searchHeroPanel.style.display = 'flex';
+    if (typeof renderHomeContinuityPanel === 'function') renderHomeContinuityPanel();
 
     document.querySelectorAll('.dropdown-sublink-napen').forEach(link => {
       link.classList.remove('active-item');
@@ -671,10 +471,630 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ==========================================================================
+  // 2a. Helpers Compartilhados de Observações Contextuais & Árvore Dinâmica
+  // ==========================================================================
+  function escHtml(str) {
+    return String(str || '')
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+  function formatObservationTextHtml(rawText) {
+    const match = String(rawText || '').match(
+      /^(Otimização de Dose|Regra de Aplicação|Ajuste de Segurança|Adaptação Clínica(?:\s*\([^)]+\))?|Abrangência Muscular(?:\s*\([^)]+\))?|Reserva Legal(?:\s*\([^)]+\))?):\s*(.+)$/i
+    );
+    if (!match) return escHtml(rawText);
+    return `<span class="obs-semantic-tag">${escHtml(match[1])}</span>${escHtml(match[2])}`;
+  }
+
+  function buildObservationsHtml(obsList, opts = {}) {
+    if (!Array.isArray(obsList) || obsList.length === 0) return '';
+    const seen = new Set();
+    const items = [];
+    obsList.forEach(obs => {
+      const key = obs.id || obs.texto;
+      if (!obs || !obs.texto || seen.has(key)) return;
+      seen.add(key);
+
+      const sev = String(obs.severidade || 'info').toLowerCase();
+      const sevCls = sev === 'danger' || sev === 'critical' || sev === 'alerta'
+        ? 'obs-sev-danger'
+        : (sev === 'warning' || sev === 'atencao' || sev === 'alert' ? 'obs-sev-warning' : 'obs-sev-info');
+
+      const doiUrl = obs.referencia_doi
+        ? (obs.referencia_doi.startsWith('http') ? obs.referencia_doi : `https://doi.org/${obs.referencia_doi}`)
+        : '';
+      const doiHtml = doiUrl
+        ? `<div class="obs-action-row"><a href="${escHtml(doiUrl)}" target="_blank" rel="noopener noreferrer" class="obs-action-link">${escHtml(obs.referencia_rotulo || 'Consultar referência oficial')} ↗</a></div>`
+        : '';
+
+      const redirectHtml = obs.acao_condicao_id
+        ? `<div class="obs-action-row"><button type="button" class="obs-redirect-btn" data-obs-redirect-cond="${escHtml(obs.acao_condicao_id)}">${escHtml(obs.acao_rotulo || 'Abrir Protocolo Recomendado')} ➔</button></div>`
+        : '';
+
+      items.push(`
+        <div class="obs-contextual-item ${sevCls}${opts.compact ? ' obs-compact' : ''}">
+          <div class="obs-contextual-text">${formatObservationTextHtml(obs.texto)}</div>
+          ${doiHtml}${redirectHtml}
+        </div>
+      `);
+    });
+
+    if (items.length === 0) return '';
+    return `<div class="obs-contextual-list${opts.compact ? ' obs-compact' : ''}">${items.join('')}</div>`;
+  }
+
+  function bindObsRedirectButtons(rootEl) {
+    if (!rootEl) return;
+    rootEl.querySelectorAll('[data-obs-redirect-cond]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const targetCondId = btn.getAttribute('data-obs-redirect-cond');
+        if (targetCondId) {
+          switchTab('prescription');
+          openConditionAlgorithm(targetCondId, { forceEntryMode: 'new' });
+        }
+      });
+    });
+  }
+
+  function renderObservationsSlot(containerEl, obsList, opts = {}) {
+    if (!containerEl) return;
+    const html = buildObservationsHtml(obsList, opts);
+    if (!html) {
+      containerEl.innerHTML = '';
+      containerEl.style.display = 'none';
+      return;
+    }
+    containerEl.innerHTML = html;
+    containerEl.style.display = 'block';
+    bindObsRedirectButtons(containerEl);
+  }
+
+  function collectTreeProtocolLeaves(tree) {
+    if (!tree || !Array.isArray(tree.etapas) || tree.etapas.length === 0) return [];
+    const stepMap = {};
+    tree.etapas.forEach(s => {
+      stepMap[s.etapa_id] = s;
+    });
+
+    const leaves = [];
+    const seenKeys = new Set();
+
+    function walk(stepId, rootOptId, crumbs, visited) {
+      if (!stepId || visited.has(stepId)) return;
+      const step = stepMap[stepId];
+      if (!step) return;
+      visited.add(stepId);
+
+      (step.opcoes || []).forEach(opt => {
+        const nextRoot = rootOptId || opt.id;
+        const cleanRotulo = String(opt.rotulo || '').trim();
+        const nextCrumbs = cleanRotulo ? [...crumbs, cleanRotulo] : [...crumbs];
+        const targetKey = opt.modalidade_chave || opt.protocolo_alvo;
+        if (targetKey && !seenKeys.has(targetKey)) {
+          seenKeys.add(targetKey);
+          leaves.push({
+            key: targetKey,
+            primary: nextRoot,
+            crumbs: nextCrumbs,
+            opt
+          });
+        }
+        if (opt.proxima_etapa) {
+          walk(opt.proxima_etapa, nextRoot, nextCrumbs, new Set(visited));
+        }
+      });
+    }
+
+    walk(tree.etapas[0].etapa_id, null, [], new Set());
+    return leaves;
+  }
+
+  function resolveModalityForFactor(cond, factorId) {
+    if (!cond) return null;
+    if (cond.modalidades && cond.modalidades[factorId]) return cond.modalidades[factorId];
+    const trees = Object.values(cond.arvore_algoritmo || {});
+    for (const tree of trees) {
+      const leaves = collectTreeProtocolLeaves(tree);
+      const match = leaves.find(l => l.primary === factorId || l.key === factorId);
+      if (match && cond.modalidades?.[match.key]) return cond.modalidades[match.key];
+    }
+    const allMods = Object.values(cond.modalidades || {});
+    return allMods.length > 0 ? allMods[0] : null;
+  }
+
+  function formatDottedIndicator(linhaFluxograma) {
+    if (linhaFluxograma !== 'pontilhada') return '';
+    return '<span class="protocol-dotted-flag" title="Linha pontilhada no fluxograma oficial NAPeN: evidência preliminar ou conduta exploratória">Linha pontilhada · Conduta exploratória / evidência limitada</span>';
+  }
+
+  // ==========================================================================
+  // 2b. Triagem de Continuidade Clínica (Homepage + Barra Compacta Interna)
+  // ==========================================================================
+  function getContinuityProtocolOptions(cond, modalityOverride = null) {
+    if (!cond) return [];
+    const trees = cond.arvore_algoritmo || {};
+    const modType = modalityOverride || engine.activeModalityType || 'rtms';
+    const tree = trees[modType] || Object.values(trees)[0];
+
+    if (tree) {
+      const leaves = collectTreeProtocolLeaves(tree);
+      if (leaves.length > 0) {
+        return leaves.map(leaf => {
+          const m = cond.modalidades?.[leaf.key];
+          const pathSummary = leaf.crumbs.map(c => c.split('(')[0].trim()).filter(Boolean).join(' › ');
+          const techName = m?.tecnica ? ` — ${m.tecnica}` : '';
+          const dottedTag = m?.linha_fluxograma === 'pontilhada' ? ' [Linha pontilhada]' : '';
+          return {
+            key: leaf.key,
+            primary: leaf.primary,
+            label: `${pathSummary}${techName}${dottedTag}`
+          };
+        });
+      }
+    }
+
+    return (cond.fatores_limitantes || []).map(f => ({
+      key: f.id,
+      primary: f.id,
+      label: f.label
+    }));
+  }
+
+  function scrollToCalculatorHighlight() {
+    setTimeout(() => {
+      if (!dualCalcContainer) return;
+      const headerEl = document.querySelector('.site-header');
+      const headerHeight = headerEl ? headerEl.offsetHeight : 140;
+      const rect = dualCalcContainer.getBoundingClientRect();
+      const targetScrollY = window.pageYOffset + rect.top - headerHeight - 16;
+      window.scrollTo({ top: Math.max(0, targetScrollY), behavior: 'smooth' });
+      dualCalcContainer.classList.add('calc-highlight-pulse');
+      setTimeout(() => dualCalcContainer.classList.remove('calc-highlight-pulse'), 2500);
+    }, 100);
+  }
+
+  function getDynamicAltStagesForActiveModality() {
+    const m = engine.getActiveModality();
+    const chain = engine.getProtocolChain();
+    const altSteps = chain.filter(s => s.stageKey !== 'primary');
+    if (altSteps.length > 0) {
+      return altSteps.map((s, idx) => ({
+        stageKey: s.stageKey,
+        shortLabel: `Alternativo ${idx + 1}`,
+        nome: s.nome || `Protocolo Alternativo ${idx + 1}`,
+        etapaRotulo: s.etapa_rotulo || `Alternativo ${idx + 1}`
+      }));
+    }
+    if (chain.length > 0) {
+      return [];
+    }
+    const fallback = [];
+    if (m?.protocolo_alternativo && !String(m.protocolo_alternativo.nome || '').includes('Protocolo Único')) {
+      fallback.push({
+        stageKey: 'alt1',
+        shortLabel: 'Alternativo 1',
+        nome: m.protocolo_alternativo.nome || 'Protocolo Alternativo 1',
+        etapaRotulo: 'Protocolo Alternativo 1'
+      });
+    }
+    if (m?.protocolo_alternativo_2 && !String(m.protocolo_alternativo_2.nome || '').includes('Protocolo Único')) {
+      fallback.push({
+        stageKey: 'alt2',
+        shortLabel: 'Alternativo 2',
+        nome: m.protocolo_alternativo_2.nome || 'Protocolo Alternativo 2',
+        etapaRotulo: 'Protocolo Alternativo 2'
+      });
+    }
+    return fallback;
+  }
+
+  function renderContinuingFocusSlot(cond) {
+    if (!continuingStageFocusSlot) return;
+    if (engine.entryMode !== 'returning' || engine.continuingStage === 'evaluation' || engine.continuingStage === 'primary') {
+      continuingStageFocusSlot.style.display = 'none';
+      continuingStageFocusSlot.innerHTML = '';
+      continuingStageFocusSlot.className = 'continuing-focus-slot';
+      return;
+    }
+
+    const stage = engine.continuingStage;
+    const stageData = engine.getPrescriptionForStage(stage);
+    if (!stageData) return;
+
+    const altStages = getDynamicAltStagesForActiveModality();
+    continuingStageFocusSlot.style.display = 'flex';
+    continuingStageFocusSlot.className = `continuing-focus-slot stage-${stage}`;
+
+    let bodyHtml = '';
+    let nextActionsHtml = '';
+
+    if (stage && stage.startsWith('alt')) {
+      const dottedHtml = formatDottedIndicator(stageData.linhaFluxograma);
+      bodyHtml = `
+        ${dottedHtml ? `<div style="margin-bottom: 6px;">${dottedHtml}</div>` : ''}
+        <div class="continuing-focus-meta">
+          <div class="continuing-meta-item"><strong>Técnica:</strong><br>${escHtml(stageData.tecnica)}</div>
+          <div class="continuing-meta-item"><strong>Alvo Anatômico:</strong><br>${escHtml(stageData.alvo)}</div>
+          <div class="continuing-meta-item"><strong>Parâmetros:</strong><br>${escHtml(stageData.parametros)}</div>
+          <div class="continuing-meta-item"><strong>Observações Clínicas:</strong><br>${escHtml(stageData.observacoes)}</div>
+          ${stageData.efeitoEsperado ? `<div class="continuing-meta-item"><strong>Efeito Esperado:</strong><br>${escHtml(stageData.efeitoEsperado)}</div>` : ''}
+          ${stageData.referencia ? `<div class="continuing-meta-item"><strong>Referência:</strong><br>${escHtml(stageData.referencia)}</div>` : ''}
+        </div>
+      `;
+      const curIdx = altStages.findIndex(a => a.stageKey === stage);
+      const nextAlt = (curIdx >= 0 && curIdx + 1 < altStages.length) ? altStages[curIdx + 1] : null;
+      nextActionsHtml = `
+        <button type="button" class="btn-step-action secondary" id="btnTopJumpCalc">Avaliar Resposta (${escHtml(stageData.badge)}) na Calculadora</button>
+        ${nextAlt
+          ? `<button type="button" class="btn-step-action primary" data-next-cont-stage="${nextAlt.stageKey}">Sem Resposta ➔ ${escHtml(nextAlt.nome)}</button>`
+          : `<button type="button" class="btn-step-action danger" data-next-cont-stage="failure">Sem Resposta ➔ Encerramento / Esgotamento da Sequência</button>`}
+      `;
+    } else if (stage === 'failure') {
+      const conductList = (stageData.condutas || []).map(c => `<li>${escHtml(c)}</li>`).join('');
+      bodyHtml = `
+        <div style="font-size: 0.86rem; color: #7F1D1D; line-height: 1.5;">
+          <strong>Critério de Enquadramento:</strong> ${escHtml(stageData.criterio)}
+        </div>
+        <div class="failure-conduct-box">
+          <div class="failure-conduct-title">Condutas Sistematizadas da Rede NAPeN:</div>
+          <ul style="margin: 4px 0 0 18px; line-height: 1.5;">${conductList}</ul>
+        </div>
+      `;
+      nextActionsHtml = `
+        <button type="button" class="btn-step-action secondary" id="btnTopJumpCalc">Registrar Última Avaliação / Tolerabilidade</button>
+      `;
+    }
+
+    const stageObsHtml = buildObservationsHtml(engine.getContextualObservations({ slot: 'stage', stage }));
+
+    continuingStageFocusSlot.innerHTML = `
+      <div class="continuing-focus-header">
+        <div>
+          <span class="continuing-focus-kicker">Acompanhamento Direto · ${escHtml(stageData.badge)} (Base: ${escHtml(stageData.referenciaPrimaria)})</span>
+          <h3 class="continuing-focus-title">${escHtml(stageData.titulo)}</h3>
+        </div>
+        <button type="button" class="btn-reopen-triage" id="btnReopenFullTriage">Reabrir triagem diagnóstica completa</button>
+      </div>
+      ${bodyHtml}
+      ${stageObsHtml}
+      <div class="adjustment-actions-row">${nextActionsHtml}</div>
+    `;
+
+    bindObsRedirectButtons(continuingStageFocusSlot);
+    document.getElementById('btnReopenFullTriage')?.addEventListener('click', () => {
+      engine.setEntryMode('new');
+      state.therapeuticStage = 'primary';
+      engine.setOutcome(null);
+      renderContinuityBar(cond);
+      renderModalitySelector(cond);
+      renderCascadingFlow(cond);
+      renderNode1Options(cond);
+      renderTolerabilityUI();
+      updatePrescriptionDisplay();
+      updateOutcomeDisplay();
+    });
+    document.getElementById('btnTopJumpCalc')?.addEventListener('click', scrollToCalculatorHighlight);
+    continuingStageFocusSlot.querySelectorAll('[data-next-cont-stage]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const nextStage = btn.getAttribute('data-next-cont-stage');
+        if (nextStage) selectContinuityStage(cond, nextStage);
+      });
+    });
+  }
+
+  function selectContinuityStage(cond, stage) {
+    engine.setEntryMode('returning', stage);
+    if (stage === 'evaluation') {
+      state.therapeuticStage = 'primary';
+      renderContinuityBar(cond);
+      updatePrescriptionDisplay();
+      scrollToCalculatorHighlight();
+    } else {
+      state.therapeuticStage = stage;
+      engine.setOutcome('danger');
+      renderContinuityBar(cond);
+      updatePrescriptionDisplay();
+      updateOutcomeDisplay();
+    }
+  }
+
+  function renderContinuityBar(cond) {
+    if (!cond) return;
+    const isReturning = engine.entryMode === 'returning';
+
+    if (btnSwitchToContinuing) {
+      btnSwitchToContinuing.style.display = isReturning ? 'none' : 'inline-flex';
+    }
+
+    if (!continuityEntryBar) return;
+
+    if (!isReturning) {
+      continuityEntryBar.style.display = 'none';
+      if (continuityInlineContext) continuityInlineContext.innerHTML = '';
+      renderContinuingFocusSlot(cond);
+      return;
+    }
+
+    continuityEntryBar.style.display = 'flex';
+    if (continuityCompactBar) continuityCompactBar.style.display = 'block';
+    if (!continuityInlineContext) return;
+
+    const mods = cond.modalidades_suportadas || [];
+    const modSelectHtml = mods.length > 1
+      ? `<label class="continuity-inline-label" for="contSelectModality">Modalidade:</label>
+         <select id="contSelectModality" class="continuity-inline-select">
+           ${mods.map(m => `<option value="${m.id}" ${engine.activeModalityType === m.id ? 'selected' : ''}>${m.id.toUpperCase()}</option>`).join('')}
+         </select>`
+      : '';
+
+    const protOptions = getContinuityProtocolOptions(cond);
+    const activeProtKey = engine.activeFactorId || engine.primaryFactorId;
+    const protSelectHtml = `
+      <label class="continuity-inline-label" for="contSelectProtocol">Protocolo prévio:</label>
+      <select id="contSelectProtocol" class="continuity-inline-select">
+        ${protOptions.map(o => `<option value="${o.key}" data-primary="${o.primary}" ${activeProtKey === o.key ? 'selected' : ''}>${escHtml(o.label)}</option>`).join('')}
+      </select>
+    `;
+
+    const curStage = engine.continuingStage || 'evaluation';
+    const altStages = getDynamicAltStagesForActiveModality();
+    const altBtnsHtml = altStages.map(a => `
+      <button type="button" class="btn-stage-shortcut ${curStage === a.stageKey ? 'active' : ''}" data-stage="${a.stageKey}" title="${escHtml(a.nome)}">${escHtml(a.shortLabel)}</button>
+    `).join('');
+
+    continuityInlineContext.innerHTML = `
+      <div class="continuity-context-fields">
+        ${modSelectHtml}
+        ${protSelectHtml}
+      </div>
+      <div class="continuity-stage-shortcuts">
+        <span class="continuity-inline-label">Cenário do paciente:</span>
+        <button type="button" class="btn-stage-shortcut ${curStage === 'evaluation' ? 'active' : ''}" data-stage="evaluation">Avaliar Resposta (Calculadora)</button>
+        ${altBtnsHtml}
+        <button type="button" class="btn-stage-shortcut stage-danger ${curStage === 'failure' ? 'active' : ''}" data-stage="failure">Sem Resposta a Toda a Sequência (Encerramento)</button>
+        <button type="button" class="btn-reopen-triage" id="btnReopenFullTriageBar">Voltar à triagem inicial</button>
+      </div>
+    `;
+
+    const selMod = document.getElementById('contSelectModality');
+    if (selMod) {
+      selMod.addEventListener('change', (e) => {
+        engine.setModalityType(e.target.value);
+        renderContinuityBar(cond);
+        renderNode1Options(cond);
+        renderTolerabilityUI();
+        updatePrescriptionDisplay();
+        if (state.therapeuticStage !== 'primary') updateOutcomeDisplay();
+      });
+    }
+
+    const selProt = document.getElementById('contSelectProtocol');
+    if (selProt) {
+      selProt.addEventListener('change', (e) => {
+        const selectedOpt = e.target.options[e.target.selectedIndex];
+        const key = selectedOpt.value;
+        const primaryKey = selectedOpt.getAttribute('data-primary') || key;
+        engine.setFactor(primaryKey, true);
+        if (key !== primaryKey) {
+          engine.setFactor(key, false);
+        }
+        renderContinuityBar(cond);
+        renderNode1Options(cond);
+        renderTolerabilityUI();
+        updatePrescriptionDisplay();
+        if (state.therapeuticStage !== 'primary') updateOutcomeDisplay();
+      });
+    }
+
+    continuityInlineContext.querySelectorAll('.btn-stage-shortcut').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const targetStage = btn.getAttribute('data-stage');
+        selectContinuityStage(cond, targetStage);
+      });
+    });
+
+    document.getElementById('btnReopenFullTriageBar')?.addEventListener('click', () => {
+      engine.setEntryMode('new');
+      state.therapeuticStage = 'primary';
+      engine.setOutcome(null);
+      renderContinuityBar(cond);
+      renderModalitySelector(cond);
+      renderCascadingFlow(cond);
+      renderNode1Options(cond);
+      renderTolerabilityUI();
+      updatePrescriptionDisplay();
+      updateOutcomeDisplay();
+    });
+
+    renderContinuingFocusSlot(cond);
+  }
+
+  function populateHomeContinuityConditions() {
+    if (!homeContCondition || !data?.condicoes?.length) return;
+    homeContCondition.innerHTML = '';
+
+    const groups = new Map();
+    data.condicoes.forEach(c => {
+      const axis = c.eixo || 'Condições Clínicas';
+      if (!groups.has(axis)) groups.set(axis, []);
+      groups.get(axis).push(c);
+    });
+
+    groups.forEach((conds, axisName) => {
+      const og = document.createElement('optgroup');
+      og.label = axisName;
+      conds.forEach(c => {
+        const opt = document.createElement('option');
+        opt.value = c.id;
+        opt.textContent = c.condicao;
+        og.appendChild(opt);
+      });
+      homeContCondition.appendChild(og);
+    });
+
+    if (!state.homeSelectedConditionId || !engine.getCondition(state.homeSelectedConditionId)) {
+      state.homeSelectedConditionId = data.condicoes[0].id;
+    }
+    homeContCondition.value = state.homeSelectedConditionId;
+  }
+
+  function renderHomeContinuityStageButtons(cond) {
+    if (!homeContStageShortcuts || !cond) return;
+    const selectedProtOpt = homeContProtocol && homeContProtocol.options[homeContProtocol.selectedIndex];
+    const protOptions = getContinuityProtocolOptions(cond, state.homeSelectedModality);
+    const factorKey = (selectedProtOpt && selectedProtOpt.value) || protOptions[0]?.key || null;
+    const mod = (factorKey && cond.modalidades?.[factorKey]) || Object.values(cond.modalidades || {})[0];
+    const chain = (mod && Array.isArray(mod.cadeia_sequencial)) ? mod.cadeia_sequencial : [];
+    const alt1Step = chain.length > 1 ? chain[1] : null;
+    const alt1Fallback = (chain.length === 0 && mod?.protocolo_alternativo && !String(mod.protocolo_alternativo.nome || '').includes('Protocolo Único'))
+      ? mod.protocolo_alternativo
+      : null;
+    const hasAlt = Boolean(alt1Step || alt1Fallback);
+    const altLabel = alt1Step?.nome || alt1Fallback?.nome || 'Protocolo Alternativo 1';
+
+    homeContStageShortcuts.innerHTML = hasAlt
+      ? `<button type="button" class="btn-stage-shortcut" data-home-stage="evaluation">Avaliar Resposta do Protocolo (Calculadora)</button>
+         <button type="button" class="btn-stage-shortcut stage-danger" data-home-stage="alt1">Não Respondeu ao Protocolo ➔ Ver ${escHtml(altLabel)}</button>`
+      : `<button type="button" class="btn-stage-shortcut" data-home-stage="evaluation">Avaliar Resposta do Protocolo (Calculadora)</button>
+         <button type="button" class="btn-stage-shortcut stage-danger" data-home-stage="failure">Sem Resposta ao Protocolo Único ➔ Conduta de Encerramento</button>`;
+  }
+
+  function renderHomeContinuityPanel() {
+    if (!homeContinuityPanel) return;
+    const isReturning = state.homeEntryMode === 'returning';
+
+    if (btnHomeEntryNew) btnHomeEntryNew.classList.toggle('active', !isReturning);
+    if (btnHomeEntryReturning) btnHomeEntryReturning.classList.toggle('active', isReturning);
+
+    if (!homeContinuityQuickPanel) return;
+    if (!isReturning) {
+      homeContinuityQuickPanel.style.display = 'none';
+      return;
+    }
+
+    homeContinuityQuickPanel.style.display = 'flex';
+    const condId = state.homeSelectedConditionId || data?.condicoes?.[0]?.id;
+    const cond = engine.getCondition(condId);
+    if (!cond) return;
+
+    if (homeContCondition && homeContCondition.value !== cond.id) {
+      homeContCondition.value = cond.id;
+    }
+
+    const mods = cond.modalidades_suportadas || [];
+    const hasSelectedMod = mods.some(m => m.id === state.homeSelectedModality);
+    if (!hasSelectedMod) {
+      state.homeSelectedModality = mods[0]?.id || 'rtms';
+    }
+
+    if (homeContModalityWrap && homeContModality) {
+      if (mods.length > 1) {
+        homeContModalityWrap.style.display = 'flex';
+        homeContModality.innerHTML = mods
+          .map(m => `<option value="${m.id}" ${state.homeSelectedModality === m.id ? 'selected' : ''}>${m.id.toUpperCase()}</option>`)
+          .join('');
+      } else {
+        homeContModalityWrap.style.display = 'none';
+      }
+    }
+
+    if (homeContProtocol) {
+      const protOptions = getContinuityProtocolOptions(cond, state.homeSelectedModality);
+      homeContProtocol.innerHTML = protOptions
+        .map(o => `<option value="${o.key}" data-primary="${o.primary}">${escHtml(o.label)}</option>`)
+        .join('');
+    }
+    renderHomeContinuityStageButtons(cond);
+  }
+
+  if (btnHomeEntryNew) {
+    btnHomeEntryNew.addEventListener('click', () => {
+      state.homeEntryMode = 'new';
+      renderHomeContinuityPanel();
+    });
+  }
+
+  if (btnHomeEntryReturning) {
+    btnHomeEntryReturning.addEventListener('click', () => {
+      state.homeEntryMode = 'returning';
+      renderHomeContinuityPanel();
+    });
+  }
+
+  if (homeContCondition) {
+    homeContCondition.addEventListener('change', (e) => {
+      state.homeSelectedConditionId = e.target.value;
+      state.homeSelectedModality = 'rtms';
+      renderHomeContinuityPanel();
+    });
+  }
+
+  if (homeContModality) {
+    homeContModality.addEventListener('change', (e) => {
+      state.homeSelectedModality = e.target.value;
+      renderHomeContinuityPanel();
+    });
+  }
+
+  if (homeContProtocol) {
+    homeContProtocol.addEventListener('change', () => {
+      const condId = (homeContCondition && homeContCondition.value) || state.homeSelectedConditionId;
+      renderHomeContinuityStageButtons(engine.getCondition(condId));
+    });
+  }
+
+  if (homeContStageShortcuts) {
+    homeContStageShortcuts.addEventListener('click', (e) => {
+      const btn = e.target.closest('[data-home-stage]');
+      if (!btn) return;
+      const targetStage = btn.getAttribute('data-home-stage');
+      const condId = (homeContCondition && homeContCondition.value) || state.homeSelectedConditionId;
+      if (!condId) return;
+
+      const selectedProtOpt = homeContProtocol && homeContProtocol.options[homeContProtocol.selectedIndex];
+      const factorKey = selectedProtOpt ? selectedProtOpt.value : null;
+      const primaryKey = selectedProtOpt ? (selectedProtOpt.getAttribute('data-primary') || factorKey) : factorKey;
+
+      state.homeEntryMode = 'returning';
+      openConditionAlgorithm(condId, {
+        forceEntryMode: 'returning',
+        modalityType: state.homeSelectedModality || 'rtms',
+        factorKey,
+        primaryKey,
+        continuingStage: targetStage
+      });
+
+      if (targetStage === 'evaluation') {
+        scrollToCalculatorHighlight();
+      }
+    });
+  }
+
+  if (btnSwitchToContinuing) {
+    btnSwitchToContinuing.addEventListener('click', () => {
+      const cond = engine.getCondition(state.selectedConditionId);
+      if (!cond) return;
+      engine.setEntryMode('returning', 'evaluation');
+      renderContinuityBar(cond);
+      renderModalitySelector(cond);
+      renderCascadingFlow(cond);
+      updatePrescriptionDisplay();
+    });
+  }
+
+  // ==========================================================================
   // 3a. Seletor de Modalidade Terapêutica (rTMS vs. tDCS)
   // ==========================================================================
   function renderModalitySelector(cond) {
     if (!modalitySelectorBar || !modalityPillsGroup) return;
+
+    if (engine.entryMode === 'returning') {
+      modalitySelectorBar.style.display = 'none';
+      return;
+    }
 
     const mods = cond.modalidades_suportadas || [];
     if (mods.length <= 1) {
@@ -706,137 +1126,98 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ==========================================================================
-  // 3b. Árvore de Decisão Algorítmica em Cascata Progressiva
-  // Conecta sequencialmente: Fator Limitante ➔ Modalidade ➔ Estratificação ➔ Protocolo
+  // 3b. Árvore de Decisão Algorítmica em Cascata Progressiva (100% Dinâmica)
+  // Conecta sequencialmente: Fator Limitante ➔ Sub-nós do Roadmap ➔ Protocolo
   // ==========================================================================
   function renderCascadingFlow(cond) {
     if (!cascadingFlowContainer) return;
+    if (engine.entryMode === 'returning') {
+      renderObservationsSlot(preTriagemObservationsSlot, []);
+      cascadingFlowContainer.style.display = 'none';
+      cascadingFlowContainer.innerHTML = '';
+      return;
+    }
     cascadingFlowContainer.innerHTML = '';
     cascadingFlowContainer.style.display = 'flex';
 
     const node1Panel = document.getElementById('node1Panel');
     if (node1Panel) node1Panel.style.display = 'none';
 
+    // Slot PRE-TRIAGEM (redirecionamentos transversais, exclusões e avisos pré-avaliação)
+    const preObs = engine.getContextualObservations({ slot: 'pre' });
+    renderObservationsSlot(preTriagemObservationsSlot, preObs);
+
     let currentStepNum = 0;
     const trailCrumbs = [];
+    const seenStepObsIds = new Set();
 
-    // ------------------------------------------------------------------------
-    // ETAPA 1: Fator Limitante Principal / Foco Clínico Alvo (Queixa Funcional)
-    // Determina o Desfecho Clínico Alvo, Escala Recomendada e Linha de Prescrição
-    // ------------------------------------------------------------------------
-    currentStepNum += 1;
-    const step1Card = document.createElement('div');
-    step1Card.className = 'cascading-step-card active-step';
-
-    const step1Header = document.createElement('div');
-    step1Header.className = 'cascading-step-header';
-    step1Header.innerHTML = `
-      <span class="cascading-step-badge">Etapa ${currentStepNum}</span>
-      <div class="cascading-step-title-box">
-        <h4 class="cascading-step-question">${cond.no1_pergunta || 'Qual é o principal fator limitante ou queixa funcional do paciente?'}</h4>
-        <span class="cascading-step-subtext">A seleção do fator limitante define o Desfecho Clínico Alvo, o Instrumento de Avaliação (Escala) e a Linha de Prescrição Cortical.</span>
-      </div>
-    `;
-    step1Card.appendChild(step1Header);
-
-    const step1OptsRow = document.createElement('div');
-    step1OptsRow.className = 'cascading-options-row';
-
-    const factors = cond.fatores_limitantes || [];
-    factors.forEach(f => {
-      const btn = document.createElement('button');
-      btn.type = 'button';
-      const isActive = (engine.primaryFactorId || engine.activeFactorId) === f.id;
-      btn.className = `btn-cascade-choice ${isActive ? 'active' : ''}`;
-
-      btn.innerHTML = `
-        <span>${f.label}</span>
-      `;
-
-      btn.addEventListener('click', () => {
-        engine.setFactor(f.id, true);
-        renderCascadingFlow(cond);
-        renderNode1Options(cond);
-        updatePrescriptionDisplay();
+    const tree = engine.getActiveTree();
+    if (tree && Array.isArray(tree.etapas) && tree.etapas.length > 0) {
+      const stepMap = {};
+      tree.etapas.forEach(s => {
+        stepMap[s.etapa_id] = s;
       });
 
-      step1OptsRow.appendChild(btn);
-    });
+      const visitedSteps = new Set();
+      let nextStepId = tree.etapas[0].etapa_id;
 
-    step1Card.appendChild(step1OptsRow);
-    cascadingFlowContainer.appendChild(step1Card);
-
-    const activeFactorObj = factors.find(f => f.id === (engine.primaryFactorId || engine.activeFactorId)) || factors[0];
-    if (activeFactorObj) {
-      trailCrumbs.push(activeFactorObj.label.split('(')[0].trim());
-    }
-
-    // Modalidade Terapêutica ativa registrada na trilha clínica (seleção centralizada na barra oficial)
-    const mods = cond.modalidades_suportadas || [];
-    const activeModObj = mods.find(m => m.id === engine.activeModalityType) || mods[0];
-    if (activeModObj) {
-      trailCrumbs.push(activeModObj.id.toUpperCase());
-    }
-
-    // ------------------------------------------------------------------------
-    // ETAPAS 2+: Árvore de Decisão Neurofisiológica / Anatômica do Roadmap
-    // ------------------------------------------------------------------------
-    const tree = engine.getActiveTree();
-    if (tree && tree.etapas && tree.etapas.length > 1) {
-      // Começa da segunda etapa da árvore (após o fator limitante macro)
-      let nextStepId = null;
-
-      // Determina próximo nó com base no fator limitante selecionado
-      const rootFactor = engine.primaryFactorId || engine.activeFactorId || 'espasticidade';
-      if (rootFactor === 'espasticidade' || rootFactor === 'fraqueza' || rootFactor === 'dor' || rootFactor.startsWith('sem_pem') || rootFactor.startsWith('m1')) {
-        nextStepId = engine.activeModalityType === 'tdcs' ? 'lesao_tdcs_m1' : 'pem_triage';
-      } else if (rootFactor === 'sensorial') {
-        nextStepId = engine.activeModalityType === 'tdcs' ? 'protocolo_s1_tdcs' : 'lesao_s1';
-      } else if (rootFactor === 'negligencia') {
-        nextStepId = engine.activeModalityType === 'tdcs' ? 'protocolo_ppc_tdcs' : 'protocolo_ppc';
-      }
-
-      while (nextStepId) {
-        const step = tree.etapas.find(s => s.etapa_id === nextStepId);
-        if (!step) break;
+      while (nextStepId && !visitedSteps.has(nextStepId)) {
+        const step = stepMap[nextStepId];
+        if (!step || !Array.isArray(step.opcoes) || step.opcoes.length === 0) break;
+        visitedSteps.add(nextStepId);
 
         currentStepNum += 1;
 
-        const connectorSub = document.createElement('div');
-        connectorSub.className = 'cascading-connector-line';
-        cascadingFlowContainer.appendChild(connectorSub);
+        if (currentStepNum > 1) {
+          const connectorSub = document.createElement('div');
+          connectorSub.className = 'cascading-connector-line';
+          cascadingFlowContainer.appendChild(connectorSub);
+        }
 
-        const subCard = document.createElement('div');
-        subCard.className = 'cascading-step-card active-step';
+        const stepCard = document.createElement('div');
+        stepCard.className = 'cascading-step-card active-step';
 
-        const currentChoiceId = engine.getPathChoice(step.etapa_id) || (step.opcoes && step.opcoes[0] ? step.opcoes[0].id : null);
-        if (!engine.getPathChoice(step.etapa_id) && currentChoiceId) {
+        let currentChoiceId = engine.getPathChoice(step.etapa_id);
+        if (!currentChoiceId || !step.opcoes.some(o => o.id === currentChoiceId)) {
+          currentChoiceId = step.opcoes[0].id;
           engine.setPathChoice(step.etapa_id, currentChoiceId);
         }
 
-        const subHeader = document.createElement('div');
-        subHeader.className = 'cascading-step-header';
-        subHeader.innerHTML = `
+        const isRootStep = step.etapa_id === 'fator_limitante' || currentStepNum === 1;
+        const stepQuestion = isRootStep
+          ? (step.pergunta || cond.no1_pergunta || 'Qual é o principal fator limitante ou queixa funcional do paciente?')
+          : (step.pergunta || 'Selecione a estratificação clínica do protocolo:');
+        const stepSubtitle = step.subtitulo
+          || (isRootStep ? 'A seleção do foco funcional direciona o desfecho clínico, a escala de avaliação e a linha de prescrição.' : '');
+
+        const stepHeader = document.createElement('div');
+        stepHeader.className = 'cascading-step-header';
+        stepHeader.innerHTML = `
           <span class="cascading-step-badge">Etapa ${currentStepNum}</span>
           <div class="cascading-step-title-box">
-            <h4 class="cascading-step-question">${step.pergunta}</h4>
-            ${step.subtitulo ? `<span class="cascading-step-subtext">${step.subtitulo}</span>` : ''}
+            <h4 class="cascading-step-question">${escHtml(stepQuestion)}</h4>
+            ${stepSubtitle ? `<span class="cascading-step-subtext">${escHtml(stepSubtitle)}</span>` : ''}
           </div>
         `;
-        subCard.appendChild(subHeader);
+        stepCard.appendChild(stepHeader);
 
-        const subOptsRow = document.createElement('div');
-        subOptsRow.className = 'cascading-options-row';
+        const stepOptsRow = document.createElement('div');
+        stepOptsRow.className = 'cascading-options-row';
 
         step.opcoes.forEach(opt => {
           const btnOpt = document.createElement('button');
           btnOpt.type = 'button';
           const isOptActive = currentChoiceId === opt.id;
-          btnOpt.className = `btn-cascade-choice ${isOptActive ? 'active' : ''}`;
+          const targetLeafKey = opt.modalidade_chave || opt.protocolo_alvo;
+          const targetLeafMod = targetLeafKey ? cond.modalidades?.[targetLeafKey] : null;
+          const isDottedOpt = opt.linha_fluxograma === 'pontilhada' || targetLeafMod?.linha_fluxograma === 'pontilhada';
 
+          btnOpt.className = `btn-cascade-choice ${isOptActive ? 'active' : ''} ${isDottedOpt ? 'btn-cascade-dotted' : ''}`.trim();
+
+          const subtextoFinal = opt.subtexto || (isDottedOpt ? 'Linha pontilhada · Conduta exploratória' : '');
           btnOpt.innerHTML = `
-            <span>${opt.rotulo}</span>
-            ${opt.subtexto ? `<span class="btn-cascade-sub">${opt.subtexto}</span>` : ''}
+            <span>${escHtml(opt.rotulo)}</span>
+            ${subtextoFinal ? `<span class="btn-cascade-sub">${escHtml(subtextoFinal)}</span>` : ''}
           `;
 
           btnOpt.addEventListener('click', () => {
@@ -852,8 +1233,8 @@ document.addEventListener('DOMContentLoaded', () => {
               if (btnPemSim) btnPemSim.classList.remove('active');
             }
 
-            if (opt.modalidade_chave) {
-              engine.setFactor(opt.modalidade_chave, false);
+            if (targetLeafKey) {
+              engine.setFactor(targetLeafKey, false);
             }
 
             renderCascadingFlow(cond);
@@ -861,20 +1242,84 @@ document.addEventListener('DOMContentLoaded', () => {
             updatePrescriptionDisplay();
           });
 
-          subOptsRow.appendChild(btnOpt);
+          stepOptsRow.appendChild(btnOpt);
         });
 
-        subCard.appendChild(subOptsRow);
-        cascadingFlowContainer.appendChild(subCard);
+        stepCard.appendChild(stepOptsRow);
 
-        const chosenOpt = step.opcoes.find(o => o.id === currentChoiceId);
+        // Observações inline da Etapa (SLOT-STEP), incluindo guia PEM e notas condicionais
+        const rawStepObs = engine.getContextualObservations({
+          slot: 'step',
+          etapaId: step.etapa_id,
+          optionId: currentChoiceId
+        }).filter(o => {
+          const k = o.id || o.texto;
+          if (seenStepObsIds.has(k)) return false;
+          seenStepObsIds.add(k);
+          return true;
+        });
+
+        if (rawStepObs.length > 0) {
+          const stepObsEl = document.createElement('div');
+          stepObsEl.className = 'step-inline-obs-slot';
+          stepObsEl.innerHTML = buildObservationsHtml(rawStepObs, { compact: true });
+          stepCard.appendChild(stepObsEl);
+          bindObsRedirectButtons(stepObsEl);
+        }
+
+        cascadingFlowContainer.appendChild(stepCard);
+
+        const chosenOpt = step.opcoes.find(o => o.id === currentChoiceId) || step.opcoes[0];
         if (chosenOpt) {
-          trailCrumbs.push(chosenOpt.rotulo.split('(')[0].trim());
+          const crumbText = String(chosenOpt.rotulo || '').split('(')[0].trim();
+          if (crumbText) trailCrumbs.push(crumbText);
+
+          if (currentStepNum === 1) {
+            const mods = cond.modalidades_suportadas || [];
+            const activeModObj = mods.find(m => m.id === engine.activeModalityType) || mods[0];
+            if (activeModObj) {
+              trailCrumbs.push(activeModObj.id === 'integrado' ? 'rTMS + tDCS' : activeModObj.id.toUpperCase());
+            }
+          }
+
           nextStepId = chosenOpt.proxima_etapa || null;
         } else {
           nextStepId = null;
         }
       }
+    } else {
+      // Fallback defensivo se alguma condição não possuir arvore_algoritmo
+      currentStepNum += 1;
+      const step1Card = document.createElement('div');
+      step1Card.className = 'cascading-step-card active-step';
+      const factors = cond.fatores_limitantes || [];
+      const activeFactorObj = factors.find(f => f.id === (engine.primaryFactorId || engine.activeFactorId)) || factors[0];
+      if (activeFactorObj) trailCrumbs.push((activeFactorObj.label || activeFactorObj.nome || '').split('(')[0].trim());
+      step1Card.innerHTML = `
+        <div class="cascading-step-header">
+          <span class="cascading-step-badge">Etapa 1</span>
+          <div class="cascading-step-title-box">
+            <h4 class="cascading-step-question">${escHtml(cond.no1_pergunta || 'Principal fator limitante')}</h4>
+          </div>
+        </div>
+      `;
+      const row = document.createElement('div');
+      row.className = 'cascading-options-row';
+      factors.forEach(f => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = `btn-cascade-choice ${(engine.primaryFactorId || engine.activeFactorId) === f.id ? 'active' : ''}`;
+        btn.innerHTML = `<span>${escHtml(f.label || f.nome || '')}</span>`;
+        btn.addEventListener('click', () => {
+          engine.setFactor(f.id, true);
+          renderCascadingFlow(cond);
+          renderNode1Options(cond);
+          updatePrescriptionDisplay();
+        });
+        row.appendChild(btn);
+      });
+      step1Card.appendChild(row);
+      cascadingFlowContainer.appendChild(step1Card);
     }
 
     // ------------------------------------------------------------------------
@@ -885,19 +1330,21 @@ document.addEventListener('DOMContentLoaded', () => {
       summaryBox.className = 'cascading-active-path-summary';
       const m = engine.getActiveModality();
       const protName = m?.tecnica || 'Protocolo Primário Recomendado';
+      const dottedBanner = formatDottedIndicator(m?.linha_fluxograma);
 
       summaryBox.innerHTML = `
         <div style="display: flex; flex-direction: column; gap: 4px;">
-          <span class="cascading-path-label">Percurso Clínico do Roadmap Selecionado:</span>
+          <span class="cascading-path-label">Percurso Clínico Selecionado:</span>
           <div class="cascading-path-trail">
             ${trailCrumbs.map((c, i) => `
-              <span class="cascading-path-crumb">${c}</span>
+              <span class="cascading-path-crumb">${escHtml(c)}</span>
               ${i < trailCrumbs.length - 1 ? '<span class="cascading-path-arrow">➔</span>' : ''}
             `).join('')}
           </div>
+          ${dottedBanner ? `<div style="margin-top: 4px;">${dottedBanner}</div>` : ''}
         </div>
         <div class="cascading-path-protocol-badge">
-          ${protName}
+          ${escHtml(protName)}
         </div>
       `;
       cascadingFlowContainer.appendChild(summaryBox);
@@ -911,8 +1358,14 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!node1OptionsList) return;
     node1OptionsList.innerHTML = '';
 
-    let factors = cond.fatores_limitantes || [];
-    const currentFactor = engine.primaryFactorId || engine.activeFactorId;
+    const tree = engine.getActiveTree();
+    const rootOpts = tree?.etapas?.[0]?.opcoes;
+    const factors = (Array.isArray(rootOpts) && rootOpts.length > 0)
+      ? rootOpts.map(o => ({ id: o.id, label: o.rotulo }))
+      : (cond.fatores_limitantes || []);
+
+    const activeRootChoice = tree?.etapas?.[0] ? engine.getPathChoice(tree.etapas[0].etapa_id) : null;
+    const currentFactor = activeRootChoice || engine.primaryFactorId || engine.activeFactorId;
 
     if (!factors.some(f => f.id === currentFactor) && factors.length > 0) {
       engine.setFactor(factors[0].id, true);
@@ -921,7 +1374,7 @@ document.addEventListener('DOMContentLoaded', () => {
     factors.forEach(f => {
       const btn = document.createElement('button');
       btn.type = 'button';
-      const isActive = (engine.primaryFactorId || engine.activeFactorId) === f.id;
+      const isActive = (activeRootChoice || engine.primaryFactorId || engine.activeFactorId) === f.id;
       btn.className = `pill-factor-btn ${isActive ? 'active' : ''}`;
       btn.textContent = f.label;
 
@@ -1108,52 +1561,219 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ==========================================================================
+  // 4b. Helpers de Qualidade Metodológica (AMSTAR 2 / GRADE) & Tolerabilidade
+  // ==========================================================================
+  function getQualityLevelClass(levelStr) {
+    if (!levelStr) return '';
+    const v = String(levelStr).toLowerCase();
+    if (v.includes('critica')) return 'level-critica';
+    if (v.includes('muito baixa')) return 'level-muito-baixa';
+    if (v.includes('alta')) return 'level-alta';
+    if (v.includes('moderad')) return 'level-moderada';
+    if (v.includes('baixa')) return 'level-baixa';
+    return '';
+  }
+
+  function renderEvidenceQualityDisplays(m) {
+    const eq = engine.getEvidenceQuality();
+    const amstar = eq.amstar2;
+    const grade = eq.grade;
+    const meta = m?.meta_analise;
+
+    // 1. Metanálise de Suporte + AMSTAR 2
+    if (evidenceMetaBlock) {
+      if (meta) {
+        evidenceMetaBlock.style.display = 'block';
+        if (evidenceMetaCitationText) {
+          const per = meta.periodico || meta.revista || '';
+          const perFmt = per ? ` (${per})` : '';
+          evidenceMetaCitationText.innerHTML = `<strong>${meta.autores || 'Revisão Sistemática'} (${meta.ano || ''})</strong> — <em>"${meta.titulo || 'Revisão Sistemática e Metanálise de Suporte'}"</em>${perFmt}`;
+        }
+        if (evidenceMetaDoiLink) {
+          const urlMeta = meta.url_doi || (meta.doi ? (meta.doi.startsWith('http') ? meta.doi : `https://doi.org/${meta.doi}`) : '#');
+          evidenceMetaDoiLink.href = urlMeta;
+        }
+        if (evidenceMetaDoiText) {
+          evidenceMetaDoiText.textContent = meta.doi ? `DOI: ${meta.doi.replace('https://doi.org/', '')}` : 'Acessar Metanálise';
+        }
+        if (evidenceAmstarBadge) {
+          const level = amstar?.nivel || 'Avaliação Pendente GT';
+          evidenceAmstarBadge.textContent = `AMSTAR 2: ${level} · Em homologação GT`;
+          evidenceAmstarBadge.className = `evidence-tag-amstar ${getQualityLevelClass(level)}`;
+        }
+        if (evidenceAmstarRationale) {
+          evidenceAmstarRationale.textContent = amstar?.justificativa_preliminar || 'Instrumento AMSTAR 2 aplicado à qualidade metodológica da revisão sistemática de suporte.';
+        }
+      } else {
+        evidenceMetaBlock.style.display = 'none';
+      }
+    }
+
+    // 2. Certeza da Evidência (GRADE)
+    const gradeCerteza = grade?.certeza || 'Moderada';
+    const gradeSimbolos = grade?.simbolos || '⊕⊕⊕◯';
+    const gradeForca = grade?.forca_recomendacao || 'Condicional';
+    const gradeCls = getQualityLevelClass(gradeCerteza);
+
+    if (evidenceGradeBadge) {
+      evidenceGradeBadge.textContent = `GRADE: ${gradeCerteza} (${gradeSimbolos}) · Rec. ${gradeForca} · Em homologação GT`;
+      evidenceGradeBadge.className = `evidence-tag-grade ${gradeCls}`;
+    }
+    if (evidenceGradeRationale) {
+      evidenceGradeRationale.textContent = grade?.observacao_dominios || 'Avaliação preliminar da certeza da evidência por desfecho (risco de viés, inconsistência, evidência indireta e imprecisão).';
+    }
+
+    // 3. Espelho compacto na Coluna 2 da Calculadora e no cabeçalho recolhível de Evidências
+    const amstarLevel = amstar?.nivel || 'Pendente GT';
+    const amstarCls = getQualityLevelClass(amstarLevel);
+
+    if (calcGradeBadge) {
+      calcGradeBadge.textContent = `GRADE: ${gradeCerteza} (${gradeSimbolos}) · ${gradeForca}`;
+      calcGradeBadge.className = `evidence-tag-grade ${gradeCls}`;
+    }
+    if (calcAmstarBadge) {
+      calcAmstarBadge.textContent = `AMSTAR 2 (Metanálise): ${amstarLevel}`;
+      calcAmstarBadge.className = `evidence-tag-amstar ${amstarCls}`;
+    }
+    if (evidenceSummaryGradeBadge) {
+      evidenceSummaryGradeBadge.textContent = `GRADE: ${gradeCerteza} (${gradeSimbolos})`;
+      evidenceSummaryGradeBadge.className = `evidence-tag-grade ${gradeCls}`;
+    }
+    if (evidenceSummaryAmstarBadge) {
+      evidenceSummaryAmstarBadge.textContent = `AMSTAR 2: ${amstarLevel}`;
+      evidenceSummaryAmstarBadge.className = `evidence-tag-amstar ${amstarCls}`;
+    }
+  }
+
+  function renderTolerabilityUI() {
+    if (!tolerabilityOptionsGrid) return;
+    const tol = engine.tolerabilityStatus || 'boa';
+    tolerabilityOptionsGrid.querySelectorAll('.btn-tolerability').forEach(btn => {
+      btn.classList.toggle('active', btn.getAttribute('data-tol') === tol);
+    });
+
+    if (!tolerabilityContextNote) return;
+    const guidance = engine.getTolerabilityGuidance();
+    const tolObs = engine.getContextualObservations({ slot: 'tol' });
+    const tolObsHtml = buildObservationsHtml(tolObs, { compact: true });
+
+    let baseGuidanceHtml = '';
+    let noteClass = 'tolerability-context-note';
+
+    if (tol === 'leve') {
+      baseGuidanceHtml = `
+        <div><strong>Orientação de Manejo (Desconforto Leve):</strong> ${escHtml(guidance.orientacaoGeral)}</div>
+        <div style="color: var(--text-muted); margin-top: 2px;">${escHtml(guidance.fatoresModuladores)}</div>
+      `;
+    } else if (tol === 'intolerante') {
+      noteClass = 'tolerability-context-note tol-warning';
+      baseGuidanceHtml = `
+        <div><strong>Conduta de Tolerabilidade (Intolerância Moderada):</strong> ${escHtml(guidance.ajusteDoseSugerido)}</div>
+        <div><a href="${escHtml(guidance.adverseBankUrl)}" target="_blank" rel="noopener noreferrer" class="adverse-bank-link">Registrar evento no Banco de Efeitos Adversos NAPeN ↗</a></div>
+      `;
+    } else if (tol === 'grave') {
+      noteClass = 'tolerability-context-note tol-danger';
+      baseGuidanceHtml = `
+        <div><strong>Alerta de Segurança:</strong> Suspender imediatamente a sessão/protocolo e proceder à avaliação médica. <strong>Registro obrigatório:</strong>
+        <a href="${escHtml(guidance.adverseBankUrl)}" target="_blank" rel="noopener noreferrer" class="adverse-bank-link">Acessar Banco de Efeitos Adversos da Rede NAPeN ↗</a></div>
+      `;
+    }
+
+    if (!baseGuidanceHtml && !tolObsHtml) {
+      tolerabilityContextNote.style.display = 'none';
+      tolerabilityContextNote.innerHTML = '';
+      tolerabilityContextNote.className = 'tolerability-context-note';
+      return;
+    }
+
+    if (tol === 'boa' && tolObs.some(o => String(o.severidade).toLowerCase() === 'danger')) {
+      noteClass = 'tolerability-context-note tol-danger';
+    } else if (tol === 'boa' && tolObs.some(o => String(o.severidade).toLowerCase() === 'warning')) {
+      noteClass = 'tolerability-context-note tol-warning';
+    }
+
+    tolerabilityContextNote.style.display = 'block';
+    tolerabilityContextNote.className = noteClass;
+    tolerabilityContextNote.innerHTML = `${baseGuidanceHtml}${tolObsHtml ? `<div style="${baseGuidanceHtml ? 'margin-top: 8px;' : ''}">${tolObsHtml}</div>` : ''}`;
+    bindObsRedirectButtons(tolerabilityContextNote);
+  }
+
+  if (tolerabilityOptionsGrid) {
+    tolerabilityOptionsGrid.querySelectorAll('.btn-tolerability').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const tol = btn.getAttribute('data-tol') || 'boa';
+        engine.setTolerabilityStatus(tol);
+        renderTolerabilityUI();
+        handleScoreComputation();
+      });
+    });
+  }
+
+  // ==========================================================================
   // 5. Atualiza Prescrição Primária, Diretrizes e Monitoramento do Ciclo
   // ==========================================================================
   function updatePrescriptionDisplay() {
     const m = engine.getActiveModality();
     if (!m) return;
 
+    const cond = engine.getCondition(engine.activeConditionId);
+    const dottedHtml = formatDottedIndicator(m.linha_fluxograma);
+
     if (prescTecnica) prescTecnica.textContent = m.tecnica || '—';
-    if (prescModalidade) prescModalidade.textContent = `Modalidade: ${m.modalidade_sigla || 'NIBS'}`;
+    if (prescModalidade) {
+      prescModalidade.innerHTML = `Modalidade: ${escHtml(m.modalidade_sigla || 'NIBS')}${dottedHtml ? `<div style="margin-top: 4px;">${dottedHtml}</div>` : ''}`;
+    }
     if (prescAlvo) prescAlvo.textContent = m.alvo || '—';
     if (prescFrequencia) prescFrequencia.textContent = m.frequencia || '—';
     if (prescIntensidade) prescIntensidade.textContent = `Intensidade: ${m.intensidade || 'Conforme limiar motor/sensorial'}`;
     if (prescPulsos) prescPulsos.textContent = m.pulsos_duracao || '—';
     if (prescSessoes) prescSessoes.textContent = `Dose e Sessões: ${m.sessoes || '—'}`;
-    
+
+    // Observações cirúrgicas nos slots dos parâmetros
+    renderObservationsSlot(prescObsTecnica, engine.getContextualObservations({ slot: 'tec', stage: state.therapeuticStage }), { compact: true });
+    renderObservationsSlot(prescObsAlvo, engine.getContextualObservations({ slot: 'alvo', stage: state.therapeuticStage }), { compact: true });
+    renderObservationsSlot(prescObsIntensidade, engine.getContextualObservations({ slot: 'intensidade', stage: state.therapeuticStage }), { compact: true });
+    renderObservationsSlot(prescObsSessoes, engine.getContextualObservations({ slot: 'sessoes', stage: state.therapeuticStage }), { compact: true });
+
     // Dissociação Conceitual NAPeN: Desfecho Clínico Alvo vs. Instrumento de Avaliação
-    const cond = engine.getCondition(engine.activeConditionId);
-    const activeFactor = cond?.fatores_limitantes?.find(f => f.id === (engine.primaryFactorId || engine.activeFactorId)) || (cond?.fatores_limitantes ? cond.fatores_limitantes[0] : null);
+    const tree = engine.getActiveTree();
+    const rootOpts = tree?.etapas?.[0]?.opcoes || [];
+    const activeRootChoice = tree?.etapas?.[0] ? engine.getPathChoice(tree.etapas[0].etapa_id) : null;
+    const chosenRootOpt = rootOpts.find(o => o.id === activeRootChoice);
+    const activeFactor = cond?.fatores_limitantes?.find(f => f.id === (engine.primaryFactorId || engine.activeFactorId))
+      || (cond?.fatores_limitantes ? cond.fatores_limitantes[0] : null);
     if (prescDesfechoNome) {
-      prescDesfechoNome.textContent = activeFactor ? activeFactor.label : (cond ? cond.condicao : 'Desfecho Clínico Alvo');
+      prescDesfechoNome.textContent = chosenRootOpt?.rotulo || activeFactor?.nome || activeFactor?.label || m.titulo_curto || cond?.condicao || '—';
     }
     const activeScale = engine.getActiveScale() || (m.escalas_detalhadas && m.escalas_detalhadas.length > 0 ? m.escalas_detalhadas[0] : null);
-    if (prescEscala) prescEscala.textContent = activeScale?.nome || m.escala_recomendada || 'Escala Clínica Validada';
+    if (prescEscala) prescEscala.textContent = activeScale?.nome || m.escala_recomendada || '—';
     if (prescEfeito) prescEfeito.textContent = activeScale?.tamanho_efeito || m.tamanho_efeito || 'Eficácia demonstrada em ensaios controlados randomizados.';
     if (prescMeta) prescMeta.textContent = activeScale?.meta_texto || m.meta_melhora || 'Melhora clinicamente relevante conforme protocolo.';
+    renderObservationsSlot(prescObsEscala, engine.getContextualObservations({ slot: 'scale', stage: state.therapeuticStage }), { compact: true });
 
-    // Diretriz Internacional Oficial em Padrão ABNT
+    // Diretriz Internacional Oficial + GRADE
     const gInfo = engine.getFormattedGuideline();
+    const eq = engine.getEvidenceQuality();
+    const gradeLabelShort = eq.grade ? ` · GRADE: ${eq.grade.certeza} (${eq.grade.simbolos})` : '';
     if (guidelineBadgeText) {
       if (gInfo && gInfo.url) {
         guidelineBadgeText.innerHTML = `
-          <span><strong>${gInfo.recomendacao}</strong> — ${gInfo.autores || 'IFCN'} (${gInfo.ano || 'Consenso'})</span>
-          <a href="${gInfo.url}" target="_blank" rel="noopener noreferrer" style="color: var(--napen-teal-dark); text-decoration: underline; margin-left: 6px; font-weight: 600;" title="Acessar diretriz oficial via DOI">
-            ${gInfo.doi ? `DOI: ${gInfo.doi} ↗` : 'Acessar Diretriz ↗'}
+          <span><strong>${escHtml(gInfo.recomendacao)}</strong> — ${escHtml(gInfo.autores || 'IFCN')} (${escHtml(gInfo.ano || 'Consenso')})${escHtml(gradeLabelShort)}</span>
+          <a href="${escHtml(gInfo.url)}" target="_blank" rel="noopener noreferrer" style="color: var(--napen-teal-dark); text-decoration: underline; margin-left: 6px; font-weight: 600;" title="Acessar diretriz oficial via DOI">
+            ${gInfo.doi ? `DOI: ${escHtml(gInfo.doi)} ↗` : 'Acessar Diretriz ↗'}
           </a>
         `;
       } else {
-        guidelineBadgeText.textContent = gInfo?.text || 'Recomendação Consensual NAPeN';
+        guidelineBadgeText.textContent = `${gInfo?.text || 'Recomendação Consensual NAPeN'}${gradeLabelShort}`;
       }
     }
 
-    // Painel de Evidências: Estudos de referência vs. Diretriz Internacional
+    // Painel de Evidências: Estudos de referência, Metanálise (AMSTAR 2), Diretriz/GRADE e Guia PEM
     if (m.artigo_referencia) {
       if (evidenceCitationText) {
         const periodicalText = m.artigo_referencia.periodico || m.artigo_referencia.revista || '';
-        const periodicalFormatted = periodicalText ? ` (${periodicalText})` : '';
-        evidenceCitationText.innerHTML = `<strong>${m.artigo_referencia.citacao_completa || m.artigo_referencia.autores}</strong> — <em>"${m.artigo_referencia.titulo || ''}"</em>${periodicalFormatted}`;
+        const periodicalFormatted = periodicalText ? ` (${escHtml(periodicalText)})` : '';
+        evidenceCitationText.innerHTML = `<strong>${escHtml(m.artigo_referencia.citacao_completa || m.artigo_referencia.autores)}</strong> — <em>"${escHtml(m.artigo_referencia.titulo || '')}"</em>${periodicalFormatted}`;
       }
       if (evidenceDoiLink) {
         const fullDoiUrl = m.artigo_referencia.url_doi || (m.artigo_referencia.doi ? (m.artigo_referencia.doi.startsWith('http') ? m.artigo_referencia.doi : `https://doi.org/${m.artigo_referencia.doi}`) : '#');
@@ -1165,7 +1785,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (evidenceGuidelineText) {
-      evidenceGuidelineText.innerHTML = `<strong>${gInfo.recomendacao}</strong> — Diretriz Internacional IFCN / Consenso (${gInfo.autores || 'IFCN'}, ${gInfo.ano || '2020'}).`;
+      evidenceGuidelineText.innerHTML = `<strong>${escHtml(gInfo.recomendacao)}</strong> — Diretriz Internacional IFCN / Consenso (${escHtml(gInfo.autores || 'IFCN')}, ${escHtml(gInfo.ano || '2020')}).`;
     }
     if (evidenceGuidelineDoiLink) {
       const fullGuideUrl = gInfo.url || (gInfo.doi ? (gInfo.doi.startsWith('http') ? gInfo.doi : `https://doi.org/${gInfo.doi}`) : '#');
@@ -1175,37 +1795,138 @@ document.addEventListener('DOMContentLoaded', () => {
       evidenceGuidelineDoiText.textContent = gInfo.doi ? `DOI: ${gInfo.doi.replace('https://doi.org/', '')}` : 'Acessar Diretriz Oficial';
     }
 
+    if (evidencePemGuide) {
+      const showPemGuide = Boolean(
+        cond
+        && (cond.id === 'avc-membro-superior' || cond.id === 'avc-mobilidade')
+        && (engine.activeModalityType === 'rtms' || m.mod_tipo === 'rtms')
+      );
+      evidencePemGuide.style.display = showPemGuide ? 'block' : 'none';
+    }
 
+    renderEvidenceQualityDisplays(m);
 
-    // Monitoramento Clínico e Regras de Reavaliação
+    // Monitoramento Clínico e Regras de Reavaliação (+ SLOT-REEVAL)
     const sa = m.sessoes_ajuste || {};
     if (monitoringReeval) {
-      monitoringReeval.textContent = sa.quando_reavaliar || 'Reavaliar pontuação na escala clínica após 5 a 10 sessões de indução.';
+      const reevalBase = sa.quando_reavaliar || 'Reavaliar pontuação na escala clínica após 5 a 10 sessões de indução.';
+      const reevalObs = engine.getContextualObservations({ slot: 'reeval', stage: state.therapeuticStage });
+      const reevalObsHtml = buildObservationsHtml(reevalObs, { compact: true });
+      if (reevalObsHtml) {
+        monitoringReeval.innerHTML = `<div>${escHtml(reevalBase)}</div><div style="margin-top: 6px;">${reevalObsHtml}</div>`;
+        bindObsRedirectButtons(monitoringReeval);
+      } else {
+        monitoringReeval.textContent = reevalBase;
+      }
     }
     if (monitoringDoseAdjust) {
-      monitoringDoseAdjust.textContent = sa.ajuste_dose || 'Se resposta parcial, estender ciclo em +5 sessões diárias e recalibrar o Limiar Motor de Repouso (LMR).';
+      monitoringDoseAdjust.textContent = m.falha_terapeutica?.criterio || sa.regra_interrupcao || sa.ajuste_dose || 'Resposta clínica inferior à MCID esperada após a janela clínica avança diretamente ao próximo protocolo.';
     }
     if (monitoringStopRule) {
-      monitoringStopRule.textContent = sa.regra_interrupcao || 'Interromper o ciclo de indução e migrar para o Protocolo Alternativo se não houver ganho clínico mínimo após 2 ajustes sucessivos.';
+      monitoringStopRule.textContent = sa.regra_interrupcao || 'Interromper o ciclo de indução e avançar diretamente para o próximo protocolo (ou falha terapêutica) caso não haja ganho clínico mínimo na reavaliação.';
     }
     if (monitoringNotesText) {
-      monitoringNotesText.textContent = m.notas_clinicas || 'A estimulação deve ser associada a intervenção motora ou comportamental imediata com metas funcionais bem delineadas.';
+      monitoringNotesText.innerHTML = formatObservationTextHtml(
+        m.notas_clinicas || 'A estimulação deve ser associada a intervenção motora ou comportamental imediata com metas funcionais bem delineadas.'
+      );
     }
 
+    // Guia Estratégico de Tolerabilidade & Dose (Painel Plano Integrado)
+    renderTolerabilityDoseGuide(m, sa);
+
     if (stepNode3) stepNode3.classList.add('completed');
+
+    // Atualiza nota contextual de tolerabilidade (SLOT-TOL) do protocolo ativo
+    renderTolerabilityUI();
+
+    // Atualiza foco de continuidade caso esteja ativo
+    if (engine.entryMode === 'returning' && cond) {
+      renderContinuingFocusSlot(cond);
+    }
 
     // Inicializa a calculadora com a escala ativa correspondente
     renderCalculatorForActiveScale();
   }
 
+  function renderTolerabilityDoseGuide(m, sa) {
+    if (!tolerabilityDoseGuidePanel) return;
+    const tolGuide = engine.getTolerabilityGuidance();
+    if (tolGuideTitle) {
+      tolGuideTitle.textContent = tolGuide.tituloGuia || 'Guia Estratégico de Tolerabilidade & Dose';
+    }
+    if (tolGuideBankLink && tolGuide.adverseBankUrl) {
+      tolGuideBankLink.href = tolGuide.adverseBankUrl;
+    }
+
+    if (tolGuideTolerance) {
+      const tolTexts = [];
+      [tolGuide.orientacaoGeral, tolGuide.ajusteDoseSugerido].forEach(txt => {
+        if (!txt) return;
+        const norm = String(txt).trim();
+        if (norm && !tolTexts.some(prev => prev.includes(norm) || norm.includes(prev))) {
+          tolTexts.push(norm);
+        }
+      });
+      const intensityObs = engine.getContextualObservations({ slot: 'intensidade', stage: state.therapeuticStage }) || [];
+      const tolObs = engine.getContextualObservations({ slot: 'tol', stage: state.therapeuticStage }) || [];
+      const combinedObs = [];
+      const seenObs = new Set();
+      [...intensityObs, ...tolObs].forEach(o => {
+        const key = o?.id || o?.texto;
+        if (key && !seenObs.has(key)) {
+          seenObs.add(key);
+          combinedObs.push(o);
+        }
+      });
+      const obsHtml = buildObservationsHtml(combinedObs, { compact: true });
+      tolGuideTolerance.innerHTML = `
+        ${tolTexts.map((t, idx) => `<p${idx > 0 ? ' class="tol-guide-col-note"' : ''}>${formatObservationTextHtml(t)}</p>`).join('')}
+        ${obsHtml ? `<div style="margin-top: 8px;">${obsHtml}</div>` : ''}
+      `;
+      bindObsRedirectButtons(tolGuideTolerance);
+    }
+
+    if (tolGuideDose) {
+      const doseMain = (tolGuide.dosePulsos || '').trim();
+      const doseExtra = (sa?.ajuste_dose || '').trim();
+      const hasExtra = Boolean(doseExtra && (!doseMain || (!doseMain.includes(doseExtra) && !doseExtra.includes(doseMain))));
+      tolGuideDose.innerHTML = `
+        ${doseMain ? `<p>${formatObservationTextHtml(doseMain)}</p>` : ''}
+        ${hasExtra ? `<div class="tol-guide-col-note"><strong>Conduta de Carga / Estímulo:</strong> ${formatObservationTextHtml(doseExtra)}</div>` : ''}
+      `;
+    }
+
+    if (tolGuideCalibration) {
+      const calibMain = (tolGuide.calibracaoLimiar || '').trim();
+      const modFactors = (tolGuide.fatoresModuladores || '').trim();
+      tolGuideCalibration.innerHTML = `
+        ${calibMain ? `<p>${escHtml(calibMain)}</p>` : ''}
+        ${modFactors ? `<div class="tol-guide-col-note"><strong>Fatores Moduladores:</strong> ${escHtml(modFactors)}</div>` : ''}
+      `;
+    }
+  }
+
+  function scrollToTolerabilityGuide() {
+    if (!tolerabilityDoseGuidePanel) return;
+    const headerEl = document.querySelector('.site-header');
+    const headerHeight = headerEl ? headerEl.offsetHeight : 140;
+    const rect = tolerabilityDoseGuidePanel.getBoundingClientRect();
+    const targetScrollY = window.pageYOffset + rect.top - headerHeight - 16;
+    window.scrollTo({ top: Math.max(0, targetScrollY), behavior: 'smooth' });
+    tolerabilityDoseGuidePanel.classList.add('tol-guide-highlight-pulse');
+    setTimeout(() => {
+      tolerabilityDoseGuidePanel.classList.remove('tol-guide-highlight-pulse');
+    }, 2500);
+  }
+
   // ==========================================================================
-  // 6. Assistente de Resposta Clínica (Sem Emojis, Badges Clínicos Sóbrios)
-  // ==========================================================================
-  // 6. Atualiza Assistente de Resposta Clínica (Pós-Indução)
+  // 6. Assistente de Resposta Clínica (Integrado à Tolerabilidade & Esteira Completa)
   // ==========================================================================
   function updateOutcomeDisplay() {
     const outcome = engine.activeOutcome;
     const m = engine.getActiveModality();
+    const guidance = engine.getTolerabilityGuidance();
+    const tol = engine.tolerabilityStatus || 'boa';
 
     if (btnOutcomeSuccess) btnOutcomeSuccess.classList.toggle('active', outcome === 'success');
     if (btnOutcomeDanger) btnOutcomeDanger.classList.toggle('active', outcome === 'danger');
@@ -1219,171 +1940,174 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (stepNode4) stepNode4.classList.add('current');
 
+    // Estado 1: Resposta Clínica Satisfatória
     if (outcome === 'success') {
       branchResultPanel.className = 'branch-result-panel success visible';
+      const tolNoteHtml = tol === 'leve'
+        ? `<div style="margin-top: 8px; padding-top: 8px; border-top: 1px dashed rgba(6,95,70,0.25);"><strong>Manejo de Desconforto Leve:</strong> ${escHtml(guidance.orientacaoGeral)}</div>`
+        : '';
+      const stageObsHtml = buildObservationsHtml(engine.getContextualObservations({ slot: 'stage', stage: 'primary' }), { compact: true });
       branchResultPanel.innerHTML = `
         <div style="font-weight: 700; margin-bottom: 6px; display: flex; align-items: center; gap: 8px;">
           <span class="outcome-bullet status-success"></span>
           [Resposta Clínica Satisfatória Alcançada]
         </div>
         <div style="color: var(--status-success-text); line-height: 1.55;">
-          Paciente atingiu ou superou a meta terapêutica estabelecida no protocolo (${m?.escala_recomendada || 'escala clínica'}).
-          <br><strong>Conduta Oficial do Roadmap NAPeN:</strong> Manter o protocolo primário até consolidação do ganho clínico e iniciar transição para manutenção periódica (redução gradual da frequência para 1 sessão por semana ou quinzenal, mantendo terapia multiprofissional concomitante e reavaliações periódicas).
+          Paciente atingiu ou superou a meta terapêutica estabelecida no protocolo (${escHtml(m?.escala_recomendada || 'escala clínica')}) com tolerabilidade adequada.
+          <br><strong>Conduta Clínica NAPeN:</strong> Manter o protocolo primário até consolidação do ganho clínico e iniciar transição para manutenção periódica (redução gradual da frequência para 1 sessão por semana ou quinzenal, mantendo terapia multiprofissional concomitante e reavaliações periódicas).
+          ${tolNoteHtml}
+        </div>
+        ${stageObsHtml}
+      `;
+      bindObsRedirectButtons(branchResultPanel);
+      return;
+    }
+
+    // Estado Especial de Segurança: Evento Adverso Grave
+    if (tol === 'grave' && outcome === 'danger') {
+      branchResultPanel.className = 'branch-result-panel danger visible';
+      branchResultPanel.innerHTML = `
+        <div class="failure-therapeutic-card" style="margin-top: 0;">
+          <div class="failure-head">
+            <span class="failure-badge">Segurança do Paciente</span>
+            <span class="failure-title">Suspensão Imediata por Evento Adverso Grave / Contraindicação</span>
+          </div>
+          <div class="failure-description">
+            Ocorrência de evento adverso grave ou contraindicação superveniente exige interrupção imediata da estimulação vigente, sobrepondo-se a qualquer pontuação numérica da escala.
+          </div>
+          <div class="failure-conduct-box">
+            <div class="failure-conduct-title">Protocolo de Conduta Segura NAPeN:</div>
+            <div style="line-height: 1.55;">
+              1. Suspender imediatamente a sessão e o ciclo terapêutico atual;<br>
+              2. Realizar avaliação médica/neurológica presencial para estabilização clínica;<br>
+              3. Revisar medicações, histórico convulsivo, implantes e adesão ao checklist pré-sessão;<br>
+              4. <a href="${escHtml(guidance.adverseBankUrl)}" target="_blank" rel="noopener noreferrer" class="adverse-bank-link">Registrar formalmente a ocorrência no Banco de Efeitos Adversos da Rede NAPeN ↗</a>
+            </div>
+          </div>
         </div>
       `;
-    } else if (outcome === 'danger') {
-      branchResultPanel.className = 'branch-result-panel danger visible';
-      const alt1 = m?.protocolo_alternativo;
-      const alt2 = m?.protocolo_alternativo_2;
-      const aj = m?.ajuste_parametros;
-      const falha = m?.falha_terapeutica;
-
-      let stageHtml = '';
-
-      if (state.therapeuticStage === 'primary') {
-        stageHtml = `
-          <div style="font-weight: 700; margin-bottom: 6px; display: flex; align-items: center; gap: 8px;">
-            <span class="outcome-bullet status-danger"></span>
-            [Resposta Insatisfatória — Pós-Indução de 1ª Linha]
-          </div>
-          <div style="line-height: 1.55; margin-bottom: 12px;">
-            Paciente não atingiu o benefício terapêutico mínimo (ganho inferior à MCID na escala recomendada).
-            Conforme a árvore clínica de decisão da Rede NAPeN, selecione a próxima conduta na esteira terapêutica:
-          </div>
-          <div class="adjustment-actions-row">
-            <button type="button" class="btn-step-action secondary" id="btnGoAdjustment">
-              Otimizar Parâmetros e Tolerabilidade
-            </button>
-            <button type="button" class="btn-step-action primary" id="btnGoAlt1">
-              Transitar para Protocolo Alternativo 1 ➔
-            </button>
-          </div>
-        `;
-      } else if (state.therapeuticStage === 'adjustment') {
-        stageHtml = `
-          <div class="adjustment-step-card">
-            <div class="adjustment-step-title">
-              ${aj?.titulo || 'Diretrizes de Otimização e Ajuste de Parâmetros (NAPeN)'}
-            </div>
-            <div class="adjustment-step-body">
-              <p><strong>1. Tolerabilidade e Intensidade:</strong> ${aj?.tolerabilidade || 'Reduzir para 80% do LMR e progredir gradualmente conforme tolerância até 90-100% LMR.'}</p>
-              <p style="margin-top: 6px;"><strong>2. Dose de Pulsos:</strong> ${aj?.dose_pulsos || 'Ajustar para até 1.500 pulsos por sessão conforme evidências de dose-resposta.'}</p>
-              <p style="margin-top: 6px;"><strong>3. Limiar Motor:</strong> ${aj?.calibracao_limiar || 'Calibrar estimulação baseando-se no Limiar Motor Ativo (LMA a 70%–80%) na ausência de LMR.'}</p>
-            </div>
-            <div class="adjustment-actions-row">
-              <button type="button" class="btn-step-action secondary" id="btnBackPrimary">
-                ← Retornar à 1ª Linha
-              </button>
-              <button type="button" class="btn-step-action primary" id="btnGoAlt1">
-                Sem Ganho Após Ajustes ➔ Transitar para Protocolo Alternativo 1
-              </button>
-            </div>
-          </div>
-        `;
-      } else if (state.therapeuticStage === 'alt1') {
-        stageHtml = `
-          <div class="alternative-protocol-box" style="margin-top: 6px;">
-            <div class="alt-title-line" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
-              <span><strong>Etapa 2 da Linha de Cuidado:</strong> ${alt1?.nome || 'Protocolo Alternativo 1'}</span>
-              <span class="failure-badge" style="background-color: var(--napen-teal-dark);">Alternativo 1</span>
-            </div>
-            <div style="margin-top: 6px;"><strong>Técnica:</strong> ${alt1?.tecnica || '—'}</div>
-            <div><strong>Alvo Anatômico:</strong> ${alt1?.alvo || '—'}</div>
-            <div><strong>Parâmetros:</strong> ${alt1?.parametros || '—'}</div>
-            <div class="alt-clinical-notes" style="margin-top: 8px;">
-              <strong>Observações Clínicas do Roadmap:</strong> ${alt1?.observacoes || 'Transição sequencial indicada conforme o algoritmo do roadmap.'}
-            </div>
-            <div class="adjustment-actions-row" style="margin-top: 14px;">
-              <button type="button" class="btn-step-action secondary" id="btnBackPrimary">
-                ← 1ª Linha
-              </button>
-              <button type="button" class="btn-step-action primary" id="btnGoAlt2">
-                Alternativo 1 Sem Resposta ➔ Avançar para Protocolo Alternativo 2
-              </button>
-            </div>
-          </div>
-        `;
-      } else if (state.therapeuticStage === 'alt2') {
-        stageHtml = `
-          <div class="alternative-protocol-box" style="margin-top: 6px;">
-            <div class="alt-title-line" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
-              <span><strong>Etapa 3 da Linha de Cuidado:</strong> ${alt2?.nome || 'Protocolo Alternativo 2'}</span>
-              <span class="failure-badge" style="background-color: var(--napen-navy);">Alternativo 2</span>
-            </div>
-            <div style="margin-top: 6px;"><strong>Técnica:</strong> ${alt2?.tecnica || '—'}</div>
-            <div><strong>Alvo Anatômico:</strong> ${alt2?.alvo || '—'}</div>
-            <div><strong>Parâmetros:</strong> ${alt2?.parametros || '—'}</div>
-            <div class="alt-clinical-notes" style="margin-top: 8px;">
-              <strong>Observações Clínicas do Roadmap:</strong> ${alt2?.observacoes || 'Protocolo sequencial prévio à caracterização de falha.'}
-            </div>
-            <div class="adjustment-actions-row" style="margin-top: 14px;">
-              <button type="button" class="btn-step-action secondary" id="btnGoAlt1">
-                ← Alternativo 1
-              </button>
-              <button type="button" class="btn-step-action danger" id="btnGoFailure">
-                Alternativo 2 Sem Resposta ➔ Declarar Falha Terapêutica Formal
-              </button>
-            </div>
-          </div>
-        `;
-      } else if (state.therapeuticStage === 'failure') {
-        stageHtml = `
-          <div class="failure-therapeutic-card">
-            <div class="failure-head">
-              <span class="failure-badge">Desfecho do Algoritmo</span>
-              <span class="failure-title">Falha Terapêutica Formal Constatada (Roadmaps NAPeN)</span>
-            </div>
-            <div class="failure-description">
-              ${falha?.criterio || 'Paciente concluiu o ciclo de indução pleno, ajustes de parâmetros/tolerabilidade e protocolos alternativos sequenciais sem apresentar resposta clínica mínima relevante (&lt; MCID).'}
-            </div>
-            <div class="failure-conduct-box">
-              <div class="failure-conduct-title">Conduta Clínica Sistematizada da Rede NAPeN:</div>
-              <div style="white-space: pre-line;">${falha?.conduta_oficial || '1. Encerramento formal do ciclo de estimulação vigente;\n2. Investigação de fatores biológicos de resistência;\n3. Discussão interdisciplinar para migração de modalidade.'}</div>
-            </div>
-            <div class="adjustment-actions-row" style="margin-top: 14px;">
-              <button type="button" class="btn-step-action secondary" id="btnBackPrimary">
-                ← Reiniciar Ciclo / Retornar à 1ª Linha
-              </button>
-            </div>
-          </div>
-        `;
-      }
-
-      branchResultPanel.innerHTML = stageHtml;
-
-      // Listeners dos botões de avanço da esteira
-      function switchTherapeuticStage(stage) {
-        state.therapeuticStage = stage;
-        updateOutcomeDisplay();
-      }
-
-      const btnGoAdjustment = document.getElementById('btnGoAdjustment');
-      const btnBackPrimary = document.getElementById('btnBackPrimary');
-      const btnGoAlt1 = document.getElementById('btnGoAlt1');
-      const btnGoAlt2 = document.getElementById('btnGoAlt2');
-      const btnGoFailure = document.getElementById('btnGoFailure');
-
-      if (btnGoAdjustment) {
-        btnGoAdjustment.addEventListener('click', () => switchTherapeuticStage('adjustment'));
-      }
-      if (btnBackPrimary) {
-        btnBackPrimary.addEventListener('click', () => switchTherapeuticStage('primary'));
-      }
-      if (btnGoAlt1) {
-        btnGoAlt1.addEventListener('click', () => switchTherapeuticStage('alt1'));
-      }
-      if (btnGoAlt2) {
-        btnGoAlt2.addEventListener('click', () => switchTherapeuticStage('alt2'));
-      }
-      if (btnGoFailure) {
-        btnGoFailure.addEventListener('click', () => switchTherapeuticStage('failure'));
-      }
+      return;
     }
+
+    // Estado 2: Transição Direta para Protocolo Alternativo Dinâmico ou Encerramento da Sequência
+    branchResultPanel.className = 'branch-result-panel danger visible';
+
+    const altStages = getDynamicAltStagesForActiveModality();
+    const curStage = state.therapeuticStage || 'primary';
+    const stageObsHtml = buildObservationsHtml(engine.getContextualObservations({ slot: 'stage', stage: curStage }), { compact: true });
+    let stageHtml = '';
+
+    if (curStage === 'primary') {
+      const firstAlt = altStages[0];
+      stageHtml = `
+        <div style="font-weight: 700; margin-bottom: 6px; display: flex; align-items: center; gap: 8px;">
+          <span class="outcome-bullet status-danger"></span>
+          [Resposta Insatisfatória — Avanço Direto no Algoritmo]
+        </div>
+        <div style="line-height: 1.55; margin-bottom: 12px;">
+          Paciente não atingiu o benefício terapêutico mínimo após a janela clínica esperada.
+          Caso necessário revisar parâmetros de tolerabilidade ou dose do ciclo vigente, utilize o <a href="#tolerabilityDoseGuidePanel" class="adverse-bank-link js-scroll-tol-guide">Guia Estratégico de Tolerabilidade &amp; Dose ↑</a>.
+        </div>
+        ${stageObsHtml}
+        <div class="adjustment-actions-row">
+          ${firstAlt
+            ? `<button type="button" class="btn-step-action primary" id="btnGoAlt1" data-target-stage="${firstAlt.stageKey}">Avançar para ${escHtml(firstAlt.nome)} ➔</button>`
+            : `<button type="button" class="btn-step-action danger" id="btnGoFailure" data-target-stage="failure">Sem Resposta no Protocolo Único ➔ Conduta de Encerramento</button>`}
+        </div>
+      `;
+    } else if (curStage.startsWith('alt')) {
+      const altData = engine.getPrescriptionForStage(curStage);
+      const curIdx = altStages.findIndex(a => a.stageKey === curStage);
+      const prevStage = curIdx > 0 ? altStages[curIdx - 1] : null;
+      const nextAlt = (curIdx >= 0 && curIdx + 1 < altStages.length) ? altStages[curIdx + 1] : null;
+      const dottedHtml = formatDottedIndicator(altData?.linhaFluxograma);
+      const prevBtnId = prevStage ? (prevStage.stageKey === 'alt1' ? 'btnGoAlt1' : `btnGo${prevStage.stageKey}`) : 'btnBackPrimary';
+      const nextBtnId = nextAlt ? (nextAlt.stageKey === 'alt2' ? 'btnGoAlt2' : `btnGo${nextAlt.stageKey}`) : 'btnGoFailure';
+
+      stageHtml = `
+        <div class="alternative-protocol-box" style="margin-top: 6px;">
+          <div class="alt-title-line" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+            <span><strong>${escHtml(altData?.badge || `Alternativo ${curIdx + 1}`)}:</strong> ${escHtml(altData?.titulo || 'Protocolo Alternativo')}</span>
+            <span class="failure-badge" style="background-color: var(--napen-teal-dark);">${escHtml(altStages[curIdx]?.shortLabel || curStage.toUpperCase())}</span>
+          </div>
+          ${dottedHtml ? `<div style="margin-top: 6px;">${dottedHtml}</div>` : ''}
+          <div style="margin-top: 6px;"><strong>Técnica:</strong> ${escHtml(altData?.tecnica || '—')}</div>
+          <div><strong>Alvo Anatômico:</strong> ${escHtml(altData?.alvo || '—')}</div>
+          <div><strong>Parâmetros:</strong> ${escHtml(altData?.parametros || '—')}</div>
+          ${altData?.efeitoEsperado ? `<div><strong>Efeito Esperado:</strong> ${escHtml(altData.efeitoEsperado)}</div>` : ''}
+          ${altData?.referencia ? `<div><strong>Referência:</strong> ${escHtml(altData.referencia)}</div>` : ''}
+          <div class="alt-clinical-notes" style="margin-top: 8px;">
+            <strong>Observações Clínicas:</strong> ${formatObservationTextHtml(altData?.observacoes || 'Transição sequencial indicada conforme a sequência terapêutica.')}
+          </div>
+          ${stageObsHtml}
+          <div class="adjustment-actions-row" style="margin-top: 14px;">
+            <button type="button" class="btn-step-action secondary" id="${prevBtnId}" data-target-stage="${prevStage ? prevStage.stageKey : 'primary'}">
+              ${prevStage ? `← ${escHtml(prevStage.shortLabel)}` : '← 1ª Linha'}
+            </button>
+            ${nextAlt
+              ? `<button type="button" class="btn-step-action primary" id="${nextBtnId}" data-target-stage="${nextAlt.stageKey}">Sem Resposta no ${escHtml(altStages[curIdx]?.shortLabel || '')} ➔ Avançar para ${escHtml(nextAlt.nome)}</button>`
+              : `<button type="button" class="btn-step-action danger" id="${nextBtnId}" data-target-stage="failure">Sem Resposta ➔ Encerrar Sequência Terapêutica</button>`}
+          </div>
+        </div>
+      `;
+    } else if (curStage === 'failure') {
+      const failData = engine.getPrescriptionForStage('failure');
+      const conductList = (failData?.condutas || []).map(c => `<li>${escHtml(c)}</li>`).join('');
+      stageHtml = `
+        <div class="failure-therapeutic-card">
+          <div class="failure-head">
+            <span class="failure-badge">Desfecho do Algoritmo</span>
+            <span class="failure-title">${escHtml(failData?.titulo || 'Sem Resposta Terapêutica (Encerramento da Sequência NAPeN)')}</span>
+          </div>
+          <div class="failure-description">
+            ${escHtml(failData?.criterio || 'Paciente concluiu o ciclo de indução pleno e os protocolos alternativos sequenciais previstos sem apresentar resposta clínica mínima relevante.')}
+          </div>
+          <div class="failure-conduct-box">
+            <div class="failure-conduct-title">Conduta Clínica Sistematizada da Rede NAPeN:</div>
+            <ul style="margin: 4px 0 0 18px; line-height: 1.55;">${conductList}</ul>
+          </div>
+          ${stageObsHtml}
+          <div class="adjustment-actions-row" style="margin-top: 14px;">
+            <button type="button" class="btn-step-action secondary" id="btnBackPrimary" data-target-stage="primary">
+              ← Reiniciar Ciclo / Retornar à 1ª Linha
+            </button>
+          </div>
+        </div>
+      `;
+    }
+
+    branchResultPanel.innerHTML = stageHtml;
+    bindObsRedirectButtons(branchResultPanel);
+
+    branchResultPanel.querySelectorAll('.js-scroll-tol-guide').forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        scrollToTolerabilityGuide();
+      });
+    });
+
+    function switchTherapeuticStage(stage) {
+      state.therapeuticStage = stage;
+      if (stage === 'primary') {
+        engine.setOutcome(null);
+      } else {
+        engine.setOutcome('danger');
+      }
+      updateOutcomeDisplay();
+    }
+
+    branchResultPanel.querySelectorAll('[data-target-stage]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const nextStage = btn.getAttribute('data-target-stage');
+        if (nextStage) switchTherapeuticStage(nextStage);
+      });
+    });
   }
 
   // Interação manual com os botões de desfecho
   if (btnOutcomeSuccess) {
     btnOutcomeSuccess.addEventListener('click', () => {
+      state.therapeuticStage = 'primary';
       engine.toggleOutcome('success');
       updateOutcomeDisplay();
     });
@@ -1391,13 +2115,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (btnOutcomeDanger) {
     btnOutcomeDanger.addEventListener('click', () => {
-      engine.toggleOutcome('danger');
+      if (engine.activeOutcome === 'danger') {
+        state.therapeuticStage = 'primary';
+        engine.setOutcome(null);
+      } else if (engine.tolerabilityStatus === 'grave') {
+        state.therapeuticStage = 'primary';
+        engine.setOutcome('danger');
+      } else {
+        const altStages = getDynamicAltStagesForActiveModality();
+        state.therapeuticStage = altStages[0]?.stageKey || 'failure';
+        engine.setOutcome('danger');
+      }
       updateOutcomeDisplay();
     });
   }
 
   // ==========================================================================
-  // 7. Calculadora Dual & Automatismo de Seleção de Desfecho
+  // 7. Calculadora Dual Multidimensional (Escore + Tolerabilidade) & Automatismo
   // ==========================================================================
   function handleScoreComputation() {
     const m = engine.getActiveModality();
@@ -1413,23 +2147,58 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const res = engine.calculateDelta(valBaseRaw, valPostRaw, activeScale, m);
+    const evalMatrix = engine.evaluateClinicalResponse(res, engine.tolerabilityStatus);
+
+    const bindCalcGuideLinks = () => {
+      if (!calcGoalFeedback) return;
+      calcGoalFeedback.querySelectorAll('.js-scroll-tol-guide').forEach(link => {
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          scrollToTolerabilityGuide();
+        });
+      });
+    };
 
     if (!res.isSuccess) {
       if (calcDeltaPoints) calcDeltaPoints.textContent = 'Δ = —';
       if (calcDeltaPercent) calcDeltaPercent.textContent = '— %';
       if (calcMcidBadge) {
-        calcMcidBadge.textContent = 'Aguardando dados';
+        calcMcidBadge.textContent = evalMatrix.recommendationType === 'pending' ? 'Aguardando dados' : evalMatrix.badgeLabel;
         calcMcidBadge.className = 'calc-metric-val calc-mcid-status';
       }
+      const noScoreCls = evalMatrix.recommendationType === 'adverse_halt' ? 'danger' : (evalMatrix.recommendationType === 'warning_tol' ? 'warning' : '');
       if (cardDeltaPoints) cardDeltaPoints.className = 'calc-metric-card';
       if (cardDeltaPercent) cardDeltaPercent.className = 'calc-metric-card';
-      if (cardMcidBadge) cardMcidBadge.className = 'calc-metric-card';
+      if (cardMcidBadge) cardMcidBadge.className = `calc-metric-card ${noScoreCls}`.trim();
 
       if (calcGoalFeedback) {
-        calcGoalFeedback.textContent = `Meta do protocolo: ${activeScale?.meta_texto || m?.meta_melhora || 'Insira os escores para verificar o desfecho.'}`;
+        if (evalMatrix.recommendationType === 'adverse_halt' || evalMatrix.recommendationType === 'warning_tol') {
+          const tolGuideAnchor = evalMatrix.recommendationType === 'warning_tol'
+            ? ' <a href="#tolerabilityDoseGuidePanel" class="adverse-bank-link js-scroll-tol-guide">Ver Ajustes de Tolerabilidade &amp; Dose ↑</a>'
+            : '';
+          const bankHtml = evalMatrix.needsAdverseReport
+            ? ` <a href="${evalMatrix.adverseBankUrl}" target="_blank" rel="noopener noreferrer" class="adverse-bank-link">Registrar no Banco de Efeitos Adversos NAPeN ↗</a>`
+            : '';
+          calcGoalFeedback.innerHTML = `${evalMatrix.summaryHtml}${tolGuideAnchor}${bankHtml}`;
+          bindCalcGuideLinks();
+        } else {
+          calcGoalFeedback.textContent = `Meta do protocolo: ${activeScale?.meta_texto || m?.meta_melhora || 'Insira os escores e selecione a tolerabilidade para verificar o desfecho.'}`;
+        }
       }
       if (calcComparisonFeedback) {
-        calcComparisonFeedback.textContent = 'Ao informar os escores, o sistema analisará se o ganho clínico individual é compatível com o intervalo de confiança dos estudos de referência e se superou a MCID da escala.';
+        calcComparisonFeedback.innerHTML = evalMatrix.recommendationType === 'pending'
+          ? 'Ao informar os escores e a tolerabilidade, o sistema analisará a compatibilidade clínica com a MCID, com os estudos de referência e com a segurança terapêutica.'
+          : evalMatrix.summaryHtml;
+      }
+
+      if (evalMatrix.recommendationType === 'adverse_halt') {
+        state.therapeuticStage = 'primary';
+        engine.setOutcome('danger');
+        updateOutcomeDisplay();
+      } else if (evalMatrix.recommendationType === 'warning_tol') {
+        state.therapeuticStage = 'primary';
+        engine.setOutcome(null);
+        updateOutcomeDisplay();
       }
       return;
     }
@@ -1437,36 +2206,56 @@ document.addEventListener('DOMContentLoaded', () => {
     // Atualização dos 3 Cards de Métricas Individuais
     if (calcDeltaPoints) calcDeltaPoints.textContent = res.deltaPointsFormatted || `Δ = ${res.delta}`;
     if (calcDeltaPercent) calcDeltaPercent.textContent = res.percentFormatted || `${res.percent}%`;
-    
+
     if (calcMcidBadge) {
-      if (res.mcidMet) {
-        calcMcidBadge.textContent = 'MCID Atingida';
+      if (evalMatrix.recommendationType === 'adverse_halt') {
+        calcMcidBadge.textContent = 'Suspensão (EA Grave)';
+      } else if (res.mcidMet) {
+        calcMcidBadge.textContent = evalMatrix.recommendationType === 'warning_tol' ? 'MCID (Ver Tolerabilidade)' : 'MCID Atingida';
       } else if (res.isImproved) {
-        calcMcidBadge.textContent = 'Abaixo da MCID';
+        calcMcidBadge.textContent = 'Parcial (< MCID)';
       } else {
         calcMcidBadge.textContent = 'Não Atingida';
       }
     }
 
-    const statusClass = res.outcomeRecommended === 'success' ? 'success' : 'danger';
+    let statusClass = 'danger';
+    if (evalMatrix.recommendationType === 'success') statusClass = 'success';
+    else if (evalMatrix.recommendationType === 'warning_tol') statusClass = 'warning';
+
     if (cardDeltaPoints) cardDeltaPoints.className = `calc-metric-card ${statusClass}`;
     if (cardDeltaPercent) cardDeltaPercent.className = `calc-metric-card ${statusClass}`;
     if (cardMcidBadge) cardMcidBadge.className = `calc-metric-card ${statusClass}`;
 
-    // Automatismo: Seleciona e abre automaticamente o desfecho clínico
-    engine.setOutcome(res.outcomeRecommended);
+    // Automatismo multidimensional: resposta satisfatória consolida; resposta insatisfatória avança diretamente ao próximo protocolo
+    if (evalMatrix.recommendationType === 'success') {
+      state.therapeuticStage = 'primary';
+      engine.setOutcome('success');
+    } else if (evalMatrix.recommendationType === 'warning_tol') {
+      state.therapeuticStage = 'primary';
+      engine.setOutcome(null);
+    } else if (evalMatrix.recommendationType === 'adverse_halt') {
+      state.therapeuticStage = 'primary';
+      engine.setOutcome('danger');
+    } else {
+      state.therapeuticStage = evalMatrix.recommendedStage || 'alt1';
+      engine.setOutcome('danger');
+    }
     updateOutcomeDisplay();
 
-    // Feedback Clínico e Conduta Oficial dos Roadmaps da Rede NAPeN
+    // Feedback Clínico Integrado (Escore + Tolerabilidade)
     if (calcGoalFeedback) {
-      if (res.outcomeRecommended === 'success') {
-        calcGoalFeedback.innerHTML = `<strong>[Meta Terapêutica Alcançada (≥ MCID)]</strong> O paciente atingiu ou superou o limiar de relevância clínica da escala (${res.mcidLabel || activeScale?.meta_texto || m?.meta_melhora}). Conduta oficial de consolidação e manutenção periódica ativada automaticamente abaixo.`;
-      } else {
-        calcGoalFeedback.innerHTML = `<strong>[Resposta Insatisfatória (< MCID)]</strong> A evolução clínica na escala permaneceu aquém da meta do protocolo (${res.mcidLabel || activeScale?.meta_texto || m?.meta_melhora}). Transição para o Protocolo Alternativo da árvore sequencial ativada automaticamente abaixo.`;
-      }
+      const tolGuideAnchor = evalMatrix.recommendationType === 'warning_tol'
+        ? ' <a href="#tolerabilityDoseGuidePanel" class="adverse-bank-link js-scroll-tol-guide">Ver Ajustes de Tolerabilidade &amp; Dose ↑</a>'
+        : '';
+      const bankLink = evalMatrix.needsAdverseReport
+        ? ` <a href="${evalMatrix.adverseBankUrl}" target="_blank" rel="noopener noreferrer" class="adverse-bank-link">Registrar evento no Banco de Efeitos Adversos NAPeN ↗</a>`
+        : '';
+      calcGoalFeedback.innerHTML = `${evalMatrix.summaryHtml}${tolGuideAnchor}${bankLink}`;
+      bindCalcGuideLinks();
     }
 
-    // Diagnóstico Comparativo Dinâmico com Ensaio Clínico de Referência
+    // Diagnóstico Comparativo Dinâmico
     if (calcComparisonFeedback) {
       calcComparisonFeedback.innerHTML = res.comparativeFeedback;
     }
@@ -1624,23 +2413,52 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!rawScaleStr) return 'eam';
     const str = String(rawScaleStr).toLowerCase();
     if (str.includes('ashworth') || str.includes('eam')) return 'eam';
+    if (str.includes('fma-le') || str.includes('membro inferior') && str.includes('fugl')) return 'fma_le';
     if (str.includes('fugl') || str.includes('fma')) return 'fma_ue';
+    if (str.includes('mal-brazil') || str.includes('mal ') || str.includes('motor activity log')) return 'mal_brazil';
+    if (str.includes('bergego')) return 'catherine_bergego';
     if (str.includes('berg') || str.includes('bbs')) return 'bbs';
+    if (str.includes('icars')) return 'icars';
     if (str.includes('sara')) return 'sara';
-    if (str.includes('hamd') || str.includes('ham-d') || str.includes('hdrs') || str.includes('madrs')) return 'ham_d';
+    if (str.includes('madrs') || str.includes('montgomery')) return 'madrs';
+    if (str.includes('hdrs-21') || str.includes('hdrs 21')) return 'hdrs_21';
+    if (str.includes('hamd') || str.includes('ham-d') || str.includes('hdrs')) return 'ham_d';
+    if (str.includes('gad-7') || str.includes('gad 7')) return 'gad_7';
+    if (str.includes('dass-21') || str.includes('dass 21') || str.includes('dass')) return 'dass_21';
+    if (str.includes('bai') || str.includes('beck anxiety')) return 'bai';
     if (str.includes('hama') || str.includes('ham-a')) return 'ham_a';
-    if (str.includes('pcl') || str.includes('tept')) return 'pcl_5';
+    if (str.includes('pcl')) return 'pcl_5';
+    if (str.includes('caps')) return 'caps';
+    if (str.includes('bpi') || str.includes('brief pain')) return 'bpi';
+    if (str.includes('npsi')) return 'npsi';
     if (str.includes('eva') || str.includes('vas')) return 'eva';
     if (str.includes('dn4')) return 'dn4';
     if (str.includes('tug') || str.includes('timed up')) return 'tug';
+    if (str.includes('nfog')) return 'nfog_q';
     if (str.includes('fog') || str.includes('freezing')) return 'fogq';
     if (str.includes('updrs') || str.includes('mds')) return 'updrs_iii';
+    if (str.includes('moca') || str.includes('montreal')) return 'moca';
+    if (str.includes('cornell') || str.includes('csdd')) return 'cornell';
     if (str.includes('meem') || str.includes('mmse') || str.includes('mental')) return 'meem';
     if (str.includes('adas')) return 'adas_cog';
+    if (str.includes('trilhas') || str.includes('trail') || str.includes('tmt')) return 'teste_trilhas';
+    if (str.includes('wais') || str.includes('dígitos') || str.includes('digitos')) return 'wais_digitos';
+    if (str.includes('d2')) return 'd2_psico';
     if (str.includes('boston') || str.includes('bnt')) return 'bnt';
+    if (str.includes('mtl')) return 'mtl_brasil';
+    if (str.includes('token')) return 'token_test';
     if (str.includes('wab')) return 'wab_r';
-    if (str.includes('fois') || str.includes('doss') || str.includes('fedss')) return 'fois';
+    if (str.includes('doss')) return 'doss';
+    if (str.includes('masa')) return 'masa';
+    if (str.includes('ssa')) return 'ssa';
+    if (str.includes('fois') || str.includes('fedss')) return 'fois';
+    if (str.includes('pdms')) return 'pdms_fm';
+    if (str.includes('quest')) return 'quest';
+    if (str.includes('box') || str.includes('bbt')) return 'bbt';
+    if (str.includes('pediatric balance') || str.includes('pbs')) return 'pbs';
     if (str.includes('gmfm')) return 'gmfm';
+    if (str.includes('rbs')) return 'rbs_r';
+    if (str.includes('atec')) return 'atec';
     if (str.includes('abc')) return 'abc';
     if (str.includes('srs')) return 'srs_2';
     if (str.includes('npi')) return 'npi';
@@ -1658,7 +2476,11 @@ document.addEventListener('DOMContentLoaded', () => {
     if (scaleGuideSigla) scaleGuideSigla.textContent = scale.sigla;
     if (scaleGuideTempo) scaleGuideTempo.textContent = `⏱ ${scale.tempo_aplicacao || '5 a 10 min'}`;
     if (scaleGuideTitle) scaleGuideTitle.textContent = scale.nome;
-    if (scaleGuideDominio) scaleGuideDominio.textContent = scale.dominio;
+    if (scaleGuideDominio) {
+      scaleGuideDominio.textContent = scale.uso_privativo_psicologo
+        ? `${scale.dominio} · Uso privativo de psicólogos (Lei nº 4.119/1962)`
+        : scale.dominio;
+    }
     if (scaleGuidePublico) scaleGuidePublico.textContent = scale.publico_alvo;
     if (scaleGuideMateriais) scaleGuideMateriais.textContent = scale.materiais;
 
@@ -1694,8 +2516,15 @@ document.addEventListener('DOMContentLoaded', () => {
     if (scaleGuideInterpretacaoText) scaleGuideInterpretacaoText.textContent = scale.interpretacao_clinica || '';
     if (scaleGuideRefAbnt) scaleGuideRefAbnt.textContent = scale.referencia_abnt || '';
     if (scaleGuideDoiLink) {
-      scaleGuideDoiLink.href = scale.link_artigo || '#';
-      scaleGuideDoiLink.textContent = `Acessar Artigo Original (${scale.doi ? 'DOI: ' + scale.doi : 'Link Oficial'}) ↗`;
+      const hasLink = Boolean(scale.doi || (scale.link_artigo && scale.link_artigo !== '#'));
+      if (hasLink) {
+        scaleGuideDoiLink.style.display = 'inline-flex';
+        scaleGuideDoiLink.href = scale.link_artigo || (scale.doi ? `https://doi.org/${scale.doi}` : '#');
+        scaleGuideDoiLink.textContent = `Acessar Artigo Original (${scale.doi ? 'DOI: ' + scale.doi : 'Link Oficial'}) ↗`;
+      } else {
+        scaleGuideDoiLink.style.display = 'none';
+        scaleGuideDoiLink.href = '#';
+      }
     }
     if (scaleGuideValidacaoBrasil) scaleGuideValidacaoBrasil.textContent = scale.validacao_brasil || 'Adaptação e normas psicométricas disponíveis em língua portuguesa.';
 
@@ -1731,7 +2560,7 @@ document.addEventListener('DOMContentLoaded', () => {
     btnOpenScaleGuideMain.addEventListener('click', () => {
       const activeMod = engine.getActiveModality();
       const activeScale = engine.getActiveScale();
-      const scaleToOpen = activeScale?.sigla || activeScale?.id || activeMod?.escala_recomendada;
+      const scaleToOpen = activeScale?.scale_key || activeScale?.sigla || activeScale?.id || activeMod?.escala_recomendada;
       openScaleGuide(scaleToOpen);
     });
   }
@@ -1740,7 +2569,7 @@ document.addEventListener('DOMContentLoaded', () => {
     btnOpenScaleGuideCalc.addEventListener('click', () => {
       const activeScale = engine.getActiveScale();
       const activeMod = engine.getActiveModality();
-      const scaleToOpen = activeScale?.sigla || activeScale?.id || activeMod?.escala_recomendada;
+      const scaleToOpen = activeScale?.scale_key || activeScale?.sigla || activeScale?.id || activeMod?.escala_recomendada;
       openScaleGuide(scaleToOpen);
     });
   }
@@ -1750,7 +2579,7 @@ document.addEventListener('DOMContentLoaded', () => {
     btnOpenScaleGuidePresc.addEventListener('click', () => {
       const activeScale = engine.getActiveScale();
       const activeMod = engine.getActiveModality();
-      const scaleToOpen = activeScale?.sigla || activeScale?.id || activeMod?.escala_recomendada;
+      const scaleToOpen = activeScale?.scale_key || activeScale?.sigla || activeScale?.id || activeMod?.escala_recomendada;
       openScaleGuide(scaleToOpen);
     });
   }
@@ -1766,6 +2595,29 @@ document.addEventListener('DOMContentLoaded', () => {
         const targetScrollY = window.pageYOffset + rect.top - headerHeight - 16;
         window.scrollTo({ top: targetScrollY, behavior: 'smooth' });
       }
+    });
+  }
+
+  const tolAnchorBtn = typeof btnScrollToTolGuide !== 'undefined' && btnScrollToTolGuide ? btnScrollToTolGuide : document.getElementById('btnScrollToTolGuide');
+  if (tolAnchorBtn) {
+    tolAnchorBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      scrollToTolerabilityGuide();
+    });
+  }
+
+  const evidenceAnchorBtn = typeof btnScrollToEvidence !== 'undefined' && btnScrollToEvidence ? btnScrollToEvidence : document.getElementById('btnScrollToEvidence');
+  if (evidenceAnchorBtn) {
+    evidenceAnchorBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const panel = typeof evidenceReferencePanel !== 'undefined' && evidenceReferencePanel ? evidenceReferencePanel : document.getElementById('evidenceReferencePanel');
+      if (!panel) return;
+      panel.open = true;
+      const headerEl = document.querySelector('.site-header');
+      const headerHeight = headerEl ? headerEl.offsetHeight : 140;
+      const rect = panel.getBoundingClientRect();
+      const targetScrollY = window.pageYOffset + rect.top - headerHeight - 16;
+      window.scrollTo({ top: Math.max(0, targetScrollY), behavior: 'smooth' });
     });
   }
 
@@ -1968,14 +2820,18 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!pocketTableBody) return;
     pocketTableBody.innerHTML = '';
 
+    const escAttr = (val) => String(val || '').replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
     data.condicoes.forEach(c => {
       const factors = c.fatores_limitantes || [];
       factors.forEach(f => {
-        const m = c.modalidades ? c.modalidades[f.id] : null;
+        const m = resolveModalityForFactor(c, f.id);
         if (!m) return;
 
         const ensaio = m.ensaio_clinico || m.artigo_referencia;
         const meta = m.meta_analise;
+        const amstar = meta ? (meta.amstar2 || m.amstar2) : m.amstar2;
+        const grade = m.grade;
 
         let condLabel = c.condicao.replace(/\s*\([A-Z0-9]+\)/g, '');
         let eixoLabel = (c.eixo || '').replace(/\s*\([A-Z0-9]+\)/g, '');
@@ -1990,14 +2846,24 @@ document.addEventListener('DOMContentLoaded', () => {
             <div style="font-size: 0.75rem; color: var(--text-faint); margin-top: 2px;">${eixoLabel}</div>
           </td>
           <td>
-            <span style="background: var(--napen-teal-soft); color: var(--napen-teal-dark); padding: 4px 9px; border-radius: 4px; font-weight: 600; font-size: 0.78rem;">
+            <span style="background: var(--napen-teal-soft); color: var(--napen-teal-dark); padding: 4px 9px; border-radius: 3px; font-weight: 600; font-size: 0.78rem; display: inline-block;">
               ${f.label}
             </span>
           </td>
           <td>
-            <span style="font-weight: 700; color: var(--napen-teal-dark); font-size: 0.82rem;">
+            <div style="font-weight: 700; color: var(--napen-teal-dark); font-size: 0.82rem; line-height: 1.35;">
               ${m.diretriz_internacional || 'Recomendação Consensual NAPeN'}
-            </span>
+            </div>
+            ${grade ? `
+              <div style="margin-top: 6px;">
+                <span class="evidence-tag-grade ${getQualityLevelClass(grade.certeza)}" title="${escAttr(grade.observacao_dominios)}">
+                  GRADE: ${grade.certeza} (${grade.simbolos}) · Rec. ${grade.forca_recomendacao}
+                </span>
+                <div style="font-size: 0.70rem; color: var(--text-faint); margin-top: 3px;">
+                  ${grade.status_homologacao || 'Avaliação preliminar — Em homologação GT'}
+                </div>
+              </div>
+            ` : ''}
           </td>
           <td>
             ${ensaio ? `
@@ -2017,6 +2883,16 @@ document.addEventListener('DOMContentLoaded', () => {
               <div style="font-size: 0.80rem; line-height: 1.4;">
                 <div style="font-weight: 700; color: var(--text-muted);">${meta.autores} (${meta.ano})</div>
                 <div style="font-size: 0.74rem; color: var(--text-muted); margin-top: 2px;">${meta.titulo || ''}</div>
+                ${amstar ? `
+                  <div style="margin-top: 6px;">
+                    <span class="evidence-tag-amstar ${getQualityLevelClass(amstar.nivel)}" title="${escAttr(amstar.justificativa_preliminar)}">
+                      AMSTAR 2: ${amstar.nivel}
+                    </span>
+                    <div style="font-size: 0.70rem; color: var(--text-faint); margin-top: 3px;">
+                      ${amstar.status_homologacao || 'Avaliação preliminar — Em homologação GT'}
+                    </div>
+                  </div>
+                ` : ''}
                 ${meta.url_doi ? `
                   <a href="${meta.url_doi}" target="_blank" rel="noopener noreferrer" style="color: var(--napen-teal-dark); font-weight: 700; text-decoration: underline; font-size: 0.76rem; display: inline-block; margin-top: 4px;">
                     Acessar Metanálise via DOI ↗
@@ -2036,10 +2912,13 @@ document.addEventListener('DOMContentLoaded', () => {
         if (btnGoto) {
           btnGoto.addEventListener('click', () => {
             switchTab('prescription');
-            openConditionAlgorithm(c.id);
+            openConditionAlgorithm(c.id, { forceEntryMode: 'new' });
             if (f.id) {
               engine.setFactor(f.id);
-              if (typeof renderCascadingFlow === 'function') renderCascadingFlow();
+              if (typeof renderContinuityBar === 'function') renderContinuityBar(c);
+              if (typeof renderCascadingFlow === 'function') renderCascadingFlow(c);
+              if (typeof renderNode1Options === 'function') renderNode1Options(c);
+              if (typeof updatePrescriptionDisplay === 'function') updatePrescriptionDisplay();
               if (typeof updateOutcomeDisplay === 'function') updateOutcomeDisplay();
             }
           });
@@ -2057,7 +2936,6 @@ document.addEventListener('DOMContentLoaded', () => {
     state.activeTab = tabKey;
 
     navItemPrescription.classList.toggle('active', tabKey === 'prescription');
-    if (navItemCalc) navItemCalc.classList.toggle('active', false);
     navItemPocket.classList.toggle('active', tabKey === 'pocket');
     navItemMethod.classList.toggle('active', tabKey === 'method');
 
@@ -2071,17 +2949,8 @@ document.addEventListener('DOMContentLoaded', () => {
   if (tabBtnPrescription) {
     tabBtnPrescription.addEventListener('click', (e) => {
       e.stopPropagation();
-      closeCalcDropdown();
       switchTab('prescription');
       toggleDropdown();
-    });
-  }
-
-  if (tabBtnCalc) {
-    tabBtnCalc.addEventListener('click', (e) => {
-      e.stopPropagation();
-      closeDropdown();
-      toggleCalcDropdown();
     });
   }
 
@@ -2102,7 +2971,6 @@ document.addEventListener('DOMContentLoaded', () => {
   // Hover suave no desktop para o menu de Prescrição Interativa
   if (navItemPrescription) {
     navItemPrescription.addEventListener('mouseenter', () => {
-      closeCalcDropdown();
       openDropdown();
     });
     navItemPrescription.addEventListener('mouseleave', () => {
@@ -2110,24 +2978,10 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Hover suave no desktop para o menu da Calculadora de Resposta Clínica
-  if (navItemCalc) {
-    navItemCalc.addEventListener('mouseenter', () => {
-      closeDropdown();
-      openCalcDropdown();
-    });
-    navItemCalc.addEventListener('mouseleave', () => {
-      closeCalcDropdown();
-    });
-  }
-
   // Fechar dropdowns ao clicar fora ou teclar ESC
   document.addEventListener('click', (e) => {
     if (navItemPrescription && !navItemPrescription.contains(e.target)) {
       closeDropdown();
-    }
-    if (navItemCalc && !navItemCalc.contains(e.target)) {
-      closeCalcDropdown();
     }
   });
 
@@ -2139,6 +2993,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Inicialização
   populateDropdownMenu();
-  populateCalcDropdown();
+  populateHomeContinuityConditions();
+  renderHomeContinuityPanel();
   renderPocketTable();
 });

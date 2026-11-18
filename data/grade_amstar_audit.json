@@ -1,0 +1,2704 @@
+{
+  "versao_auditoria": "2026-11-17-v2",
+  "status_geral": "Avaliação preliminar — Em homologação pelo GT NAPeN",
+  "total_pares_auditados": 78,
+  "distribuicao_amstar2": {
+    "Moderada": 69,
+    "Baixa": 7,
+    "Alta": 2
+  },
+  "distribuicao_grade": {
+    "Alta": 7,
+    "Moderada": 49,
+    "Baixa": 18,
+    "Muito Baixa": 4
+  },
+  "pares": {
+    "avc-membro-superior::fraqueza": {
+      "condicao_id": "avc-membro-superior",
+      "fator_id": "fraqueza",
+      "meta_analise": {
+        "autores": "Antonino, G. B., et al.",
+        "ano": 2025,
+        "titulo": "The impact of the number of sessions and stimulation parameters on repetitive transcranial magnetic stimulation efficacy for post-stroke upper extremity recovery: A systematic review and meta-analysis",
+        "periodico": "Clinical Rehabilitation",
+        "doi": "10.1177/02692155251328945",
+        "url_doi": "https://doi.org/10.1177/02692155251328945",
+        "amstar2": {
+          "instrumento": "AMSTAR 2 (Shea et al., 2017 — Avaliação crítica de revisões sistemáticas)",
+          "nivel": "Moderada",
+          "resumo_criterio": "Revisão sistemática com 6 bases, avaliação PEDro e metanálise dose-resposta via curva ROC (35 ECRs, n=897).",
+          "justificativa_preliminar": "Busca abrangente em 6 bases e curva ROC dose-resposta em ≥ 15 sessões.",
+          "sinais_metodologicos": [
+            "Avaliação PEDro",
+            "Curva ROC"
+          ],
+          "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+        }
+      },
+      "grade": {
+        "certeza": "Alta",
+        "simbolos": "⊕⊕⊕⊕",
+        "forca_recomendacao": "Forte",
+        "observacao_dominios": "Nível A (Lefaucheur et al., 2020) e 35 ECRs (Antonino et al., 2025) na presença de PEM.",
+        "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+      },
+      "tolerabilidade_roadmap": {
+        "orientacao_tolerabilidade": "Em caso de desconforto com a bobina, reduzir inicialmente a intensidade e progredir gradualmente conforme a tolerância do paciente até o valor previsto no protocolo.",
+        "ajuste_seguranca": "Na ausência de identificação do Limiar Motor de Repouso (LMR), calibrar pelo Limiar Motor Ativo (LMA); na ausência de PEM no hemisfério lesionado, testar o hemisfério contralesional para confirmar inervação e excluir limitação técnica.",
+        "fatores_moduladores": "Qualidade do sono, medicações em uso (não interromper terapias medicamentosas), integridade do trato corticoespinhal e fase pós-AVC (efeito mais pronunciado de 1 a 6 meses)."
+      }
+    },
+    "avc-membro-superior::perda_sinergia": {
+      "condicao_id": "avc-membro-superior",
+      "fator_id": "perda_sinergia",
+      "meta_analise": {
+        "autores": "Antonino, G. B., et al.",
+        "ano": 2025,
+        "titulo": "The impact of the number of sessions and stimulation parameters on repetitive transcranial magnetic stimulation efficacy for post-stroke upper extremity recovery: A systematic review and meta-analysis",
+        "periodico": "Clinical Rehabilitation",
+        "doi": "10.1177/02692155251328945",
+        "url_doi": "https://doi.org/10.1177/02692155251328945",
+        "amstar2": {
+          "instrumento": "AMSTAR 2 (Shea et al., 2017 — Avaliação crítica de revisões sistemáticas)",
+          "nivel": "Moderada",
+          "resumo_criterio": "Metanálise dose-resposta com 35 ECRs (Antonino et al., 2025).",
+          "justificativa_preliminar": "Consistente com efeito motor global de HF-rTMS.",
+          "sinais_metodologicos": [
+            "Avaliação PEDro"
+          ],
+          "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+        }
+      },
+      "grade": {
+        "certeza": "Alta",
+        "simbolos": "⊕⊕⊕⊕",
+        "forca_recomendacao": "Forte",
+        "observacao_dominios": "Evidência sólida quando PEM presente.",
+        "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+      },
+      "tolerabilidade_roadmap": {
+        "orientacao_tolerabilidade": "Em caso de desconforto com a bobina, reduzir inicialmente a intensidade e progredir gradualmente conforme a tolerância do paciente até o valor previsto no protocolo.",
+        "ajuste_seguranca": "Na ausência de identificação do Limiar Motor de Repouso (LMR), calibrar pelo Limiar Motor Ativo (LMA); na ausência de PEM no hemisfério lesionado, testar o hemisfério contralesional para confirmar inervação e excluir limitação técnica.",
+        "fatores_moduladores": "Qualidade do sono, medicações em uso (não interromper terapias medicamentosas), integridade do trato corticoespinhal e fase pós-AVC (efeito mais pronunciado de 1 a 6 meses)."
+      }
+    },
+    "avc-membro-superior::espasticidade": {
+      "condicao_id": "avc-membro-superior",
+      "fator_id": "espasticidade",
+      "meta_analise": {
+        "autores": "Fan, J., et al.",
+        "ano": 2022,
+        "titulo": "The effectiveness and safety of repetitive transcranial magnetic stimulation on spasticity after upper motor neuron injury: A systematic review and meta-analysis",
+        "periodico": "Frontiers in Neural Circuits",
+        "doi": "10.3389/fncir.2022.973561",
+        "url_doi": "https://doi.org/10.3389/fncir.2022.973561",
+        "amstar2": {
+          "instrumento": "AMSTAR 2 (Shea et al., 2017 — Avaliação crítica de revisões sistemáticas)",
+          "nivel": "Moderada",
+          "resumo_criterio": "Revisão sistemática em 8 bases, risco de viés em duplicata e GRADE relatado (42 ECRs, n=2.108).",
+          "justificativa_preliminar": "Busca em 8 bases e GRADE relatado (Fan et al., 2022).",
+          "sinais_metodologicos": [
+            "Avaliação de risco de viés",
+            "Análise de heterogeneidade",
+            "GRADE / Certeza relatados"
+          ],
+          "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+        }
+      },
+      "grade": {
+        "certeza": "Moderada",
+        "simbolos": "⊕⊕⊕◯",
+        "forca_recomendacao": "Condicional",
+        "observacao_dominios": "Heterogeneidade moderada entre alvos corticais e cerebelares.",
+        "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+      },
+      "tolerabilidade_roadmap": {
+        "orientacao_tolerabilidade": "Em caso de desconforto com a bobina, reduzir inicialmente a intensidade e progredir gradualmente conforme a tolerância do paciente até o valor previsto no protocolo.",
+        "ajuste_seguranca": "Na ausência de identificação do Limiar Motor de Repouso (LMR), calibrar pelo Limiar Motor Ativo (LMA); na ausência de PEM no hemisfério lesionado, testar o hemisfério contralesional para confirmar inervação e excluir limitação técnica.",
+        "fatores_moduladores": "Qualidade do sono, medicações em uso (não interromper terapias medicamentosas), integridade do trato corticoespinhal e fase pós-AVC (efeito mais pronunciado de 1 a 6 meses)."
+      }
+    },
+    "avc-membro-superior::disfuncao_motora": {
+      "condicao_id": "avc-membro-superior",
+      "fator_id": "disfuncao_motora",
+      "meta_analise": {
+        "autores": "Antonino, G. B., et al.",
+        "ano": 2025,
+        "titulo": "The impact of the number of sessions and stimulation parameters on repetitive transcranial magnetic stimulation efficacy for post-stroke upper extremity recovery: A systematic review and meta-analysis",
+        "periodico": "Clinical Rehabilitation",
+        "doi": "10.1177/02692155251328945",
+        "url_doi": "https://doi.org/10.1177/02692155251328945",
+        "amstar2": {
+          "instrumento": "AMSTAR 2 (Shea et al., 2017 — Avaliação crítica de revisões sistemáticas)",
+          "nivel": "Moderada",
+          "resumo_criterio": "Metanálise dose-resposta com 35 ECRs.",
+          "justificativa_preliminar": "Consistente para recuperação motora global pós-AVC.",
+          "sinais_metodologicos": [
+            "Avaliação PEDro"
+          ],
+          "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+        }
+      },
+      "grade": {
+        "certeza": "Alta",
+        "simbolos": "⊕⊕⊕⊕",
+        "forca_recomendacao": "Forte",
+        "observacao_dominios": "Nível A com PEM positivo.",
+        "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+      },
+      "tolerabilidade_roadmap": {
+        "orientacao_tolerabilidade": "Em caso de desconforto com a bobina, reduzir inicialmente a intensidade e progredir gradualmente conforme a tolerância do paciente até o valor previsto no protocolo.",
+        "ajuste_seguranca": "Na ausência de identificação do Limiar Motor de Repouso (LMR), calibrar pelo Limiar Motor Ativo (LMA); na ausência de PEM no hemisfério lesionado, testar o hemisfério contralesional para confirmar inervação e excluir limitação técnica.",
+        "fatores_moduladores": "Qualidade do sono, medicações em uso (não interromper terapias medicamentosas), integridade do trato corticoespinhal e fase pós-AVC (efeito mais pronunciado de 1 a 6 meses)."
+      }
+    },
+    "avc-membro-superior::rtms_m1_grave": {
+      "condicao_id": "avc-membro-superior",
+      "fator_id": "rtms_m1_grave",
+      "meta_analise": {
+        "autores": "Antonino, G. B., et al.",
+        "ano": 2025,
+        "titulo": "The impact of the number of sessions and stimulation parameters on repetitive transcranial magnetic stimulation efficacy for post-stroke upper extremity recovery: A systematic review and meta-analysis",
+        "periodico": "Clinical Rehabilitation",
+        "doi": "10.1177/02692155251328945",
+        "url_doi": "https://doi.org/10.1177/02692155251328945",
+        "amstar2": {
+          "instrumento": "AMSTAR 2 (Shea et al., 2017 — Avaliação crítica de revisões sistemáticas)",
+          "nivel": "Moderada",
+          "resumo_criterio": "Metanálise dose-resposta (Antonino et al., 2025).",
+          "justificativa_preliminar": "Inclui subgrupos de comprometimento moderado-grave.",
+          "sinais_metodologicos": [
+            "Avaliação PEDro"
+          ],
+          "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+        }
+      },
+      "grade": {
+        "certeza": "Moderada",
+        "simbolos": "⊕⊕⊕◯",
+        "forca_recomendacao": "Condicional",
+        "observacao_dominios": "Necessita ≥ 15 sessões em déficit motor moderado-grave.",
+        "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+      },
+      "tolerabilidade_roadmap": {
+        "orientacao_tolerabilidade": "Em caso de desconforto com a bobina, reduzir inicialmente a intensidade e progredir gradualmente conforme a tolerância do paciente até o valor previsto no protocolo.",
+        "ajuste_seguranca": "Na ausência de identificação do Limiar Motor de Repouso (LMR), calibrar pelo Limiar Motor Ativo (LMA); na ausência de PEM no hemisfério lesionado, testar o hemisfério contralesional para confirmar inervação e excluir limitação técnica.",
+        "fatores_moduladores": "Qualidade do sono, medicações em uso (não interromper terapias medicamentosas), integridade do trato corticoespinhal e fase pós-AVC (efeito mais pronunciado de 1 a 6 meses)."
+      }
+    },
+    "avc-membro-superior::rtms_m1_grave_p3": {
+      "condicao_id": "avc-membro-superior",
+      "fator_id": "rtms_m1_grave_p3",
+      "meta_analise": {
+        "autores": "Antonino, G. B., et al.",
+        "ano": 2025,
+        "titulo": "The impact of the number of sessions and stimulation parameters on repetitive transcranial magnetic stimulation efficacy for post-stroke upper extremity recovery: A systematic review and meta-analysis",
+        "periodico": "Clinical Rehabilitation",
+        "doi": "10.1177/02692155251328945",
+        "url_doi": "https://doi.org/10.1177/02692155251328945",
+        "amstar2": {
+          "instrumento": "AMSTAR 2 (Shea et al., 2017 — Avaliação crítica de revisões sistemáticas)",
+          "nivel": "Moderada",
+          "resumo_criterio": "Metanálise dose-resposta (Antonino et al., 2025).",
+          "justificativa_preliminar": "Ensaio clínico paralelo em comprometimento moderado-grave.",
+          "sinais_metodologicos": [
+            "Quadro pontilhado"
+          ],
+          "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+        }
+      },
+      "grade": {
+        "certeza": "Moderada",
+        "simbolos": "⊕⊕⊕◯",
+        "forca_recomendacao": "Condicional",
+        "observacao_dominios": "Segue para iTBS cerebelar ipsilesional (80% LMA) em caso de resposta insatisfatória.",
+        "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+      },
+      "tolerabilidade_roadmap": {
+        "orientacao_tolerabilidade": "Em caso de desconforto com a bobina, reduzir inicialmente a intensidade e progredir gradualmente conforme a tolerância do paciente até o valor previsto no protocolo.",
+        "ajuste_seguranca": "Na ausência de identificação do Limiar Motor de Repouso (LMR), calibrar pelo Limiar Motor Ativo (LMA); na ausência de PEM no hemisfério lesionado, testar o hemisfério contralesional para confirmar inervação e excluir limitação técnica.",
+        "fatores_moduladores": "Qualidade do sono, medicações em uso (não interromper terapias medicamentosas), integridade do trato corticoespinhal e fase pós-AVC (efeito mais pronunciado de 1 a 6 meses)."
+      }
+    },
+    "avc-membro-superior::sem_pem": {
+      "condicao_id": "avc-membro-superior",
+      "fator_id": "sem_pem",
+      "meta_analise": {
+        "autores": "Zhu, Y., et al.",
+        "ano": 2025,
+        "titulo": "Effects of Cerebellar Transcranial Magnetic Stimulation on the Motor Function of Patients With Stroke: A Systematic Review and Meta‐Analysis",
+        "periodico": "Brain and Behavior",
+        "doi": "10.1002/brb3.70471",
+        "url_doi": "https://doi.org/10.1002/brb3.70471",
+        "amstar2": {
+          "instrumento": "AMSTAR 2 (Shea et al., 2017 — Avaliação crítica de revisões sistemáticas)",
+          "nivel": "Moderada",
+          "resumo_criterio": "Revisão sistemática de vias motoras alternativas (Zhu et al., 2025).",
+          "justificativa_preliminar": "Evidência específica em ausência de PEM e lesão pré-frontal extensa.",
+          "sinais_metodologicos": [
+            "Protocolo registrado",
+            "Avaliação de risco de viés"
+          ],
+          "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+        }
+      },
+      "grade": {
+        "certeza": "Baixa",
+        "simbolos": "⊕⊕◯◯",
+        "forca_recomendacao": "Condicional",
+        "observacao_dominios": "Quadro pontilhado (Wang et al., 2022): modula hemisfério contralesional poupado.",
+        "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+      },
+      "tolerabilidade_roadmap": {
+        "orientacao_tolerabilidade": "Em caso de desconforto com a bobina, reduzir inicialmente a intensidade e progredir gradualmente conforme a tolerância do paciente até o valor previsto no protocolo.",
+        "ajuste_seguranca": "Na ausência de identificação do Limiar Motor de Repouso (LMR), calibrar pelo Limiar Motor Ativo (LMA); na ausência de PEM no hemisfério lesionado, testar o hemisfério contralesional para confirmar inervação e excluir limitação técnica.",
+        "fatores_moduladores": "Qualidade do sono, medicações em uso (não interromper terapias medicamentosas), integridade do trato corticoespinhal e fase pós-AVC (efeito mais pronunciado de 1 a 6 meses)."
+      }
+    },
+    "avc-membro-superior::sem_pem_ipsilesional": {
+      "condicao_id": "avc-membro-superior",
+      "fator_id": "sem_pem_ipsilesional",
+      "meta_analise": {
+        "autores": "Antonino, G. B., et al.",
+        "ano": 2025,
+        "titulo": "The impact of the number of sessions and stimulation parameters on repetitive transcranial magnetic stimulation efficacy for post-stroke upper extremity recovery: A systematic review and meta-analysis",
+        "periodico": "Clinical Rehabilitation",
+        "doi": "10.1177/02692155251328945",
+        "url_doi": "https://doi.org/10.1177/02692155251328945",
+        "amstar2": {
+          "instrumento": "AMSTAR 2 (Shea et al., 2017 — Avaliação crítica de revisões sistemáticas)",
+          "nivel": "Moderada",
+          "resumo_criterio": "Metanálise dose-resposta em rTMS pós-AVC (Antonino et al., 2025).",
+          "justificativa_preliminar": "Córtex pré-frontal poupado permite estimulação ipsilesional em M1.",
+          "sinais_metodologicos": [
+            "Avaliação PEDro"
+          ],
+          "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+        }
+      },
+      "grade": {
+        "certeza": "Moderada",
+        "simbolos": "⊕⊕⊕◯",
+        "forca_recomendacao": "Condicional",
+        "observacao_dominios": "Calibração por LMA quando LMR não captado.",
+        "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+      },
+      "tolerabilidade_roadmap": {
+        "orientacao_tolerabilidade": "Em caso de desconforto com a bobina, reduzir inicialmente a intensidade e progredir gradualmente conforme a tolerância do paciente até o valor previsto no protocolo.",
+        "ajuste_seguranca": "Na ausência de identificação do Limiar Motor de Repouso (LMR), calibrar pelo Limiar Motor Ativo (LMA); na ausência de PEM no hemisfério lesionado, testar o hemisfério contralesional para confirmar inervação e excluir limitação técnica.",
+        "fatores_moduladores": "Qualidade do sono, medicações em uso (não interromper terapias medicamentosas), integridade do trato corticoespinhal e fase pós-AVC (efeito mais pronunciado de 1 a 6 meses)."
+      }
+    },
+    "avc-membro-superior::sensorial": {
+      "condicao_id": "avc-membro-superior",
+      "fator_id": "sensorial",
+      "meta_analise": {
+        "autores": "Chen, G., et al.",
+        "ano": 2023,
+        "titulo": "Non-invasive brain stimulation effectively improves post-stroke sensory impairment: a systematic review and meta-analysis",
+        "periodico": "Journal of Neural Transmission",
+        "doi": "10.1007/s00702-023-02674-x",
+        "url_doi": "https://doi.org/10.1007/s00702-023-02674-x",
+        "amstar2": {
+          "instrumento": "AMSTAR 2 (Shea et al., 2017 — Avaliação crítica de revisões sistemáticas)",
+          "nivel": "Moderada",
+          "resumo_criterio": "Metanálise em déficits sensoriais pós-AVC (Chen et al., 2023).",
+          "justificativa_preliminar": "Risco de viés e heterogeneidade avaliados.",
+          "sinais_metodologicos": [
+            "Risco de viés",
+            "Heterogeneidade"
+          ],
+          "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+        }
+      },
+      "grade": {
+        "certeza": "Moderada",
+        "simbolos": "⊕⊕⊕◯",
+        "forca_recomendacao": "Condicional",
+        "observacao_dominios": "S1 3 cm posterior ao hotspot motor mostra ganho sensorial consistente.",
+        "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+      },
+      "tolerabilidade_roadmap": {
+        "orientacao_tolerabilidade": "Em caso de desconforto com a bobina, reduzir inicialmente a intensidade e progredir gradualmente conforme a tolerância do paciente até o valor previsto no protocolo.",
+        "ajuste_seguranca": "Na ausência de identificação do Limiar Motor de Repouso (LMR), calibrar pelo Limiar Motor Ativo (LMA); na ausência de PEM no hemisfério lesionado, testar o hemisfério contralesional para confirmar inervação e excluir limitação técnica.",
+        "fatores_moduladores": "Qualidade do sono, medicações em uso (não interromper terapias medicamentosas), integridade do trato corticoespinhal e fase pós-AVC (efeito mais pronunciado de 1 a 6 meses)."
+      }
+    },
+    "avc-membro-superior::rtms_s1_pf_sim": {
+      "condicao_id": "avc-membro-superior",
+      "fator_id": "rtms_s1_pf_sim",
+      "meta_analise": {
+        "autores": "Chen, G., et al.",
+        "ano": 2023,
+        "titulo": "Non-invasive brain stimulation effectively improves post-stroke sensory impairment: a systematic review and meta-analysis",
+        "periodico": "Journal of Neural Transmission",
+        "doi": "10.1007/s00702-023-02674-x",
+        "url_doi": "https://doi.org/10.1007/s00702-023-02674-x",
+        "amstar2": {
+          "instrumento": "AMSTAR 2 (Shea et al., 2017 — Avaliação crítica de revisões sistemáticas)",
+          "nivel": "Moderada",
+          "resumo_criterio": "Metanálise em recuperação sensorial (Chen et al., 2023).",
+          "justificativa_preliminar": "Preserva segurança evitando estimulação sobre tecido pós-frontal extenso.",
+          "sinais_metodologicos": [
+            "Risco de viés"
+          ],
+          "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+        }
+      },
+      "grade": {
+        "certeza": "Baixa",
+        "simbolos": "⊕⊕◯◯",
+        "forca_recomendacao": "Condicional",
+        "observacao_dominios": "Rota secundária anatômica quando S1 não está viável.",
+        "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+      },
+      "tolerabilidade_roadmap": {
+        "orientacao_tolerabilidade": "Em caso de desconforto com a bobina, reduzir inicialmente a intensidade e progredir gradualmente conforme a tolerância do paciente até o valor previsto no protocolo.",
+        "ajuste_seguranca": "Na ausência de identificação do Limiar Motor de Repouso (LMR), calibrar pelo Limiar Motor Ativo (LMA); na ausência de PEM no hemisfério lesionado, testar o hemisfério contralesional para confirmar inervação e excluir limitação técnica.",
+        "fatores_moduladores": "Qualidade do sono, medicações em uso (não interromper terapias medicamentosas), integridade do trato corticoespinhal e fase pós-AVC (efeito mais pronunciado de 1 a 6 meses)."
+      }
+    },
+    "avc-membro-superior::negligencia": {
+      "condicao_id": "avc-membro-superior",
+      "fator_id": "negligencia",
+      "meta_analise": {
+        "autores": "Fan, J., et al.",
+        "ano": 2017,
+        "titulo": "Efficacy of Noninvasive Brain Stimulation on Unilateral Neglect After Stroke: A Systematic Review and Meta-analysis",
+        "periodico": "American Journal of Physical Medicine & Rehabilitation",
+        "doi": "10.1097/PHM.0000000000000834",
+        "url_doi": "https://doi.org/10.1097/PHM.0000000000000834",
+        "amstar2": {
+          "instrumento": "AMSTAR 2 (Shea et al., 2017 — Avaliação crítica de revisões sistemáticas)",
+          "nivel": "Moderada",
+          "resumo_criterio": "Metanálise em heminegligência unilateral pós-AVC (Fan et al., 2017).",
+          "justificativa_preliminar": "ECRs duplo-cegos consistentes no PPC.",
+          "sinais_metodologicos": [
+            "Avaliação de risco de viés"
+          ],
+          "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+        }
+      },
+      "grade": {
+        "certeza": "Moderada",
+        "simbolos": "⊕⊕⊕◯",
+        "forca_recomendacao": "Condicional",
+        "observacao_dominios": "Evidência moderada para reequilíbrio parietal.",
+        "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+      },
+      "tolerabilidade_roadmap": {
+        "orientacao_tolerabilidade": "Em caso de desconforto com a bobina, reduzir inicialmente a intensidade e progredir gradualmente conforme a tolerância do paciente até o valor previsto no protocolo.",
+        "ajuste_seguranca": "Na ausência de identificação do Limiar Motor de Repouso (LMR), calibrar pelo Limiar Motor Ativo (LMA); na ausência de PEM no hemisfério lesionado, testar o hemisfério contralesional para confirmar inervação e excluir limitação técnica.",
+        "fatores_moduladores": "Qualidade do sono, medicações em uso (não interromper terapias medicamentosas), integridade do trato corticoespinhal e fase pós-AVC (efeito mais pronunciado de 1 a 6 meses)."
+      }
+    },
+    "avc-membro-superior::tdcs_m1_pf_nao": {
+      "condicao_id": "avc-membro-superior",
+      "fator_id": "tdcs_m1_pf_nao",
+      "meta_analise": {
+        "autores": "Antonino, G. B., et al.",
+        "ano": 2025,
+        "titulo": "The impact of the number of sessions and stimulation parameters on repetitive transcranial magnetic stimulation efficacy for post-stroke upper extremity recovery: A systematic review and meta-analysis",
+        "periodico": "Clinical Rehabilitation",
+        "doi": "10.1177/02692155251328945",
+        "url_doi": "https://doi.org/10.1177/02692155251328945",
+        "amstar2": {
+          "instrumento": "AMSTAR 2 (Shea et al., 2017 — Avaliação crítica de revisões sistemáticas)",
+          "nivel": "Moderada",
+          "resumo_criterio": "Revisão e diretriz IFCN tDCS (2017).",
+          "justificativa_preliminar": "Parâmetros otimizados com 2 mA e 30 min simultâneos.",
+          "sinais_metodologicos": [
+            "IFCN tDCS"
+          ],
+          "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+        }
+      },
+      "grade": {
+        "certeza": "Moderada",
+        "simbolos": "⊕⊕⊕◯",
+        "forca_recomendacao": "Condicional",
+        "observacao_dominios": "Pacientes leves apresentam maior resposta à tDCS.",
+        "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+      },
+      "tolerabilidade_roadmap": {
+        "orientacao_tolerabilidade": "Monitorar formigamento, eritema cutâneo e cefaleia sob os eletrodos (25–35 cm²); hidratar uniformemente as esponjas com solução salina e inspecionar a pele a cada sessão.",
+        "ajuste_seguranca": "Quando bem tolerado em protocolos tDCS compatíveis, titular progressivamente para 2 mA e 30 minutos conforme conforto cutâneo e tolerabilidade.",
+        "fatores_moduladores": "Estado medicamentoso estável (não suspender medicações), fase subaguda (1–6 meses) e grau de comprometimento motor (quadros leves respondem melhor)."
+      }
+    },
+    "avc-membro-superior::tdcs_m1_pf_sim_ext_nao": {
+      "condicao_id": "avc-membro-superior",
+      "fator_id": "tdcs_m1_pf_sim_ext_nao",
+      "meta_analise": {
+        "autores": "Zhu, Y., et al.",
+        "ano": 2025,
+        "titulo": "Effects of Cerebellar Transcranial Magnetic Stimulation on the Motor Function of Patients With Stroke: A Systematic Review and Meta‐Analysis",
+        "periodico": "Brain and Behavior",
+        "doi": "10.1002/brb3.70471",
+        "url_doi": "https://doi.org/10.1002/brb3.70471",
+        "amstar2": {
+          "instrumento": "AMSTAR 2 (Shea et al., 2017 — Avaliação crítica de revisões sistemáticas)",
+          "nivel": "Moderada",
+          "resumo_criterio": "Vias motoras alternativas pós-AVC (Zhu et al., 2025).",
+          "justificativa_preliminar": "Ensaio único exploratório (pontilhado).",
+          "sinais_metodologicos": [
+            "Protocolo registrado",
+            "Avaliação de risco de viés"
+          ],
+          "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+        }
+      },
+      "grade": {
+        "certeza": "Baixa",
+        "simbolos": "⊕⊕◯◯",
+        "forca_recomendacao": "Condicional",
+        "observacao_dominios": "Indicado quando ausência de extensão ativa ≥ 10°.",
+        "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+      },
+      "tolerabilidade_roadmap": {
+        "orientacao_tolerabilidade": "Monitorar formigamento, eritema cutâneo e cefaleia sob os eletrodos (25–35 cm²); hidratar uniformemente as esponjas com solução salina e inspecionar a pele a cada sessão.",
+        "ajuste_seguranca": "Quando bem tolerado em protocolos tDCS compatíveis, titular progressivamente para 2 mA e 30 minutos conforme conforto cutâneo e tolerabilidade.",
+        "fatores_moduladores": "Estado medicamentoso estável (não suspender medicações), fase subaguda (1–6 meses) e grau de comprometimento motor (quadros leves respondem melhor)."
+      }
+    },
+    "avc-membro-superior::tdcs_m1_pf_sim_ext_sim": {
+      "condicao_id": "avc-membro-superior",
+      "fator_id": "tdcs_m1_pf_sim_ext_sim",
+      "meta_analise": {
+        "autores": "Antonino, G. B., et al.",
+        "ano": 2025,
+        "titulo": "The impact of the number of sessions and stimulation parameters on repetitive transcranial magnetic stimulation efficacy for post-stroke upper extremity recovery: A systematic review and meta-analysis",
+        "periodico": "Clinical Rehabilitation",
+        "doi": "10.1177/02692155251328945",
+        "url_doi": "https://doi.org/10.1177/02692155251328945",
+        "amstar2": {
+          "instrumento": "AMSTAR 2 (Shea et al., 2017 — Avaliação crítica de revisões sistemáticas)",
+          "nivel": "Moderada",
+          "resumo_criterio": "Evidência em estimulação pré-motora.",
+          "justificativa_preliminar": "Reservado a pacientes com extensão mínima preservada (≥ 10°).",
+          "sinais_metodologicos": [
+            "Quadro pontilhado"
+          ],
+          "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+        }
+      },
+      "grade": {
+        "certeza": "Baixa",
+        "simbolos": "⊕⊕◯◯",
+        "forca_recomendacao": "Condicional",
+        "observacao_dominios": "Pacientes leves apresentam resposta superior à tDCS.",
+        "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+      },
+      "tolerabilidade_roadmap": {
+        "orientacao_tolerabilidade": "Monitorar formigamento, eritema cutâneo e cefaleia sob os eletrodos (25–35 cm²); hidratar uniformemente as esponjas com solução salina e inspecionar a pele a cada sessão.",
+        "ajuste_seguranca": "Quando bem tolerado em protocolos tDCS compatíveis, titular progressivamente para 2 mA e 30 minutos conforme conforto cutâneo e tolerabilidade.",
+        "fatores_moduladores": "Estado medicamentoso estável (não suspender medicações), fase subaguda (1–6 meses) e grau de comprometimento motor (quadros leves respondem melhor)."
+      }
+    },
+    "avc-membro-superior::tdcs_sensorial_s1": {
+      "condicao_id": "avc-membro-superior",
+      "fator_id": "tdcs_sensorial_s1",
+      "meta_analise": {
+        "autores": "Chen, G., et al.",
+        "ano": 2023,
+        "titulo": "Non-invasive brain stimulation effectively improves post-stroke sensory impairment: a systematic review and meta-analysis",
+        "periodico": "Journal of Neural Transmission",
+        "doi": "10.1007/s00702-023-02674-x",
+        "url_doi": "https://doi.org/10.1007/s00702-023-02674-x",
+        "amstar2": {
+          "instrumento": "AMSTAR 2 (Shea et al., 2017 — Avaliação crítica de revisões sistemáticas)",
+          "nivel": "Moderada",
+          "resumo_criterio": "Metanálise sensorial (Chen et al., 2023).",
+          "justificativa_preliminar": "Consistência favorável em estimulação somatossensorial.",
+          "sinais_metodologicos": [
+            "Risco de viés"
+          ],
+          "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+        }
+      },
+      "grade": {
+        "certeza": "Moderada",
+        "simbolos": "⊕⊕⊕◯",
+        "forca_recomendacao": "Condicional",
+        "observacao_dominios": "Titular corrente para 2 mA e 30 min.",
+        "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+      },
+      "tolerabilidade_roadmap": {
+        "orientacao_tolerabilidade": "Monitorar formigamento, eritema cutâneo e cefaleia sob os eletrodos (25–35 cm²); hidratar uniformemente as esponjas com solução salina e inspecionar a pele a cada sessão.",
+        "ajuste_seguranca": "Quando bem tolerado em protocolos tDCS compatíveis, titular progressivamente para 2 mA e 30 minutos conforme conforto cutâneo e tolerabilidade.",
+        "fatores_moduladores": "Estado medicamentoso estável (não suspender medicações), fase subaguda (1–6 meses) e grau de comprometimento motor (quadros leves respondem melhor)."
+      }
+    },
+    "avc-membro-superior::tdcs_negligencia": {
+      "condicao_id": "avc-membro-superior",
+      "fator_id": "tdcs_negligencia",
+      "meta_analise": {
+        "autores": "Fan, J., et al.",
+        "ano": 2017,
+        "titulo": "Efficacy of Noninvasive Brain Stimulation on Unilateral Neglect After Stroke: A Systematic Review and Meta-analysis",
+        "periodico": "American Journal of Physical Medicine & Rehabilitation",
+        "doi": "10.1097/PHM.0000000000000834",
+        "url_doi": "https://doi.org/10.1097/PHM.0000000000000834",
+        "amstar2": {
+          "instrumento": "AMSTAR 2 (Shea et al., 2017 — Avaliação crítica de revisões sistemáticas)",
+          "nivel": "Moderada",
+          "resumo_criterio": "Metanálise heminegligência (Fan et al., 2017).",
+          "justificativa_preliminar": "Simultaneidade ao treino visuoespacial potencializa resposta.",
+          "sinais_metodologicos": [
+            "Avaliação de risco de viés"
+          ],
+          "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+        }
+      },
+      "grade": {
+        "certeza": "Moderada",
+        "simbolos": "⊕⊕⊕◯",
+        "forca_recomendacao": "Condicional",
+        "observacao_dominios": "Reequilíbrio parietal inter-hemisférico.",
+        "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+      },
+      "tolerabilidade_roadmap": {
+        "orientacao_tolerabilidade": "Monitorar formigamento, eritema cutâneo e cefaleia sob os eletrodos (25–35 cm²); hidratar uniformemente as esponjas com solução salina e inspecionar a pele a cada sessão.",
+        "ajuste_seguranca": "Quando bem tolerado em protocolos tDCS compatíveis, titular progressivamente para 2 mA e 30 minutos conforme conforto cutâneo e tolerabilidade.",
+        "fatores_moduladores": "Estado medicamentoso estável (não suspender medicações), fase subaguda (1–6 meses) e grau de comprometimento motor (quadros leves respondem melhor)."
+      }
+    },
+    "avc-mobilidade::equilibrio": {
+      "condicao_id": "avc-mobilidade",
+      "fator_id": "equilibrio",
+      "meta_analise": {
+        "autores": "Zeng, Y., et al.",
+        "ano": 2024,
+        "titulo": "Efficacy of Cerebellar Transcranial Magnetic Stimulation for Post-stroke Balance and Limb Motor Function Impairments: Meta-analyses of Random Controlled Trials and Resting-State fMRI Studies",
+        "periodico": "The Cerebellum",
+        "doi": "10.1007/s12311-024-01660-7",
+        "url_doi": "https://doi.org/10.1007/s12311-024-01660-7",
+        "amstar2": {
+          "instrumento": "AMSTAR 2 (Shea et al., 2017 — Avaliação crítica de revisões sistemáticas)",
+          "nivel": "Baixa",
+          "resumo_criterio": "Metanálise cerebelar em marcha e equilíbrio (Zeng et al., 2024).",
+          "justificativa_preliminar": "Pequeno número de ECRs por alvo cerebelar.",
+          "sinais_metodologicos": [
+            "Risco de viés"
+          ],
+          "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+        }
+      },
+      "grade": {
+        "certeza": "Moderada",
+        "simbolos": "⊕⊕⊕◯",
+        "forca_recomendacao": "Condicional",
+        "observacao_dominios": "Quadros pontilhados em cerebelo requerem reavaliação seriada após 5 sessões.",
+        "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+      },
+      "tolerabilidade_roadmap": {
+        "orientacao_tolerabilidade": "A intensidade do estimulador pode ser reduzida inicialmente em caso de desconforto e ajustada progressivamente conforme a tolerância do paciente até o valor previsto.",
+        "ajuste_seguranca": "Usar bobina circular ou parabólica para M1 MMII e parabólica/duplo cone no cerebelo; na ausência de PEM no hemisfério lesionado, definir o LMR pelo hemisfério não lesionado.",
+        "fatores_moduladores": "Medicações em uso (não interromper terapias medicamentosas) e ciclos com 10 ou mais sessões para maior tamanho de efeito."
+      }
+    },
+    "avc-mobilidade::velocidade_marcha": {
+      "condicao_id": "avc-mobilidade",
+      "fator_id": "velocidade_marcha",
+      "meta_analise": {
+        "autores": "Jia, D., et al.",
+        "ano": 2025,
+        "titulo": "Therapeutic efficacy of repetitive transcranial magnetic stimulation on gait and limb balance function in patients with lower limb dysfunction post-cerebral infarction: a systematic review and meta-analysis",
+        "periodico": "BMC Neurology",
+        "doi": "10.1186/s12883-025-04112-9",
+        "url_doi": "https://doi.org/10.1186/s12883-025-04112-9",
+        "amstar2": {
+          "instrumento": "AMSTAR 2 (Shea et al., 2017 — Avaliação crítica de revisões sistemáticas)",
+          "nivel": "Moderada",
+          "resumo_criterio": "Metanálise (Jia et al., 2025) em marcha/equilíbrio com ≥ 10 sessões.",
+          "justificativa_preliminar": "Análise por subgrupos de dose de sessões.",
+          "sinais_metodologicos": [
+            "Subgrupo ≥10 sessões"
+          ],
+          "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+        }
+      },
+      "grade": {
+        "certeza": "Moderada",
+        "simbolos": "⊕⊕⊕◯",
+        "forca_recomendacao": "Condicional",
+        "observacao_dominios": "Usar bobina circular ou parabólica para representação de MMII.",
+        "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+      },
+      "tolerabilidade_roadmap": {
+        "orientacao_tolerabilidade": "A intensidade do estimulador pode ser reduzida inicialmente em caso de desconforto e ajustada progressivamente conforme a tolerância do paciente até o valor previsto.",
+        "ajuste_seguranca": "Usar bobina circular ou parabólica para M1 MMII e parabólica/duplo cone no cerebelo; na ausência de PEM no hemisfério lesionado, definir o LMR pelo hemisfério não lesionado.",
+        "fatores_moduladores": "Medicações em uso (não interromper terapias medicamentosas) e ciclos com 10 ou mais sessões para maior tamanho de efeito."
+      }
+    },
+    "avc-mobilidade::rtms_m1_aguda": {
+      "condicao_id": "avc-mobilidade",
+      "fator_id": "rtms_m1_aguda",
+      "meta_analise": {
+        "autores": "Su, X., et al.",
+        "ano": 2025,
+        "titulo": "The Effect of Intermittent Theta Burst Stimulation for Post-Stroke Lower Limb Motor Recovery: A Systematic Review and Meta-Analysis",
+        "periodico": "Neurorehabilitation",
+        "doi": "10.1177/10538135241304991",
+        "url_doi": "https://doi.org/10.1177/10538135241304991",
+        "amstar2": {
+          "instrumento": "AMSTAR 2 (Shea et al., 2017 — Avaliação crítica de revisões sistemáticas)",
+          "nivel": "Baixa",
+          "resumo_criterio": "Metanálise iTBS/rTMS em MMII pós-AVC (Su et al., 2025).",
+          "justificativa_preliminar": "Heterogeneidade em ensaios de fase aguda.",
+          "sinais_metodologicos": [
+            "Heterogeneidade"
+          ],
+          "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+        }
+      },
+      "grade": {
+        "certeza": "Moderada",
+        "simbolos": "⊕⊕⊕◯",
+        "forca_recomendacao": "Condicional",
+        "observacao_dominios": "Quadro pontilhado em lesão ≤ 1 mês.",
+        "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+      },
+      "tolerabilidade_roadmap": {
+        "orientacao_tolerabilidade": "A intensidade do estimulador pode ser reduzida inicialmente em caso de desconforto e ajustada progressivamente conforme a tolerância do paciente até o valor previsto.",
+        "ajuste_seguranca": "Usar bobina circular ou parabólica para M1 MMII e parabólica/duplo cone no cerebelo; na ausência de PEM no hemisfério lesionado, definir o LMR pelo hemisfério não lesionado.",
+        "fatores_moduladores": "Medicações em uso (não interromper terapias medicamentosas) e ciclos com 10 ou mais sessões para maior tamanho de efeito."
+      }
+    },
+    "avc-mobilidade::rtms_ppc_mob": {
+      "condicao_id": "avc-mobilidade",
+      "fator_id": "rtms_ppc_mob",
+      "meta_analise": {
+        "autores": "Fan, J., et al.",
+        "ano": 2017,
+        "titulo": "Efficacy of Noninvasive Brain Stimulation on Unilateral Neglect After Stroke: A Systematic Review and Meta-analysis",
+        "periodico": "American Journal of Physical Medicine & Rehabilitation",
+        "doi": "10.1097/PHM.0000000000000834",
+        "url_doi": "https://doi.org/10.1097/PHM.0000000000000834",
+        "amstar2": {
+          "instrumento": "AMSTAR 2 (Shea et al., 2017 — Avaliação crítica de revisões sistemáticas)",
+          "nivel": "Moderada",
+          "resumo_criterio": "Metanálise heminegligência (Fan et al., 2017).",
+          "justificativa_preliminar": "Evidência sólida em modulação parietal.",
+          "sinais_metodologicos": [
+            "Avaliação de risco de viés"
+          ],
+          "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+        }
+      },
+      "grade": {
+        "certeza": "Moderada",
+        "simbolos": "⊕⊕⊕◯",
+        "forca_recomendacao": "Condicional",
+        "observacao_dominios": "Reequilíbrio inter-hemisférico em heminegligência.",
+        "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+      },
+      "tolerabilidade_roadmap": {
+        "orientacao_tolerabilidade": "A intensidade do estimulador pode ser reduzida inicialmente em caso de desconforto e ajustada progressivamente conforme a tolerância do paciente até o valor previsto.",
+        "ajuste_seguranca": "Usar bobina circular ou parabólica para M1 MMII e parabólica/duplo cone no cerebelo; na ausência de PEM no hemisfério lesionado, definir o LMR pelo hemisfério não lesionado.",
+        "fatores_moduladores": "Medicações em uso (não interromper terapias medicamentosas) e ciclos com 10 ou mais sessões para maior tamanho de efeito."
+      }
+    },
+    "avc-mobilidade::tdcs_m1_mob": {
+      "condicao_id": "avc-mobilidade",
+      "fator_id": "tdcs_m1_mob",
+      "meta_analise": {
+        "autores": "Jia, D., et al.",
+        "ano": 2025,
+        "titulo": "Therapeutic efficacy of repetitive transcranial magnetic stimulation on gait and limb balance function in patients with lower limb dysfunction post-cerebral infarction: a systematic review and meta-analysis",
+        "periodico": "BMC Neurology",
+        "doi": "10.1186/s12883-025-04112-9",
+        "url_doi": "https://doi.org/10.1186/s12883-025-04112-9",
+        "amstar2": {
+          "instrumento": "AMSTAR 2 (Shea et al., 2017 — Avaliação crítica de revisões sistemáticas)",
+          "nivel": "Moderada",
+          "resumo_criterio": "Revisão em estimulação elétrica para marcha.",
+          "justificativa_preliminar": "Combinação simultânea ao treino locomotor potencializa ganho.",
+          "sinais_metodologicos": [
+            "IFCN tDCS"
+          ],
+          "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+        }
+      },
+      "grade": {
+        "certeza": "Moderada",
+        "simbolos": "⊕⊕⊕◯",
+        "forca_recomendacao": "Condicional",
+        "observacao_dominios": "Alternativa no deltoide direito reduz desconforto facial.",
+        "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+      },
+      "tolerabilidade_roadmap": {
+        "orientacao_tolerabilidade": "Monitorar desconforto cutâneo e hidratar uniformemente as esponjas; em caso de incômodo facial no Protocolo Alternativo 1, deslocar o cátodo do músculo bucinador para o músculo deltoide direito.",
+        "ajuste_seguranca": "Otimização de Dose: quando tolerado em protocolos tDCS compatíveis, titular para 2 mA e 30 minutos simultaneamente à tarefa locomotora.",
+        "fatores_moduladores": "Cuidados cutâneos padrão, manutenção das medicações e ciclos > 15 sessões."
+      }
+    },
+    "avc-mobilidade::tdcs_s1_mob": {
+      "condicao_id": "avc-mobilidade",
+      "fator_id": "tdcs_s1_mob",
+      "meta_analise": {
+        "autores": "Chen, G., et al.",
+        "ano": 2023,
+        "titulo": "Non-invasive brain stimulation effectively improves post-stroke sensory impairment: a systematic review and meta-analysis",
+        "periodico": "Journal of Neural Transmission",
+        "doi": "10.1007/s00702-023-02674-x",
+        "url_doi": "https://doi.org/10.1007/s00702-023-02674-x",
+        "amstar2": {
+          "instrumento": "AMSTAR 2 (Shea et al., 2017 — Avaliação crítica de revisões sistemáticas)",
+          "nivel": "Moderada",
+          "resumo_criterio": "Metanálise sensorial pós-AVC (Chen et al., 2023).",
+          "justificativa_preliminar": "Indicado na disfunção sensorial do membro inferior.",
+          "sinais_metodologicos": [
+            "Risco de viés"
+          ],
+          "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+        }
+      },
+      "grade": {
+        "certeza": "Moderada",
+        "simbolos": "⊕⊕⊕◯",
+        "forca_recomendacao": "Condicional",
+        "observacao_dominios": "Alt 3 é quadro pontilhado de escalonamento.",
+        "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+      },
+      "tolerabilidade_roadmap": {
+        "orientacao_tolerabilidade": "Monitorar desconforto cutâneo e hidratar uniformemente as esponjas; em caso de incômodo facial no Protocolo Alternativo 1, deslocar o cátodo do músculo bucinador para o músculo deltoide direito.",
+        "ajuste_seguranca": "Otimização de Dose: quando tolerado em protocolos tDCS compatíveis, titular para 2 mA e 30 minutos simultaneamente à tarefa locomotora.",
+        "fatores_moduladores": "Cuidados cutâneos padrão, manutenção das medicações e ciclos > 15 sessões."
+      }
+    },
+    "avc-mobilidade::tdcs_ppc_mob": {
+      "condicao_id": "avc-mobilidade",
+      "fator_id": "tdcs_ppc_mob",
+      "meta_analise": {
+        "autores": "Fan, J., et al.",
+        "ano": 2017,
+        "titulo": "Efficacy of Noninvasive Brain Stimulation on Unilateral Neglect After Stroke: A Systematic Review and Meta-analysis",
+        "periodico": "American Journal of Physical Medicine & Rehabilitation",
+        "doi": "10.1097/PHM.0000000000000834",
+        "url_doi": "https://doi.org/10.1097/PHM.0000000000000834",
+        "amstar2": {
+          "instrumento": "AMSTAR 2 (Shea et al., 2017 — Avaliação crítica de revisões sistemáticas)",
+          "nivel": "Moderada",
+          "resumo_criterio": "Metanálise heminegligência (Fan et al., 2017).",
+          "justificativa_preliminar": "Protocolos PPC alinhados para heminegligência em mobilidade.",
+          "sinais_metodologicos": [
+            "Avaliação de risco de viés"
+          ],
+          "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+        }
+      },
+      "grade": {
+        "certeza": "Moderada",
+        "simbolos": "⊕⊕⊕◯",
+        "forca_recomendacao": "Condicional",
+        "observacao_dominios": "Treino simultâneo amplia efeito.",
+        "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+      },
+      "tolerabilidade_roadmap": {
+        "orientacao_tolerabilidade": "Monitorar desconforto cutâneo e hidratar uniformemente as esponjas; em caso de incômodo facial no Protocolo Alternativo 1, deslocar o cátodo do músculo bucinador para o músculo deltoide direito.",
+        "ajuste_seguranca": "Otimização de Dose: quando tolerado em protocolos tDCS compatíveis, titular para 2 mA e 30 minutos simultaneamente à tarefa locomotora.",
+        "fatores_moduladores": "Cuidados cutâneos padrão, manutenção das medicações e ciclos > 15 sessões."
+      }
+    },
+    "avc-afasia::expressao": {
+      "condicao_id": "avc-afasia",
+      "fator_id": "expressao",
+      "meta_analise": {
+        "autores": "Ding, X., et al.",
+        "ano": 2022,
+        "titulo": "Comparative efficacy of non-invasive brain stimulation for post-stroke aphasia: A network meta-analysis and meta-regression of moderators",
+        "periodico": "Neuroscience & Biobehavioral Reviews",
+        "doi": "10.1016/j.neubiorev.2022.104804",
+        "url_doi": "https://doi.org/10.1016/j.neubiorev.2022.104804",
+        "amstar2": {
+          "instrumento": "AMSTAR 2 (Shea et al., 2017 — Avaliação crítica de revisões sistemáticas)",
+          "nivel": "Moderada",
+          "resumo_criterio": "Metanálise em rede NIBS para afasia (Ding et al., 2022).",
+          "justificativa_preliminar": "Comparação e metarregressão por moderadores clínicos.",
+          "sinais_metodologicos": [
+            "Análise em rede",
+            "Risco de viés"
+          ],
+          "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+        }
+      },
+      "grade": {
+        "certeza": "Moderada",
+        "simbolos": "⊕⊕⊕◯",
+        "forca_recomendacao": "Condicional",
+        "observacao_dominios": "Base sólida para 1 Hz F6; F5 exige tecido viável.",
+        "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+      },
+      "tolerabilidade_roadmap": {
+        "orientacao_tolerabilidade": "Realizar triagem de contraindicações (implantes metálicos cerebrais, implantes cocleares, histórico de convulsões não controladas e EEG/exames de imagem quando pertinentes) antes de iniciar protocolos excitatórios.",
+        "ajuste_seguranca": "No Protocolo 3 dual de rTMS, realizar obrigatoriamente a inibição contralesional (1 Hz FC6+F6) ANTES da excitação lesional (20 Hz FC5+F5). Em tDCS Protocolo 2, a estimulação dual F5/F6 ocorre simultaneamente.",
+        "fatores_moduladores": "Exames de imagem (RNM com tractografia, EEG, TC), dominância hemisférica (Inventário de Edimburgo), tecido viável remanescente e ciclos ≥ 15 sessões."
+      }
+    },
+    "avc-afasia::compreensao": {
+      "condicao_id": "avc-afasia",
+      "fator_id": "compreensao",
+      "meta_analise": {
+        "autores": "Han, C., et al.",
+        "ano": 2024,
+        "titulo": "The effectiveness and safety of noninvasive brain stimulation technology combined with speech training on aphasia after stroke: A systematic review and meta-analysis",
+        "periodico": "Medicine",
+        "doi": "10.1097/MD.0000000000036880",
+        "url_doi": "https://doi.org/10.1097/MD.0000000000036880",
+        "amstar2": {
+          "instrumento": "AMSTAR 2 (Shea et al., 2017 — Avaliação crítica de revisões sistemáticas)",
+          "nivel": "Moderada",
+          "resumo_criterio": "Metanálise NIBS + terapia de linguagem (Han et al., 2024).",
+          "justificativa_preliminar": "Risco de viés avaliado; integração à fonoterapia.",
+          "sinais_metodologicos": [
+            "Risco de viés"
+          ],
+          "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+        }
+      },
+      "grade": {
+        "certeza": "Moderada",
+        "simbolos": "⊕⊕⊕◯",
+        "forca_recomendacao": "Condicional",
+        "observacao_dominios": "Considerar extensão da lesão antes de optar por HF-rTMS esquerda.",
+        "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+      },
+      "tolerabilidade_roadmap": {
+        "orientacao_tolerabilidade": "Realizar triagem de contraindicações (implantes metálicos cerebrais, implantes cocleares, histórico de convulsões não controladas e EEG/exames de imagem quando pertinentes) antes de iniciar protocolos excitatórios.",
+        "ajuste_seguranca": "No Protocolo 3 dual de rTMS, realizar obrigatoriamente a inibição contralesional (1 Hz FC6+F6) ANTES da excitação lesional (20 Hz FC5+F5). Em tDCS Protocolo 2, a estimulação dual F5/F6 ocorre simultaneamente.",
+        "fatores_moduladores": "Exames de imagem (RNM com tractografia, EEG, TC), dominância hemisférica (Inventário de Edimburgo), tecido viável remanescente e ciclos ≥ 15 sessões."
+      }
+    },
+    "avc-afasia::tdcs_expressao_gfi": {
+      "condicao_id": "avc-afasia",
+      "fator_id": "tdcs_expressao_gfi",
+      "meta_analise": {
+        "autores": "Biou, E., et al.",
+        "ano": 2019,
+        "titulo": "Transcranial direct current stimulation in post-stroke aphasia rehabilitation: A systematic review",
+        "periodico": "Annals of Physical and Rehabilitation Medicine",
+        "doi": "10.1016/j.rehab.2019.01.003",
+        "url_doi": "https://doi.org/10.1016/j.rehab.2019.01.003",
+        "amstar2": {
+          "instrumento": "AMSTAR 2 (Shea et al., 2017 — Avaliação crítica de revisões sistemáticas)",
+          "nivel": "Moderada",
+          "resumo_criterio": "Revisão sistemática em tDCS na afasia pós-AVC (Biou et al., 2019).",
+          "justificativa_preliminar": "Detalhamento de montagens anódicas e duais simultâneas.",
+          "sinais_metodologicos": [
+            "Revisão Sistemática"
+          ],
+          "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+        }
+      },
+      "grade": {
+        "certeza": "Moderada",
+        "simbolos": "⊕⊕⊕◯",
+        "forca_recomendacao": "Condicional",
+        "observacao_dominios": "Considerar extensão de lesão para escolher lateralidade.",
+        "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+      },
+      "tolerabilidade_roadmap": {
+        "orientacao_tolerabilidade": "Realizar triagem de contraindicações (implantes metálicos cerebrais, implantes cocleares, histórico de convulsões não controladas e EEG/exames de imagem quando pertinentes) antes de iniciar protocolos excitatórios.",
+        "ajuste_seguranca": "No Protocolo 3 dual de rTMS, realizar obrigatoriamente a inibição contralesional (1 Hz FC6+F6) ANTES da excitação lesional (20 Hz FC5+F5). Em tDCS Protocolo 2, a estimulação dual F5/F6 ocorre simultaneamente.",
+        "fatores_moduladores": "Exames de imagem (RNM com tractografia, EEG, TC), dominância hemisférica (Inventário de Edimburgo), tecido viável remanescente e ciclos ≥ 15 sessões."
+      }
+    },
+    "avc-afasia::tdcs_compreensao_tp": {
+      "condicao_id": "avc-afasia",
+      "fator_id": "tdcs_compreensao_tp",
+      "meta_analise": {
+        "autores": "Biou, E., et al.",
+        "ano": 2019,
+        "titulo": "Transcranial direct current stimulation in post-stroke aphasia rehabilitation: A systematic review",
+        "periodico": "Annals of Physical and Rehabilitation Medicine",
+        "doi": "10.1016/j.rehab.2019.01.003",
+        "url_doi": "https://doi.org/10.1016/j.rehab.2019.01.003",
+        "amstar2": {
+          "instrumento": "AMSTAR 2 (Shea et al., 2017 — Avaliação crítica de revisões sistemáticas)",
+          "nivel": "Moderada",
+          "resumo_criterio": "Revisão sistemática tDCS na afasia (Biou et al., 2019).",
+          "justificativa_preliminar": "Diferencia estimulação esquerda vs inibição direita por imagem.",
+          "sinais_metodologicos": [
+            "Revisão Sistemática"
+          ],
+          "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+        }
+      },
+      "grade": {
+        "certeza": "Moderada",
+        "simbolos": "⊕⊕⊕◯",
+        "forca_recomendacao": "Condicional",
+        "observacao_dominios": "Montagem catódica contralateral em lesões extensas.",
+        "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+      },
+      "tolerabilidade_roadmap": {
+        "orientacao_tolerabilidade": "Realizar triagem de contraindicações (implantes metálicos cerebrais, implantes cocleares, histórico de convulsões não controladas e EEG/exames de imagem quando pertinentes) antes de iniciar protocolos excitatórios.",
+        "ajuste_seguranca": "No Protocolo 3 dual de rTMS, realizar obrigatoriamente a inibição contralesional (1 Hz FC6+F6) ANTES da excitação lesional (20 Hz FC5+F5). Em tDCS Protocolo 2, a estimulação dual F5/F6 ocorre simultaneamente.",
+        "fatores_moduladores": "Exames de imagem (RNM com tractografia, EEG, TC), dominância hemisférica (Inventário de Edimburgo), tecido viável remanescente e ciclos ≥ 15 sessões."
+      }
+    },
+    "avc-afasia::tdcs_cerebelo_anomia": {
+      "condicao_id": "avc-afasia",
+      "fator_id": "tdcs_cerebelo_anomia",
+      "meta_analise": {
+        "autores": "Biou, E., et al.",
+        "ano": 2019,
+        "titulo": "Transcranial direct current stimulation in post-stroke aphasia rehabilitation: A systematic review",
+        "periodico": "Annals of Physical and Rehabilitation Medicine",
+        "doi": "10.1016/j.rehab.2019.01.003",
+        "url_doi": "https://doi.org/10.1016/j.rehab.2019.01.003",
+        "amstar2": {
+          "instrumento": "AMSTAR 2 (Shea et al., 2017 — Avaliação crítica de revisões sistemáticas)",
+          "nivel": "Moderada",
+          "resumo_criterio": "Evidência complementar cerebelar em anomia na afasia.",
+          "justificativa_preliminar": "Ramo exploratório pontilhado indicado para anomia.",
+          "sinais_metodologicos": [
+            "Quadro pontilhado"
+          ],
+          "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+        }
+      },
+      "grade": {
+        "certeza": "Baixa",
+        "simbolos": "⊕⊕◯◯",
+        "forca_recomendacao": "Condicional",
+        "observacao_dominios": "Associar treino lexical estruturado.",
+        "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+      },
+      "tolerabilidade_roadmap": {
+        "orientacao_tolerabilidade": "Realizar triagem de contraindicações (implantes metálicos cerebrais, implantes cocleares, histórico de convulsões não controladas e EEG/exames de imagem quando pertinentes) antes de iniciar protocolos excitatórios.",
+        "ajuste_seguranca": "No Protocolo 3 dual de rTMS, realizar obrigatoriamente a inibição contralesional (1 Hz FC6+F6) ANTES da excitação lesional (20 Hz FC5+F5). Em tDCS Protocolo 2, a estimulação dual F5/F6 ocorre simultaneamente.",
+        "fatores_moduladores": "Exames de imagem (RNM com tractografia, EEG, TC), dominância hemisférica (Inventário de Edimburgo), tecido viável remanescente e ciclos ≥ 15 sessões."
+      }
+    },
+    "avc-disfagia::orofaringea": {
+      "condicao_id": "avc-disfagia",
+      "fator_id": "orofaringea",
+      "meta_analise": {
+        "autores": "Han, D., et al.",
+        "ano": 2024,
+        "titulo": "Evidence for Intermittent Theta Burst Transcranial Magnetic Stimulation for Dysphagia after Stroke: A Systematic Review and Meta-analysis",
+        "periodico": "Dysphagia",
+        "doi": "10.1007/s00455-024-10729-8",
+        "url_doi": "https://doi.org/10.1007/s00455-024-10729-8",
+        "amstar2": {
+          "instrumento": "AMSTAR 2 (Shea et al., 2017 — Avaliação crítica de revisões sistemáticas)",
+          "nivel": "Moderada",
+          "resumo_criterio": "Metanálise iTBS disfagia pós-AVC (Han et al., 2024).",
+          "justificativa_preliminar": "Seleção e risco de viés em duplicata.",
+          "sinais_metodologicos": [
+            "Avaliação de risco de viés"
+          ],
+          "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+        }
+      },
+      "grade": {
+        "certeza": "Moderada",
+        "simbolos": "⊕⊕⊕◯",
+        "forca_recomendacao": "Condicional",
+        "observacao_dominios": "Forte consistência em 5–10 sessões com fonoterapia especializada.",
+        "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+      },
+      "tolerabilidade_roadmap": {
+        "orientacao_tolerabilidade": "Avaliar contraindicações: presença de implantes metálicos no cérebro, histórico de convulsões não controladas e implantes cocleares.",
+        "ajuste_seguranca": "Protocolos Theta-Burst (iTBS/cTBS) requerem menos tempo de sessão e menor intensidade vs. rTMS tradicional. Em tDCS unilateral P1, considerar 1,4 mA por 20 min (Xie et al., 2023) conforme tolerância.",
+        "fatores_moduladores": "Avaliar extensão cortical/subcortical, déficit cognitivo ou de linguagem associado, fase aguda/subaguda (1–6 meses) e reavaliar cada consistência alimentar."
+      }
+    },
+    "avc-disfagia::rtms_cortical_extensa": {
+      "condicao_id": "avc-disfagia",
+      "fator_id": "rtms_cortical_extensa",
+      "meta_analise": {
+        "autores": "Wen, X., et al.",
+        "ano": 2022,
+        "titulo": "The Effectiveness of Repetitive Transcranial Magnetic Stimulation for Post-stroke Dysphagia: A Systematic Review and Meta-Analysis",
+        "periodico": "Frontiers in Human Neuroscience",
+        "doi": "10.3389/fnhum.2022.841781",
+        "url_doi": "https://doi.org/10.3389/fnhum.2022.841781",
+        "amstar2": {
+          "instrumento": "AMSTAR 2 (Shea et al., 2017 — Avaliação crítica de revisões sistemáticas)",
+          "nivel": "Moderada",
+          "resumo_criterio": "Metanálise disfagia (Wen et al., 2022).",
+          "justificativa_preliminar": "Indicado quando lesão cortical impede estimulação direta.",
+          "sinais_metodologicos": [
+            "PRISMA",
+            "Avaliação de risco de viés",
+            "Análise de heterogeneidade"
+          ],
+          "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+        }
+      },
+      "grade": {
+        "certeza": "Moderada",
+        "simbolos": "⊕⊕⊕◯",
+        "forca_recomendacao": "Condicional",
+        "observacao_dominios": "Drive corticobulbar compensatório.",
+        "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+      },
+      "tolerabilidade_roadmap": {
+        "orientacao_tolerabilidade": "Avaliar contraindicações: presença de implantes metálicos no cérebro, histórico de convulsões não controladas e implantes cocleares.",
+        "ajuste_seguranca": "Protocolos Theta-Burst (iTBS/cTBS) requerem menos tempo de sessão e menor intensidade vs. rTMS tradicional. Em tDCS unilateral P1, considerar 1,4 mA por 20 min (Xie et al., 2023) conforme tolerância.",
+        "fatores_moduladores": "Avaliar extensão cortical/subcortical, déficit cognitivo ou de linguagem associado, fase aguda/subaguda (1–6 meses) e reavaliar cada consistência alimentar."
+      }
+    },
+    "avc-disfagia::tempo_transito": {
+      "condicao_id": "avc-disfagia",
+      "fator_id": "tempo_transito",
+      "meta_analise": {
+        "autores": "Liu, Y., et al.",
+        "ano": 2024,
+        "titulo": "Effects of Cerebellar Repetitive Transcranial Magnetic Stimulation in the Treatment of Post-Stroke Dysphagia: A Meta-Analysis and Systematic Review of Randomized Controlled Trials",
+        "periodico": "European Neurology",
+        "doi": "10.1159/000538130",
+        "url_doi": "https://doi.org/10.1159/000538130",
+        "amstar2": {
+          "instrumento": "AMSTAR 2 (Shea et al., 2017 — Avaliação crítica de revisões sistemáticas)",
+          "nivel": "Moderada",
+          "resumo_criterio": "Metanálise cerebelar em disfagia pós-AVC (Liu et al., 2024).",
+          "justificativa_preliminar": "Avaliação sistemática específica para alvos cerebelares.",
+          "sinais_metodologicos": [
+            "Risco de viés"
+          ],
+          "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+        }
+      },
+      "grade": {
+        "certeza": "Moderada",
+        "simbolos": "⊕⊕⊕◯",
+        "forca_recomendacao": "Condicional",
+        "observacao_dominios": "Alvo cerebelar alternativo em disfagia cortical.",
+        "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+      },
+      "tolerabilidade_roadmap": {
+        "orientacao_tolerabilidade": "Avaliar contraindicações: presença de implantes metálicos no cérebro, histórico de convulsões não controladas e implantes cocleares.",
+        "ajuste_seguranca": "Protocolos Theta-Burst (iTBS/cTBS) requerem menos tempo de sessão e menor intensidade vs. rTMS tradicional. Em tDCS unilateral P1, considerar 1,4 mA por 20 min (Xie et al., 2023) conforme tolerância.",
+        "fatores_moduladores": "Avaliar extensão cortical/subcortical, déficit cognitivo ou de linguagem associado, fase aguda/subaguda (1–6 meses) e reavaliar cada consistência alimentar."
+      }
+    },
+    "avc-disfagia::rtms_tronco": {
+      "condicao_id": "avc-disfagia",
+      "fator_id": "rtms_tronco",
+      "meta_analise": {
+        "autores": "Liu, Y., et al.",
+        "ano": 2024,
+        "titulo": "Effects of Cerebellar Repetitive Transcranial Magnetic Stimulation in the Treatment of Post-Stroke Dysphagia: A Meta-Analysis and Systematic Review of Randomized Controlled Trials",
+        "periodico": "European Neurology",
+        "doi": "10.1159/000538130",
+        "url_doi": "https://doi.org/10.1159/000538130",
+        "amstar2": {
+          "instrumento": "AMSTAR 2 (Shea et al., 2017 — Avaliação crítica de revisões sistemáticas)",
+          "nivel": "Moderada",
+          "resumo_criterio": "Metanálise cerebelar disfagia (Liu et al., 2024).",
+          "justificativa_preliminar": "Indicada quando lesão é de tronco encefálico.",
+          "sinais_metodologicos": [
+            "Risco de viés"
+          ],
+          "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+        }
+      },
+      "grade": {
+        "certeza": "Baixa",
+        "simbolos": "⊕⊕◯◯",
+        "forca_recomendacao": "Condicional",
+        "observacao_dominios": "Quadro pontilhado para tronco encefálico.",
+        "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+      },
+      "tolerabilidade_roadmap": {
+        "orientacao_tolerabilidade": "Avaliar contraindicações: presença de implantes metálicos no cérebro, histórico de convulsões não controladas e implantes cocleares.",
+        "ajuste_seguranca": "Protocolos Theta-Burst (iTBS/cTBS) requerem menos tempo de sessão e menor intensidade vs. rTMS tradicional. Em tDCS unilateral P1, considerar 1,4 mA por 20 min (Xie et al., 2023) conforme tolerância.",
+        "fatores_moduladores": "Avaliar extensão cortical/subcortical, déficit cognitivo ou de linguagem associado, fase aguda/subaguda (1–6 meses) e reavaliar cada consistência alimentar."
+      }
+    },
+    "avc-disfagia::tdcs_disf_uni": {
+      "condicao_id": "avc-disfagia",
+      "fator_id": "tdcs_disf_uni",
+      "meta_analise": {
+        "autores": "Han, D., et al.",
+        "ano": 2024,
+        "titulo": "Evidence for Intermittent Theta Burst Transcranial Magnetic Stimulation for Dysphagia after Stroke: A Systematic Review and Meta-analysis",
+        "periodico": "Dysphagia",
+        "doi": "10.1007/s00455-024-10729-8",
+        "url_doi": "https://doi.org/10.1007/s00455-024-10729-8",
+        "amstar2": {
+          "instrumento": "AMSTAR 2 (Shea et al., 2017 — Avaliação crítica de revisões sistemáticas)",
+          "nivel": "Moderada",
+          "resumo_criterio": "Revisão e diretriz tDCS em disfagia.",
+          "justificativa_preliminar": "Preditores favoráveis com menor NIHSS e estimulação precoce.",
+          "sinais_metodologicos": [
+            "Avaliação de risco de viés"
+          ],
+          "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+        }
+      },
+      "grade": {
+        "certeza": "Moderada",
+        "simbolos": "⊕⊕⊕◯",
+        "forca_recomendacao": "Condicional",
+        "observacao_dominios": "Xie et al. (2023) sugerem 1,4 mA / 20 min no P1.",
+        "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+      },
+      "tolerabilidade_roadmap": {
+        "orientacao_tolerabilidade": "Avaliar contraindicações: presença de implantes metálicos no cérebro, histórico de convulsões não controladas e implantes cocleares.",
+        "ajuste_seguranca": "Protocolos Theta-Burst (iTBS/cTBS) requerem menos tempo de sessão e menor intensidade vs. rTMS tradicional. Em tDCS unilateral P1, considerar 1,4 mA por 20 min (Xie et al., 2023) conforme tolerância.",
+        "fatores_moduladores": "Avaliar extensão cortical/subcortical, déficit cognitivo ou de linguagem associado, fase aguda/subaguda (1–6 meses) e reavaliar cada consistência alimentar."
+      }
+    },
+    "avc-disfagia::tdcs_disf_bi": {
+      "condicao_id": "avc-disfagia",
+      "fator_id": "tdcs_disf_bi",
+      "meta_analise": {
+        "autores": "Wen, X., et al.",
+        "ano": 2022,
+        "titulo": "The Effectiveness of Repetitive Transcranial Magnetic Stimulation for Post-stroke Dysphagia: A Systematic Review and Meta-Analysis",
+        "periodico": "Frontiers in Human Neuroscience",
+        "doi": "10.3389/fnhum.2022.841781",
+        "url_doi": "https://doi.org/10.3389/fnhum.2022.841781",
+        "amstar2": {
+          "instrumento": "AMSTAR 2 (Shea et al., 2017 — Avaliação crítica de revisões sistemáticas)",
+          "nivel": "Moderada",
+          "resumo_criterio": "Metanálise disfagia pós-AVC (Wen et al., 2022).",
+          "justificativa_preliminar": "Preditores clínicos Sawan et al. (2020).",
+          "sinais_metodologicos": [
+            "PRISMA",
+            "Avaliação de risco de viés",
+            "Análise de heterogeneidade"
+          ],
+          "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+        }
+      },
+      "grade": {
+        "certeza": "Baixa",
+        "simbolos": "⊕⊕◯◯",
+        "forca_recomendacao": "Condicional",
+        "observacao_dominios": "Alternar hemisférios antes de Alt A / tAVNS.",
+        "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+      },
+      "tolerabilidade_roadmap": {
+        "orientacao_tolerabilidade": "Avaliar contraindicações: presença de implantes metálicos no cérebro, histórico de convulsões não controladas e implantes cocleares.",
+        "ajuste_seguranca": "Protocolos Theta-Burst (iTBS/cTBS) requerem menos tempo de sessão e menor intensidade vs. rTMS tradicional. Em tDCS unilateral P1, considerar 1,4 mA por 20 min (Xie et al., 2023) conforme tolerância.",
+        "fatores_moduladores": "Avaliar extensão cortical/subcortical, déficit cognitivo ou de linguagem associado, fase aguda/subaguda (1–6 meses) e reavaliar cada consistência alimentar."
+      }
+    },
+    "doenca-parkinson::funcao_global": {
+      "condicao_id": "doenca-parkinson",
+      "fator_id": "funcao_global",
+      "meta_analise": {
+        "autores": "Li, R., et al.",
+        "ano": 2022,
+        "titulo": "Effects of Repetitive Transcranial Magnetic Stimulation on Motor Symptoms in Parkinson’s Disease: A Meta-Analysis",
+        "periodico": "Neurorehabilitation and neural repair",
+        "doi": "10.1177/15459683221095034",
+        "url_doi": "https://doi.org/10.1177/15459683221095034",
+        "amstar2": {
+          "instrumento": "AMSTAR 2 (Shea et al., 2017 — Avaliação crítica de revisões sistemáticas)",
+          "nivel": "Moderada",
+          "resumo_criterio": "Metanálise de rTMS em sintomas motores da Doença de Parkinson (Li et al., 2022 / Zhang et al., 2022).",
+          "justificativa_preliminar": "Avaliação por alvos motores e estado dopaminérgico ON.",
+          "sinais_metodologicos": [
+            "Risco de viés"
+          ],
+          "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+        }
+      },
+      "grade": {
+        "certeza": "Moderada",
+        "simbolos": "⊕⊕⊕◯",
+        "forca_recomendacao": "Condicional",
+        "observacao_dominios": "Base consolidada por metanálise para M1 bilateral no estado ON.",
+        "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+      },
+      "tolerabilidade_roadmap": {
+        "orientacao_tolerabilidade": "Cefaleia é o efeito adverso mais frequente durante/após estimulação; atenção a contraindicações (implantes metálicos e epilepsia não controlada).",
+        "ajuste_seguranca": "Aplicar sempre no estado 'ON' da medicação dopaminérgica. Ajuste de Segurança: no Protocolo 10 (Dual M1 + tsMS nível C7), aplicar a 50% da saída máxima no nível C7.",
+        "fatores_moduladores": "Fenótipo rígido-acinético apresenta melhor prognóstico; benzodiazepínicos diminuem os efeitos terapêuticos. Se discinesia por levodopa ou freezing, priorizar protocolos voltados a esses sintomas."
+      }
+    },
+    "doenca-parkinson::dp_ams": {
+      "condicao_id": "doenca-parkinson",
+      "fator_id": "dp_ams",
+      "meta_analise": {
+        "autores": "Chen, Y., et al.",
+        "ano": 2025,
+        "titulo": "Effects of non-invasive brain stimulation over the supplementary motor area on motor function in Parkinson's disease: A systematic review and meta-analysis",
+        "periodico": "Brain Stimulation",
+        "doi": "10.1016/j.brs.2024.12.005",
+        "url_doi": "https://doi.org/10.1016/j.brs.2024.12.005",
+        "amstar2": {
+          "instrumento": "AMSTAR 2 (Shea et al., 2017 — Avaliação crítica de revisões sistemáticas)",
+          "nivel": "Moderada",
+          "resumo_criterio": "Metanálise dedicada à Área Motora Suplementar em Parkinson (Chen et al., 2025).",
+          "justificativa_preliminar": "Benefício consistente em sintomas axiais e bradicinesia.",
+          "sinais_metodologicos": [
+            "Subgrupo AMS"
+          ],
+          "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+        }
+      },
+      "grade": {
+        "certeza": "Moderada",
+        "simbolos": "⊕⊕⊕◯",
+        "forca_recomendacao": "Condicional",
+        "observacao_dominios": "Usar 3 cm à frente de Cz quando hotspot ausente.",
+        "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+      },
+      "tolerabilidade_roadmap": {
+        "orientacao_tolerabilidade": "Cefaleia é o efeito adverso mais frequente durante/após estimulação; atenção a contraindicações (implantes metálicos e epilepsia não controlada).",
+        "ajuste_seguranca": "Aplicar sempre no estado 'ON' da medicação dopaminérgica. Ajuste de Segurança: no Protocolo 10 (Dual M1 + tsMS nível C7), aplicar a 50% da saída máxima no nível C7.",
+        "fatores_moduladores": "Fenótipo rígido-acinético apresenta melhor prognóstico; benzodiazepínicos diminuem os efeitos terapêuticos. Se discinesia por levodopa ou freezing, priorizar protocolos voltados a esses sintomas."
+      }
+    },
+    "doenca-parkinson::dp_dlpfc": {
+      "condicao_id": "doenca-parkinson",
+      "fator_id": "dp_dlpfc",
+      "meta_analise": {
+        "autores": "Zhang, W., et al.",
+        "ano": 2022,
+        "titulo": "Efficacy of repetitive transcranial magnetic stimulation in Parkinson's disease: A systematic review and meta-analysis of randomised controlled trials",
+        "periodico": "EClinicalMedicine",
+        "doi": "10.1016/j.eclinm.2022.101589",
+        "url_doi": "https://doi.org/10.1016/j.eclinm.2022.101589",
+        "amstar2": {
+          "instrumento": "AMSTAR 2 (Shea et al., 2017 — Avaliação crítica de revisões sistemáticas)",
+          "nivel": "Moderada",
+          "resumo_criterio": "Metanálise geral DP (Zhang et al., 2022).",
+          "justificativa_preliminar": "Protocolo dual F3+M1 com duplo cone oriundo de ensaio individual.",
+          "sinais_metodologicos": [
+            "Protocolo registrado",
+            "Análise de heterogeneidade"
+          ],
+          "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+        }
+      },
+      "grade": {
+        "certeza": "Baixa",
+        "simbolos": "⊕⊕◯◯",
+        "forca_recomendacao": "Condicional",
+        "observacao_dominios": "Alta carga de pulsos (5.000–7.000 p) no estado ON.",
+        "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+      },
+      "tolerabilidade_roadmap": {
+        "orientacao_tolerabilidade": "Cefaleia é o efeito adverso mais frequente durante/após estimulação; atenção a contraindicações (implantes metálicos e epilepsia não controlada).",
+        "ajuste_seguranca": "Aplicar sempre no estado 'ON' da medicação dopaminérgica. Ajuste de Segurança: no Protocolo 10 (Dual M1 + tsMS nível C7), aplicar a 50% da saída máxima no nível C7.",
+        "fatores_moduladores": "Fenótipo rígido-acinético apresenta melhor prognóstico; benzodiazepínicos diminuem os efeitos terapêuticos. Se discinesia por levodopa ou freezing, priorizar protocolos voltados a esses sintomas."
+      }
+    },
+    "doenca-parkinson::fog": {
+      "condicao_id": "doenca-parkinson",
+      "fator_id": "fog",
+      "meta_analise": {
+        "autores": "Xie, Y., et al.",
+        "ano": 2019,
+        "titulo": "Effect of Repetitive Transcranial Magnetic Stimulation on Gait and Freezing of Gait in Parkinson Disease: A Systematic Review and Meta-analysis",
+        "periodico": "Archives of Physical Medicine and Rehabilitation",
+        "doi": "10.1016/j.apmr.2019.07.013",
+        "url_doi": "https://doi.org/10.1016/j.apmr.2019.07.013",
+        "amstar2": {
+          "instrumento": "AMSTAR 2 (Shea et al., 2017 — Avaliação crítica de revisões sistemáticas)",
+          "nivel": "Moderada",
+          "resumo_criterio": "Metanálise rTMS em Freezing of Gait (Xie et al., 2020).",
+          "justificativa_preliminar": "Alinhada com Mi 2019 (AMS) e Song 2024 (M1 contralateral).",
+          "sinais_metodologicos": [
+            "Avaliação de risco de viés"
+          ],
+          "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+        }
+      },
+      "grade": {
+        "certeza": "Moderada",
+        "simbolos": "⊕⊕⊕◯",
+        "forca_recomendacao": "Condicional",
+        "observacao_dominios": "P6 inicia pelo lado contralateral ao dimídio mais comprometido.",
+        "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+      },
+      "tolerabilidade_roadmap": {
+        "orientacao_tolerabilidade": "Cefaleia é o efeito adverso mais frequente durante/após estimulação; atenção a contraindicações (implantes metálicos e epilepsia não controlada).",
+        "ajuste_seguranca": "Aplicar sempre no estado 'ON' da medicação dopaminérgica. Ajuste de Segurança: no Protocolo 10 (Dual M1 + tsMS nível C7), aplicar a 50% da saída máxima no nível C7.",
+        "fatores_moduladores": "Fenótipo rígido-acinético apresenta melhor prognóstico; benzodiazepínicos diminuem os efeitos terapêuticos. Se discinesia por levodopa ou freezing, priorizar protocolos voltados a esses sintomas."
+      }
+    },
+    "doenca-parkinson::mobilidade": {
+      "condicao_id": "doenca-parkinson",
+      "fator_id": "mobilidade",
+      "meta_analise": {
+        "autores": "Zhang, W., et al.",
+        "ano": 2022,
+        "titulo": "Efficacy of repetitive transcranial magnetic stimulation in Parkinson's disease: A systematic review and meta-analysis of randomised controlled trials",
+        "periodico": "EClinicalMedicine",
+        "doi": "10.1016/j.eclinm.2022.101589",
+        "url_doi": "https://doi.org/10.1016/j.eclinm.2022.101589",
+        "amstar2": {
+          "instrumento": "AMSTAR 2 (Shea et al., 2017 — Avaliação crítica de revisões sistemáticas)",
+          "nivel": "Moderada",
+          "resumo_criterio": "Metanálise DP (Zhang et al., 2022) + ensaios recentes tsMS.",
+          "justificativa_preliminar": "Cadeia escalonada até tsMS T3 e C7 (com ajuste de segurança).",
+          "sinais_metodologicos": [
+            "Protocolo registrado",
+            "Análise de heterogeneidade"
+          ],
+          "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+        }
+      },
+      "grade": {
+        "certeza": "Moderada",
+        "simbolos": "⊕⊕⊕◯",
+        "forca_recomendacao": "Condicional",
+        "observacao_dominios": "P8 sólido; tsMS T3/C7 são exploratórios.",
+        "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+      },
+      "tolerabilidade_roadmap": {
+        "orientacao_tolerabilidade": "Cefaleia é o efeito adverso mais frequente durante/após estimulação; atenção a contraindicações (implantes metálicos e epilepsia não controlada).",
+        "ajuste_seguranca": "Aplicar sempre no estado 'ON' da medicação dopaminérgica. Ajuste de Segurança: no Protocolo 10 (Dual M1 + tsMS nível C7), aplicar a 50% da saída máxima no nível C7.",
+        "fatores_moduladores": "Fenótipo rígido-acinético apresenta melhor prognóstico; benzodiazepínicos diminuem os efeitos terapêuticos. Se discinesia por levodopa ou freezing, priorizar protocolos voltados a esses sintomas."
+      }
+    },
+    "depressao-maior::moderada_grave": {
+      "condicao_id": "depressao-maior",
+      "fator_id": "moderada_grave",
+      "meta_analise": {
+        "autores": "Hsu, T. W., et al.",
+        "ano": 2024,
+        "titulo": "The dose-effect relationship of six stimulation parameters with rTMS over left DLPFC on treatment-resistant depression: A systematic review and meta-analysis",
+        "periodico": "Neuroscience & Biobehavioral Reviews",
+        "doi": "10.1016/j.neubiorev.2024.105704",
+        "url_doi": "https://doi.org/10.1016/j.neubiorev.2024.105704",
+        "amstar2": {
+          "instrumento": "AMSTAR 2 (Shea et al., 2017 — Avaliação crítica de revisões sistemáticas)",
+          "nivel": "Alta",
+          "resumo_criterio": "Metanálise dose-resposta em 6 parâmetros (Hsu et al., 2024) e consenso NNDC/IFCN (Trapp et al., 2025).",
+          "justificativa_preliminar": "Frequência, intensidade e platô de 4–5 mil pulsos definidos com alta consistência.",
+          "sinais_metodologicos": [
+            "Dose-resposta",
+            "Consenso 2025"
+          ],
+          "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+        }
+      },
+      "grade": {
+        "certeza": "Alta",
+        "simbolos": "⊕⊕⊕⊕",
+        "forca_recomendacao": "Forte",
+        "observacao_dominios": "Nível A consolidado para depressão moderada a grave resistente.",
+        "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+      },
+      "tolerabilidade_roadmap": {
+        "orientacao_tolerabilidade": "Reduzir a intensidade (em % do LMR) se houver intolerância do paciente nos primeiros trens de estimulação.",
+        "ajuste_seguranca": "Curva dose-resposta possui platô em 4.000 a 5.000 pulsos/sessão; associar tratamento medicamentoso potencializa eficácia.",
+        "fatores_moduladores": "Melhora sintomática atinge pico entre a 3ª e a 4ª semanas e pode decair após 3 meses — programar reavaliação após 3 meses da indução."
+      }
+    },
+    "depressao-maior::tempo_reduzido": {
+      "condicao_id": "depressao-maior",
+      "fator_id": "tempo_reduzido",
+      "meta_analise": {
+        "autores": "Shi, R., et al.",
+        "ano": 2024,
+        "titulo": "Short-term and long-term efficacy of accelerated transcranial magnetic stimulation for depression: a systematic review and meta-analysis",
+        "periodico": "BMC Psychiatry",
+        "doi": "10.1186/s12888-024-05545-1",
+        "url_doi": "https://doi.org/10.1186/s12888-024-05545-1",
+        "amstar2": {
+          "instrumento": "AMSTAR 2 (Shea et al., 2017 — Avaliação crítica de revisões sistemáticas)",
+          "nivel": "Moderada",
+          "resumo_criterio": "Metanálise iTBS acelerada (Shi et al., 2024; Kishi et al., 2024) e ECR JAMA Psychiatry (Ramos et al., 2025).",
+          "justificativa_preliminar": "Alta eficácia de curto prazo quando há demanda logística por tempo reduzido.",
+          "sinais_metodologicos": [
+            "Protocolo registrado"
+          ],
+          "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+        }
+      },
+      "grade": {
+        "certeza": "Moderada",
+        "simbolos": "⊕⊕⊕◯",
+        "forca_recomendacao": "Condicional",
+        "observacao_dominios": "Escolha entre TTT (craniometria) e SNT (neuronavegação) conforme infraestrutura.",
+        "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+      },
+      "tolerabilidade_roadmap": {
+        "orientacao_tolerabilidade": "Reduzir a intensidade (em % do LMR) se houver intolerância do paciente nos primeiros trens de estimulação.",
+        "ajuste_seguranca": "Curva dose-resposta possui platô em 4.000 a 5.000 pulsos/sessão; associar tratamento medicamentoso potencializa eficácia.",
+        "fatores_moduladores": "Melhora sintomática atinge pico entre a 3ª e a 4ª semanas e pode decair após 3 meses — programar reavaliação após 3 meses da indução."
+      }
+    },
+    "depressao-maior::comorbidade_ansiedade": {
+      "condicao_id": "depressao-maior",
+      "fator_id": "comorbidade_ansiedade",
+      "meta_analise": {
+        "autores": "Li, H., et al.",
+        "ano": 2021,
+        "titulo": "Comparative efficacy and acceptability of neuromodulation procedures in the treatment of treatment-resistant depression: a network meta-analysis of randomized controlled trials",
+        "periodico": "Journal of Affective Disorders",
+        "doi": "10.1016/j.jad.2021.03.019",
+        "url_doi": "https://doi.org/10.1016/j.jad.2021.03.019",
+        "amstar2": {
+          "instrumento": "AMSTAR 2 (Shea et al., 2017 — Avaliação crítica de revisões sistemáticas)",
+          "nivel": "Moderada",
+          "resumo_criterio": "Metanálise em rede comparativa (Li et al., 2021 · Kishi et al., 2024).",
+          "justificativa_preliminar": "Bilateral F4+F3 demonstra boa aceitabilidade.",
+          "sinais_metodologicos": [
+            "PRISMA"
+          ],
+          "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+        }
+      },
+      "grade": {
+        "certeza": "Alta",
+        "simbolos": "⊕⊕⊕⊕",
+        "forca_recomendacao": "Forte",
+        "observacao_dominios": "Protocolo 2 do ramo convencional.",
+        "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+      },
+      "tolerabilidade_roadmap": {
+        "orientacao_tolerabilidade": "Reduzir a intensidade (em % do LMR) se houver intolerância do paciente nos primeiros trens de estimulação.",
+        "ajuste_seguranca": "Curva dose-resposta possui platô em 4.000 a 5.000 pulsos/sessão; associar tratamento medicamentoso potencializa eficácia.",
+        "fatores_moduladores": "Melhora sintomática atinge pico entre a 3ª e a 4ª semanas e pode decair após 3 meses — programar reavaliação após 3 meses da indução."
+      }
+    },
+    "ansiedade-generalizada::moderada_alta": {
+      "condicao_id": "ansiedade-generalizada",
+      "fator_id": "moderada_alta",
+      "meta_analise": {
+        "autores": "Cirillo, P., et al.",
+        "ano": 2019,
+        "titulo": "Transcranial magnetic stimulation in anxiety and trauma‐related disorders: A systematic review and meta‐analysis",
+        "periodico": "Brain and Behavior",
+        "doi": "10.1002/brb3.1284",
+        "url_doi": "https://doi.org/10.1002/brb3.1284",
+        "amstar2": {
+          "instrumento": "AMSTAR 2 (Shea et al., 2017 — Avaliação crítica de revisões sistemáticas)",
+          "nivel": "Baixa",
+          "resumo_criterio": "Metanálise em ansiedade e trauma (Cirillo et al., 2019).",
+          "justificativa_preliminar": "Replicação existente apenas para 1 Hz F4 (P1); P2 e P4 ainda limitados.",
+          "sinais_metodologicos": [
+            "PRISMA"
+          ],
+          "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+        }
+      },
+      "grade": {
+        "certeza": "Baixa",
+        "simbolos": "⊕⊕◯◯",
+        "forca_recomendacao": "Condicional",
+        "observacao_dominios": "P2 limitado a 600 pulsos por segurança; P4 requer vigilância convulsiva.",
+        "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+      },
+      "tolerabilidade_roadmap": {
+        "orientacao_tolerabilidade": "Em cTBS (Protocolo 2), embora 1.800 p ocorra em depressão, no TAG optou-se por 600 pulsos priorizando segurança. O Protocolo 4 (20 Hz F4) excede diretriz de segurança e registrou 1 crise tônico-clônica.",
+        "ajuste_seguranca": "Protocolos iniciam com 5 sessões/semana por 2–4 semanas, variando de 10 a 25 sessões, com desmame gradual para 3–2 sessões/semana antes de encerrar.",
+        "fatores_moduladores": "Como a HAM-A não é validada no Brasil, associar BAI, GAD-7 ou DASS-21; falha = ausência de melhora após 5 tentativas com diferentes protocolos."
+      }
+    },
+    "ansiedade-generalizada::tag_parietal_p4": {
+      "condicao_id": "ansiedade-generalizada",
+      "fator_id": "tag_parietal_p4",
+      "meta_analise": {
+        "autores": "Cirillo, P., et al.",
+        "ano": 2019,
+        "titulo": "Transcranial magnetic stimulation in anxiety and trauma‐related disorders: A systematic review and meta‐analysis",
+        "periodico": "Brain and Behavior",
+        "doi": "10.1002/brb3.1284",
+        "url_doi": "https://doi.org/10.1002/brb3.1284",
+        "amstar2": {
+          "instrumento": "AMSTAR 2 (Shea et al., 2017 — Avaliação crítica de revisões sistemáticas)",
+          "nivel": "Baixa",
+          "resumo_criterio": "Metanálise transtornos de ansiedade (Cirillo et al., 2019).",
+          "justificativa_preliminar": "Estudo piloto duplo-cego em P4 para TAG + insônia.",
+          "sinais_metodologicos": [
+            "PRISMA"
+          ],
+          "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+        }
+      },
+      "grade": {
+        "certeza": "Baixa",
+        "simbolos": "⊕⊕◯◯",
+        "forca_recomendacao": "Condicional",
+        "observacao_dominios": "Benefício adicional na qualidade do sono (insônia comorbida).",
+        "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+      },
+      "tolerabilidade_roadmap": {
+        "orientacao_tolerabilidade": "Em cTBS (Protocolo 2), embora 1.800 p ocorra em depressão, no TAG optou-se por 600 pulsos priorizando segurança. O Protocolo 4 (20 Hz F4) excede diretriz de segurança e registrou 1 crise tônico-clônica.",
+        "ajuste_seguranca": "Protocolos iniciam com 5 sessões/semana por 2–4 semanas, variando de 10 a 25 sessões, com desmame gradual para 3–2 sessões/semana antes de encerrar.",
+        "fatores_moduladores": "Como a HAM-A não é validada no Brasil, associar BAI, GAD-7 ou DASS-21; falha = ausência de melhora após 5 tentativas com diferentes protocolos."
+      }
+    },
+    "ansiedade-generalizada::comorbidade_depressiva": {
+      "condicao_id": "ansiedade-generalizada",
+      "fator_id": "comorbidade_depressiva",
+      "meta_analise": {
+        "autores": "Cirillo, P., et al.",
+        "ano": 2019,
+        "titulo": "Transcranial magnetic stimulation in anxiety and trauma‐related disorders: A systematic review and meta‐analysis",
+        "periodico": "Brain and Behavior",
+        "doi": "10.1002/brb3.1284",
+        "url_doi": "https://doi.org/10.1002/brb3.1284",
+        "amstar2": {
+          "instrumento": "AMSTAR 2 (Shea et al., 2017 — Avaliação crítica de revisões sistemáticas)",
+          "nivel": "Baixa",
+          "resumo_criterio": "Metanálise transtornos de ansiedade (Cirillo et al., 2019).",
+          "justificativa_preliminar": "Indicado na presença de sintomas depressivos comórbidos.",
+          "sinais_metodologicos": [
+            "PRISMA"
+          ],
+          "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+        }
+      },
+      "grade": {
+        "certeza": "Baixa",
+        "simbolos": "⊕⊕◯◯",
+        "forca_recomendacao": "Condicional",
+        "observacao_dominios": "Indicado quando há comorbidade depressiva associada.",
+        "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+      },
+      "tolerabilidade_roadmap": {
+        "orientacao_tolerabilidade": "Em cTBS (Protocolo 2), embora 1.800 p ocorra em depressão, no TAG optou-se por 600 pulsos priorizando segurança. O Protocolo 4 (20 Hz F4) excede diretriz de segurança e registrou 1 crise tônico-clônica.",
+        "ajuste_seguranca": "Protocolos iniciam com 5 sessões/semana por 2–4 semanas, variando de 10 a 25 sessões, com desmame gradual para 3–2 sessões/semana antes de encerrar.",
+        "fatores_moduladores": "Como a HAM-A não é validada no Brasil, associar BAI, GAD-7 ou DASS-21; falha = ausência de melhora após 5 tentativas com diferentes protocolos."
+      }
+    },
+    "tept::sintomas_gerais": {
+      "condicao_id": "tept",
+      "fator_id": "sintomas_gerais",
+      "meta_analise": {
+        "autores": "Liu, H., et al.",
+        "ano": 2024,
+        "titulo": "Neuromodulation treatments for post-traumatic stress disorder: A systematic review and network meta-analysis covering efficacy, acceptability, and follow-up effects",
+        "periodico": "Journal of Anxiety Disorders",
+        "doi": "10.1016/j.janxdis.2024.102912",
+        "url_doi": "https://doi.org/10.1016/j.janxdis.2024.102912",
+        "amstar2": {
+          "instrumento": "AMSTAR 2 (Shea et al., 2017 — Avaliação crítica de revisões sistemáticas)",
+          "nivel": "Moderada",
+          "resumo_criterio": "Metanálise em rede NIBS no TEPT (Liu et al., 2024) e Cochrane (Brown et al., 2024).",
+          "justificativa_preliminar": "Consistência favorável para F4 direito no TEPT.",
+          "sinais_metodologicos": [
+            "Análise em rede",
+            "Cochrane"
+          ],
+          "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+        }
+      },
+      "grade": {
+        "certeza": "Moderada",
+        "simbolos": "⊕⊕⊕◯",
+        "forca_recomendacao": "Condicional",
+        "observacao_dominios": "Associar Exposição Prolongada, TCC Focada ou EMDR.",
+        "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+      },
+      "tolerabilidade_roadmap": {
+        "orientacao_tolerabilidade": "Reduzir intensidade da estimulação caso haja intolerância nos primeiros trens de pulso e aumentar a dose gradualmente.",
+        "ajuste_seguranca": "Em casos graves, ideação suicida ou risco de abandono, preferir Protocolo 3 bilateral (resposta rápida já a partir da 4ª sessão).",
+        "fatores_moduladores": "Associar fortemente psicoterapias focadas no trauma (Exposição Prolongada, TCC Focada no Trauma, EMDR); resposta < 25% CAPS/PCL-5 exige investigar borderline/substâncias e estressores."
+      }
+    },
+    "tept::tept_bilateral": {
+      "condicao_id": "tept",
+      "fator_id": "tept_bilateral",
+      "meta_analise": {
+        "autores": "Liu, H., et al.",
+        "ano": 2024,
+        "titulo": "Neuromodulation treatments for post-traumatic stress disorder: A systematic review and network meta-analysis covering efficacy, acceptability, and follow-up effects",
+        "periodico": "Journal of Anxiety Disorders",
+        "doi": "10.1016/j.janxdis.2024.102912",
+        "url_doi": "https://doi.org/10.1016/j.janxdis.2024.102912",
+        "amstar2": {
+          "instrumento": "AMSTAR 2 (Shea et al., 2017 — Avaliação crítica de revisões sistemáticas)",
+          "nivel": "Moderada",
+          "resumo_criterio": "Metanálise em rede no TEPT (Liu et al., 2024).",
+          "justificativa_preliminar": "Maior velocidade de resposta (4ª sessão).",
+          "sinais_metodologicos": [
+            "Análise em rede"
+          ],
+          "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+        }
+      },
+      "grade": {
+        "certeza": "Moderada",
+        "simbolos": "⊕⊕⊕◯",
+        "forca_recomendacao": "Condicional",
+        "observacao_dominios": "Indicado em urgência sintomática / risco de abandono.",
+        "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+      },
+      "tolerabilidade_roadmap": {
+        "orientacao_tolerabilidade": "Reduzir intensidade da estimulação caso haja intolerância nos primeiros trens de pulso e aumentar a dose gradualmente.",
+        "ajuste_seguranca": "Em casos graves, ideação suicida ou risco de abandono, preferir Protocolo 3 bilateral (resposta rápida já a partir da 4ª sessão).",
+        "fatores_moduladores": "Associar fortemente psicoterapias focadas no trauma (Exposição Prolongada, TCC Focada no Trauma, EMDR); resposta < 25% CAPS/PCL-5 exige investigar borderline/substâncias e estressores."
+      }
+    },
+    "tept::tept_itbs_f4": {
+      "condicao_id": "tept",
+      "fator_id": "tept_itbs_f4",
+      "meta_analise": {
+        "autores": "Liu, H., et al.",
+        "ano": 2024,
+        "titulo": "Neuromodulation treatments for post-traumatic stress disorder: A systematic review and network meta-analysis covering efficacy, acceptability, and follow-up effects",
+        "periodico": "Journal of Anxiety Disorders",
+        "doi": "10.1016/j.janxdis.2024.102912",
+        "url_doi": "https://doi.org/10.1016/j.janxdis.2024.102912",
+        "amstar2": {
+          "instrumento": "AMSTAR 2 (Shea et al., 2017 — Avaliação crítica de revisões sistemáticas)",
+          "nivel": "Moderada",
+          "resumo_criterio": "Metanálise NIBS TEPT (Liu et al., 2024).",
+          "justificativa_preliminar": "ECR duplo-cego controlado de iTBS F4.",
+          "sinais_metodologicos": [
+            "Risco de viés"
+          ],
+          "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+        }
+      },
+      "grade": {
+        "certeza": "Moderada",
+        "simbolos": "⊕⊕⊕◯",
+        "forca_recomendacao": "Condicional",
+        "observacao_dominios": "Sessão rápida em 9,5 min com boa aceitação.",
+        "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+      },
+      "tolerabilidade_roadmap": {
+        "orientacao_tolerabilidade": "Reduzir intensidade da estimulação caso haja intolerância nos primeiros trens de pulso e aumentar a dose gradualmente.",
+        "ajuste_seguranca": "Em casos graves, ideação suicida ou risco de abandono, preferir Protocolo 3 bilateral (resposta rápida já a partir da 4ª sessão).",
+        "fatores_moduladores": "Associar fortemente psicoterapias focadas no trauma (Exposição Prolongada, TCC Focada no Trauma, EMDR); resposta < 25% CAPS/PCL-5 exige investigar borderline/substâncias e estressores."
+      }
+    },
+    "tept::comorbidade_depressiva": {
+      "condicao_id": "tept",
+      "fator_id": "comorbidade_depressiva",
+      "meta_analise": {
+        "autores": "McGirr, A., et al.",
+        "ano": 2020,
+        "titulo": "Repetitive Transcranial Magnetic Stimulation for the Treatment of Post-traumatic Stress Disorder: A Systematic Review and Network Meta-analysis: La Stimulation Magnétique Transcrânienne Répétitive Pour le Traitement du Trouble de Stress Post-Traumatique : Une Revue Systématique et une Méta-Analyse en Réseau",
+        "periodico": "The Canadian Journal of Psychiatry",
+        "doi": "10.1177/0706743720982432",
+        "url_doi": "https://doi.org/10.1177/0706743720982432",
+        "amstar2": {
+          "instrumento": "AMSTAR 2 (Shea et al., 2017 — Avaliação crítica de revisões sistemáticas)",
+          "nivel": "Moderada",
+          "resumo_criterio": "Revisão crítica de rTMS em TEPT (McGirr et al., 2021 · Liu et al., 2024).",
+          "justificativa_preliminar": "Indicado na presença de depressão associada.",
+          "sinais_metodologicos": [
+            "PRISMA",
+            "Protocolo registrado",
+            "Análise de heterogeneidade"
+          ],
+          "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+        }
+      },
+      "grade": {
+        "certeza": "Moderada",
+        "simbolos": "⊕⊕⊕◯",
+        "forca_recomendacao": "Condicional",
+        "observacao_dominios": "Associar psicoterapia focada no trauma.",
+        "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+      },
+      "tolerabilidade_roadmap": {
+        "orientacao_tolerabilidade": "Reduzir intensidade da estimulação caso haja intolerância nos primeiros trens de pulso e aumentar a dose gradualmente.",
+        "ajuste_seguranca": "Em casos graves, ideação suicida ou risco de abandono, preferir Protocolo 3 bilateral (resposta rápida já a partir da 4ª sessão).",
+        "fatores_moduladores": "Associar fortemente psicoterapias focadas no trauma (Exposição Prolongada, TCC Focada no Trauma, EMDR); resposta < 25% CAPS/PCL-5 exige investigar borderline/substâncias e estressores."
+      }
+    },
+    "dor-neuropatica::geral": {
+      "condicao_id": "dor-neuropatica",
+      "fator_id": "geral",
+      "meta_analise": {
+        "autores": "Duarte‐Moreira, R., et al.",
+        "ano": 2025,
+        "titulo": "Evidence‐Based Umbrella Review of Non‐Invasive Neuromodulation in Chronic Neuropathic Pain",
+        "periodico": "European Journal of Pain",
+        "doi": "10.1002/ejp.4786",
+        "url_doi": "https://doi.org/10.1002/ejp.4786",
+        "amstar2": {
+          "instrumento": "AMSTAR 2 (Shea et al., 2017 — Avaliação crítica de revisões sistemáticas)",
+          "nivel": "Alta",
+          "resumo_criterio": "Umbrella Review (Duarte-Moreira et al., 2025) + Metanálise (Jiang et al., 2022).",
+          "justificativa_preliminar": "Síntese de alta qualidade metodológica para dor neuropática crônica em M1.",
+          "sinais_metodologicos": [
+            "Análise de heterogeneidade",
+            "GRADE / Certeza relatados"
+          ],
+          "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+        }
+      },
+      "grade": {
+        "certeza": "Alta",
+        "simbolos": "⊕⊕⊕⊕",
+        "forca_recomendacao": "Forte",
+        "observacao_dominios": "Nível A para rTMS de alta frequência em M1 contralateral à dor.",
+        "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+      },
+      "tolerabilidade_roadmap": {
+        "orientacao_tolerabilidade": "Em rTMS, posicionar bobina em figura de 8 com cabo virado para trás e angulado a 45 graus com o plano sagital. Na alodinia mecânica, preferir rPMS (sem encostar a bobina na pele).",
+        "ajuste_seguranca": "Manter avaliação de alterações sensoriais (alodinia, hiperalgesia, hiperpatia), sono, humor e qualidade de vida, pois a analgesia pode consolidar nas semanas pós-indução.",
+        "fatores_moduladores": "Redução < 20% na EVA em 5 sessões define resposta insatisfatória. Associar estimulação elétrica ou magnética periférica de forma segura quando indicado."
+      }
+    },
+    "dor-neuropatica::dor_geral_p2": {
+      "condicao_id": "dor-neuropatica",
+      "fator_id": "dor_geral_p2",
+      "meta_analise": {
+        "autores": "Jiang, X., et al.",
+        "ano": 2022,
+        "titulo": "Effects of repetitive transcranial magnetic stimulation on neuropathic pain: A systematic review and meta-analysis",
+        "periodico": "Neuroscience & Biobehavioral Reviews",
+        "doi": "10.1016/j.neubiorev.2021.11.037",
+        "url_doi": "https://doi.org/10.1016/j.neubiorev.2021.11.037",
+        "amstar2": {
+          "instrumento": "AMSTAR 2 (Shea et al., 2017 — Avaliação crítica de revisões sistemáticas)",
+          "nivel": "Moderada",
+          "resumo_criterio": "Metanálise (Jiang et al., 2022) para rTMS em dor neuropática.",
+          "justificativa_preliminar": "Análise sistemática com avaliação de viés e heterogeneidade.",
+          "sinais_metodologicos": [
+            "Risco de viés"
+          ],
+          "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+        }
+      },
+      "grade": {
+        "certeza": "Alta",
+        "simbolos": "⊕⊕⊕⊕",
+        "forca_recomendacao": "Forte",
+        "observacao_dominios": "Protocolo clássico de 10 Hz / 2.000 pulsos em M1.",
+        "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+      },
+      "tolerabilidade_roadmap": {
+        "orientacao_tolerabilidade": "Em rTMS, posicionar bobina em figura de 8 com cabo virado para trás e angulado a 45 graus com o plano sagital. Na alodinia mecânica, preferir rPMS (sem encostar a bobina na pele).",
+        "ajuste_seguranca": "Manter avaliação de alterações sensoriais (alodinia, hiperalgesia, hiperpatia), sono, humor e qualidade de vida, pois a analgesia pode consolidar nas semanas pós-indução.",
+        "fatores_moduladores": "Redução < 20% na EVA em 5 sessões define resposta insatisfatória. Associar estimulação elétrica ou magnética periférica de forma segura quando indicado."
+      }
+    },
+    "dor-neuropatica::dor_fantasma": {
+      "condicao_id": "dor-neuropatica",
+      "fator_id": "dor_fantasma",
+      "meta_analise": {
+        "autores": "Pacheco-Barrios, K., et al.",
+        "ano": 2020,
+        "titulo": "Neuromodulation Techniques in Phantom Limb Pain: A Systematic Review and Meta-analysis",
+        "periodico": "Pain Medicine",
+        "doi": "10.1093/pm/pnaa039",
+        "url_doi": "https://doi.org/10.1093/pm/pnaa039",
+        "amstar2": {
+          "instrumento": "AMSTAR 2 (Shea et al., 2017 — Avaliação crítica de revisões sistemáticas)",
+          "nivel": "Moderada",
+          "resumo_criterio": "Metanálise dedicada à dor do membro fantasma (Pacheco-Barrios et al., 2020).",
+          "justificativa_preliminar": "Sinal consistente para tDCS anódica M1.",
+          "sinais_metodologicos": [
+            "Risco de viés"
+          ],
+          "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+        }
+      },
+      "grade": {
+        "certeza": "Moderada",
+        "simbolos": "⊕⊕⊕◯",
+        "forca_recomendacao": "Condicional",
+        "observacao_dominios": "Boa tolerabilidade inicial antes de rTMS.",
+        "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+      },
+      "tolerabilidade_roadmap": {
+        "orientacao_tolerabilidade": "Em rTMS, posicionar bobina em figura de 8 com cabo virado para trás e angulado a 45 graus com o plano sagital. Na alodinia mecânica, preferir rPMS (sem encostar a bobina na pele).",
+        "ajuste_seguranca": "Manter avaliação de alterações sensoriais (alodinia, hiperalgesia, hiperpatia), sono, humor e qualidade de vida, pois a analgesia pode consolidar nas semanas pós-indução.",
+        "fatores_moduladores": "Redução < 20% na EVA em 5 sessões define resposta insatisfatória. Associar estimulação elétrica ou magnética periférica de forma segura quando indicado."
+      }
+    },
+    "dor-neuropatica::espinhal": {
+      "condicao_id": "dor-neuropatica",
+      "fator_id": "espinhal",
+      "meta_analise": {
+        "autores": "Uygur-Kucukseymen, E., et al.",
+        "ano": 2023,
+        "titulo": "Non-invasive brain stimulation on clinical symptoms in multiple sclerosis patients: A systematic review and meta-analysis",
+        "periodico": "Multiple Sclerosis and Related Disorders",
+        "doi": "10.1016/j.msard.2023.104927",
+        "url_doi": "https://doi.org/10.1016/j.msard.2023.104927",
+        "amstar2": {
+          "instrumento": "AMSTAR 2 (Shea et al., 2017 — Avaliação crítica de revisões sistemáticas)",
+          "nivel": "Moderada",
+          "resumo_criterio": "Metanálise NIBS em Esclerose Múltipla (Uygur-Kucukseymen et al., 2023).",
+          "justificativa_preliminar": "Resultados consistentes em dor crônica associada à EM.",
+          "sinais_metodologicos": [
+            "Risco de viés"
+          ],
+          "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+        }
+      },
+      "grade": {
+        "certeza": "Moderada",
+        "simbolos": "⊕⊕⊕◯",
+        "forca_recomendacao": "Condicional",
+        "observacao_dominios": "Sequência direta tDCS -> tsDCS medular.",
+        "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+      },
+      "tolerabilidade_roadmap": {
+        "orientacao_tolerabilidade": "Em rTMS, posicionar bobina em figura de 8 com cabo virado para trás e angulado a 45 graus com o plano sagital. Na alodinia mecânica, preferir rPMS (sem encostar a bobina na pele).",
+        "ajuste_seguranca": "Manter avaliação de alterações sensoriais (alodinia, hiperalgesia, hiperpatia), sono, humor e qualidade de vida, pois a analgesia pode consolidar nas semanas pós-indução.",
+        "fatores_moduladores": "Redução < 20% na EVA em 5 sessões define resposta insatisfatória. Associar estimulação elétrica ou magnética periférica de forma segura quando indicado."
+      }
+    },
+    "ataxia-cerebelar::severidade_motora": {
+      "condicao_id": "ataxia-cerebelar",
+      "fator_id": "severidade_motora",
+      "meta_analise": {
+        "autores": "Akiyoshi Matsugi et al.",
+        "ano": 2024,
+        "titulo": "Effects of Non‐Invasive Brain Stimulation for Degenerative Cerebellar Ataxia: A Systematic Review and Meta‐Analysis",
+        "periodico": "Movement Disorders Clinical Practice",
+        "doi": "10.1002/mdc3.14205",
+        "url_doi": "https://doi.org/10.1002/mdc3.14205",
+        "amstar2": {
+          "instrumento": "AMSTAR 2 (Shea et al., 2017 — Avaliação crítica de revisões sistemáticas)",
+          "nivel": "Moderada",
+          "resumo_criterio": "Metanálise cerebelar em ataxia (Matsugi et al., 2024).",
+          "justificativa_preliminar": "Consistência de csDCS e ctDCS sobre escores SARA/ICARS.",
+          "sinais_metodologicos": [
+            "Protocolo registrado",
+            "Avaliação de risco de viés",
+            "Análise de heterogeneidade",
+            "GRADE / Certeza relatados"
+          ],
+          "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+        }
+      },
+      "grade": {
+        "certeza": "Moderada",
+        "simbolos": "⊕⊕⊕◯",
+        "forca_recomendacao": "Condicional",
+        "observacao_dominios": "P1 reduz SARA em ~25% (mantido até 6 meses); P2 reduz 14,8%.",
+        "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+      },
+      "tolerabilidade_roadmap": {
+        "orientacao_tolerabilidade": "Atentar para eventos adversos durante e após a estimulação e para o efeito terapêutico reduzido na presença de certas medicações (ex.: benzodiazepínicos).",
+        "ajuste_seguranca": "Em estimulação medular T11 (csDCS), usar eletrodo de 8 × 6 cm (48 cm²). Em núcleo denteado, utilizar obrigatoriamente neuronavegação; para estimular vérmis considerar 1 cm abaixo do ínion e para hemisférios cerebelares 1 cm abaixo e 3 cm laterais.",
+        "fatores_moduladores": "Qualidade da resposta em avaliação semanal + auto-relato do paciente; uso de benzodiazepínicos e extensão de ciclos para 10 a 20 sessões."
+      }
+    },
+    "ataxia-cerebelar::ataxia_rtms_nao_resp": {
+      "condicao_id": "ataxia-cerebelar",
+      "fator_id": "ataxia_rtms_nao_resp",
+      "meta_analise": {
+        "autores": "Akiyoshi Matsugi et al.",
+        "ano": 2024,
+        "titulo": "Effects of Non‐Invasive Brain Stimulation for Degenerative Cerebellar Ataxia: A Systematic Review and Meta‐Analysis",
+        "periodico": "Movement Disorders Clinical Practice",
+        "doi": "10.1002/mdc3.14205",
+        "url_doi": "https://doi.org/10.1002/mdc3.14205",
+        "amstar2": {
+          "instrumento": "AMSTAR 2 (Shea et al., 2017 — Avaliação crítica de revisões sistemáticas)",
+          "nivel": "Moderada",
+          "resumo_criterio": "Metanálise cerebelar (Matsugi et al., 2024).",
+          "justificativa_preliminar": "Inclui ECRs em iTBS e rTMS cerebelar.",
+          "sinais_metodologicos": [
+            "Protocolo registrado",
+            "Avaliação de risco de viés",
+            "Análise de heterogeneidade",
+            "GRADE / Certeza relatados"
+          ],
+          "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+        }
+      },
+      "grade": {
+        "certeza": "Baixa",
+        "simbolos": "⊕⊕◯◯",
+        "forca_recomendacao": "Condicional",
+        "observacao_dominios": "Núcleo denteado é protocolo experimental tracejado.",
+        "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+      },
+      "tolerabilidade_roadmap": {
+        "orientacao_tolerabilidade": "Atentar para eventos adversos durante e após a estimulação e para o efeito terapêutico reduzido na presença de certas medicações (ex.: benzodiazepínicos).",
+        "ajuste_seguranca": "Em estimulação medular T11 (csDCS), usar eletrodo de 8 × 6 cm (48 cm²). Em núcleo denteado, utilizar obrigatoriamente neuronavegação; para estimular vérmis considerar 1 cm abaixo do ínion e para hemisférios cerebelares 1 cm abaixo e 3 cm laterais.",
+        "fatores_moduladores": "Qualidade da resposta em avaliação semanal + auto-relato do paciente; uso de benzodiazepínicos e extensão de ciclos para 10 a 20 sessões."
+      }
+    },
+    "ataxia-cerebelar::destreza_manual": {
+      "condicao_id": "ataxia-cerebelar",
+      "fator_id": "destreza_manual",
+      "meta_analise": {
+        "autores": "Akiyoshi Matsugi et al.",
+        "ano": 2024,
+        "titulo": "Effects of Non‐Invasive Brain Stimulation for Degenerative Cerebellar Ataxia: A Systematic Review and Meta‐Analysis",
+        "periodico": "Movement Disorders Clinical Practice",
+        "doi": "10.1002/mdc3.14205",
+        "url_doi": "https://doi.org/10.1002/mdc3.14205",
+        "amstar2": {
+          "instrumento": "AMSTAR 2 (Shea et al., 2017 — Avaliação crítica de revisões sistemáticas)",
+          "nivel": "Moderada",
+          "resumo_criterio": "Metanálise ataxia (Matsugi et al., 2024).",
+          "justificativa_preliminar": "Consistente em destreza fina.",
+          "sinais_metodologicos": [
+            "Protocolo registrado",
+            "Avaliação de risco de viés",
+            "Análise de heterogeneidade",
+            "GRADE / Certeza relatados"
+          ],
+          "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+        }
+      },
+      "grade": {
+        "certeza": "Moderada",
+        "simbolos": "⊕⊕⊕◯",
+        "forca_recomendacao": "Condicional",
+        "observacao_dominios": "Combinar com treino manual direcionado.",
+        "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+      },
+      "tolerabilidade_roadmap": {
+        "orientacao_tolerabilidade": "Atentar para eventos adversos durante e após a estimulação e para o efeito terapêutico reduzido na presença de certas medicações (ex.: benzodiazepínicos).",
+        "ajuste_seguranca": "Em estimulação medular T11 (csDCS), usar eletrodo de 8 × 6 cm (48 cm²). Em núcleo denteado, utilizar obrigatoriamente neuronavegação; para estimular vérmis considerar 1 cm abaixo do ínion e para hemisférios cerebelares 1 cm abaixo e 3 cm laterais.",
+        "fatores_moduladores": "Qualidade da resposta em avaliação semanal + auto-relato do paciente; uso de benzodiazepínicos e extensão de ciclos para 10 a 20 sessões."
+      }
+    },
+    "ataxia-cerebelar::mobilidade_funcional": {
+      "condicao_id": "ataxia-cerebelar",
+      "fator_id": "mobilidade_funcional",
+      "meta_analise": {
+        "autores": "Lianjun Yin et al.",
+        "ano": 2023,
+        "titulo": "Repetitive transcranial magnetic stimulation for cerebellar ataxia: a systematic review and meta-analysis",
+        "periodico": "Frontiers in Neurology",
+        "doi": "10.3389/fneur.2023.1177746",
+        "url_doi": "https://doi.org/10.3389/fneur.2023.1177746",
+        "amstar2": {
+          "instrumento": "AMSTAR 2 (Shea et al., 2017 — Avaliação crítica de revisões sistemáticas)",
+          "nivel": "Moderada",
+          "resumo_criterio": "Metanálise marcha/equilíbrio em ataxia (Yin et al., 2023).",
+          "justificativa_preliminar": "Resultados consistentes em TC10m e TUG.",
+          "sinais_metodologicos": [
+            "Protocolo registrado",
+            "Avaliação de risco de viés"
+          ],
+          "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+        }
+      },
+      "grade": {
+        "certeza": "Moderada",
+        "simbolos": "⊕⊕⊕◯",
+        "forca_recomendacao": "Condicional",
+        "observacao_dominios": "Associar treino de marcha em fadiga leve-moderada.",
+        "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+      },
+      "tolerabilidade_roadmap": {
+        "orientacao_tolerabilidade": "Atentar para eventos adversos durante e após a estimulação e para o efeito terapêutico reduzido na presença de certas medicações (ex.: benzodiazepínicos).",
+        "ajuste_seguranca": "Em estimulação medular T11 (csDCS), usar eletrodo de 8 × 6 cm (48 cm²). Em núcleo denteado, utilizar obrigatoriamente neuronavegação; para estimular vérmis considerar 1 cm abaixo do ínion e para hemisférios cerebelares 1 cm abaixo e 3 cm laterais.",
+        "fatores_moduladores": "Qualidade da resposta em avaliação semanal + auto-relato do paciente; uso de benzodiazepínicos e extensão de ciclos para 10 a 20 sessões."
+      }
+    },
+    "ataxia-cerebelar::equilibrio": {
+      "condicao_id": "ataxia-cerebelar",
+      "fator_id": "equilibrio",
+      "meta_analise": {
+        "autores": "Lianjun Yin et al.",
+        "ano": 2023,
+        "titulo": "Repetitive transcranial magnetic stimulation for cerebellar ataxia: a systematic review and meta-analysis",
+        "periodico": "Frontiers in Neurology",
+        "doi": "10.3389/fneur.2023.1177746",
+        "url_doi": "https://doi.org/10.3389/fneur.2023.1177746",
+        "amstar2": {
+          "instrumento": "AMSTAR 2 (Shea et al., 2017 — Avaliação crítica de revisões sistemáticas)",
+          "nivel": "Moderada",
+          "resumo_criterio": "Metanálise equilíbrio em ataxia (Yin et al., 2023).",
+          "justificativa_preliminar": "Efeito clínico de 9,1% na SARA e 11,77% na BBS.",
+          "sinais_metodologicos": [
+            "Protocolo registrado",
+            "Avaliação de risco de viés"
+          ],
+          "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+        }
+      },
+      "grade": {
+        "certeza": "Moderada",
+        "simbolos": "⊕⊕⊕◯",
+        "forca_recomendacao": "Condicional",
+        "observacao_dominios": "Reavaliar semanalmente via pré-teste + auto-relato.",
+        "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+      },
+      "tolerabilidade_roadmap": {
+        "orientacao_tolerabilidade": "Atentar para eventos adversos durante e após a estimulação e para o efeito terapêutico reduzido na presença de certas medicações (ex.: benzodiazepínicos).",
+        "ajuste_seguranca": "Em estimulação medular T11 (csDCS), usar eletrodo de 8 × 6 cm (48 cm²). Em núcleo denteado, utilizar obrigatoriamente neuronavegação; para estimular vérmis considerar 1 cm abaixo do ínion e para hemisférios cerebelares 1 cm abaixo e 3 cm laterais.",
+        "fatores_moduladores": "Qualidade da resposta em avaliação semanal + auto-relato do paciente; uso de benzodiazepínicos e extensão de ciclos para 10 a 20 sessões."
+      }
+    },
+    "ataxia-cerebelar::disartria": {
+      "condicao_id": "ataxia-cerebelar",
+      "fator_id": "disartria",
+      "meta_analise": {
+        "autores": "Pasquale Balzan et al.",
+        "ano": 2021,
+        "titulo": "Non-invasive brain stimulation for treating neurogenic dysarthria: A systematic review",
+        "periodico": "Annals of Physical and Rehabilitation Medicine",
+        "doi": "10.1016/j.rehab.2021.101580",
+        "url_doi": "https://doi.org/10.1016/j.rehab.2021.101580",
+        "amstar2": {
+          "instrumento": "AMSTAR 2 (Shea et al., 2017 — Avaliação crítica de revisões sistemáticas)",
+          "nivel": "Moderada",
+          "resumo_criterio": "Revisão sistemática neurogenic dysarthria (Balzan et al., 2022).",
+          "justificativa_preliminar": "Ainda requer ensaios mais robustos para consolidação.",
+          "sinais_metodologicos": [
+            "Avaliação de risco de viés",
+            "Análise de heterogeneidade"
+          ],
+          "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+        }
+      },
+      "grade": {
+        "certeza": "Muito Baixa",
+        "simbolos": "⊕◯◯◯",
+        "forca_recomendacao": "Condicional",
+        "observacao_dominios": "Sub-ramo experimental tracejado (disartria atáxica).",
+        "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+      },
+      "tolerabilidade_roadmap": {
+        "orientacao_tolerabilidade": "Atentar para eventos adversos durante e após a estimulação e para o efeito terapêutico reduzido na presença de certas medicações (ex.: benzodiazepínicos).",
+        "ajuste_seguranca": "Em estimulação medular T11 (csDCS), usar eletrodo de 8 × 6 cm (48 cm²). Em núcleo denteado, utilizar obrigatoriamente neuronavegação; para estimular vérmis considerar 1 cm abaixo do ínion e para hemisférios cerebelares 1 cm abaixo e 3 cm laterais.",
+        "fatores_moduladores": "Qualidade da resposta em avaliação semanal + auto-relato do paciente; uso de benzodiazepínicos e extensão de ciclos para 10 a 20 sessões."
+      }
+    },
+    "paralisia-cerebral::deficits_motores": {
+      "condicao_id": "paralisia-cerebral",
+      "fator_id": "deficits_motores",
+      "meta_analise": {
+        "autores": "Zhong, M., et al.",
+        "ano": 2025,
+        "titulo": "Safety and effectiveness of non-invasive brain stimulation on mobility and balance function in children with cerebral palsy: a systematic review and meta-analysis",
+        "periodico": "Journal of NeuroEngineering and Rehabilitation",
+        "doi": "10.1186/s12984-025-01619-7",
+        "url_doi": "https://doi.org/10.1186/s12984-025-01619-7",
+        "amstar2": {
+          "instrumento": "AMSTAR 2 (Shea et al., 2017 — Avaliação crítica de revisões sistemáticas)",
+          "nivel": "Baixa",
+          "resumo_criterio": "Metanálise mobilidade e equilíbrio na PC (Zhong et al., 2025).",
+          "justificativa_preliminar": "Benefício consistente quando combinada a treino locomotor em esteira.",
+          "sinais_metodologicos": [
+            "Metanálise Pediátrica"
+          ],
+          "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+        }
+      },
+      "grade": {
+        "certeza": "Moderada",
+        "simbolos": "⊕⊕⊕◯",
+        "forca_recomendacao": "Condicional",
+        "observacao_dominios": "Associar treinamento ativo durante ou logo após a sessão.",
+        "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+      },
+      "tolerabilidade_roadmap": {
+        "orientacao_tolerabilidade": "Rampa tDCS recomendada: 10 segundos (subida/descida), ajustável às sensibilidades sensoriais pediátricas. Monitorar irritabilidade, cefaleia, fadiga e desconforto local.",
+        "ajuste_seguranca": "PAUSA IMEDIATA diante de qualquer sintoma neurológico agudo (confusão, alteração de consciência, sinais motores abruptos). Proibido protocolo acelerado (> 1 sessão/dia).",
+        "fatores_moduladores": "Não aplicar com fontanelas abertas ou alterações craniofaciais (micro/macro/plagiocefalia); aguardar 3 a 4 meses entre ciclos e respeitar máximo ≤ 25 sessões totais."
+      }
+    },
+    "paralisia-cerebral::pc_manip_hemi": {
+      "condicao_id": "paralisia-cerebral",
+      "fator_id": "pc_manip_hemi",
+      "meta_analise": {
+        "autores": "Zhang, Y., et al.",
+        "ano": 2025,
+        "titulo": "Non-invasive brain stimulation for upper extremity dysfunction in children with cerebral palsy: a systematic review and meta-analysis",
+        "periodico": "Translational Pediatrics",
+        "doi": "10.21037/tp-24-488",
+        "url_doi": "https://doi.org/10.21037/tp-24-488",
+        "amstar2": {
+          "instrumento": "AMSTAR 2 (Shea et al., 2017 — Avaliação crítica de revisões sistemáticas)",
+          "nivel": "Moderada",
+          "resumo_criterio": "Metanálise em função de membro superior na PC (Zhang et al., 2025).",
+          "justificativa_preliminar": "Opções complementares entre rTMS sequencial, tDCS e rTMS priming.",
+          "sinais_metodologicos": [
+            "Risco de viés"
+          ],
+          "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+        }
+      },
+      "grade": {
+        "certeza": "Moderada",
+        "simbolos": "⊕⊕⊕◯",
+        "forca_recomendacao": "Condicional",
+        "observacao_dominios": "Protocolo 3 oferece opção de priming com terapia de contensão.",
+        "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+      },
+      "tolerabilidade_roadmap": {
+        "orientacao_tolerabilidade": "Rampa tDCS recomendada: 10 segundos (subida/descida), ajustável às sensibilidades sensoriais pediátricas. Monitorar irritabilidade, cefaleia, fadiga e desconforto local.",
+        "ajuste_seguranca": "PAUSA IMEDIATA diante de qualquer sintoma neurológico agudo (confusão, alteração de consciência, sinais motores abruptos). Proibido protocolo acelerado (> 1 sessão/dia).",
+        "fatores_moduladores": "Não aplicar com fontanelas abertas ou alterações craniofaciais (micro/macro/plagiocefalia); aguardar 3 a 4 meses entre ciclos e respeitar máximo ≤ 25 sessões totais."
+      }
+    },
+    "paralisia-cerebral::pc_manip_tetra": {
+      "condicao_id": "paralisia-cerebral",
+      "fator_id": "pc_manip_tetra",
+      "meta_analise": {
+        "autores": "Zhang, Y., et al.",
+        "ano": 2025,
+        "titulo": "Non-invasive brain stimulation for upper extremity dysfunction in children with cerebral palsy: a systematic review and meta-analysis",
+        "periodico": "Translational Pediatrics",
+        "doi": "10.21037/tp-24-488",
+        "url_doi": "https://doi.org/10.21037/tp-24-488",
+        "amstar2": {
+          "instrumento": "AMSTAR 2 (Shea et al., 2017 — Avaliação crítica de revisões sistemáticas)",
+          "nivel": "Moderada",
+          "resumo_criterio": "Metanálise membro superior na PC (Zhang et al., 2025).",
+          "justificativa_preliminar": "ECR recente em tetraparesia espástica (Waqas et al., 2025).",
+          "sinais_metodologicos": [
+            "ECR 2025"
+          ],
+          "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+        }
+      },
+      "grade": {
+        "certeza": "Baixa",
+        "simbolos": "⊕⊕◯◯",
+        "forca_recomendacao": "Condicional",
+        "observacao_dominios": "Combinar com terapia funcional ativa.",
+        "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+      },
+      "tolerabilidade_roadmap": {
+        "orientacao_tolerabilidade": "Rampa tDCS recomendada: 10 segundos (subida/descida), ajustável às sensibilidades sensoriais pediátricas. Monitorar irritabilidade, cefaleia, fadiga e desconforto local.",
+        "ajuste_seguranca": "PAUSA IMEDIATA diante de qualquer sintoma neurológico agudo (confusão, alteração de consciência, sinais motores abruptos). Proibido protocolo acelerado (> 1 sessão/dia).",
+        "fatores_moduladores": "Não aplicar com fontanelas abertas ou alterações craniofaciais (micro/macro/plagiocefalia); aguardar 3 a 4 meses entre ciclos e respeitar máximo ≤ 25 sessões totais."
+      }
+    },
+    "paralisia-cerebral::pc_estab_dip": {
+      "condicao_id": "paralisia-cerebral",
+      "fator_id": "pc_estab_dip",
+      "meta_analise": {
+        "autores": "Zhong, M., et al.",
+        "ano": 2025,
+        "titulo": "Safety and effectiveness of non-invasive brain stimulation on mobility and balance function in children with cerebral palsy: a systematic review and meta-analysis",
+        "periodico": "Journal of NeuroEngineering and Rehabilitation",
+        "doi": "10.1186/s12984-025-01619-7",
+        "url_doi": "https://doi.org/10.1186/s12984-025-01619-7",
+        "amstar2": {
+          "instrumento": "AMSTAR 2 (Shea et al., 2017 — Avaliação crítica de revisões sistemáticas)",
+          "nivel": "Baixa",
+          "resumo_criterio": "Metanálise mobilidade e equilíbrio na PC (Zhong et al., 2025).",
+          "justificativa_preliminar": "Ensaio duplo-cego com controle postural.",
+          "sinais_metodologicos": [
+            "ECR duplo-cego"
+          ],
+          "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+        }
+      },
+      "grade": {
+        "certeza": "Moderada",
+        "simbolos": "⊕⊕⊕◯",
+        "forca_recomendacao": "Condicional",
+        "observacao_dominios": "Associar treino de equilíbrio funcional.",
+        "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+      },
+      "tolerabilidade_roadmap": {
+        "orientacao_tolerabilidade": "Rampa tDCS recomendada: 10 segundos (subida/descida), ajustável às sensibilidades sensoriais pediátricas. Monitorar irritabilidade, cefaleia, fadiga e desconforto local.",
+        "ajuste_seguranca": "PAUSA IMEDIATA diante de qualquer sintoma neurológico agudo (confusão, alteração de consciência, sinais motores abruptos). Proibido protocolo acelerado (> 1 sessão/dia).",
+        "fatores_moduladores": "Não aplicar com fontanelas abertas ou alterações craniofaciais (micro/macro/plagiocefalia); aguardar 3 a 4 meses entre ciclos e respeitar máximo ≤ 25 sessões totais."
+      }
+    },
+    "paralisia-cerebral::pc_estab_hemi": {
+      "condicao_id": "paralisia-cerebral",
+      "fator_id": "pc_estab_hemi",
+      "meta_analise": {
+        "autores": "Saleem, G., et al.",
+        "ano": 2019,
+        "titulo": "Transcranial Direct Current Stimulation in Pediatric Motor Disorders: A Systematic Review and Meta-analysis",
+        "periodico": "Archives of Physical Medicine and Rehabilitation",
+        "doi": "10.1016/j.apmr.2018.10.011",
+        "url_doi": "https://doi.org/10.1016/j.apmr.2018.10.011",
+        "amstar2": {
+          "instrumento": "AMSTAR 2 (Shea et al., 2017 — Avaliação crítica de revisões sistemáticas)",
+          "nivel": "Moderada",
+          "resumo_criterio": "Revisão pediátrica (Saleem et al., 2019 · Zhong et al., 2025).",
+          "justificativa_preliminar": "Evidência em controle postural para hemiparesia.",
+          "sinais_metodologicos": [
+            "Pequena amostra"
+          ],
+          "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+        }
+      },
+      "grade": {
+        "certeza": "Baixa",
+        "simbolos": "⊕⊕◯◯",
+        "forca_recomendacao": "Condicional",
+        "observacao_dominios": "Respeitar idade ≥ 3–6 anos e triagem EEG.",
+        "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+      },
+      "tolerabilidade_roadmap": {
+        "orientacao_tolerabilidade": "Rampa tDCS recomendada: 10 segundos (subida/descida), ajustável às sensibilidades sensoriais pediátricas. Monitorar irritabilidade, cefaleia, fadiga e desconforto local.",
+        "ajuste_seguranca": "PAUSA IMEDIATA diante de qualquer sintoma neurológico agudo (confusão, alteração de consciência, sinais motores abruptos). Proibido protocolo acelerado (> 1 sessão/dia).",
+        "fatores_moduladores": "Não aplicar com fontanelas abertas ou alterações craniofaciais (micro/macro/plagiocefalia); aguardar 3 a 4 meses entre ciclos e respeitar máximo ≤ 25 sessões totais."
+      }
+    },
+    "paralisia-cerebral::pc_ataxia": {
+      "condicao_id": "paralisia-cerebral",
+      "fator_id": "pc_ataxia",
+      "meta_analise": {
+        "autores": "Saleem, G., et al.",
+        "ano": 2019,
+        "titulo": "Transcranial Direct Current Stimulation in Pediatric Motor Disorders: A Systematic Review and Meta-analysis",
+        "periodico": "Archives of Physical Medicine and Rehabilitation",
+        "doi": "10.1016/j.apmr.2018.10.011",
+        "url_doi": "https://doi.org/10.1016/j.apmr.2018.10.011",
+        "amstar2": {
+          "instrumento": "AMSTAR 2 (Shea et al., 2017 — Avaliação crítica de revisões sistemáticas)",
+          "nivel": "Moderada",
+          "resumo_criterio": "Revisão pediátrica (Saleem et al., 2019).",
+          "justificativa_preliminar": "Estudo piloto crossover em PC atáxica.",
+          "sinais_metodologicos": [
+            "Evidência exploratória"
+          ],
+          "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+        }
+      },
+      "grade": {
+        "certeza": "Muito Baixa",
+        "simbolos": "⊕◯◯◯",
+        "forca_recomendacao": "Condicional",
+        "observacao_dominios": "Quadro exploratório tracejado.",
+        "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+      },
+      "tolerabilidade_roadmap": {
+        "orientacao_tolerabilidade": "Rampa tDCS recomendada: 10 segundos (subida/descida), ajustável às sensibilidades sensoriais pediátricas. Monitorar irritabilidade, cefaleia, fadiga e desconforto local.",
+        "ajuste_seguranca": "PAUSA IMEDIATA diante de qualquer sintoma neurológico agudo (confusão, alteração de consciência, sinais motores abruptos). Proibido protocolo acelerado (> 1 sessão/dia).",
+        "fatores_moduladores": "Não aplicar com fontanelas abertas ou alterações craniofaciais (micro/macro/plagiocefalia); aguardar 3 a 4 meses entre ciclos e respeitar máximo ≤ 25 sessões totais."
+      }
+    },
+    "paralisia-cerebral::pc_distonia": {
+      "condicao_id": "paralisia-cerebral",
+      "fator_id": "pc_distonia",
+      "meta_analise": {
+        "autores": "Saleem, G., et al.",
+        "ano": 2019,
+        "titulo": "Transcranial Direct Current Stimulation in Pediatric Motor Disorders: A Systematic Review and Meta-analysis",
+        "periodico": "Archives of Physical Medicine and Rehabilitation",
+        "doi": "10.1016/j.apmr.2018.10.011",
+        "url_doi": "https://doi.org/10.1016/j.apmr.2018.10.011",
+        "amstar2": {
+          "instrumento": "AMSTAR 2 (Shea et al., 2017 — Avaliação crítica de revisões sistemáticas)",
+          "nivel": "Moderada",
+          "resumo_criterio": "Revisão pediátrica (Saleem et al., 2019).",
+          "justificativa_preliminar": "Estudo controlado em distonia infantil.",
+          "sinais_metodologicos": [
+            "Evidência exploratória"
+          ],
+          "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+        }
+      },
+      "grade": {
+        "certeza": "Muito Baixa",
+        "simbolos": "⊕◯◯◯",
+        "forca_recomendacao": "Condicional",
+        "observacao_dominios": "Quadro exploratório em movimentos involuntários.",
+        "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+      },
+      "tolerabilidade_roadmap": {
+        "orientacao_tolerabilidade": "Rampa tDCS recomendada: 10 segundos (subida/descida), ajustável às sensibilidades sensoriais pediátricas. Monitorar irritabilidade, cefaleia, fadiga e desconforto local.",
+        "ajuste_seguranca": "PAUSA IMEDIATA diante de qualquer sintoma neurológico agudo (confusão, alteração de consciência, sinais motores abruptos). Proibido protocolo acelerado (> 1 sessão/dia).",
+        "fatores_moduladores": "Não aplicar com fontanelas abertas ou alterações craniofaciais (micro/macro/plagiocefalia); aguardar 3 a 4 meses entre ciclos e respeitar máximo ≤ 25 sessões totais."
+      }
+    },
+    "transtorno-espectro-autista::comportamental": {
+      "condicao_id": "transtorno-espectro-autista",
+      "fator_id": "comportamental",
+      "meta_analise": {
+        "autores": "Liu, A., et al.",
+        "ano": 2023,
+        "titulo": "Non-invasive brain stimulation for patient with autism: a systematic review and meta-analysis",
+        "periodico": "Frontiers in Psychiatry",
+        "doi": "10.3389/fpsyt.2023.1147327",
+        "url_doi": "https://doi.org/10.3389/fpsyt.2023.1147327",
+        "amstar2": {
+          "instrumento": "AMSTAR 2 (Shea et al., 2017 — Avaliação crítica de revisões sistemáticas)",
+          "nivel": "Moderada",
+          "resumo_criterio": "Metanálise NIBS no TEA (Liu et al., 2023 · Chen et al., 2024).",
+          "justificativa_preliminar": "Maior parte dos estudos em QI > 80; triagem psiquiátrica/neurológica e vigilância 24h obrigatórias.",
+          "sinais_metodologicos": [
+            "Avaliação de risco de viés",
+            "Viés de publicação avaliado"
+          ],
+          "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+        }
+      },
+      "grade": {
+        "certeza": "Baixa",
+        "simbolos": "⊕⊕◯◯",
+        "forca_recomendacao": "Condicional",
+        "observacao_dominios": "Associar tarefas comportamentais/sociais e manter psicofármacos estáveis.",
+        "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+      },
+      "tolerabilidade_roadmap": {
+        "orientacao_tolerabilidade": "VIGILÂNCIA ATÉ 24H PÓS-SESSÃO (Gupta & Adnan, 2018): observar fala excessiva, agitação psicomotora, insônia, euforia, impulsividade ou irritabilidade acentuada.",
+        "ajuste_seguranca": "Condutas escalonadas na intensificação de sintomas: (1) espaçar sessões (ex.: 5×/sem -> 2–3×/sem); (2) reduzir mA/% LMR, duração/trens/pulsos ou trocar para alvo menos ativador; (3) suspender definitivamente se risco de hipomania/descompensação.",
+        "fatores_moduladores": "Monitorar aceitação tátil e auditiva durante posicionamento de eletrodos/bobina em crianças com hipersensibilidade."
+      }
+    },
+    "transtorno-espectro-autista::tea_comp_rtms": {
+      "condicao_id": "transtorno-espectro-autista",
+      "fator_id": "tea_comp_rtms",
+      "meta_analise": {
+        "autores": "Liu, A., et al.",
+        "ano": 2023,
+        "titulo": "Non-invasive brain stimulation for patient with autism: a systematic review and meta-analysis",
+        "periodico": "Frontiers in Psychiatry",
+        "doi": "10.3389/fpsyt.2023.1147327",
+        "url_doi": "https://doi.org/10.3389/fpsyt.2023.1147327",
+        "amstar2": {
+          "instrumento": "AMSTAR 2 (Shea et al., 2017 — Avaliação crítica de revisões sistemáticas)",
+          "nivel": "Moderada",
+          "resumo_criterio": "Metanálise TEA (Liu et al., 2023).",
+          "justificativa_preliminar": "Rotação progressiva F3 -> F4 -> Bilateral a cada 6 sessões.",
+          "sinais_metodologicos": [
+            "Avaliação de risco de viés",
+            "Viés de publicação avaliado"
+          ],
+          "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+        }
+      },
+      "grade": {
+        "certeza": "Baixa",
+        "simbolos": "⊕⊕◯◯",
+        "forca_recomendacao": "Condicional",
+        "observacao_dominios": "Vigilância de 24h obrigatória para agitação/hipomania.",
+        "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+      },
+      "tolerabilidade_roadmap": {
+        "orientacao_tolerabilidade": "VIGILÂNCIA ATÉ 24H PÓS-SESSÃO (Gupta & Adnan, 2018): observar fala excessiva, agitação psicomotora, insônia, euforia, impulsividade ou irritabilidade acentuada.",
+        "ajuste_seguranca": "Condutas escalonadas na intensificação de sintomas: (1) espaçar sessões (ex.: 5×/sem -> 2–3×/sem); (2) reduzir mA/% LMR, duração/trens/pulsos ou trocar para alvo menos ativador; (3) suspender definitivamente se risco de hipomania/descompensação.",
+        "fatores_moduladores": "Monitorar aceitação tátil e auditiva durante posicionamento de eletrodos/bobina em crianças com hipersensibilidade."
+      }
+    },
+    "transtorno-espectro-autista::tea_repetitivos": {
+      "condicao_id": "transtorno-espectro-autista",
+      "fator_id": "tea_repetitivos",
+      "meta_analise": {
+        "autores": "Yang‐Chieh Brian Chen et al.",
+        "ano": 2024,
+        "titulo": "A network meta-analysis of non-invasive brain stimulation interventions for autism spectrum disorder: Evidence from randomized controlled trials",
+        "periodico": "Neuroscience & Biobehavioral Reviews",
+        "doi": "10.1016/j.neubiorev.2024.105807",
+        "url_doi": "https://doi.org/10.1016/j.neubiorev.2024.105807",
+        "amstar2": {
+          "instrumento": "AMSTAR 2 (Shea et al., 2017 — Avaliação crítica de revisões sistemáticas)",
+          "nivel": "Moderada",
+          "resumo_criterio": "Metanálise em rede no TEA (Chen et al., 2024).",
+          "justificativa_preliminar": "Consistência de 1 Hz F3 em comportamentos repetitivos e estereotipias.",
+          "sinais_metodologicos": [
+            "Protocolo registrado"
+          ],
+          "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+        }
+      },
+      "grade": {
+        "certeza": "Baixa",
+        "simbolos": "⊕⊕◯◯",
+        "forca_recomendacao": "Condicional",
+        "observacao_dominios": "Mudança para CP5/CP6 tem nível exploratório.",
+        "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+      },
+      "tolerabilidade_roadmap": {
+        "orientacao_tolerabilidade": "VIGILÂNCIA ATÉ 24H PÓS-SESSÃO (Gupta & Adnan, 2018): observar fala excessiva, agitação psicomotora, insônia, euforia, impulsividade ou irritabilidade acentuada.",
+        "ajuste_seguranca": "Condutas escalonadas na intensificação de sintomas: (1) espaçar sessões (ex.: 5×/sem -> 2–3×/sem); (2) reduzir mA/% LMR, duração/trens/pulsos ou trocar para alvo menos ativador; (3) suspender definitivamente se risco de hipomania/descompensação.",
+        "fatores_moduladores": "Monitorar aceitação tátil e auditiva durante posicionamento de eletrodos/bobina em crianças com hipersensibilidade."
+      }
+    },
+    "transtorno-espectro-autista::social": {
+      "condicao_id": "transtorno-espectro-autista",
+      "fator_id": "social",
+      "meta_analise": {
+        "autores": "Yang‐Chieh Brian Chen et al.",
+        "ano": 2024,
+        "titulo": "A network meta-analysis of non-invasive brain stimulation interventions for autism spectrum disorder: Evidence from randomized controlled trials",
+        "periodico": "Neuroscience & Biobehavioral Reviews",
+        "doi": "10.1016/j.neubiorev.2024.105807",
+        "url_doi": "https://doi.org/10.1016/j.neubiorev.2024.105807",
+        "amstar2": {
+          "instrumento": "AMSTAR 2 (Shea et al., 2017 — Avaliação crítica de revisões sistemáticas)",
+          "nivel": "Moderada",
+          "resumo_criterio": "Metanálise em rede no TEA (Chen et al., 2024).",
+          "justificativa_preliminar": "Cadeia progressiva bem definida até mudança para cerebelo D.",
+          "sinais_metodologicos": [
+            "Protocolo registrado"
+          ],
+          "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+        }
+      },
+      "grade": {
+        "certeza": "Baixa",
+        "simbolos": "⊕⊕◯◯",
+        "forca_recomendacao": "Condicional",
+        "observacao_dominios": "Associar treino de habilidades sociais (priming).",
+        "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+      },
+      "tolerabilidade_roadmap": {
+        "orientacao_tolerabilidade": "VIGILÂNCIA ATÉ 24H PÓS-SESSÃO (Gupta & Adnan, 2018): observar fala excessiva, agitação psicomotora, insônia, euforia, impulsividade ou irritabilidade acentuada.",
+        "ajuste_seguranca": "Condutas escalonadas na intensificação de sintomas: (1) espaçar sessões (ex.: 5×/sem -> 2–3×/sem); (2) reduzir mA/% LMR, duração/trens/pulsos ou trocar para alvo menos ativador; (3) suspender definitivamente se risco de hipomania/descompensação.",
+        "fatores_moduladores": "Monitorar aceitação tátil e auditiva durante posicionamento de eletrodos/bobina em crianças com hipersensibilidade."
+      }
+    },
+    "transtorno-espectro-autista::tea_comunicacao": {
+      "condicao_id": "transtorno-espectro-autista",
+      "fator_id": "tea_comunicacao",
+      "meta_analise": {
+        "autores": "Yang‐Chieh Brian Chen et al.",
+        "ano": 2024,
+        "titulo": "A network meta-analysis of non-invasive brain stimulation interventions for autism spectrum disorder: Evidence from randomized controlled trials",
+        "periodico": "Neuroscience & Biobehavioral Reviews",
+        "doi": "10.1016/j.neubiorev.2024.105807",
+        "url_doi": "https://doi.org/10.1016/j.neubiorev.2024.105807",
+        "amstar2": {
+          "instrumento": "AMSTAR 2 (Shea et al., 2017 — Avaliação crítica de revisões sistemáticas)",
+          "nivel": "Moderada",
+          "resumo_criterio": "Metanálise em rede no TEA (Chen et al., 2024).",
+          "justificativa_preliminar": "Ensaio recente de comunicação em tDCS F3/Fp2 com alternativa bifrontal F3/F4.",
+          "sinais_metodologicos": [
+            "Protocolo registrado"
+          ],
+          "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+        }
+      },
+      "grade": {
+        "certeza": "Muito Baixa",
+        "simbolos": "⊕◯◯◯",
+        "forca_recomendacao": "Condicional",
+        "observacao_dominios": "Associar tarefas estruturadas de linguagem.",
+        "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+      },
+      "tolerabilidade_roadmap": {
+        "orientacao_tolerabilidade": "VIGILÂNCIA ATÉ 24H PÓS-SESSÃO (Gupta & Adnan, 2018): observar fala excessiva, agitação psicomotora, insônia, euforia, impulsividade ou irritabilidade acentuada.",
+        "ajuste_seguranca": "Condutas escalonadas na intensificação de sintomas: (1) espaçar sessões (ex.: 5×/sem -> 2–3×/sem); (2) reduzir mA/% LMR, duração/trens/pulsos ou trocar para alvo menos ativador; (3) suspender definitivamente se risco de hipomania/descompensação.",
+        "fatores_moduladores": "Monitorar aceitação tátil e auditiva durante posicionamento de eletrodos/bobina em crianças com hipersensibilidade."
+      }
+    },
+    "alzheimer-ccl::alzheimer_memoria": {
+      "condicao_id": "alzheimer-ccl",
+      "fator_id": "alzheimer_memoria",
+      "meta_analise": {
+        "autores": "Xiu, H., et al.",
+        "ano": 2023,
+        "titulo": "High-frequency repetitive transcranial magnetic stimulation (HF-rTMS) on global cognitive function of elderly in mild to moderate Alzheimer’s disease: a systematic review and meta-analysis",
+        "periodico": "Neurological Sciences",
+        "doi": "10.1007/s10072-023-07072-5",
+        "url_doi": "https://doi.org/10.1007/s10072-023-07072-5",
+        "amstar2": {
+          "instrumento": "AMSTAR 2 (Shea et al., 2017 — Avaliação crítica de revisões sistemáticas)",
+          "nivel": "Moderada",
+          "resumo_criterio": "Metanálise HF-rTMS na Doença de Alzheimer (Xiu et al., 2024).",
+          "justificativa_preliminar": "Seleção e risco de viés relatados; melhor resposta em estágio leve-moderado.",
+          "sinais_metodologicos": [
+            "Avaliação de risco de viés"
+          ],
+          "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+        }
+      },
+      "grade": {
+        "certeza": "Moderada",
+        "simbolos": "⊕⊕⊕◯",
+        "forca_recomendacao": "Condicional",
+        "observacao_dominios": "Associar treinamento cognitivo dirigido durante a estimulação.",
+        "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+      },
+      "tolerabilidade_roadmap": {
+        "orientacao_tolerabilidade": "Em quadros confusionais ou alterações do sono durante a rTMS, reduzir o número de pulsos pela metade. Observar agitação, confusão, humor (atenção se linguagem prejudicada).",
+        "ajuste_seguranca": "Pacientes com dificuldade de locomoção ou histórico de convulsão podem ser beneficiados pela tDCS. Nunca posicionar eletrodos sobre lesões teciduais.",
+        "fatores_moduladores": "Evitar fim do dia em pacientes com Sundowning; não alterar medicações; benzodiazepínicos diminuem efeito; realizar atividades cognitivas dirigidas na sessão."
+      }
+    },
+    "alzheimer-ccl::ccl_cognicao": {
+      "condicao_id": "alzheimer-ccl",
+      "fator_id": "ccl_cognicao",
+      "meta_analise": {
+        "autores": "Yang, T., et al.",
+        "ano": 2024,
+        "titulo": "The cognitive effect of non-invasive brain stimulation combined with cognitive training in Alzheimer’s disease and mild cognitive impairment: a systematic review and meta-analysis",
+        "periodico": "Alzheimer s Research & Therapy",
+        "doi": "10.1186/s13195-024-01505-9",
+        "url_doi": "https://doi.org/10.1186/s13195-024-01505-9",
+        "amstar2": {
+          "instrumento": "AMSTAR 2 (Shea et al., 2017 — Avaliação crítica de revisões sistemáticas)",
+          "nivel": "Moderada",
+          "resumo_criterio": "Metanálise NIBS + treino cognitivo (Yang et al., 2024).",
+          "justificativa_preliminar": "Forte sinergia entre estimulação pré-frontal/precúneo e treino cognitivo.",
+          "sinais_metodologicos": [
+            "PRISMA",
+            "Avaliação de risco de viés"
+          ],
+          "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+        }
+      },
+      "grade": {
+        "certeza": "Moderada",
+        "simbolos": "⊕⊕⊕◯",
+        "forca_recomendacao": "Condicional",
+        "observacao_dominios": "Pacientes em estágio CCL obtêm melhor preservação funcional.",
+        "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+      },
+      "tolerabilidade_roadmap": {
+        "orientacao_tolerabilidade": "Em quadros confusionais ou alterações do sono durante a rTMS, reduzir o número de pulsos pela metade. Observar agitação, confusão, humor (atenção se linguagem prejudicada).",
+        "ajuste_seguranca": "Pacientes com dificuldade de locomoção ou histórico de convulsão podem ser beneficiados pela tDCS. Nunca posicionar eletrodos sobre lesões teciduais.",
+        "fatores_moduladores": "Evitar fim do dia em pacientes com Sundowning; não alterar medicações; benzodiazepínicos diminuem efeito; realizar atividades cognitivas dirigidas na sessão."
+      }
+    },
+    "alzheimer-ccl::rtms_parietal_temporal": {
+      "condicao_id": "alzheimer-ccl",
+      "fator_id": "rtms_parietal_temporal",
+      "meta_analise": {
+        "autores": "Menardi, A., et al.",
+        "ano": 2022,
+        "titulo": "Transcranial magnetic stimulation treatment in Alzheimer's disease: a meta-analysis of its efficacy as a function of protocol characteristics and degree of personalization",
+        "periodico": "Journal of Neurology",
+        "doi": "10.1007/s00415-022-11236-2",
+        "url_doi": "https://doi.org/10.1007/s00415-022-11236-2",
+        "amstar2": {
+          "instrumento": "AMSTAR 2 (Shea et al., 2017 — Avaliação crítica de revisões sistemáticas)",
+          "nivel": "Moderada",
+          "resumo_criterio": "Metanálise de personalização de alvos na DA (Menardi et al., 2022).",
+          "justificativa_preliminar": "Foco em cognição global via rede de modo padrão parieto-temporal.",
+          "sinais_metodologicos": [
+            "Personalização"
+          ],
+          "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+        }
+      },
+      "grade": {
+        "certeza": "Moderada",
+        "simbolos": "⊕⊕⊕◯",
+        "forca_recomendacao": "Condicional",
+        "observacao_dominios": "Pode ser selecionado diretamente ou após falha em CPFDL.",
+        "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+      },
+      "tolerabilidade_roadmap": {
+        "orientacao_tolerabilidade": "Em quadros confusionais ou alterações do sono durante a rTMS, reduzir o número de pulsos pela metade. Observar agitação, confusão, humor (atenção se linguagem prejudicada).",
+        "ajuste_seguranca": "Pacientes com dificuldade de locomoção ou histórico de convulsão podem ser beneficiados pela tDCS. Nunca posicionar eletrodos sobre lesões teciduais.",
+        "fatores_moduladores": "Evitar fim do dia em pacientes com Sundowning; não alterar medicações; benzodiazepínicos diminuem efeito; realizar atividades cognitivas dirigidas na sessão."
+      }
+    },
+    "alzheimer-ccl::rm12_apatia_executiva": {
+      "condicao_id": "alzheimer-ccl",
+      "fator_id": "rm12_apatia_executiva",
+      "meta_analise": {
+        "autores": "Jin, Y., et al.",
+        "ano": 2024,
+        "titulo": "Efficacy and safety of neuromodulation for apathy in patients with Alzheimer's disease: A systematic review and meta-analysis of randomized controlled trials",
+        "periodico": "Journal of Psychiatric Research",
+        "doi": "10.1016/j.jpsychires.2024.01.016",
+        "url_doi": "https://doi.org/10.1016/j.jpsychires.2024.01.016",
+        "amstar2": {
+          "instrumento": "AMSTAR 2 (Shea et al., 2017 — Avaliação crítica de revisões sistemáticas)",
+          "nivel": "Moderada",
+          "resumo_criterio": "Metanálise de neuromodulação para apatia na DA (Jin et al., 2024).",
+          "justificativa_preliminar": "Evidência crescente para apatia pré-frontal esquerda.",
+          "sinais_metodologicos": [
+            "Avaliação de risco de viés"
+          ],
+          "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+        }
+      },
+      "grade": {
+        "certeza": "Moderada",
+        "simbolos": "⊕⊕⊕◯",
+        "forca_recomendacao": "Condicional",
+        "observacao_dominios": "Direciona Apatia, Função Executiva e Atenção para F3.",
+        "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+      },
+      "tolerabilidade_roadmap": {
+        "orientacao_tolerabilidade": "Em quadros confusionais ou alterações do sono durante a rTMS, reduzir o número de pulsos pela metade. Observar agitação, confusão, humor (atenção se linguagem prejudicada).",
+        "ajuste_seguranca": "Pacientes com dificuldade de locomoção ou histórico de convulsão podem ser beneficiados pela tDCS. Nunca posicionar eletrodos sobre lesões teciduais.",
+        "fatores_moduladores": "Evitar fim do dia em pacientes com Sundowning; não alterar medicações; benzodiazepínicos diminuem efeito; realizar atividades cognitivas dirigidas na sessão."
+      }
+    },
+    "alzheimer-ccl::tdcs_ad_cpfdl": {
+      "condicao_id": "alzheimer-ccl",
+      "fator_id": "tdcs_ad_cpfdl",
+      "meta_analise": {
+        "autores": "Andrade, S., et al.",
+        "ano": 2024,
+        "titulo": "Effect of transcranial direct current stimulation and transcranial magnetic stimulation on the cognitive function of individuals with Alzheimer’s disease: a systematic review with meta-analysis and meta-regression",
+        "periodico": "Neurological Research",
+        "doi": "10.1080/01616412.2024.2321779",
+        "url_doi": "https://doi.org/10.1080/01616412.2024.2321779",
+        "amstar2": {
+          "instrumento": "AMSTAR 2 (Shea et al., 2017 — Avaliação crítica de revisões sistemáticas)",
+          "nivel": "Moderada",
+          "resumo_criterio": "Metanálise tDCS vs rTMS na DA (Andrade et al., 2024).",
+          "justificativa_preliminar": "Útil especialmente em dificuldade de locomoção ou histórico de convulsões.",
+          "sinais_metodologicos": [
+            "Metarregressão"
+          ],
+          "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+        }
+      },
+      "grade": {
+        "certeza": "Moderada",
+        "simbolos": "⊕⊕⊕◯",
+        "forca_recomendacao": "Condicional",
+        "observacao_dominios": "Efeito tDCS menor que rTMS na DA, porém alta segurança.",
+        "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+      },
+      "tolerabilidade_roadmap": {
+        "orientacao_tolerabilidade": "Em quadros confusionais ou alterações do sono durante a rTMS, reduzir o número de pulsos pela metade. Observar agitação, confusão, humor (atenção se linguagem prejudicada).",
+        "ajuste_seguranca": "Pacientes com dificuldade de locomoção ou histórico de convulsão podem ser beneficiados pela tDCS. Nunca posicionar eletrodos sobre lesões teciduais.",
+        "fatores_moduladores": "Evitar fim do dia em pacientes com Sundowning; não alterar medicações; benzodiazepínicos diminuem efeito; realizar atividades cognitivas dirigidas na sessão."
+      }
+    },
+    "alzheimer-ccl::tdcs_ccl_cpfdl": {
+      "condicao_id": "alzheimer-ccl",
+      "fator_id": "tdcs_ccl_cpfdl",
+      "meta_analise": {
+        "autores": "Yang, T., et al.",
+        "ano": 2024,
+        "titulo": "The cognitive effect of non-invasive brain stimulation combined with cognitive training in Alzheimer’s disease and mild cognitive impairment: a systematic review and meta-analysis",
+        "periodico": "Alzheimer s Research & Therapy",
+        "doi": "10.1186/s13195-024-01505-9",
+        "url_doi": "https://doi.org/10.1186/s13195-024-01505-9",
+        "amstar2": {
+          "instrumento": "AMSTAR 2 (Shea et al., 2017 — Avaliação crítica de revisões sistemáticas)",
+          "nivel": "Moderada",
+          "resumo_criterio": "Metanálise NIBS + treino cognitivo (Yang et al., 2024).",
+          "justificativa_preliminar": "Protocolo CCL estruturado em 10 sessões.",
+          "sinais_metodologicos": [
+            "PRISMA",
+            "Avaliação de risco de viés"
+          ],
+          "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+        }
+      },
+      "grade": {
+        "certeza": "Moderada",
+        "simbolos": "⊕⊕⊕◯",
+        "forca_recomendacao": "Condicional",
+        "observacao_dominios": "Combinar com estimulação cognitiva durante a sessão.",
+        "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+      },
+      "tolerabilidade_roadmap": {
+        "orientacao_tolerabilidade": "Em quadros confusionais ou alterações do sono durante a rTMS, reduzir o número de pulsos pela metade. Observar agitação, confusão, humor (atenção se linguagem prejudicada).",
+        "ajuste_seguranca": "Pacientes com dificuldade de locomoção ou histórico de convulsão podem ser beneficiados pela tDCS. Nunca posicionar eletrodos sobre lesões teciduais.",
+        "fatores_moduladores": "Evitar fim do dia em pacientes com Sundowning; não alterar medicações; benzodiazepínicos diminuem efeito; realizar atividades cognitivas dirigidas na sessão."
+      }
+    },
+    "alzheimer-ccl::sintomas_neuropsiquiatricos": {
+      "condicao_id": "alzheimer-ccl",
+      "fator_id": "sintomas_neuropsiquiatricos",
+      "meta_analise": {
+        "autores": "Jin, Y., et al.",
+        "ano": 2024,
+        "titulo": "Efficacy and safety of neuromodulation for apathy in patients with Alzheimer's disease: A systematic review and meta-analysis of randomized controlled trials",
+        "periodico": "Journal of Psychiatric Research",
+        "doi": "10.1016/j.jpsychires.2024.01.016",
+        "url_doi": "https://doi.org/10.1016/j.jpsychires.2024.01.016",
+        "amstar2": {
+          "instrumento": "AMSTAR 2 (Shea et al., 2017 — Avaliação crítica de revisões sistemáticas)",
+          "nivel": "Moderada",
+          "resumo_criterio": "Metanálise em sintomas neuropsiquiátricos/apatia na DA (Jin et al., 2024).",
+          "justificativa_preliminar": "Forte impacto sobre sintomas comportamentais e humor.",
+          "sinais_metodologicos": [
+            "Avaliação de risco de viés"
+          ],
+          "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+        }
+      },
+      "grade": {
+        "certeza": "Moderada",
+        "simbolos": "⊕⊕⊕◯",
+        "forca_recomendacao": "Condicional",
+        "observacao_dominios": "Temporoparietal indicado para NPI e depressão na DA.",
+        "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
+      },
+      "tolerabilidade_roadmap": {
+        "orientacao_tolerabilidade": "Em quadros confusionais ou alterações do sono durante a rTMS, reduzir o número de pulsos pela metade. Observar agitação, confusão, humor (atenção se linguagem prejudicada).",
+        "ajuste_seguranca": "Pacientes com dificuldade de locomoção ou histórico de convulsão podem ser beneficiados pela tDCS. Nunca posicionar eletrodos sobre lesões teciduais.",
+        "fatores_moduladores": "Evitar fim do dia em pacientes com Sundowning; não alterar medicações; benzodiazepínicos diminuem efeito; realizar atividades cognitivas dirigidas na sessão."
+      }
+    }
+  }
+}

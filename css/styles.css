@@ -505,8 +505,9 @@ body {
   border: 1px solid var(--border-medium);
   border-left: 4px solid var(--napen-teal-bar);
   border-radius: var(--radius-md);
-  padding: 16px 20px;
-  margin-top: 18px;
+  padding: 14px 18px;
+  margin-top: 20px;
+  scroll-margin-top: 160px;
 }
 
 .evidence-ref-header {
@@ -514,8 +515,57 @@ body {
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 0;
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+}
+
+.evidence-ref-header::-webkit-details-marker {
+  display: none;
+}
+
+.evidence-reference-panel[open] .evidence-ref-header {
+  margin-bottom: 14px;
+  padding-bottom: 12px;
+  border-bottom: 1px dashed var(--border-subtle);
+}
+
+.evidence-ref-summary-left {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.evidence-ref-summary-right {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
   gap: 8px;
-  margin-bottom: 10px;
+}
+
+.evidence-toggle-cue {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: var(--napen-teal-dark);
+  padding: 2px 6px;
+  border: 1px solid var(--napen-teal-bar);
+  border-radius: 3px;
+  background-color: var(--napen-teal-soft);
+}
+
+.evidence-chevron {
+  display: inline-block;
+  transition: transform 0.2s ease;
+}
+
+.evidence-reference-panel[open] .evidence-chevron {
+  transform: rotate(180deg);
 }
 
 .evidence-ref-title {
@@ -2916,6 +2966,696 @@ body {
   margin-bottom: 4px;
 }
 
+/* ==========================================================================
+   Etapa 0: Triagem Inicial de Continuidade Clínica (Homepage & Barra Ativa)
+   ========================================================================== */
+.home-continuity-panel {
+  margin-top: 8px;
+  padding-top: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.home-continuity-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--text-faint);
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.home-continuity-divider::before,
+.home-continuity-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background-color: var(--border-subtle);
+}
+
+.home-continuity-question {
+  font-size: 1.04rem;
+  font-weight: 700;
+  color: var(--napen-navy);
+  margin: 0 0 3px 0;
+  line-height: 1.35;
+}
+
+.home-continuity-quick-panel {
+  background-color: #FAFDFD;
+  border: none;
+  border-left: 3px solid var(--napen-teal-dark);
+  border-top: 1px solid var(--border-subtle);
+  padding: 14px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.home-continuity-fields {
+  display: flex;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.home-continuity-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1 1 210px;
+}
+
+.home-continuity-field-wide {
+  flex: 1.5 1 280px;
+}
+
+.home-continuity-select {
+  max-width: 100%;
+  width: 100%;
+}
+
+.home-continuity-stage-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding-top: 6px;
+  border-top: 1px dashed var(--border-medium);
+}
+
+.home-continuity-hint {
+  margin: 0;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  line-height: 1.45;
+}
+
+.algo-header-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.btn-switch-continuing {
+  display: inline-flex;
+  align-items: center;
+  background-color: transparent;
+  color: var(--napen-navy);
+  border: 1.5px solid var(--napen-navy);
+  padding: 7px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.btn-switch-continuing:hover {
+  background-color: var(--napen-navy);
+  color: #FFFFFF;
+}
+
+.continuity-entry-bar {
+  background-color: transparent;
+  border: none;
+  border-left: 3px solid var(--napen-navy);
+  border-bottom: 1px solid var(--border-subtle);
+  border-radius: 0;
+  padding: 12px 18px 14px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.continuity-question-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.continuity-title-group {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  flex: 1 1 380px;
+}
+
+.continuity-binary-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.continuity-compact-bar {
+  border-top: none;
+  padding-top: 0;
+}
+
+.continuity-inline-context {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.continuity-context-fields {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.continuity-inline-label {
+  font-size: 0.76rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: var(--napen-navy);
+}
+
+.continuity-inline-select {
+  background-color: #FFFFFF;
+  border: 1.5px solid var(--border-medium);
+  border-radius: var(--radius-sm);
+  padding: 6px 10px;
+  font-family: var(--font-family-base);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-main);
+  cursor: pointer;
+  max-width: 280px;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.continuity-inline-select:focus {
+  border-color: var(--napen-teal-dark);
+}
+
+.continuity-stage-shortcuts {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.btn-stage-shortcut {
+  background-color: transparent;
+  border: 1.5px solid var(--napen-teal-dark);
+  color: var(--napen-teal-dark);
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-family-nav);
+  font-size: 0.76rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.btn-stage-shortcut:hover,
+.btn-stage-shortcut.active {
+  background-color: var(--napen-teal-dark);
+  color: #FFFFFF;
+}
+
+.btn-stage-shortcut.stage-danger {
+  border-color: #991B1B;
+  color: #991B1B;
+}
+
+.btn-stage-shortcut.stage-danger:hover,
+.btn-stage-shortcut.stage-danger.active {
+  background-color: #991B1B;
+  color: #FFFFFF;
+}
+
+.btn-stage-shortcut.stage-adjust {
+  border-color: #B45309;
+  color: #B45309;
+}
+
+.btn-stage-shortcut.stage-adjust:hover,
+.btn-stage-shortcut.stage-adjust.active {
+  background-color: #B45309;
+  color: #FFFFFF;
+}
+
+/* Slot de Foco Direto no Topo ao pular Triagem */
+.continuing-focus-slot {
+  background-color: transparent;
+  border: none;
+  border-left: 4px solid var(--napen-teal-dark);
+  border-bottom: 1px solid var(--border-subtle);
+  padding: 14px 20px 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.continuing-focus-slot.stage-adjustment {
+  border-left-color: #D97706;
+  background-color: #FFFDF7;
+}
+
+.continuing-focus-slot.stage-failure {
+  border-left-color: #DC2626;
+  background-color: #FFF9F9;
+}
+
+.continuing-focus-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.continuing-focus-kicker {
+  font-size: 0.74rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--napen-teal-dark);
+}
+
+.continuing-focus-title {
+  font-size: 1.08rem;
+  font-weight: 700;
+  color: var(--napen-navy);
+  margin: 2px 0 0 0;
+}
+
+.continuing-focus-meta {
+  font-size: 0.84rem;
+  color: var(--text-main);
+  line-height: 1.5;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 10px;
+}
+
+.continuing-meta-item {
+  border-left: 2px solid var(--border-medium);
+  padding-left: 10px;
+}
+
+.btn-reopen-triage {
+  background-color: transparent;
+  border: 1.5px solid var(--napen-navy);
+  color: var(--napen-navy);
+  padding: 5px 12px;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-family-nav);
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.btn-reopen-triage:hover {
+  background-color: var(--napen-navy);
+  color: #FFFFFF;
+}
+
+/* ==========================================================================
+   Calculadora: Critério Clínico de Tolerabilidade e Efeitos Adversos
+   ========================================================================== */
+.calc-tolerability-panel {
+  border-top: 1px dashed var(--border-medium);
+  border-left: 3px solid var(--napen-navy);
+  padding: 10px 0 6px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.tolerability-options-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+
+.btn-tolerability {
+  background-color: transparent;
+  border: 1.5px solid var(--border-medium);
+  border-radius: var(--radius-sm);
+  padding: 8px 10px;
+  font-family: var(--font-family-base);
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-main);
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.btn-tolerability:hover {
+  background-color: var(--napen-teal-dark);
+  border-color: var(--napen-teal-dark);
+  color: #FFFFFF;
+}
+
+.btn-tolerability.active {
+  background-color: var(--napen-teal-dark);
+  border-color: var(--napen-teal-dark);
+  color: #FFFFFF;
+  font-weight: 700;
+}
+
+.btn-tolerability[data-tol="intolerante"]:hover,
+.btn-tolerability[data-tol="intolerante"].active {
+  background-color: #B45309;
+  border-color: #B45309;
+  color: #FFFFFF;
+}
+
+.btn-tolerability[data-tol="grave"]:hover,
+.btn-tolerability[data-tol="grave"].active {
+  background-color: #991B1B;
+  border-color: #991B1B;
+  color: #FFFFFF;
+}
+
+.tolerability-context-note {
+  font-size: 0.79rem;
+  line-height: 1.45;
+  padding: 8px 10px;
+  border-left: 3px solid var(--napen-teal-bar);
+  background-color: #F8FAFC;
+  color: var(--text-main);
+}
+
+.tolerability-context-note.tol-warning {
+  border-left-color: #D97706;
+  background-color: #FFFBEB;
+  color: #78350F;
+}
+
+.tolerability-context-note.tol-danger {
+  border-left-color: #DC2626;
+  background-color: #FEF2F2;
+  color: #7F1D1D;
+}
+
+.adverse-bank-link {
+  display: inline-block;
+  margin-top: 6px;
+  color: #991B1B;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.adverse-bank-link:hover {
+  color: #7F1D1D;
+}
+
+/* Utility anchor row right below parameter boxes */
+.params-utility-bar {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 8px;
+}
+
+/* Guia Prático: Ajustes de Tolerabilidade, Dose & Calibração (Estilo Plano NAPeN) */
+.tolerability-guide-panel {
+  background-color: #FFFFFF;
+  border: 1px solid #CBD5E1;
+  border-left: 4px solid var(--napen-teal-bar);
+  border-radius: var(--radius-md);
+  padding: 18px 20px;
+  margin-top: 16px;
+}
+
+.tol-guide-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.tol-guide-title {
+  display: block;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--napen-navy);
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+}
+
+.tol-guide-subtitle {
+  margin: 3px 0 0 0;
+  font-size: 0.8rem;
+  color: var(--text-faint);
+  line-height: 1.4;
+}
+
+.tol-guide-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.tol-guide-col {
+  background-color: #F8FAFC;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.tol-guide-col-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--napen-teal-dark);
+  letter-spacing: 0.03em;
+}
+
+.tol-guide-col-text {
+  font-size: 0.84rem;
+  color: var(--text-main);
+  line-height: 1.5;
+}
+
+.tol-guide-col-note {
+  margin-top: 4px;
+  padding-top: 6px;
+  border-top: 1px dashed var(--border-subtle);
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.tol-guide-highlight-pulse {
+  outline: 2px solid var(--napen-teal-bar);
+  outline-offset: 2px;
+}
+
+/* ==========================================================================
+   Indicadores Metodológicos: GRADE & AMSTAR 2 (Design Tipográfico Plano)
+   ========================================================================== */
+.evidence-homolog-note {
+  font-size: 0.74rem;
+  color: var(--text-faint);
+  font-weight: 600;
+}
+
+.evidence-scope-note {
+  font-size: 0.74rem;
+  color: var(--text-faint);
+  border-left: 2px solid var(--border-medium);
+  padding-left: 8px;
+}
+
+.evidence-block-head-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.evidence-tag-grade,
+.evidence-tag-amstar {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 3px;
+  font-size: 0.74rem;
+  font-weight: 700;
+  border: 1px solid var(--border-medium);
+  background-color: #F8FAFC;
+  color: var(--napen-navy);
+  line-height: 1.4;
+}
+
+.evidence-tag-grade.level-alta,
+.evidence-tag-amstar.level-alta {
+  background-color: #ECFDF5;
+  border-color: #10B981;
+  color: #065F46;
+}
+
+.evidence-tag-grade.level-moderada,
+.evidence-tag-amstar.level-moderada {
+  background-color: var(--napen-teal-soft);
+  border-color: var(--napen-teal-bar);
+  color: var(--napen-teal-dark);
+}
+
+.evidence-tag-grade.level-baixa,
+.evidence-tag-amstar.level-baixa {
+  background-color: #FFFBEB;
+  border-color: #F59E0B;
+  color: #92400E;
+}
+
+.evidence-tag-grade.level-muito-baixa,
+.evidence-tag-amstar.level-critica {
+  background-color: #FEF2F2;
+  border-color: #EF4444;
+  color: #991B1B;
+}
+
+.evidence-amstar-rationale {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin-top: 4px;
+  line-height: 1.45;
+  border-left: 2px solid var(--border-subtle);
+  padding-left: 8px;
+}
+
+.calc-quality-badges-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+}
+
+/* ==========================================================================
+   Observações Contextuais Cirúrgicas & Indicador Pontilhado (Design Plano NAPeN)
+   ========================================================================== */
+.pre-triagem-obs-slot {
+  margin-bottom: 14px;
+}
+
+.param-box-obs {
+  margin-top: 6px;
+}
+
+.step-inline-obs-slot {
+  margin-top: 4px;
+}
+
+.obs-contextual-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.obs-contextual-list.obs-compact {
+  gap: 6px;
+}
+
+.obs-contextual-item {
+  border: none;
+  border-left: 2.5px solid var(--napen-teal-bar);
+  border-radius: 0;
+  background-color: #F8FAFC;
+  color: var(--text-main);
+  padding: 9px 12px;
+  font-size: 0.80rem;
+  line-height: 1.45;
+  box-shadow: none;
+}
+
+.obs-contextual-item.obs-compact {
+  padding: 6px 10px;
+  font-size: 0.76rem;
+  line-height: 1.4;
+}
+
+.obs-contextual-item.obs-sev-warning {
+  border-left-color: #D97706;
+  background-color: #FFFBEB;
+  color: #78350F;
+}
+
+.obs-contextual-item.obs-sev-danger {
+  border-left-color: #DC2626;
+  background-color: #FEF2F2;
+  color: #7F1D1D;
+}
+
+.obs-action-row {
+  margin-top: 6px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.obs-action-link {
+  color: var(--napen-teal-dark);
+  font-weight: 700;
+  font-size: 0.76rem;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.obs-action-link:hover {
+  color: var(--napen-navy);
+}
+
+.obs-redirect-btn {
+  background-color: #FFFFFF;
+  border: 1px solid #D97706;
+  color: #92400E;
+  font-family: var(--font-family-base);
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 5px 11px;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.obs-redirect-btn:hover {
+  background-color: #FEF3C7;
+  color: #78350F;
+}
+
+.btn-cascade-choice.btn-cascade-dotted {
+  border-style: dashed;
+}
+
+.protocol-dotted-flag {
+  display: inline-block;
+  padding: 2px 7px;
+  border: 1px dashed var(--napen-navy);
+  border-radius: 2px;
+  background-color: #F8FAFC;
+  color: var(--napen-navy);
+  font-size: 0.71rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
 @media (max-width: 768px) {
   .header-top-bar {
     height: 88px;
@@ -2950,6 +3690,30 @@ body {
   .monitoring-grid {
     grid-template-columns: 1fr;
   }
+  .tol-guide-grid {
+    grid-template-columns: 1fr;
+  }
+  .tolerability-options-grid {
+    grid-template-columns: 1fr;
+  }
+  .continuity-question-row,
+  .home-continuity-fields,
+  .algo-header-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .home-continuity-field,
+  .home-continuity-field-wide {
+    flex: 1 1 100%;
+  }
+  .continuity-inline-context {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .continuity-inline-select {
+    max-width: 100%;
+    width: 100%;
+  }
   .methodology-container {
     padding: 18px 12px;
   }
@@ -2973,9 +3737,41 @@ body {
     font-size: 0.72rem;
     white-space: normal;
   }
-  .btn-step-action, .btn-cascade-choice {
+  .btn-step-action, .btn-cascade-choice, .btn-tolerability, .btn-stage-shortcut, .btn-switch-continuing, .obs-redirect-btn {
     min-height: 42px;
+    justify-content: center;
   }
 }
+
+/* ==========================================================================
+   Rótulos Semânticos Inline em Observações Clínicas (Sem # / * / &)
+   ========================================================================== */
+.obs-semantic-tag {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--napen-teal-dark);
+  background-color: var(--napen-teal-soft);
+  border: 1px solid var(--napen-teal-bar);
+  border-radius: 3px;
+  padding: 1px 6px;
+  margin-right: 6px;
+  vertical-align: baseline;
+}
+
+.obs-contextual-item.obs-sev-warning .obs-semantic-tag {
+  color: #92400E;
+  background-color: #FEF3C7;
+  border-color: #F59E0B;
+}
+
+.obs-contextual-item.obs-sev-danger .obs-semantic-tag {
+  color: #991B1B;
+  background-color: #FEE2E2;
+  border-color: #EF4444;
+}
+
 
 

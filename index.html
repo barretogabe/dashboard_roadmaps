@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Plataforma Interativa de Prescrição Clínica em Neuromodulação Não Invasiva — Rede NAPeN</title>
-  <meta name="description" content="Roadmaps e Algoritmos de Decisão Terapêutica Baseados em Evidências para Neuromodulação Não Invasiva — Rede NAPeN.">
+  <meta name="description" content="Protocolos e Algoritmos de Decisão Terapêutica Baseados em Evidências para Neuromodulação Não Invasiva — Rede NAPeN.">
   <link rel="icon" type="image/png" href="assets/logos/napen_logo_icon.png">
 
   <!-- Estilos Oficiais NAPeN -->
@@ -121,30 +121,17 @@
           </ul>
         </div>
 
-        <!-- Botão 2: Calculadora de Resposta Clínica (Acesso Direto para Reavaliação e Decisão) -->
-        <div class="nav-item has-dropdown" id="navItemCalc">
-          <button class="nav-btn" type="button" id="tabBtnCalc">
-            <span>CALCULADORA DE RESPOSTA CLÍNICA</span>
-            <svg class="nav-arrow-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
-          </button>
-
-          <!-- Dropdown em Cascata: Diagnóstico ➔ Medidas/Escalas de Desfecho Sugeridas -->
-          <ul class="dropdown-menu-napen" id="dropdownCalcList">
-            <!-- Populado dinamicamente via JavaScript com Diagnóstico > Medidas -->
-          </ul>
-        </div>
-
-        <!-- Botão 3: Biblioteca de Evidências -->
+        <!-- Botão 2: Biblioteca de Evidências -->
         <div class="nav-item" id="navItemPocket">
           <button class="nav-btn" type="button" id="tabBtnPocket">
             BIBLIOTECA DE EVIDÊNCIAS
           </button>
         </div>
 
-        <!-- Botão 4: Como os Roadmaps de Indicação Foram Desenvolvidos -->
+        <!-- Botão 4: Como os Protocolos Clínicos Foram Desenvolvidos -->
         <div class="nav-item" id="navItemMethod">
           <button class="nav-btn" type="button" id="tabBtnMethod">
-            COMO OS ROADMAPS DE INDICAÇÃO FORAM DESENVOLVIDOS
+            COMO OS PROTOCOLOS CLÍNICOS FORAM DESENVOLVIDOS
           </button>
         </div>
 
@@ -158,7 +145,7 @@
   <section class="hero-section">
     <div class="hero-container">
       <h1 class="hero-title">Plataforma Interativa de Prescrição Clínica em Neuromodulação Não Invasiva</h1>
-      <p class="hero-subtitle">Roadmaps e Algoritmos de Decisão Terapêutica Baseados em Evidências. Versão 2025-2026.</p>
+      <p class="hero-subtitle">Protocolos e Algoritmos de Decisão Terapêutica Baseados em Evidências. Versão 2025-2026.</p>
     </div>
   </section>
 
@@ -198,6 +185,62 @@
             <div class="search-results-dropdown" id="searchResultsDropdown"></div>
           </div>
         </div>
+
+        <!-- Triagem de Continuidade Clínica na Homepage -->
+        <section class="home-continuity-panel" id="homeContinuityPanel" aria-label="Histórico terapêutico inicial">
+          <div class="home-continuity-divider">
+            <span>ou, se o paciente já estiver em acompanhamento</span>
+          </div>
+
+          <div class="continuity-question-row">
+            <div class="continuity-title-group">
+              <div>
+                <h3 class="home-continuity-question">O paciente já realizou ou iniciou algum protocolo para alguma condição presente nesta plataforma?</h3>
+                <span class="cascading-step-subtext">Avalie a resposta do protocolo vigente na Calculadora ou avance diretamente na sequência em caso de resposta insatisfatória.</span>
+              </div>
+            </div>
+            <div class="continuity-binary-actions">
+              <button type="button" class="btn-cascade-choice active" id="btnHomeEntryNew">
+                <span>Não — Primeira indicação</span>
+                <span class="btn-cascade-sub">Iniciar estratificação diagnóstica completa</span>
+              </button>
+              <button type="button" class="btn-cascade-choice" id="btnHomeEntryReturning">
+                <span>Sim — Já realizou protocolo</span>
+                <span class="btn-cascade-sub">Ir direto para Avaliação, Alternativo ou Falha</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Seletor Rápido em Linha na Própria Homepage (Exibido quando "Sim") -->
+          <div class="home-continuity-quick-panel" id="homeContinuityQuickPanel" style="display: none;">
+            <div class="home-continuity-fields">
+              <div class="home-continuity-field">
+                <label class="continuity-inline-label" for="homeContCondition">Condição Clínica</label>
+                <select id="homeContCondition" class="continuity-inline-select home-continuity-select"></select>
+              </div>
+              <div class="home-continuity-field" id="homeContModalityWrap" style="display: none;">
+                <label class="continuity-inline-label" for="homeContModality">Modalidade</label>
+                <select id="homeContModality" class="continuity-inline-select"></select>
+              </div>
+              <div class="home-continuity-field home-continuity-field-wide">
+                <label class="continuity-inline-label" for="homeContProtocol">Protocolo / Foco Prévio</label>
+                <select id="homeContProtocol" class="continuity-inline-select home-continuity-select"></select>
+              </div>
+            </div>
+
+            <div class="home-continuity-stage-row">
+              <span class="continuity-inline-label">Conduta após o protocolo selecionado:</span>
+              <div class="continuity-stage-shortcuts" id="homeContStageShortcuts">
+                <button type="button" class="btn-stage-shortcut" data-home-stage="evaluation">Avaliar Resposta do Protocolo (Calculadora)</button>
+                <button type="button" class="btn-stage-shortcut stage-danger" data-home-stage="alt1">Não Respondeu ao Protocolo ➔ Próximo Passo</button>
+              </div>
+            </div>
+
+            <p class="home-continuity-hint">
+              Modo continuidade ativo: você também pode escolher a condição pela barra de busca acima ou pelo menu <strong>PRESCRIÇÃO INTERATIVA</strong> que ela abrirá já sem a triagem inicial.
+            </p>
+          </div>
+        </section>
       </div>
 
       <!-- Área Ativa do Algoritmo Interativo (Visível Apenas Após Seleção) -->
@@ -209,9 +252,14 @@
             <span class="algo-cond-eixo" id="algoCondEixo">Doenças Cerebrovasculares (AVC)</span>
             <h2 class="algo-cond-title" id="algoCondTitle">Acidente Vascular Cerebral (AVC) — Membro Superior</h2>
           </div>
-          <button class="btn-clear-selection" id="btnClearSelection" type="button">
-            Voltar à Seleção de Condições
-          </button>
+          <div class="algo-header-actions">
+            <button class="btn-switch-continuing" id="btnSwitchToContinuing" type="button">
+              Já iniciou protocolo nesta condição?
+            </button>
+            <button class="btn-clear-selection" id="btnClearSelection" type="button">
+              Voltar à Seleção de Condições
+            </button>
+          </div>
         </div>
 
         <!-- Trilha Visual do Algoritmo (Flow Stepper) -->
@@ -237,7 +285,17 @@
           </div>
         </div>
 
-        <!-- Seletor de Modalidade Terapêutica (rTMS vs. tDCS para roadmaps com múltiplas abordagens) -->
+        <!-- Barra Compacta de Acompanhamento Direto (Visível somente em modo Continuidade) -->
+        <section class="continuity-entry-bar" id="continuityEntryBar" aria-label="Atalhos de acompanhamento do protocolo" style="display: none;">
+          <div class="continuity-compact-bar" id="continuityCompactBar">
+            <div class="continuity-inline-context" id="continuityInlineContext"></div>
+          </div>
+        </section>
+
+        <!-- Slot de Foco Direto no Topo (Quando usuário pula a triagem inicial) -->
+        <section class="continuing-focus-slot" id="continuingStageFocusSlot" style="display: none;" aria-live="polite"></section>
+
+        <!-- Seletor de Modalidade Terapêutica (rTMS vs. tDCS para condições com múltiplas abordagens) -->
         <div class="modality-selector-bar" id="modalitySelectorBar" style="display: none;">
           <span class="modality-bar-label">Modalidade de Estimulação:</span>
           <div class="modality-pills-group" id="modalityPillsGroup">
@@ -245,7 +303,10 @@
           </div>
         </div>
 
-        <!-- Árvore de Decisão Algorítmica dos Roadmaps (Cascata Progressiva Fluida) -->
+        <!-- Observações de Pré-Triagem (critérios de elegibilidade e avisos transversais) -->
+        <div class="pre-triagem-obs-slot" id="preTriagemObservationsSlot" style="display: none;"></div>
+
+        <!-- Árvore de Decisão Algorítmica dos Protocolos Clínicos (Cascata Progressiva Fluida) -->
         <div class="cascading-flow-container" id="cascadingFlowContainer">
           <!-- Renderizado dinamicamente pelo motor de decisão da NAPeN -->
         </div>
@@ -285,7 +346,7 @@
 
 
         <!-- Card de Prescrição Primária -->
-        <article class="prescription-details-card">
+        <article class="prescription-details-card" id="prescriptionDetailsCard">
           <div class="prescription-top-header">
             <h3 class="prescription-main-title">Prescrição Terapêutica Primária Recomendada</h3>
             <div class="guideline-badge-card" id="guidelineBadge">
@@ -299,25 +360,35 @@
               <span class="param-box-label">Técnica Recomendada</span>
               <span class="param-box-val" id="prescTecnica">—</span>
               <span class="param-box-desc" id="prescModalidade">—</span>
+              <div class="param-box-obs" id="prescObsTecnica" style="display: none;"></div>
             </div>
 
             <div class="param-box">
               <span class="param-box-label">Alvo Anatômico & Coordenadas</span>
               <span class="param-box-val" id="prescAlvo">—</span>
               <span class="param-box-desc">Área de estimulação cortical ou periférica</span>
+              <div class="param-box-obs" id="prescObsAlvo" style="display: none;"></div>
             </div>
 
             <div class="param-box">
               <span class="param-box-label">Frequência & Intensidade</span>
               <span class="param-box-val" id="prescFrequencia">—</span>
               <span class="param-box-desc" id="prescIntensidade">—</span>
+              <div class="param-box-obs" id="prescObsIntensidade" style="display: none;"></div>
             </div>
 
             <div class="param-box">
               <span class="param-box-label">Dose e Regime de Aplicação</span>
               <span class="param-box-val" id="prescPulsos">—</span>
               <span class="param-box-desc" id="prescSessoes">—</span>
+              <div class="param-box-obs" id="prescObsSessoes" style="display: none;"></div>
             </div>
+          </div>
+
+          <div class="params-utility-bar">
+            <a href="#tolerabilityDoseGuidePanel" class="shortcut-to-calc" id="btnScrollToTolGuide">
+              Ajustes de Tolerabilidade, Limiar &amp; Dose ↓
+            </a>
           </div>
 
           <!-- Desfecho Clínico Alvo & Instrumento de Avaliação Recomendado (Dissociação Conceitual NAPeN) -->
@@ -325,11 +396,11 @@
             <div class="scale-efficacy-header">
               <div>
                 <span class="scale-panel-kicker">Desfecho Clínico / Foco Funcional Alvo</span>
-                <h4 class="scale-target-outcome" id="prescDesfechoNome">Espasticidade em Membro Superior</h4>
+                <h4 class="scale-target-outcome" id="prescDesfechoNome">—</h4>
               </div>
               <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
                 <span class="scale-instrument-label">Instrumento de Avaliação:</span>
-                <span class="scale-badge-pill" id="prescEscala">Escala de Ashworth Modificada (EAM)</span>
+                <span class="scale-badge-pill" id="prescEscala">—</span>
                 <button type="button" class="btn-guide-pill" id="btnOpenScaleGuidePresc" title="Como aplicar esta escala no exame clínico">
                   Como Aplicar
                 </button>
@@ -343,45 +414,17 @@
                 Avaliar Resposta na Calculadora ↓
               </a>
             </div>
+            <div class="param-box-obs" id="prescObsEscala" style="display: none; margin-top: 8px;"></div>
           </div>
 
-          <!-- Evidência Científica e Artigos de Referência do Protocolo -->
-          <div class="evidence-reference-panel" id="evidenceReferencePanel">
-            <div class="evidence-ref-header">
-              <span class="evidence-ref-title">Evidência Científica & Referências Formais</span>
-            </div>
-            <div class="evidence-ref-body">
-              <div class="evidence-block">
-                <span class="evidence-block-label">Estudos de referência do Protocolo (Parâmetros & Desfecho Primário):</span>
-                <p class="evidence-citation" id="evidenceCitationText">—</p>
-                <div class="evidence-doi-row">
-                  <span style="font-weight: 700; color: var(--text-muted); font-size: 0.78rem;">Publicação Original:</span>
-                  <a href="#" target="_blank" rel="noopener noreferrer" class="doi-link-btn" id="evidenceDoiLink">
-                    <span id="evidenceDoiText">Acessar Artigo Oficial</span> ↗
-                  </a>
-                </div>
-              </div>
-              <div class="evidence-block" style="margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--border-subtle);">
-                <span class="evidence-block-label">Diretriz Internacional Consensual (Grau Formal de Recomendação):</span>
-                <p class="evidence-citation" id="evidenceGuidelineText">—</p>
-                <div class="evidence-doi-row">
-                  <span style="font-weight: 700; color: var(--text-muted); font-size: 0.78rem;">Consenso de Diretriz:</span>
-                  <a href="#" target="_blank" rel="noopener noreferrer" class="doi-link-btn" id="evidenceGuidelineDoiLink">
-                    <span id="evidenceGuidelineDoiText">Acessar Diretriz IFCN</span> ↗
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Monitoramento Clínico e Regras de Reavaliação (Destaque Geral dos Roadmaps) -->
+          <!-- Monitoramento Clínico e Regras de Reavaliação -->
           <div class="monitoring-rules-panel" id="monitoringRulesPanel">
             <div class="monitoring-head">
               <span class="monitoring-title">
                 Monitoramento Clínico, Reavaliação e Regras Gerais do Ciclo
               </span>
               <span class="monitoring-subtitle">
-                Diretriz sistematizada para verificação de resposta e conduta de ajuste
+                Critérios sistematizados para verificação de resposta e progressão de protocolo
               </span>
             </div>
 
@@ -391,7 +434,7 @@
                 <span class="monitoring-text" id="monitoringReeval">—</span>
               </div>
               <div class="monitoring-item">
-                <span class="monitoring-label">Conduta na Resposta Insatisfatória</span>
+                <span class="monitoring-label">Critério Individual de Resposta Insatisfatória</span>
                 <span class="monitoring-text" id="monitoringDoseAdjust">—</span>
               </div>
               <div class="monitoring-item">
@@ -403,6 +446,33 @@
             <div class="monitoring-notes" id="monitoringNotesBox">
               <strong>Observações Clínicas e Terapias Adjuvantes:</strong>
               <span id="monitoringNotesText">—</span>
+            </div>
+          </div>
+
+          <!-- Guia Prático: Ajustes de Tolerabilidade, Calibração & Dose (Acesso Estratégico) -->
+          <div class="tolerability-guide-panel" id="tolerabilityDoseGuidePanel">
+            <div class="tol-guide-head">
+              <div>
+                <span class="tol-guide-title" id="tolGuideTitle">Ajustes de Tolerabilidade, Dose &amp; Calibração</span>
+                <p class="tol-guide-subtitle">Referência prática para adaptar conforto, carga de pulsos e limiares durante o ciclo sem necessidade de etapa separada.</p>
+              </div>
+              <a href="https://www.neuromodulation-net.com/banco-efeitos-adversos-napen" target="_blank" rel="noopener noreferrer" class="adverse-bank-link" id="tolGuideBankLink">
+                Banco de Efeitos Adversos NAPeN ↗
+              </a>
+            </div>
+            <div class="tol-guide-grid" id="tolerabilityDoseGuideGrid">
+              <div class="tol-guide-col">
+                <span class="tol-guide-col-label">1. Desconforto &amp; Tolerância</span>
+                <div class="tol-guide-col-text" id="tolGuideTolerance">—</div>
+              </div>
+              <div class="tol-guide-col">
+                <span class="tol-guide-col-label">2. Otimização de Dose, Pulsos &amp; Duração</span>
+                <div class="tol-guide-col-text" id="tolGuideDose">—</div>
+              </div>
+              <div class="tol-guide-col">
+                <span class="tol-guide-col-label">3. Calibração (LMR / LMA) &amp; Moduladores</span>
+                <div class="tol-guide-col-text" id="tolGuideCalibration">—</div>
+              </div>
             </div>
           </div>
 
@@ -473,6 +543,18 @@
                   </div>
                 </div>
 
+                <!-- Critério Clínico Associado: Tolerabilidade e Segurança -->
+                <div class="calc-tolerability-panel" id="calcTolerabilityPanel">
+                  <span class="calc-col-label" style="margin-bottom: 4px; display: block;">Critério Clínico Associado: Tolerabilidade e Efeitos Adversos</span>
+                  <div class="tolerability-options-grid" id="tolerabilityOptionsGrid" role="radiogroup" aria-label="Perfil de tolerabilidade e efeitos adversos">
+                    <button type="button" class="btn-tolerability active" data-tol="boa">Boa tolerabilidade (Sem efeitos limitantes)</button>
+                    <button type="button" class="btn-tolerability" data-tol="leve">Desconforto leve tolerável</button>
+                    <button type="button" class="btn-tolerability" data-tol="intolerante">Intolerância moderada (Limita a dose)</button>
+                    <button type="button" class="btn-tolerability" data-tol="grave">Evento adverso grave / Suspensão</button>
+                  </div>
+                  <div class="tolerability-context-note" id="tolerabilityContextNote" style="display: none;"></div>
+                </div>
+
                 <div class="calc-clinical-result" id="calcClinicalResult">
                   <!-- Dashboard de Métricas do Paciente -->
                   <div class="calc-metrics-dashboard">
@@ -491,19 +573,25 @@
                   </div>
 
                   <div class="calc-goal-feedback" id="calcGoalFeedback">
-                    Insira os escores para verificar se o paciente atingiu a meta terapêutica estabelecida no roadmap.
+                    Insira os escores e verifique o perfil de tolerabilidade para definir a conduta clínica integrada.
                   </div>
                 </div>
               </div>
 
               <!-- Lado 2: Confronto com o Tamanho de Efeito da Evidência -->
               <div class="calc-col-evidence">
-                <span class="calc-col-label">2. Evidência Científica & Tamanho de Efeito</span>
+                <span class="calc-col-label">2. Evidência Científica, GRADE/AMSTAR 2 & Tamanho de Efeito</span>
                 <div class="calc-evidence-box">
-                  <!-- Estudo e Protocolo do Roadmap -->
+                  <!-- Estudo e Protocolo de Referência -->
                   <div class="calc-study-reference-row">
                     <span class="calc-study-label">Estudo de referência:</span>
                     <span class="calc-study-name" id="calcStudyRef">—</span>
+                  </div>
+
+                  <!-- Qualidade Metodológica (AMSTAR 2) e Certeza da Evidência (GRADE) -->
+                  <div class="calc-quality-badges-row" id="calcEvidenceGradeAmstar">
+                    <span class="evidence-tag-grade" id="calcGradeBadge">GRADE: —</span>
+                    <span class="evidence-tag-amstar" id="calcAmstarBadge">AMSTAR 2: —</span>
                   </div>
 
                   <!-- Métricas da Literatura em Grid -->
@@ -528,8 +616,11 @@
                       <span class="calc-comparison-title">Diagnóstico de Compatibilidade Clínica</span>
                     </div>
                     <div id="calcComparisonFeedback" class="calc-comparison-text">
-                      Ao informar os escores, o sistema analisará se o ganho clínico individual é compatível com o intervalo de confiança dos estudos de referência e se superou a MCID da escala.
+                      Ao informar os escores e a tolerabilidade, o sistema analisará a compatibilidade clínica com a MCID, com os estudos de referência e com a segurança terapêutica.
                     </div>
+                  </div>
+                  <div style="margin-top: 8px; text-align: right;">
+                    <a href="#evidenceReferencePanel" class="effect-calc-info-link" id="btnScrollToEvidence">Ver referências, GRADE e AMSTAR 2 completos ↓</a>
                   </div>
                 </div>
               </div>
@@ -537,12 +628,12 @@
           </div>
 
           <!-- Assistente de Resposta Clínica (Pós-Indução) -->
-          <div class="response-assistant-panel">
+          <div class="response-assistant-panel" id="responseAssistantPanel">
             <div class="assistant-head">
               <span class="assistant-title">
                 Assistente de Resposta Clínica (Pós-Indução)
               </span>
-              <span style="font-size: 0.8rem; color: var(--text-faint);">Desfecho clínico e conduta terapêutica (ativado automaticamente pela calculadora):</span>
+              <span style="font-size: 0.8rem; color: var(--text-faint);">Desfecho integrado (pontuação + tolerabilidade) e transição no algoritmo:</span>
             </div>
 
             <div class="outcome-buttons-row">
@@ -552,7 +643,7 @@
               </button>
               <button class="btn-outcome danger" id="btnOutcomeDanger" type="button">
                 <span class="outcome-bullet status-danger"></span>
-                <span>Resposta Insatisfatória (Protocolo Alternativo)</span>
+                <span>Resposta Insatisfatória (Avançar Sequência)</span>
               </button>
             </div>
 
@@ -560,6 +651,75 @@
             <div class="branch-result-panel" id="branchResultPanel"></div>
 
           </div>
+
+          <!-- Evidência Científica e Artigos de Referência do Protocolo (Encerramento Recolhível) -->
+          <details class="evidence-reference-panel" id="evidenceReferencePanel">
+            <summary class="evidence-ref-header">
+              <div class="evidence-ref-summary-left">
+                <span class="evidence-ref-title">Evidência Científica, GRADE & Qualidade Metodológica (AMSTAR 2)</span>
+                <span class="evidence-homolog-note" id="evidenceHomologHeaderNote">Classificação preliminar via metadados/abstracts · Em homologação pelo GT NAPeN</span>
+              </div>
+              <div class="evidence-ref-summary-right">
+                <span class="evidence-tag-grade" id="evidenceSummaryGradeBadge">GRADE: —</span>
+                <span class="evidence-tag-amstar" id="evidenceSummaryAmstarBadge">AMSTAR 2: —</span>
+                <span class="evidence-toggle-cue" aria-hidden="true">Referências <span class="evidence-chevron">▾</span></span>
+              </div>
+            </summary>
+            <div class="evidence-ref-body">
+              <div class="evidence-block">
+                <span class="evidence-block-label">Estudos de referência do Protocolo (Parâmetros & Desfecho Primário):</span>
+                <p class="evidence-citation" id="evidenceCitationText">—</p>
+                <div class="evidence-doi-row">
+                  <span style="font-weight: 700; color: var(--text-muted); font-size: 0.78rem;">Publicação Original:</span>
+                  <a href="#" target="_blank" rel="noopener noreferrer" class="doi-link-btn" id="evidenceDoiLink">
+                    <span id="evidenceDoiText">Acessar Artigo Oficial</span> ↗
+                  </a>
+                  <span class="evidence-scope-note">Estudo primário (AMSTAR 2 aplica-se à metanálise de suporte)</span>
+                </div>
+              </div>
+
+              <div class="evidence-block" id="evidenceMetaBlock" style="margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--border-subtle);">
+                <div class="evidence-block-head-row">
+                  <span class="evidence-block-label" style="margin-bottom: 0;">Metanálise / Revisão Sistemática de Suporte (AMSTAR 2):</span>
+                  <span class="evidence-tag-amstar" id="evidenceAmstarBadge">AMSTAR 2: —</span>
+                </div>
+                <p class="evidence-citation" id="evidenceMetaCitationText">—</p>
+                <div class="evidence-amstar-rationale" id="evidenceAmstarRationale"></div>
+                <div class="evidence-doi-row">
+                  <span style="font-weight: 700; color: var(--text-muted); font-size: 0.78rem;">Revisão Sistemática:</span>
+                  <a href="#" target="_blank" rel="noopener noreferrer" class="doi-link-btn" id="evidenceMetaDoiLink">
+                    <span id="evidenceMetaDoiText">Acessar Metanálise</span> ↗
+                  </a>
+                </div>
+              </div>
+
+              <div class="evidence-block" style="margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--border-subtle);">
+                <div class="evidence-block-head-row">
+                  <span class="evidence-block-label" style="margin-bottom: 0;">Diretriz Internacional Consensual & Certeza da Evidência (GRADE):</span>
+                  <span class="evidence-tag-grade" id="evidenceGradeBadge">GRADE: —</span>
+                </div>
+                <p class="evidence-citation" id="evidenceGuidelineText">—</p>
+                <div class="evidence-amstar-rationale" id="evidenceGradeRationale"></div>
+                <div class="evidence-doi-row">
+                  <span style="font-weight: 700; color: var(--text-muted); font-size: 0.78rem;">Consenso de Diretriz:</span>
+                  <a href="#" target="_blank" rel="noopener noreferrer" class="doi-link-btn" id="evidenceGuidelineDoiLink">
+                    <span id="evidenceGuidelineDoiText">Acessar Diretriz IFCN</span> ↗
+                  </a>
+                </div>
+              </div>
+
+              <div class="evidence-block" id="evidencePemGuide" style="display: none; margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--border-subtle);">
+                <span class="evidence-block-label">Referência de Pesquisa do Potencial Evocado Motor (PEM):</span>
+                <p class="evidence-citation">Na ausência de PEM no hemisfério lesionado, testar o hemisfério contralesional para confirmar inervação ipsilesional e excluir limitação técnica do equipamento. Protocolo brasileiro de referência:</p>
+                <div class="evidence-doi-row">
+                  <span style="font-weight: 700; color: var(--text-muted); font-size: 0.78rem;">Guia Prático PEM:</span>
+                  <a href="https://doi.org/10.17267/2965-3738bis.2023.e5097" target="_blank" rel="noopener noreferrer" class="doi-link-btn" id="evidencePemDoiLink">
+                    <span>DOI: 10.17267/2965-3738bis.2023.e5097</span> ↗
+                  </a>
+                </div>
+              </div>
+            </div>
+          </details>
         </article>
 
       </div>
@@ -573,16 +733,19 @@
         <h2 style="font-size: 1.35rem; font-weight: 700; color: var(--napen-navy); margin-bottom: 4px;">
           Biblioteca de Evidências
         </h2>
+        <p style="font-size: 0.84rem; color: var(--text-muted);">
+          Transparência científica: As classificações <strong>GRADE</strong> (certeza da evidência por desfecho) e <strong>AMSTAR 2</strong> (qualidade metodológica das metanálises/revisões sistemáticas de suporte) constituem avaliação preliminar auditável via DOI e encontram-se em homologação pelos Grupos de Trabalho da Rede NAPeN.
+        </p>
       </div>
       <div class="pocket-table-container">
         <table class="pocket-table">
           <thead>
             <tr>
               <th>Condição Clínica & Eixo</th>
-              <th>Foco / Indicação do Roadmap</th>
-              <th>Recomendação Internacional</th>
+              <th>Foco / Indicação Clínica</th>
+              <th>Recomendação Internacional & GRADE</th>
               <th>Ensaio Clínico de Referência</th>
-              <th>Metanálise de Suporte</th>
+              <th>Metanálise de Suporte (AMSTAR 2)</th>
               <th>Prescrição no Algoritmo</th>
             </tr>
           </thead>
@@ -592,19 +755,19 @@
     </div>
 
     <!-- ====================================================================
-         Aba 3: Metodologia ("Como os Roadmaps de Indicação Foram Desenvolvidos")
+         Aba 3: Metodologia ("Como os Protocolos Clínicos Foram Desenvolvidos")
          ==================================================================== -->
     <div id="paneMethod" style="display: none;">
       <div class="methodology-container">
         <div class="methodology-header">
-          <h2>Como os Roadmaps de indicação foram desenvolvidos</h2>
+          <h2>Como os Protocolos Clínicos foram desenvolvidos</h2>
           <p style="color: var(--text-muted); margin-top: 4px; font-size: 0.95rem;">
             Processo Metodológico e Diretrizes de Construção dos Algoritmos de Neuromodulação da Rede NAPeN
           </p>
         </div>
 
         <div style="background-color: var(--napen-teal-soft); border-left: 4px solid var(--napen-teal-bar); padding: 14px 18px; border-radius: var(--radius-md); font-size: 0.88rem; color: var(--napen-teal-dark); line-height: 1.5;">
-          <strong>Nota Institucional:</strong> Os processos metodológicos de consolidação dos roadmaps estão sendo sistematizados e revisados pelos Grupos de Trabalho (GTs) temáticos da Rede NAPeN. As diretrizes aqui apresentadas sintetizam os consensos internacionais vigentes da versão 2025–2026.
+          <strong>Governança Científica NAPeN:</strong> Os processos metodológicos de consolidação dos protocolos clínicos estão sendo sistematizados e revisados pelos Grupos de Trabalho (GTs) temáticos da Rede NAPeN. As diretrizes aqui apresentadas sintetizam os consensos internacionais vigentes da versão 2025–2026.
         </div>
 
         <div style="display: flex; flex-direction: column; gap: 14px;">
@@ -617,24 +780,42 @@
         <div style="display: flex; flex-direction: column; gap: 14px;">
           <h3 style="font-size: 1.15rem; color: var(--napen-navy); font-weight: 700;">2. Algoritmos Clínicos Estruturados e Transição Sequencial</h3>
           <p style="font-size: 0.92rem; color: var(--text-muted); line-height: 1.6;">
-            Cada roadmap constitui uma árvore de decisão direcionada. A estratificação clínica inicial pelo <strong>Fator Limitante Principal (Sintoma-Alvo)</strong> define o protocolo de indução mais eficaz para o microdesfecho funcional. Diante de resposta insatisfatória na escala avaliada, o algoritmo estipula a transição direta para o <strong>Protocolo Alternativo</strong> correspondente, salvaguardando as orientações de segurança e terapias adjuvantes recomendadas.
+            Cada protocolo clínico constitui uma árvore de decisão direcionada. A estratificação clínica inicial pelo <strong>Fator Limitante Principal (Sintoma-Alvo)</strong> define o protocolo de indução mais eficaz para o microdesfecho funcional. Diante de resposta insatisfatória na escala avaliada ou de intolerância ao regime vigente, o algoritmo estipula otimização de parâmetros, transição direta para o <strong>Protocolo Alternativo</strong> correspondente ou critérios formais de encerramento da sequência, salvaguardando as orientações de segurança e terapias adjuvantes recomendadas.
           </p>
         </div>
 
         <!-- Seção 3: Metodologia de Cálculo do Tamanho de Efeito -->
         <div id="metodologia-calculo-efeito" style="display: flex; flex-direction: column; gap: 14px; scroll-margin-top: 160px; border-top: 2px solid var(--napen-teal-bar); padding-top: 24px;">
           <h3 style="font-size: 1.15rem; color: var(--napen-navy); font-weight: 700;">
-            3. Como o Tamanho de Efeito (Effect Size) foi Calculado nos Roadmaps?
+            3. Como o Tamanho de Efeito (Effect Size) foi Calculado nos Protocolos Clínicos?
           </h3>
           <p style="font-size: 0.92rem; color: var(--text-muted); line-height: 1.6;">
-            O tamanho de efeito quantifica a magnitude clínica real do benefício produzido pela intervenção ativa em comparação ao controle (placebo/<em>sham</em> ou tratamento habitual). Nos Roadmaps da Rede NAPeN, os valores reportados baseiam-se na <strong>Diferença de Médias Padronizada (SMD)</strong> calculada pelo <em>d de Cohen</em> ou <em>g de Hedges</em> (para corrigir viés de pequenas amostras), ponderados segundo o modelo de efeitos aleatórios (<em>DerSimonian-Laird</em>):
+            O tamanho de efeito quantifica a magnitude clínica real do benefício produzido pela intervenção ativa em comparação ao controle (placebo/<em>sham</em> ou tratamento habitual). Nos Algoritmos Terapêuticos da Rede NAPeN, os valores reportados baseiam-se na <strong>Diferença de Médias Padronizada (SMD)</strong> calculada pelo <em>d de Cohen</em> ou <em>g de Hedges</em> (para corrigir viés de pequenas amostras), ponderados segundo o modelo de efeitos aleatórios (<em>DerSimonian-Laird</em>):
           </p>
           <div style="background-color: var(--bg-page); border: 1px solid var(--border-subtle); padding: 14px 18px; border-radius: var(--radius-md); font-family: monospace; font-size: 0.88rem; color: var(--napen-navy); line-height: 1.5;">
             SMD (d de Cohen) = (Média_Intervenção - Média_Controle) / Desvio_Padrão_Agrupado (SD_pooled)
           </div>
           <p style="font-size: 0.92rem; color: var(--text-muted); line-height: 1.6;">
-            Cada parâmetro vem acompanhado de seu respectivo <strong>Intervalo de Confiança de 95% (IC 95%)</strong>. Quando o intervalo não cruza o valor nulo (zero), comprova-se relevância e significância estatística. Esses tamanhos de efeito determinaram os limiares de <strong>Diferença Clinicamente Importante Mínima (MCID)</strong> adotados como metas terapêuticas de cada roadmap, permitindo confrontar a resposta individual de cada paciente com o padrão ouro da literatura mundial.
+            Cada parâmetro vem acompanhado de seu respectivo <strong>Intervalo de Confiança de 95% (IC 95%)</strong>. Quando o intervalo não cruza o valor nulo (zero), comprova-se relevância e significância estatística. Esses tamanhos de efeito determinaram os limiares de <strong>Diferença Clinicamente Importante Mínima (MCID)</strong> adotados como metas terapêuticas de cada protocolo clínico, permitindo confrontar a resposta individual de cada paciente com o padrão ouro da literatura mundial.
           </p>
+        </div>
+
+        <!-- Seção 4: Avaliação Metodológica (AMSTAR 2) e Certeza da Evidência (GRADE) -->
+        <div id="metodologia-grade-amstar" style="display: flex; flex-direction: column; gap: 14px; scroll-margin-top: 160px; border-top: 2px solid var(--napen-navy); padding-top: 24px;">
+          <h3 style="font-size: 1.15rem; color: var(--napen-navy); font-weight: 700;">
+            4. Qualidade Metodológica (AMSTAR 2) e Certeza da Evidência (GRADE)
+          </h3>
+          <p style="font-size: 0.92rem; color: var(--text-muted); line-height: 1.6;">
+            Para elevar a transparência metodológica além da indicação consensual (IFCN Níveis A e B), a plataforma incorpora dois referenciais internacionais complementares:
+          </p>
+          <div style="display: flex; flex-direction: column; gap: 10px; border-left: 3px solid var(--napen-teal-dark); padding-left: 16px;">
+            <p style="font-size: 0.9rem; color: var(--text-main); line-height: 1.55;">
+              <strong>AMSTAR 2 (Qualidade Metodológica de Revisões Sistemáticas e Metanálises):</strong> Instrumento de 16 itens (Shea et al., BMJ 2017) que avalia a rigidez metodológica especificamente das <em>metanálises de suporte</em> citadas em cada protocolo clínico (protocolo prévio registrado/PROSPERO, estratégia de busca abrangente, avaliação de risco de viés dos ensaios incluídos, análise de heterogeneidade e viés de publicação). Classifica a confiança na revisão em <strong>Alta</strong>, <strong>Moderada</strong>, <strong>Baixa</strong> ou <strong>Criticamente Baixa</strong>. Ensaios clínicos randomizados individuais são estudos primários e, por definição metodológica, não recebem escore AMSTAR 2 diretamente.
+            </p>
+            <p style="font-size: 0.9rem; color: var(--text-main); line-height: 1.55;">
+              <strong>Sistema GRADE (Certeza da Evidência e Força da Recomendação):</strong> Avalia a confiança no conjunto das evidências para cada desfecho clínico em quatro níveis — <strong>Alta (⊕⊕⊕⊕)</strong>, <strong>Moderada (⊕⊕⊕◯)</strong>, <strong>Baixa (⊕⊕◯◯)</strong> e <strong>Muito Baixa (⊕◯◯◯)</strong> — ponderando risco de viés, inconsistência entre ensaios, evidência indireta, imprecisão e viés de publicação, além de definir a força da recomendação clínica como <strong>Forte</strong> ou <strong>Condicional</strong>. Todas as classificações atualmente exibidas resultam de auditoria preliminar dos metadados e resumos oficiais via DOI e carregam a indicação explícita de <strong>Em homologação pelo GT NAPeN</strong>.
+            </p>
+          </div>
         </div>
       </div>
     </div>
