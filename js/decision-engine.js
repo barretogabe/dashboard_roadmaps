@@ -325,22 +325,32 @@ class DecisionEngine {
         autores: null,
         ano: null,
         doi: null,
-        url: null
+        url: null,
+        isIfcnLefaucheur: false,
+        fonteTipo: 'Consenso Clínico NAPeN'
       };
     }
 
-    const ref = m.diretriz_ref;
     const rec = m.diretriz_internacional || 'Consenso Clínico Internacional';
+    const isIfcnLefaucheur = /lefaucheur|ifcn/i.test(rec);
+    const meta = m.meta_analise;
+    const ref = isIfcnLefaucheur
+      ? (m.diretriz_ref || null)
+      : (meta && meta.url_doi ? meta : null);
 
     if (ref && ref.url_doi) {
       return {
-        text: `${rec} — ${ref.autores} (${ref.ano})`,
+        text: `${rec} — ${ref.autores || 'Referência'} (${ref.ano || ''})`,
         recomendacao: rec,
-        autores: ref.autores,
-        ano: ref.ano,
-        doi: ref.doi,
+        autores: ref.autores || (isIfcnLefaucheur ? 'Lefaucheur et al. (IFCN)' : null),
+        ano: ref.ano || null,
+        doi: ref.doi || null,
         url: ref.url_doi,
-        citacao: ref.citacao_completa
+        citacao: ref.citacao_completa || null,
+        isIfcnLefaucheur,
+        fonteTipo: isIfcnLefaucheur
+          ? 'Diretriz Internacional IFCN (Lefaucheur et al.)'
+          : 'Revisão Sistemática / Síntese Clínica para o Desfecho (sem gradação IFCN direta)'
       };
     }
 
@@ -350,7 +360,11 @@ class DecisionEngine {
       autores: null,
       ano: null,
       doi: null,
-      url: null
+      url: null,
+      isIfcnLefaucheur,
+      fonteTipo: isIfcnLefaucheur
+        ? 'Diretriz Internacional IFCN (Lefaucheur et al.)'
+        : 'Evidência Clínica Exploratória / Síntese para o Desfecho'
     };
   }
 
@@ -399,12 +413,12 @@ class DecisionEngine {
       const outcomeRecommended = goalMet ? 'success' : 'danger';
 
       const eff = m?.efeito_clinico || {};
-      const estudo = eff.estudo_referencia || 'estudos de referência';
+      const estudo = eff.estudo_referencia || 'o ensaio clínico de referência do protocolo';
       const esperado = eff.efeito_esperado_resumo || m?.tamanho_efeito || 'Diminuição de 1 nível na EAM';
 
       let comparativeFeedback = '';
       if (outcomeRecommended === 'success') {
-        comparativeFeedback = `<strong>[Resposta Clínica Satisfatória Alcançada]</strong> A redução de ${Math.abs(deltaLevels)} nível(is) no tônus muscular atingiu a MCID da escala (redução ≥ 1 grau) e é compatível com os estudos de referência (${estudo}). <strong>Conduta Oficial NAPeN:</strong> Manter protocolo para consolidação motora e transição para manutenção periódica.`;
+        comparativeFeedback = `<strong>[Resposta Clínica Satisfatória Alcançada]</strong> A redução de ${Math.abs(deltaLevels)} nível(is) no tônus muscular atingiu a MCID da escala (redução ≥ 1 grau) em concordância com o ensaio clínico de referência do protocolo (${estudo}). <strong>Conduta Oficial NAPeN:</strong> Manter protocolo para consolidação motora e transição para manutenção periódica.`;
       } else {
         comparativeFeedback = `<strong>[Resposta Clínica Insatisfatória (< MCID)]</strong> A variação de tônus permaneceu aquém da MCID da escala (redução ≥ 1 grau na EAM). <strong>Conduta Oficial NAPeN:</strong> Transição para o Protocolo Alternativo da árvore de decisão. Se persistir sem resposta após os protocolos alternativos, caracteriza-se Falha Terapêutica.`;
       }
@@ -494,12 +508,12 @@ class DecisionEngine {
 
     const outcomeRecommended = goalMet ? 'success' : 'danger';
 
-    const estudo = eff.estudo_referencia || m?.ensaio_clinico?.autores || 'estudos de referência';
+    const estudo = eff.estudo_referencia || m?.ensaio_clinico?.autores || 'o ensaio clínico de referência do protocolo';
     const esperadoResumo = eff.efeito_esperado_resumo || m?.tamanho_efeito || 'efeito clinicamente relevante';
 
     let comparativeFeedback = '';
     if (outcomeRecommended === 'success') {
-      comparativeFeedback = `<strong>[Resposta Clínica Satisfatória Alcançada]</strong> O ganho individual de <strong>${sign}${changeMagnitude.toFixed(1)} pontos (${percentFormatted})</strong> superou a MCID da escala (${mcidLabel}) e é compatível com os estudos de referência (<em>${estudo}</em>: ${esperadoResumo}). <strong>Conduta Oficial NAPeN:</strong> Prosseguir para o protocolo de consolidação e manutenção periódica com redução gradual das sessões.`;
+      comparativeFeedback = `<strong>[Resposta Clínica Satisfatória Alcançada]</strong> O ganho individual de <strong>${sign}${changeMagnitude.toFixed(1)} pontos (${percentFormatted})</strong> superou a MCID da escala (${mcidLabel}) e é compatível com o ensaio clínico de referência do protocolo (<em>${estudo}</em>: ${esperadoResumo}). <strong>Conduta Oficial NAPeN:</strong> Prosseguir para o protocolo de consolidação e manutenção periódica com redução gradual das sessões.`;
     } else {
       comparativeFeedback = `<strong>[Resposta Clínica Insatisfatória (< MCID)]</strong> O ganho individual de <strong>${sign}${changeMagnitude.toFixed(1)} pontos (${percentFormatted})</strong> não atingiu o limiar mínimo de relevância clínica (${mcidLabel}). <strong>Conduta Oficial NAPeN:</strong> Transição para o Protocolo Alternativo da árvore de decisão. Caso persista sem melhora após os protocolos alternativos, caracteriza-se Falha Terapêutica formal.`;
     }
@@ -734,7 +748,7 @@ class DecisionEngine {
     if (hasScores) {
       const m = this.getActiveModality();
       const eff = m?.efeito_clinico || {};
-      const estudo = eff.estudo_referencia || m?.ensaio_clinico?.autores || 'estudos de referência';
+      const estudo = eff.estudo_referencia || m?.ensaio_clinico?.autores || 'o ensaio clínico de referência do protocolo';
       const scoreSummary = deltaResult.isOrdinal
         ? `${Math.abs(deltaResult.delta)} nível(is) na EAM`
         : `${deltaResult.delta >= 0 ? '+' : ''}${deltaResult.delta.toFixed(1)} pts (${deltaResult.percentFormatted})`;
@@ -753,7 +767,7 @@ class DecisionEngine {
           badgeLabel: tol === 'leve'
             ? 'Resposta Satisfatória (≥ MCID · Monitorar Desconforto Leve)'
             : 'Resposta Clínica Satisfatória Alcançada',
-          summaryHtml: `<strong>[Resposta Clínica Satisfatória Alcançada]</strong> O paciente obteve variação de <strong>${scoreSummary}</strong>, atingindo a MCID (${deltaResult.mcidLabel}) em concordância com os estudos de referência (<em>${estudo}</em>), com perfil de segurança favorável. <strong>Conduta Oficial NAPeN:</strong> Manter protocolo até consolidação clínica e iniciar transição gradual para manutenção.${tolSuffix}`
+          summaryHtml: `<strong>[Resposta Clínica Satisfatória Alcançada]</strong> O paciente obteve variação de <strong>${scoreSummary}</strong>, atingindo a MCID (${deltaResult.mcidLabel}) em concordância com o ensaio clínico de referência do protocolo (<em>${estudo}</em>), com perfil de segurança favorável. <strong>Conduta Oficial NAPeN:</strong> Manter protocolo até consolidação clínica e iniciar transição gradual para manutenção.${tolSuffix}`
         };
       }
 

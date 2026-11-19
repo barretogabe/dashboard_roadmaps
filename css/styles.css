@@ -1904,15 +1904,78 @@ body {
   line-height: 1.45;
 }
 
-.pocket-table th:nth-child(1), .pocket-table td:nth-child(1) { width: 17%; min-width: 150px; }
+.pocket-table th:nth-child(1), .pocket-table td:nth-child(1) { width: 15%; min-width: 145px; }
 .pocket-table th:nth-child(2), .pocket-table td:nth-child(2) { width: 15%; min-width: 140px; }
-.pocket-table th:nth-child(3), .pocket-table td:nth-child(3) { width: 15%; min-width: 130px; }
-.pocket-table th:nth-child(4), .pocket-table td:nth-child(4) { width: 22%; min-width: 190px; }
-.pocket-table th:nth-child(5), .pocket-table td:nth-child(5) { width: 21%; min-width: 180px; }
-.pocket-table th:nth-child(6), .pocket-table td:nth-child(6) { width: 10%; min-width: 130px; text-align: center; }
+.pocket-table th:nth-child(3), .pocket-table td:nth-child(3) { width: 18%; min-width: 165px; }
+.pocket-table th:nth-child(4), .pocket-table td:nth-child(4) { width: 23%; min-width: 210px; }
+.pocket-table th:nth-child(5), .pocket-table td:nth-child(5) { width: 19%; min-width: 175px; }
+.pocket-table th:nth-child(6), .pocket-table td:nth-child(6) { width: 10%; min-width: 125px; text-align: center; }
 
 .pocket-table tbody tr:hover {
   background-color: var(--bg-page);
+}
+
+.pocket-legend-bar {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 12px;
+  padding: 12px 14px;
+  background-color: #F8FAFC;
+  border: 1px solid var(--border-subtle);
+  border-left: 3px solid var(--napen-teal-bar);
+  border-radius: 3px;
+  font-size: 0.78rem;
+  line-height: 1.45;
+  color: var(--text-muted);
+}
+
+.pocket-legend-item strong {
+  color: var(--napen-navy);
+  display: block;
+  margin-bottom: 2px;
+  font-size: 0.77rem;
+}
+
+.pocket-cell-kicker {
+  font-size: 0.70rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--text-faint);
+  margin-bottom: 3px;
+}
+
+.pocket-source-note {
+  font-size: 0.71rem;
+  color: var(--text-faint);
+  margin-top: 2px;
+  line-height: 1.35;
+}
+
+.pocket-protocol-tag {
+  background-color: var(--napen-teal-soft);
+  border-left: 2.5px solid var(--napen-teal-bar);
+  color: var(--napen-navy);
+  font-weight: 700;
+  font-size: 0.76rem;
+  line-height: 1.35;
+  padding: 4px 8px;
+  border-radius: 2px;
+  margin-bottom: 6px;
+}
+
+.pocket-alt-route-hint {
+  font-size: 0.71rem;
+  color: var(--text-faint);
+  margin-top: 4px;
+}
+
+@media (max-width: 860px) {
+  .pocket-legend-bar {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
 }
 
 /* ==========================================================================

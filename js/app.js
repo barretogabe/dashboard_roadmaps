@@ -100,6 +100,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const prescObsSessoes = document.getElementById('prescObsSessoes');
   const prescObsEscala = document.getElementById('prescObsEscala');
   const prescDesfechoNome = document.getElementById('prescDesfechoNome');
+  const prescDesfechoGradeBadge = document.getElementById('prescDesfechoGradeBadge');
   const prescLinhaPrescricao = document.getElementById('prescLinhaPrescricao');
   const prescEscala = document.getElementById('prescEscala');
   const prescEfeito = document.getElementById('prescEfeito');
@@ -413,7 +414,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (algoCondEixo) algoCondEixo.textContent = cond.eixo;
     if (algoCondTitle) algoCondTitle.textContent = cond.condicao;
     if (node1QuestionText) {
-      node1QuestionText.textContent = cond.no1_pergunta || 'Qual é o principal fator limitante ou foco de ganho terapêutico?';
+      node1QuestionText.textContent = cond.no1_pergunta || 'Qual é o principal fator limitante ou desfecho clínico prioritário?';
     }
 
     // Gerenciamento de compatibilidade da Estratificação Neurofisiológica (PEM no MS para AVC)
@@ -1188,7 +1189,7 @@ document.addEventListener('DOMContentLoaded', () => {
           ? (step.pergunta || cond.no1_pergunta || 'Qual é o principal fator limitante ou queixa funcional do paciente?')
           : (step.pergunta || 'Selecione a estratificação clínica do protocolo:');
         const stepSubtitle = step.subtitulo
-          || (isRootStep ? 'A seleção do foco funcional direciona o desfecho clínico, a escala de avaliação e a linha de prescrição.' : '');
+          || (isRootStep ? 'A seleção do fator limitante direciona o desfecho clínico, a escala de avaliação e a linha de prescrição.' : '');
 
         const stepHeader = document.createElement('div');
         stepHeader.className = 'cascading-step-header';
@@ -1466,7 +1467,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (prescMeta) prescMeta.textContent = meta;
     if (prescEscala) prescEscala.textContent = escNome;
 
-    const studyName = effObj.estudo_referencia || m?.ensaio_clinico?.autores || 'Estudos de referência';
+    const studyName = effObj.estudo_referencia || m?.ensaio_clinico?.autores || 'Ensaio clínico do protocolo';
     const studyDetail = effObj.estudo_detalhe ? ` (${effObj.estudo_detalhe})` : '';
     if (calcStudyRef) {
       calcStudyRef.textContent = `${studyName}${studyDetail}`;
@@ -1529,7 +1530,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (cardMcidBadge) cardMcidBadge.className = 'calc-metric-card';
 
     if (calcComparisonFeedback) {
-      calcComparisonFeedback.textContent = 'Ao informar os escores, o sistema analisará se o ganho clínico individual é compatível com o intervalo de confiança dos estudos de referência e se superou a MCID da escala.';
+      calcComparisonFeedback.textContent = 'Ao informar os escores, o sistema analisará se o ganho clínico individual é compatível com o intervalo de confiança do ensaio clínico de referência do protocolo e se superou a MCID da escala.';
     }
 
     // Reseta desfecho ao alternar escala ou fator
@@ -1609,26 +1610,30 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
 
-    // 2. Certeza da Evidência (GRADE)
+    // 2. Certeza da Evidência por Desfecho (GRADE)
     const gradeCerteza = grade?.certeza || 'Moderada';
     const gradeSimbolos = grade?.simbolos || '⊕⊕⊕◯';
     const gradeForca = grade?.forca_recomendacao || 'Condicional';
     const gradeCls = getQualityLevelClass(gradeCerteza);
 
     if (evidenceGradeBadge) {
-      evidenceGradeBadge.textContent = `GRADE: ${gradeCerteza} (${gradeSimbolos}) · Rec. ${gradeForca} · Em homologação GT`;
+      evidenceGradeBadge.textContent = `GRADE (Desfecho): ${gradeCerteza} (${gradeSimbolos}) · Rec. ${gradeForca} · Em homologação GT`;
       evidenceGradeBadge.className = `evidence-tag-grade ${gradeCls}`;
     }
     if (evidenceGradeRationale) {
       evidenceGradeRationale.textContent = grade?.observacao_dominios || 'Avaliação preliminar da certeza da evidência por desfecho (risco de viés, inconsistência, evidência indireta e imprecisão).';
     }
 
-    // 3. Espelho compacto na Coluna 2 da Calculadora e no cabeçalho recolhível de Evidências
+    // 3. Espelho compacto no Desfecho, na Coluna 2 da Calculadora e no cabeçalho recolhível de Evidências
     const amstarLevel = amstar?.nivel || 'Pendente GT';
     const amstarCls = getQualityLevelClass(amstarLevel);
 
+    if (prescDesfechoGradeBadge) {
+      prescDesfechoGradeBadge.textContent = `GRADE (Desfecho): ${gradeCerteza} (${gradeSimbolos}) · Rec. ${gradeForca}`;
+      prescDesfechoGradeBadge.className = `evidence-tag-grade ${gradeCls}`;
+    }
     if (calcGradeBadge) {
-      calcGradeBadge.textContent = `GRADE: ${gradeCerteza} (${gradeSimbolos}) · ${gradeForca}`;
+      calcGradeBadge.textContent = `GRADE (Desfecho): ${gradeCerteza} (${gradeSimbolos}) · Rec. ${gradeForca}`;
       calcGradeBadge.className = `evidence-tag-grade ${gradeCls}`;
     }
     if (calcAmstarBadge) {
@@ -1636,7 +1641,7 @@ document.addEventListener('DOMContentLoaded', () => {
       calcAmstarBadge.className = `evidence-tag-amstar ${amstarCls}`;
     }
     if (evidenceSummaryGradeBadge) {
-      evidenceSummaryGradeBadge.textContent = `GRADE: ${gradeCerteza} (${gradeSimbolos})`;
+      evidenceSummaryGradeBadge.textContent = `GRADE (Desfecho): ${gradeCerteza} (${gradeSimbolos})`;
       evidenceSummaryGradeBadge.className = `evidence-tag-grade ${gradeCls}`;
     }
     if (evidenceSummaryAmstarBadge) {
@@ -1751,24 +1756,25 @@ document.addEventListener('DOMContentLoaded', () => {
     if (prescMeta) prescMeta.textContent = activeScale?.meta_texto || m.meta_melhora || 'Melhora clinicamente relevante conforme protocolo.';
     renderObservationsSlot(prescObsEscala, engine.getContextualObservations({ slot: 'scale', stage: state.therapeuticStage }), { compact: true });
 
-    // Diretriz Internacional Oficial + GRADE
+    // Nível de Evidência em Diretriz Oficial (Guideline) ou Síntese Clínica — sem misturar GRADE
     const gInfo = engine.getFormattedGuideline();
-    const eq = engine.getEvidenceQuality();
-    const gradeLabelShort = eq.grade ? ` · GRADE: ${eq.grade.certeza} (${eq.grade.simbolos})` : '';
+    const fonteCurta = gInfo.isIfcnLefaucheur
+      ? `${gInfo.autores || 'Lefaucheur et al.'} (${gInfo.ano || '2020'})`
+      : (gInfo.autores ? `Síntese: ${gInfo.autores} (${gInfo.ano || 'Ref.'})` : 'Síntese / Consenso clínico');
     if (guidelineBadgeText) {
       if (gInfo && gInfo.url) {
         guidelineBadgeText.innerHTML = `
-          <span><strong>${escHtml(gInfo.recomendacao)}</strong> — ${escHtml(gInfo.autores || 'IFCN')} (${escHtml(gInfo.ano || 'Consenso')})${escHtml(gradeLabelShort)}</span>
-          <a href="${escHtml(gInfo.url)}" target="_blank" rel="noopener noreferrer" style="color: var(--napen-teal-dark); text-decoration: underline; margin-left: 6px; font-weight: 600;" title="Acessar diretriz oficial via DOI">
-            ${gInfo.doi ? `DOI: ${escHtml(gInfo.doi)} ↗` : 'Acessar Diretriz ↗'}
+          <span><strong>${escHtml(gInfo.recomendacao)}</strong> — ${escHtml(fonteCurta)}</span>
+          <a href="${escHtml(gInfo.url)}" target="_blank" rel="noopener noreferrer" style="color: var(--napen-teal-dark); text-decoration: underline; margin-left: 6px; font-weight: 600;" title="${gInfo.isIfcnLefaucheur ? 'Acessar diretriz oficial IFCN via DOI' : 'Acessar revisão / síntese de suporte via DOI'}">
+            ${gInfo.doi ? `DOI: ${escHtml(gInfo.doi)} ↗` : 'Acessar Referência ↗'}
           </a>
         `;
       } else {
-        guidelineBadgeText.textContent = `${gInfo?.text || 'Recomendação Consensual NAPeN'}${gradeLabelShort}`;
+        guidelineBadgeText.textContent = gInfo?.text || 'Recomendação Consensual NAPeN';
       }
     }
 
-    // Painel de Evidências: Estudos de referência, Metanálise (AMSTAR 2), Diretriz/GRADE e Guia PEM
+    // Painel de Evidências: Ensaio clínico de referência do protocolo, Metanálise (AMSTAR 2), Nível em Guideline, GRADE (Desfecho) e Guia PEM
     if (m.artigo_referencia) {
       if (evidenceCitationText) {
         const periodicalText = m.artigo_referencia.periodico || m.artigo_referencia.revista || '';
@@ -1784,15 +1790,25 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
 
+    const guidelineSourceLabel = document.getElementById('evidenceGuidelineSourceLabel');
+    if (guidelineSourceLabel) {
+      guidelineSourceLabel.textContent = gInfo.isIfcnLefaucheur
+        ? 'Guideline (IFCN):'
+        : 'Revisão / Síntese de Suporte:';
+    }
     if (evidenceGuidelineText) {
-      evidenceGuidelineText.innerHTML = `<strong>${escHtml(gInfo.recomendacao)}</strong> — Diretriz Internacional IFCN / Consenso (${escHtml(gInfo.autores || 'IFCN')}, ${escHtml(gInfo.ano || '2020')}).`;
+      evidenceGuidelineText.innerHTML = gInfo.isIfcnLefaucheur
+        ? `<strong>${escHtml(gInfo.recomendacao)}</strong> — Nível de evidência segundo a Diretriz Internacional IFCN (${escHtml(gInfo.autores || 'Lefaucheur et al.')}, ${escHtml(gInfo.ano || '2020')}).`
+        : `<strong>${escHtml(gInfo.recomendacao)}</strong> — Nível de evidência clínica segundo revisão sistemática / síntese de suporte (${gInfo.autores ? `${escHtml(gInfo.autores)}, ${escHtml(gInfo.ano || '')}` : 'estudos clínicos selecionados'}), sem gradação direta em Guideline IFCN.`;
     }
     if (evidenceGuidelineDoiLink) {
       const fullGuideUrl = gInfo.url || (gInfo.doi ? (gInfo.doi.startsWith('http') ? gInfo.doi : `https://doi.org/${gInfo.doi}`) : '#');
       evidenceGuidelineDoiLink.href = fullGuideUrl;
     }
     if (evidenceGuidelineDoiText) {
-      evidenceGuidelineDoiText.textContent = gInfo.doi ? `DOI: ${gInfo.doi.replace('https://doi.org/', '')}` : 'Acessar Diretriz Oficial';
+      evidenceGuidelineDoiText.textContent = gInfo.doi
+        ? `DOI: ${gInfo.doi.replace('https://doi.org/', '')}`
+        : (gInfo.isIfcnLefaucheur ? 'Acessar Diretriz IFCN' : 'Acessar Revisão de Suporte');
     }
 
     if (evidencePemGuide) {
@@ -2187,7 +2203,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       if (calcComparisonFeedback) {
         calcComparisonFeedback.innerHTML = evalMatrix.recommendationType === 'pending'
-          ? 'Ao informar os escores e a tolerabilidade, o sistema analisará a compatibilidade clínica com a MCID, com os estudos de referência e com a segurança terapêutica.'
+          ? 'Ao informar os escores e a tolerabilidade, o sistema analisará a compatibilidade clínica com a MCID, com o ensaio clínico de referência do protocolo e com a segurança terapêutica.'
           : evalMatrix.summaryHtml;
       }
 
@@ -2839,62 +2855,87 @@ document.addEventListener('DOMContentLoaded', () => {
           condLabel = condLabel.replace(eixoLabel + ' — ', '');
         }
 
+        const recStr = m.diretriz_internacional || 'Recomendação Consensual NAPeN';
+        const isIfcnLefaucheur = /lefaucheur|ifcn/i.test(recStr);
+        const guideRef = isIfcnLefaucheur ? (m.diretriz_ref || null) : (meta && meta.url_doi ? meta : null);
+        const fonteRecLabel = isIfcnLefaucheur
+          ? 'Guideline IFCN — apenas Nível de Evidência'
+          : 'Síntese / Metanálise Clínica (sem gradação IFCN direta)';
+        const protLabel = m.tecnica || m.modalidade_sigla || 'Protocolo de 1ª Linha';
+        const hasMultipleRoutes = (Array.isArray(c.modalidades_suportadas) && c.modalidades_suportadas.length > 1)
+          || (Array.isArray(m.cadeia_sequencial) && m.cadeia_sequencial.length > 1);
+        const altRouteHint = hasMultipleRoutes
+          ? '<div class="pocket-alt-route-hint">1ª linha padrão do desfecho · ver outras rotas no algoritmo</div>'
+          : '';
+
         const tr = document.createElement('tr');
         tr.innerHTML = `
           <td>
-            <strong style="color: var(--napen-navy); font-size: 0.90rem;">${condLabel}</strong>
-            <div style="font-size: 0.75rem; color: var(--text-faint); margin-top: 2px;">${eixoLabel}</div>
+            <strong style="color: var(--napen-navy); font-size: 0.90rem;">${escHtml(condLabel)}</strong>
+            <div style="font-size: 0.75rem; color: var(--text-faint); margin-top: 2px;">${escHtml(eixoLabel)}</div>
           </td>
           <td>
             <span style="background: var(--napen-teal-soft); color: var(--napen-teal-dark); padding: 4px 9px; border-radius: 3px; font-weight: 600; font-size: 0.78rem; display: inline-block;">
-              ${f.label}
+              ${escHtml(f.label || f.nome || '')}
             </span>
-          </td>
-          <td>
-            <div style="font-weight: 700; color: var(--napen-teal-dark); font-size: 0.82rem; line-height: 1.35;">
-              ${m.diretriz_internacional || 'Recomendação Consensual NAPeN'}
-            </div>
             ${grade ? `
-              <div style="margin-top: 6px;">
+              <div style="margin-top: 8px;">
+                <div class="pocket-cell-kicker">GRADE deste desfecho:</div>
                 <span class="evidence-tag-grade ${getQualityLevelClass(grade.certeza)}" title="${escAttr(grade.observacao_dominios)}">
-                  GRADE: ${grade.certeza} (${grade.simbolos}) · Rec. ${grade.forca_recomendacao}
+                  GRADE: ${escHtml(grade.certeza)} (${escHtml(grade.simbolos)}) · Rec. ${escHtml(grade.forca_recomendacao)}
                 </span>
                 <div style="font-size: 0.70rem; color: var(--text-faint); margin-top: 3px;">
-                  ${grade.status_homologacao || 'Avaliação preliminar — Em homologação GT'}
+                  ${escHtml(grade.status_homologacao || 'Avaliação preliminar — Em homologação GT')}
                 </div>
               </div>
             ` : ''}
           </td>
           <td>
+            <div class="pocket-cell-kicker">Nível de evidência (${isIfcnLefaucheur ? 'Guideline' : 'Síntese'}):</div>
+            <div style="font-weight: 700; color: var(--napen-teal-dark); font-size: 0.82rem; line-height: 1.35;">
+              ${escHtml(recStr)}
+            </div>
+            <div class="pocket-source-note">${escHtml(fonteRecLabel)}</div>
+            ${guideRef && guideRef.url_doi ? `
+              <a href="${escHtml(guideRef.url_doi)}" target="_blank" rel="noopener noreferrer" style="color: var(--napen-teal-dark); font-weight: 700; text-decoration: underline; font-size: 0.75rem; display: inline-block; margin-top: 4px;">
+                ${escHtml(guideRef.autores || 'Referência')} (${escHtml(guideRef.ano || '')}) · DOI ↗
+              </a>
+            ` : ''}
+          </td>
+          <td>
+            <div class="pocket-cell-kicker">Protocolo sugerido (1ª linha):</div>
+            <div class="pocket-protocol-tag">${escHtml(protLabel)}</div>
             ${ensaio ? `
+              <div class="pocket-cell-kicker" style="margin-top: 6px;">Ensaio clínico que embasa este protocolo:</div>
               <div style="font-size: 0.80rem; line-height: 1.4;">
-                <div style="font-weight: 700; color: var(--text-main);">${ensaio.autores} (${ensaio.ano})</div>
-                <div style="font-size: 0.74rem; color: var(--text-muted); margin-top: 2px;">${ensaio.titulo || ''}</div>
+                <div style="font-weight: 700; color: var(--text-main);">${escHtml(ensaio.autores)} (${escHtml(ensaio.ano)})</div>
+                <div style="font-size: 0.74rem; color: var(--text-muted); margin-top: 2px;">${escHtml(ensaio.titulo || '')}</div>
                 ${ensaio.url_doi ? `
-                  <a href="${ensaio.url_doi}" target="_blank" rel="noopener noreferrer" style="color: var(--napen-teal-dark); font-weight: 700; text-decoration: underline; font-size: 0.76rem; display: inline-block; margin-top: 4px;">
-                    Acessar Estudo via DOI ↗
+                  <a href="${escHtml(ensaio.url_doi)}" target="_blank" rel="noopener noreferrer" style="color: var(--napen-teal-dark); font-weight: 700; text-decoration: underline; font-size: 0.76rem; display: inline-block; margin-top: 4px;">
+                    Acessar Ensaio do Protocolo via DOI ↗
                   </a>
                 ` : ''}
+                ${altRouteHint}
               </div>
             ` : '<span style="color: var(--text-faint); font-size: 0.75rem;">—</span>'}
           </td>
           <td>
             ${meta ? `
               <div style="font-size: 0.80rem; line-height: 1.4;">
-                <div style="font-weight: 700; color: var(--text-muted);">${meta.autores} (${meta.ano})</div>
-                <div style="font-size: 0.74rem; color: var(--text-muted); margin-top: 2px;">${meta.titulo || ''}</div>
+                <div style="font-weight: 700; color: var(--text-muted);">${escHtml(meta.autores)} (${escHtml(meta.ano)})</div>
+                <div style="font-size: 0.74rem; color: var(--text-muted); margin-top: 2px;">${escHtml(meta.titulo || '')}</div>
                 ${amstar ? `
                   <div style="margin-top: 6px;">
                     <span class="evidence-tag-amstar ${getQualityLevelClass(amstar.nivel)}" title="${escAttr(amstar.justificativa_preliminar)}">
-                      AMSTAR 2: ${amstar.nivel}
+                      AMSTAR 2: ${escHtml(amstar.nivel)}
                     </span>
                     <div style="font-size: 0.70rem; color: var(--text-faint); margin-top: 3px;">
-                      ${amstar.status_homologacao || 'Avaliação preliminar — Em homologação GT'}
+                      ${escHtml(amstar.status_homologacao || 'Avaliação preliminar — Em homologação GT')}
                     </div>
                   </div>
                 ` : ''}
                 ${meta.url_doi ? `
-                  <a href="${meta.url_doi}" target="_blank" rel="noopener noreferrer" style="color: var(--napen-teal-dark); font-weight: 700; text-decoration: underline; font-size: 0.76rem; display: inline-block; margin-top: 4px;">
+                  <a href="${escHtml(meta.url_doi)}" target="_blank" rel="noopener noreferrer" style="color: var(--napen-teal-dark); font-weight: 700; text-decoration: underline; font-size: 0.76rem; display: inline-block; margin-top: 4px;">
                     Acessar Metanálise via DOI ↗
                   </a>
                 ` : ''}
@@ -2902,7 +2943,7 @@ document.addEventListener('DOMContentLoaded', () => {
             ` : '<span style="color: var(--text-faint); font-size: 0.75rem;">—</span>'}
           </td>
           <td style="text-align: center; vertical-align: middle;">
-            <button type="button" class="btn-evidence-goto" data-condition-id="${c.id}" data-factor-id="${f.id}">
+            <button type="button" class="btn-evidence-goto" data-condition-id="${escHtml(c.id)}" data-factor-id="${escHtml(f.id)}">
               Prescrever no Algoritmo ➔
             </button>
           </td>

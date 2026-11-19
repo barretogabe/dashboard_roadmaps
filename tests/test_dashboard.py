@@ -477,9 +477,9 @@ class TestRedeNAPeNPrescriptionPlatform(unittest.TestCase):
         # 6. Nomenclatura atualizada: 'Estudos de referência', 'Resultado Esperado na Literatura' e dissociação de desfecho clínico alvo
         self.assertIn('Tamanho de Efeito Esperado (d de Cohen)', html)
         self.assertIn('Resultado Esperado na Literatura (IC 95%)', html)
-        self.assertIn('Desfecho Clínico / Foco Funcional Alvo', html)
+        self.assertIn('Desfecho Clínico Alvo', html)
         self.assertIn('Instrumento de Avaliação:', html)
-        self.assertIn('Estudos de referência', html)
+        self.assertIn('Ensaio Clínico de Referência do Protocolo', html)
         self.assertNotIn('Tamanho de Efeito Reportado:', html)
         self.assertNotIn('Ensaio Clínico Randomizado de Referência', html)
 
@@ -1456,6 +1456,198 @@ print('JSC_WAYFINDER_22_OK');
                 proc = subprocess.run([jsc_bin, tmp_js], cwd=BASE_DIR, capture_output=True, text=True, timeout=15)
                 self.assertEqual(proc.returncode, 0, f"JSC error: {proc.stderr}\n{proc.stdout}")
                 self.assertIn('JSC_WAYFINDER_22_OK', proc.stdout)
+            finally:
+                if os.path.exists(tmp_js):
+                    os.remove(tmp_js)
+
+    def test_23_desfecho_and_protocol_trial_clarity(self):
+        """Valida separação estrita: GRADE apenas por Desfecho Clínico, Guideline apenas para Nível de Evidência e padronização do Ensaio do Protocolo."""
+        import re
+        import subprocess
+        import tempfile
+
+        html_path = os.path.join(BASE_DIR, 'index.html')
+        css_path = os.path.join(BASE_DIR, 'css', 'styles.css')
+        app_path = os.path.join(BASE_DIR, 'js', 'app.js')
+        engine_path = os.path.join(BASE_DIR, 'js', 'decision-engine.js')
+
+        with open(html_path, 'r', encoding='utf-8') as f:
+            html = f.read()
+        with open(css_path, 'r', encoding='utf-8') as f:
+            css = f.read()
+        with open(app_path, 'r', encoding='utf-8') as f:
+            app_js = f.read()
+        with open(engine_path, 'r', encoding='utf-8') as f:
+            engine_js = f.read()
+
+        # 1. Novos cabeçalhos e legenda na Biblioteca de Evidências (GRADE com Desfecho; Guideline só Nível de Evidência)
+        self.assertIn('<th>Desfecho Clínico &amp; GRADE</th>', html)
+        self.assertNotIn('<th>Foco / Indicação Clínica</th>', html)
+        self.assertIn('<th>Nível de Evidência (Guideline)</th>', html)
+        self.assertIn('<th>Ensaio Clínico de Referência do Protocolo</th>', html)
+        self.assertIn('id="pocketLegendBar"', html)
+
+        # 2. Harmonização no card de prescrição, calculadora e painel de evidências
+        self.assertIn('Nível A (Lefaucheur et al., 2020) — Lefaucheur et al. (2020)', html)
+        self.assertIn('id="prescDesfechoGradeBadge"', html)
+        self.assertIn('Protocolo / Desfecho Prévio', html)
+        self.assertIn('Desfecho Clínico Alvo', html)
+        self.assertIn('Ensaio clínico do protocolo:', html)
+        self.assertIn('Ensaio Clínico do Protocolo:', html)
+        self.assertIn('Nível de Evidência em Diretriz / Guideline (ou Síntese de Suporte):', html)
+        self.assertIn('Certeza da Evidência para este Desfecho Clínico (Sistema GRADE):', html)
+        self.assertNotIn('estudos de referência', html.lower())
+        self.assertNotIn('estudos de referência', app_js.lower())
+        self.assertNotIn('estudos de referência', engine_js.lower())
+
+        # 3. Estilos planos sem cantos elipsoides
+        for cls in ['.pocket-legend-bar', '.pocket-cell-kicker', '.pocket-protocol-tag', '.pocket-source-note']:
+            self.assertIn(cls, css)
+        pocket_css = css[css.index('.pocket-legend-bar'):css.index('Aba 3: Metodologia')]
+        self.assertNotIn('9999px', pocket_css)
+
+        # 4. Execução real em JavaScriptCore verificando separação GRADE (Desfecho) vs Guideline (Nível) e renderPocketTable()
+        jsc_bin = '/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc'
+        if os.path.exists(jsc_bin):
+            with open(os.path.join(BASE_DIR, 'js', 'data.js'), 'r', encoding='utf-8') as f:
+                data_js = f.read()
+            with open(os.path.join(BASE_DIR, 'js', 'scale-guide-data.js'), 'r', encoding='utf-8') as f:
+                sg_js = f.read()
+
+            dom_ids = sorted(set(re.findall(r'id="([^"]+)"', html)))
+            probe = f"""
+var window = {{ pageYOffset: 0, scrollTo: function(){{}} }};
+var _els = {{}};
+function makeEl(id) {{
+  var classes = new Set();
+  var _inner = '';
+  var el = {{
+    id: id, value: '', textContent: '', href: '', open: false,
+    style: {{}}, options: [], selectedIndex: 0, children: [],
+    classList: {{ add: function(c){{classes.add(c);}}, remove: function(c){{classes.delete(c);}}, toggle: function(c,f){{f?classes.add(c):classes.delete(c);}}, contains: function(c){{return classes.has(c);}} }},
+    listeners: {{}},
+    addEventListener: function(ev, fn){{ (this.listeners[ev]=this.listeners[ev]||[]).push(fn); }},
+    appendChild: function(c){{ this.children.push(c); }},
+    querySelector: function(){{ return makeEl(''); }},
+    querySelectorAll: function(){{ return []; }},
+    getAttribute: function(k){{ return this['data-' + k] || ''; }},
+    setAttribute: function(k, v){{ this['data-' + k] = v; }},
+    closest: function(){{ return null; }},
+    getBoundingClientRect: function(){{ return {{ top: 100 }}; }}
+  }};
+  Object.defineProperty(el, 'innerHTML', {{
+    get: function(){{ return _inner; }},
+    set: function(val){{ _inner = String(val || ''); }}
+  }});
+  return el;
+}}
+{json.dumps(dom_ids)}.forEach(function(id){{ _els[id] = makeEl(id); }});
+var document = {{
+  _cbs: {{}},
+  addEventListener: function(ev, fn){{ if (ev === 'DOMContentLoaded') this._cbs.ready = fn; }},
+  getElementById: function(id){{ if (!_els[id]) _els[id] = makeEl(id); return _els[id]; }},
+  createElement: function(tag){{ var e = makeEl(''); e.tagName = tag.toUpperCase(); return e; }},
+  querySelector: function(sel){{ return makeEl(sel); }},
+  querySelectorAll: function(){{ return []; }}
+}};
+{data_js}
+{sg_js}
+{engine_js}
+{app_js}
+if (document._cbs.ready) document._cbs.ready();
+
+function findClickableByText(root, needle) {{
+  if (!root) return null;
+  var txt = (root.innerHTML || '') + ' ' + (root.textContent || '');
+  if (txt.indexOf(needle) !== -1 && root.listeners && root.listeners.click && root.listeners.click.length) {{
+    return root;
+  }}
+  var kids = root.children || [];
+  for (var i = 0; i < kids.length; i++) {{
+    var hit = findClickableByText(kids[i], needle);
+    if (hit) return hit;
+  }}
+  return null;
+}}
+
+// Seleciona AVC Membro Superior pela UI para popular card de prescricao, Desfecho, Calculadora e Evidencias
+var avcLink = findClickableByText(_els['dropdownConditionsList'], 'Membro Superior');
+if (!avcLink) throw new Error('Link Membro Superior nao encontrado no dropdownConditionsList');
+avcLink.listeners.click[0]({{ preventDefault: function(){{}}, stopPropagation: function(){{}} }});
+
+// Verifica card principal IFCN: Guideline badge NAO deve conter GRADE
+var gBadgeHtml = _els['guidelineBadgeText'].innerHTML || '';
+if (gBadgeHtml.indexOf('clinph.2019.11.002') === -1 || gBadgeHtml.indexOf('GRADE') !== -1) {{
+  throw new Error('#guidelineBadgeText deve mostrar apenas Nível de Evidência + DOI sem GRADE, obtido: ' + gBadgeHtml);
+}}
+if ((_els['prescDesfechoGradeBadge'].textContent || '').indexOf('GRADE (Desfecho):') !== 0) {{
+  throw new Error('#prescDesfechoGradeBadge deve exibir GRADE (Desfecho), obtido: ' + _els['prescDesfechoGradeBadge'].textContent);
+}}
+if ((_els['calcGradeBadge'].textContent || '').indexOf('GRADE (Desfecho):') !== 0) {{
+  throw new Error('#calcGradeBadge deve exibir GRADE (Desfecho), obtido: ' + _els['calcGradeBadge'].textContent);
+}}
+if ((_els['evidenceGradeBadge'].textContent || '').indexOf('GRADE (Desfecho):') !== 0) {{
+  throw new Error('#evidenceGradeBadge deve exibir GRADE (Desfecho), obtido: ' + _els['evidenceGradeBadge'].textContent);
+}}
+
+// Seleciona Ataxia Cerebelar pela UI (condicao nao coberta pelo Guideline IFCN) -> badge usa Sintese, sem GRADE
+var ataxLink = findClickableByText(_els['dropdownConditionsList'], 'Ataxia');
+if (!ataxLink) throw new Error('Link Ataxia nao encontrado no dropdownConditionsList');
+ataxLink.listeners.click[0]({{ preventDefault: function(){{}}, stopPropagation: function(){{}} }});
+var gAtaxBadgeHtml = _els['guidelineBadgeText'].innerHTML || '';
+if (gAtaxBadgeHtml.indexOf('Síntese:') === -1 || gAtaxBadgeHtml.indexOf('Matsugi') === -1 || gAtaxBadgeHtml.indexOf('GRADE') !== -1) {{
+  throw new Error('#guidelineBadgeText de Ataxia deve mostrar Sintese (Matsugi) sem GRADE, obtido: ' + gAtaxBadgeHtml);
+}}
+if ((_els['prescDesfechoGradeBadge'].textContent || '').indexOf('GRADE (Desfecho):') !== 0) {{
+  throw new Error('#prescDesfechoGradeBadge em Ataxia deve exibir GRADE (Desfecho), obtido: ' + _els['prescDesfechoGradeBadge'].textContent);
+}}
+
+var eng = new DecisionEngine(window.NAPEN_DATA);
+// AVC MS fraqueza -> deve ser IFCN Lefaucheur true com DOI IFCN
+eng.setCondition('avc-membro-superior', {{ modalityType: 'rtms' }});
+eng.setFactor('fraqueza', true);
+var gAvc = eng.getFormattedGuideline();
+if (gAvc.isIfcnLefaucheur !== true || (gAvc.doi || '').indexOf('clinph.2019.11.002') === -1) {{
+  throw new Error('AVC fraqueza deveria ter isIfcnLefaucheur=true com DOI IFCN, obtido: ' + JSON.stringify(gAvc));
+}}
+
+// Ataxia severidade -> NAO coberta por Lefaucheur, deve ter isIfcnLefaucheur=false e apontar para Matsugi 2024
+eng.setCondition('ataxia-cerebelar', {{ modalityType: 'tdcs' }});
+eng.setFactor('severidade_motora', true);
+var gAtax = eng.getFormattedGuideline();
+if (gAtax.isIfcnLefaucheur !== false || (gAtax.autores || '').indexOf('Matsugi') === -1) {{
+  throw new Error('Ataxia nao deveria atribuir recomendacao a Lefaucheur, obtido: ' + JSON.stringify(gAtax));
+}}
+
+// Tabela Pocket renderizada: Col 2 tem GRADE deste desfecho; Col 3 tem Nível de evidência sem GRADE
+var rows = _els['pocketTableBody'].children;
+if (rows.length < 30) throw new Error('Esperado >= 30 linhas na pocketTableBody, obtido ' + rows.length);
+rows.forEach(function(r, idx) {{
+  var tds = (r.innerHTML || '').split('<td');
+  if (tds.length < 5) throw new Error('Linha ' + idx + ' sem 4 colunas td');
+  if (tds[2].indexOf('GRADE deste desfecho:') === -1) {{
+    throw new Error('Coluna 2 (Desfecho) da linha ' + idx + ' sem GRADE deste desfecho');
+  }}
+  if (tds[3].indexOf('GRADE') !== -1 || tds[3].indexOf('Nível de evidência (') === -1) {{
+    throw new Error('Coluna 3 (Guideline) da linha ' + idx + ' não deve conter GRADE e deve indicar Nível de evidência: ' + tds[3]);
+  }}
+}});
+var joined = rows.map(function(r){{ return r.innerHTML; }}).join('\\n');
+if (joined.indexOf('Protocolo sugerido (1ª linha):') === -1 || joined.indexOf('pocket-protocol-tag') === -1) {{
+  throw new Error('Pocket table deve exibir Protocolo sugerido (1ª linha) vinculado ao ensaio');
+}}
+if (joined.indexOf('Guideline IFCN — apenas Nível de Evidência') === -1 || joined.indexOf('Síntese / Metanálise Clínica (sem gradação IFCN direta)') === -1) {{
+  throw new Error('Pocket table deve distinguir fonte IFCN vs Sintese/Metanalise');
+}}
+print('JSC_NOMENCLATURE_23_OK');
+"""
+            with tempfile.NamedTemporaryFile('w', suffix='.js', encoding='utf-8', delete=False) as tf:
+                tf.write(probe)
+                tmp_js = tf.name
+            try:
+                proc = subprocess.run([jsc_bin, tmp_js], cwd=BASE_DIR, capture_output=True, text=True, timeout=15)
+                self.assertEqual(proc.returncode, 0, f"JSC error: {proc.stderr}\n{proc.stdout}")
+                self.assertIn('JSC_NOMENCLATURE_23_OK', proc.stdout)
             finally:
                 if os.path.exists(tmp_js):
                     os.remove(tmp_js)

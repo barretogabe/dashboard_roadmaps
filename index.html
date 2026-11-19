@@ -223,7 +223,7 @@
                 <select id="homeContModality" class="continuity-inline-select"></select>
               </div>
               <div class="home-continuity-field home-continuity-field-wide">
-                <label class="continuity-inline-label" for="homeContProtocol">Protocolo / Foco Prévio</label>
+                <label class="continuity-inline-label" for="homeContProtocol">Protocolo / Desfecho Prévio</label>
                 <select id="homeContProtocol" class="continuity-inline-select home-continuity-select"></select>
               </div>
             </div>
@@ -338,7 +338,7 @@
               Estratificação Clínica: Fator Limitante ou Sintoma-Alvo
             </span>
             <span id="node1QuestionText" style="display: block; font-size: 0.88rem; color: var(--text-muted); font-weight: normal; margin-top: 2px;">
-              Qual é o principal fator limitante ou foco de ganho terapêutico?
+              Qual é o principal fator limitante ou desfecho clínico prioritário?
             </span>
           </div>
           <div class="node1-options-list" id="node1OptionsList"></div>
@@ -350,7 +350,7 @@
           <div class="prescription-top-header">
             <h3 class="prescription-main-title">Prescrição Terapêutica Primária Recomendada</h3>
             <div class="guideline-badge-card" id="guidelineBadge">
-              <span id="guidelineBadgeText">Diretriz Internacional: Lefaucheur et al., 2020 (IFCN) — Nível A</span>
+              <span id="guidelineBadgeText">Nível A (Lefaucheur et al., 2020) — Lefaucheur et al. (2020)</span>
             </div>
           </div>
 
@@ -395,8 +395,9 @@
           <div class="scale-efficacy-panel">
             <div class="scale-efficacy-header">
               <div>
-                <span class="scale-panel-kicker">Desfecho Clínico / Foco Funcional Alvo</span>
+                <span class="scale-panel-kicker">Desfecho Clínico Alvo</span>
                 <h4 class="scale-target-outcome" id="prescDesfechoNome">—</h4>
+                <span class="evidence-tag-grade" id="prescDesfechoGradeBadge" style="display: inline-flex; margin-top: 6px;">GRADE (Desfecho): —</span>
               </div>
               <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
                 <span class="scale-instrument-label">Instrumento de Avaliação:</span>
@@ -484,7 +485,7 @@
                   <span class="dual-calc-title">Calculadora de Resposta Clínica & Comparador de Efeito Terapêutico</span>
                 </div>
                 <p class="dual-calc-subtitle">
-                  Avalie a resposta individual do paciente (Δ e %) e compare simultaneamente com o tamanho de efeito dos estudos de referência de suporte:
+                  Avalie a resposta individual do paciente (Δ e %) e compare simultaneamente com o tamanho de efeito do ensaio clínico de referência do protocolo:
                 </p>
               </div>
               <a href="#metodologia-calculo-efeito" class="effect-calc-info-link" id="linkComoEfeitoCalculado">
@@ -580,18 +581,18 @@
 
               <!-- Lado 2: Confronto com o Tamanho de Efeito da Evidência -->
               <div class="calc-col-evidence">
-                <span class="calc-col-label">2. Evidência Científica, GRADE/AMSTAR 2 & Tamanho de Efeito</span>
+                <span class="calc-col-label">2. GRADE (Desfecho), AMSTAR 2 &amp; Tamanho de Efeito do Protocolo</span>
                 <div class="calc-evidence-box">
                   <!-- Estudo e Protocolo de Referência -->
                   <div class="calc-study-reference-row">
-                    <span class="calc-study-label">Estudo de referência:</span>
+                    <span class="calc-study-label">Ensaio clínico do protocolo:</span>
                     <span class="calc-study-name" id="calcStudyRef">—</span>
                   </div>
 
-                  <!-- Qualidade Metodológica (AMSTAR 2) e Certeza da Evidência (GRADE) -->
+                  <!-- Qualidade Metodológica (AMSTAR 2) e Certeza da Evidência do Desfecho (GRADE) -->
                   <div class="calc-quality-badges-row" id="calcEvidenceGradeAmstar">
-                    <span class="evidence-tag-grade" id="calcGradeBadge">GRADE: —</span>
-                    <span class="evidence-tag-amstar" id="calcAmstarBadge">AMSTAR 2: —</span>
+                    <span class="evidence-tag-grade" id="calcGradeBadge">GRADE (Desfecho): —</span>
+                    <span class="evidence-tag-amstar" id="calcAmstarBadge">AMSTAR 2 (Metanálise): —</span>
                   </div>
 
                   <!-- Métricas da Literatura em Grid -->
@@ -616,7 +617,7 @@
                       <span class="calc-comparison-title">Diagnóstico de Compatibilidade Clínica</span>
                     </div>
                     <div id="calcComparisonFeedback" class="calc-comparison-text">
-                      Ao informar os escores e a tolerabilidade, o sistema analisará a compatibilidade clínica com a MCID, com os estudos de referência e com a segurança terapêutica.
+                      Ao informar os escores e a tolerabilidade, o sistema analisará a compatibilidade clínica com a MCID, com o ensaio clínico de referência do protocolo e com a segurança terapêutica.
                     </div>
                   </div>
                   <div style="margin-top: 8px; text-align: right;">
@@ -667,14 +668,14 @@
             </summary>
             <div class="evidence-ref-body">
               <div class="evidence-block">
-                <span class="evidence-block-label">Estudos de referência do Protocolo (Parâmetros & Desfecho Primário):</span>
+                <span class="evidence-block-label">Ensaio Clínico de Referência do Protocolo (Parâmetros &amp; Desfecho Primário):</span>
                 <p class="evidence-citation" id="evidenceCitationText">—</p>
                 <div class="evidence-doi-row">
-                  <span style="font-weight: 700; color: var(--text-muted); font-size: 0.78rem;">Publicação Original:</span>
+                  <span style="font-weight: 700; color: var(--text-muted); font-size: 0.78rem;">Ensaio Clínico do Protocolo:</span>
                   <a href="#" target="_blank" rel="noopener noreferrer" class="doi-link-btn" id="evidenceDoiLink">
                     <span id="evidenceDoiText">Acessar Artigo Oficial</span> ↗
                   </a>
-                  <span class="evidence-scope-note">Estudo primário (AMSTAR 2 aplica-se à metanálise de suporte)</span>
+                  <span class="evidence-scope-note">Estudo primário que embasa o protocolo sugerido (AMSTAR 2 aplica-se à metanálise de suporte)</span>
                 </div>
               </div>
 
@@ -694,18 +695,22 @@
               </div>
 
               <div class="evidence-block" style="margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--border-subtle);">
-                <div class="evidence-block-head-row">
-                  <span class="evidence-block-label" style="margin-bottom: 0;">Diretriz Internacional Consensual & Certeza da Evidência (GRADE):</span>
-                  <span class="evidence-tag-grade" id="evidenceGradeBadge">GRADE: —</span>
-                </div>
+                <span class="evidence-block-label">Nível de Evidência em Diretriz / Guideline (ou Síntese de Suporte):</span>
                 <p class="evidence-citation" id="evidenceGuidelineText">—</p>
-                <div class="evidence-amstar-rationale" id="evidenceGradeRationale"></div>
                 <div class="evidence-doi-row">
-                  <span style="font-weight: 700; color: var(--text-muted); font-size: 0.78rem;">Consenso de Diretriz:</span>
+                  <span id="evidenceGuidelineSourceLabel" style="font-weight: 700; color: var(--text-muted); font-size: 0.78rem;">Referência do Guideline:</span>
                   <a href="#" target="_blank" rel="noopener noreferrer" class="doi-link-btn" id="evidenceGuidelineDoiLink">
-                    <span id="evidenceGuidelineDoiText">Acessar Diretriz IFCN</span> ↗
+                    <span id="evidenceGuidelineDoiText">Acessar Referência</span> ↗
                   </a>
                 </div>
+              </div>
+
+              <div class="evidence-block" style="margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--border-subtle);">
+                <div class="evidence-block-head-row">
+                  <span class="evidence-block-label" style="margin-bottom: 0;">Certeza da Evidência para este Desfecho Clínico (Sistema GRADE):</span>
+                  <span class="evidence-tag-grade" id="evidenceGradeBadge">GRADE (Desfecho): —</span>
+                </div>
+                <div class="evidence-amstar-rationale" id="evidenceGradeRationale"></div>
               </div>
 
               <div class="evidence-block" id="evidencePemGuide" style="display: none; margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--border-subtle);">
@@ -734,17 +739,31 @@
           Biblioteca de Evidências
         </h2>
         <p style="font-size: 0.84rem; color: var(--text-muted);">
-          Transparência científica: As classificações <strong>GRADE</strong> (certeza da evidência por desfecho) e <strong>AMSTAR 2</strong> (qualidade metodológica das metanálises/revisões sistemáticas de suporte) constituem avaliação preliminar auditável via DOI e encontram-se em homologação pelos Grupos de Trabalho da Rede NAPeN.
+          Transparência científica: As classificações <strong>GRADE</strong> (certeza da evidência aplicada exclusivamente por desfecho clínico) e <strong>AMSTAR 2</strong> (qualidade metodológica das metanálises/revisões sistemáticas de suporte) constituem avaliação preliminar auditável via DOI e encontram-se em homologação pelos Grupos de Trabalho da Rede NAPeN.
         </p>
+        <div class="pocket-legend-bar" id="pocketLegendBar">
+          <div class="pocket-legend-item">
+            <strong>Desfecho Clínico &amp; GRADE</strong>
+            <span>Sintoma-alvo ou domínio funcional clínico que direciona a escolha terapêutica, acompanhado da certeza <strong>GRADE</strong> avaliada exclusivamente para esse desfecho.</span>
+          </div>
+          <div class="pocket-legend-item">
+            <strong>Nível de Evidência (Guideline)</strong>
+            <span>Nível de evidência atribuído por diretrizes internacionais (ex.: IFCN — Lefaucheur et al., 2017/2020) ou por síntese da literatura quando não coberto por guideline, distinto do GRADE.</span>
+          </div>
+          <div class="pocket-legend-item">
+            <strong>Ensaio Clínico de Referência do Protocolo</strong>
+            <span>Estudo primário que define os parâmetros do protocolo sugerido como <strong>1ª linha</strong> no algoritmo clínico.</span>
+          </div>
+        </div>
       </div>
       <div class="pocket-table-container">
         <table class="pocket-table">
           <thead>
             <tr>
-              <th>Condição Clínica & Eixo</th>
-              <th>Foco / Indicação Clínica</th>
-              <th>Recomendação Internacional & GRADE</th>
-              <th>Ensaio Clínico de Referência</th>
+              <th>Condição Clínica &amp; Eixo</th>
+              <th>Desfecho Clínico &amp; GRADE</th>
+              <th>Nível de Evidência (Guideline)</th>
+              <th>Ensaio Clínico de Referência do Protocolo</th>
               <th>Metanálise de Suporte (AMSTAR 2)</th>
               <th>Prescrição no Algoritmo</th>
             </tr>
@@ -771,16 +790,16 @@
         </div>
 
         <div style="display: flex; flex-direction: column; gap: 14px;">
-          <h3 style="font-size: 1.15rem; color: var(--napen-navy); font-weight: 700;">1. Curadoria Baseada em Evidências e Consensos Internacionais</h3>
+          <h3 style="font-size: 1.15rem; color: var(--napen-navy); font-weight: 700;">1. Curadoria Baseada em Evidências e Nível de Evidência (Guidelines)</h3>
           <p style="font-size: 0.92rem; color: var(--text-muted); line-height: 1.6;">
-            A seleção dos protocolos apoia-se em revisões sistemáticas com metanálise da literatura internacional e nos consensos da <em>International Federation of Clinical Neurophysiology (IFCN)</em> (Lefaucheur et al.). As recomendações são categorizadas de acordo com o grau de comprovação científica (Nível A: Eficácia Estabelecida; Nível B: Eficácia Provável).
+            A seleção dos protocolos apoia-se em ensaios clínicos de referência específicos de cada protocolo, revisões sistemáticas com metanálise e nas diretrizes da <em>International Federation of Clinical Neurophysiology (IFCN)</em> (Lefaucheur et al., 2017/2020). Os guidelines são utilizados exclusivamente para atribuir o <strong>Nível de Evidência</strong> da intervenção naquela condição (Nível A: Eficácia Estabelecida; Nível B: Eficácia Provável; Nível C: Possivelmente Eficaz), sem se confundir com a avaliação GRADE por desfecho.
           </p>
         </div>
 
         <div style="display: flex; flex-direction: column; gap: 14px;">
           <h3 style="font-size: 1.15rem; color: var(--napen-navy); font-weight: 700;">2. Algoritmos Clínicos Estruturados e Transição Sequencial</h3>
           <p style="font-size: 0.92rem; color: var(--text-muted); line-height: 1.6;">
-            Cada protocolo clínico constitui uma árvore de decisão direcionada. A estratificação clínica inicial pelo <strong>Fator Limitante Principal (Sintoma-Alvo)</strong> define o protocolo de indução mais eficaz para o microdesfecho funcional. Diante de resposta insatisfatória na escala avaliada ou de intolerância ao regime vigente, o algoritmo estipula otimização de parâmetros, transição direta para o <strong>Protocolo Alternativo</strong> correspondente ou critérios formais de encerramento da sequência, salvaguardando as orientações de segurança e terapias adjuvantes recomendadas.
+            Cada protocolo clínico constitui uma árvore de decisão direcionada. A estratificação clínica inicial pelo <strong>Fator Limitante Principal (Sintoma-Alvo)</strong> define o protocolo de indução mais eficaz para o desfecho clínico prioritário. Diante de resposta insatisfatória na escala avaliada ou de intolerância ao regime vigente, o algoritmo estipula otimização de parâmetros, transição direta para o <strong>Protocolo Alternativo</strong> correspondente ou critérios formais de encerramento da sequência, salvaguardando as orientações de segurança e terapias adjuvantes recomendadas.
           </p>
         </div>
 
@@ -796,24 +815,24 @@
             SMD (d de Cohen) = (Média_Intervenção - Média_Controle) / Desvio_Padrão_Agrupado (SD_pooled)
           </div>
           <p style="font-size: 0.92rem; color: var(--text-muted); line-height: 1.6;">
-            Cada parâmetro vem acompanhado de seu respectivo <strong>Intervalo de Confiança de 95% (IC 95%)</strong>. Quando o intervalo não cruza o valor nulo (zero), comprova-se relevância e significância estatística. Esses tamanhos de efeito determinaram os limiares de <strong>Diferença Clinicamente Importante Mínima (MCID)</strong> adotados como metas terapêuticas de cada protocolo clínico, permitindo confrontar a resposta individual de cada paciente com o padrão ouro da literatura mundial.
+            Cada parâmetro vem acompanhado de seu respectivo <strong>Intervalo de Confiança de 95% (IC 95%)</strong>. Quando o intervalo não cruza o valor nulo (zero), comprova-se relevância e significância estatística. Esses tamanhos de efeito determinaram os limiares de <strong>Diferença Clinicamente Importante Mínima (MCID)</strong> adotados como metas terapêuticas de cada protocolo clínico, permitindo confrontar a resposta individual de cada paciente com o ensaio clínico de referência do protocolo.
           </p>
         </div>
 
         <!-- Seção 4: Avaliação Metodológica (AMSTAR 2) e Certeza da Evidência (GRADE) -->
         <div id="metodologia-grade-amstar" style="display: flex; flex-direction: column; gap: 14px; scroll-margin-top: 160px; border-top: 2px solid var(--napen-navy); padding-top: 24px;">
           <h3 style="font-size: 1.15rem; color: var(--napen-navy); font-weight: 700;">
-            4. Qualidade Metodológica (AMSTAR 2) e Certeza da Evidência (GRADE)
+            4. Qualidade Metodológica (AMSTAR 2) e Certeza da Evidência por Desfecho (GRADE)
           </h3>
           <p style="font-size: 0.92rem; color: var(--text-muted); line-height: 1.6;">
-            Para elevar a transparência metodológica além da indicação consensual (IFCN Níveis A e B), a plataforma incorpora dois referenciais internacionais complementares:
+            Para distinguir com precisão o Nível de Evidência de guidelines (IFCN Níveis A, B e C) da avaliação das revisões sistemáticas e da confiança clínica por desfecho, a plataforma utiliza dois referenciais internacionais complementares:
           </p>
           <div style="display: flex; flex-direction: column; gap: 10px; border-left: 3px solid var(--napen-teal-dark); padding-left: 16px;">
             <p style="font-size: 0.9rem; color: var(--text-main); line-height: 1.55;">
               <strong>AMSTAR 2 (Qualidade Metodológica de Revisões Sistemáticas e Metanálises):</strong> Instrumento de 16 itens (Shea et al., BMJ 2017) que avalia a rigidez metodológica especificamente das <em>metanálises de suporte</em> citadas em cada protocolo clínico (protocolo prévio registrado/PROSPERO, estratégia de busca abrangente, avaliação de risco de viés dos ensaios incluídos, análise de heterogeneidade e viés de publicação). Classifica a confiança na revisão em <strong>Alta</strong>, <strong>Moderada</strong>, <strong>Baixa</strong> ou <strong>Criticamente Baixa</strong>. Ensaios clínicos randomizados individuais são estudos primários e, por definição metodológica, não recebem escore AMSTAR 2 diretamente.
             </p>
             <p style="font-size: 0.9rem; color: var(--text-main); line-height: 1.55;">
-              <strong>Sistema GRADE (Certeza da Evidência e Força da Recomendação):</strong> Avalia a confiança no conjunto das evidências para cada desfecho clínico em quatro níveis — <strong>Alta (⊕⊕⊕⊕)</strong>, <strong>Moderada (⊕⊕⊕◯)</strong>, <strong>Baixa (⊕⊕◯◯)</strong> e <strong>Muito Baixa (⊕◯◯◯)</strong> — ponderando risco de viés, inconsistência entre ensaios, evidência indireta, imprecisão e viés de publicação, além de definir a força da recomendação clínica como <strong>Forte</strong> ou <strong>Condicional</strong>. Todas as classificações atualmente exibidas resultam de auditoria preliminar dos metadados e resumos oficiais via DOI e carregam a indicação explícita de <strong>Em homologação pelo GT NAPeN</strong>.
+              <strong>Sistema GRADE (Certeza da Evidência por Desfecho Clínico):</strong> Avalia a confiança no conjunto das evidências <em>exclusivamente para cada desfecho clínico</em> em quatro níveis — <strong>Alta (⊕⊕⊕⊕)</strong>, <strong>Moderada (⊕⊕⊕◯)</strong>, <strong>Baixa (⊕⊕◯◯)</strong> e <strong>Muito Baixa (⊕◯◯◯)</strong> — ponderando risco de viés, inconsistência entre ensaios, evidência indireta, imprecisão e viés de publicação, além de definir a força da recomendação clínica como <strong>Forte</strong> ou <strong>Condicional</strong>. O GRADE não é aplicado às diretrizes/guidelines (que fornecem apenas o Nível de Evidência). Todas as classificações atualmente exibidas resultam de auditoria preliminar dos metadados e resumos oficiais via DOI e carregam a indicação explícita de <strong>Em homologação pelo GT NAPeN</strong>.
             </p>
           </div>
         </div>
