@@ -213,6 +213,10 @@ class DecisionEngine {
     const chain = (m && Array.isArray(m.cadeia_sequencial)) ? m.cadeia_sequencial : [];
     return chain.map((step, idx) => ({
       ...step,
+      ordem: step.ordem || (idx + 1),
+      fase_etapa: idx === 0
+        ? 'inicial'
+        : ((step.fase_etapa === 'ajustes' || /ajustes/i.test(step.etapa_rotulo || '') || /ajustes/i.test(step.linha_fluxograma || '')) ? 'ajustes' : 'sequencia'),
       stageKey: idx === 0 ? 'primary' : `alt${idx}`
     }));
   }
@@ -277,14 +281,44 @@ class DecisionEngine {
     this.activeScaleId = scaleId;
   }
 
-  getActiveScale() {
+  getScalesForCurrentPath() {
     const m = this.getActiveModality();
-    if (!m || !m.escalas_detalhadas || m.escalas_detalhadas.length === 0) return null;
+    if (!m || !Array.isArray(m.escalas_detalhadas) || m.escalas_detalhadas.length === 0) return [];
+    const all = m.escalas_detalhadas;
+    const map = m.escalas_por_fator;
+    const rootChoice = this.pathChoices?.fator_limitante || this.getPathChoice('fator_limitante');
+    const factorIds = [rootChoice, this.primaryFactorId, this.activeFactorId].filter(Boolean);
+    if (map && typeof map === 'object') {
+      for (const fid of factorIds) {
+        const allowed = map[fid];
+        if (Array.isArray(allowed) && allowed.length > 0) {
+          const filtered = all.filter(s => allowed.includes(s.id));
+          if (filtered.length > 0) return filtered;
+        }
+      }
+    }
+    const pf = rootChoice || this.primaryFactorId || '';
+    if (pf === 'perda_sinergia') {
+      const fmaOnly = all.filter(s => s.id !== 'eam' && !/ashworth|\beam\b/i.test(s.nome || ''));
+      if (fmaOnly.length > 0) return fmaOnly;
+    } else if (pf === 'espasticidade') {
+      const eamOnly = all.filter(s => s.id === 'eam' || /ashworth|\beam\b/i.test(s.nome || ''));
+      if (eamOnly.length > 0) return eamOnly;
+    } else if (pf === 'dor') {
+      const dorOnly = all.filter(s => s.id === 'eva' || /\beva\b|\bvas\b|\bdor\b/i.test(s.nome || ''));
+      if (dorOnly.length > 0) return dorOnly;
+    }
+    return all;
+  }
+
+  getActiveScale() {
+    const allowedScales = this.getScalesForCurrentPath();
+    if (allowedScales.length === 0) return null;
     if (this.activeScaleId) {
-      const found = m.escalas_detalhadas.find(s => s.id === this.activeScaleId);
+      const found = allowedScales.find(s => s.id === this.activeScaleId);
       if (found) return found;
     }
-    return m.escalas_detalhadas[0];
+    return allowedScales[0];
   }
 
   setOutcome(outcomeType) {
@@ -420,7 +454,7 @@ class DecisionEngine {
       if (outcomeRecommended === 'success') {
         comparativeFeedback = `<strong>[Resposta Clínica Satisfatória Alcançada]</strong> A redução de ${Math.abs(deltaLevels)} nível(is) no tônus muscular atingiu a MCID da escala (redução ≥ 1 grau) em concordância com o ensaio clínico de referência do protocolo (${estudo}). <strong>Conduta Oficial NAPeN:</strong> Manter protocolo para consolidação motora e transição para manutenção periódica.`;
       } else {
-        comparativeFeedback = `<strong>[Resposta Clínica Insatisfatória (< MCID)]</strong> A variação de tônus permaneceu aquém da MCID da escala (redução ≥ 1 grau na EAM). <strong>Conduta Oficial NAPeN:</strong> Transição para o Protocolo Alternativo da árvore de decisão. Se persistir sem resposta após os protocolos alternativos, caracteriza-se Falha Terapêutica.`;
+        comparativeFeedback = `<strong>[Resposta Clínica Insatisfatória (< MCID)]</strong> A variação de tônus permaneceu aquém da MCID da escala (redução ≥ 1 grau na EAM). <strong>Conduta Oficial NAPeN:</strong> Avançar para o próximo protocolo da sequência clínica no Assistente de Resposta Pós-Indução. Se persistir sem resposta após os protocolos seguintes e ajustes, caracteriza-se Falha Terapêutica.`;
       }
 
       return {
@@ -475,17 +509,18 @@ class DecisionEngine {
 
     // Avaliação de MCID (Minimal Clinically Important Difference)
     const eff = m?.efeito_clinico || {};
-    const mcidVal = eff.mcid_valor || m?.mcid_valor || (scale?.id === 'fma-ue' || /fma/i.test(scale?.nome || '') ? 6.6 : 30.0);
-    const mcidLabel = eff.mcid_label || m?.mcid_label || `Meta clínica: ${meta}`;
+    const mcidVal = scale?.mcid_valor ?? eff.mcid_valor ?? m?.mcid_valor ?? ((scale?.id === 'fma_ue' || scale?.id === 'fma-ue' || /fma/i.test(scale?.nome || '')) ? 5.0 : 30.0);
+    const mcidLabel = scale?.mcid_label || eff.mcid_label || m?.mcid_label || `Meta clínica: ${meta}`;
+    const isPercentMcid = /%/.test(mcidLabel) || (!/ponto|pt|grau|seg|s\b|m\/s/i.test(mcidLabel) && (mcidVal === 30.0 || mcidVal === 50.0));
 
     let mcidMet = false;
     const changeMagnitude = Math.abs(delta);
     
     // Se a MCID for percentual (ex: 30%, 50%)
-    if (/30%/i.test(mcidLabel) || mcidVal === 30.0 || mcidVal === 50.0) {
+    if (isPercentMcid) {
       mcidMet = isImproved && percentChange >= mcidVal;
     } else {
-      // Se for em pontos absolutos (ex: 6.6 na FMA-UE, 5.0 na BBS, 1.5 na SARA)
+      // Se for em pontos absolutos (ex: 5.0 na FMA-UE ou BBS, 1.5 na SARA)
       mcidMet = isImproved && changeMagnitude >= mcidVal;
     }
 
@@ -494,7 +529,7 @@ class DecisionEngine {
     const icMax = eff.ic_max;
     let withinCI = false;
     if (icMin !== undefined && icMax !== undefined && icMin !== null && icMax !== null) {
-      const metricToCheck = (/30%/i.test(mcidLabel) || mcidVal === 30.0 || mcidVal === 50.0) ? percentChange : changeMagnitude;
+      const metricToCheck = isPercentMcid ? percentChange : changeMagnitude;
       withinCI = metricToCheck >= icMin && metricToCheck <= icMax;
     }
 
@@ -502,8 +537,8 @@ class DecisionEngine {
     if (!goalMet) {
       if (/30%/i.test(meta)) goalMet = isImproved && percentChange >= 30;
       else if (/50%/i.test(meta)) goalMet = isImproved && percentChange >= 50;
-      else if (/6[,.]6/i.test(meta)) goalMet = isImproved && changeMagnitude >= 6.6;
-      else if (isImproved && percentChange >= 25) goalMet = true;
+      else if (/5[,.]0/i.test(meta) && /fma|bbs/i.test(`${scale?.id || ''} ${scale?.nome || ''}`)) goalMet = isImproved && changeMagnitude >= 5.0;
+      else if (scale?.mcid_valor == null && eff.mcid_valor == null && isImproved && percentChange >= 25) goalMet = true;
     }
 
     const outcomeRecommended = goalMet ? 'success' : 'danger';
@@ -515,7 +550,7 @@ class DecisionEngine {
     if (outcomeRecommended === 'success') {
       comparativeFeedback = `<strong>[Resposta Clínica Satisfatória Alcançada]</strong> O ganho individual de <strong>${sign}${changeMagnitude.toFixed(1)} pontos (${percentFormatted})</strong> superou a MCID da escala (${mcidLabel}) e é compatível com o ensaio clínico de referência do protocolo (<em>${estudo}</em>: ${esperadoResumo}). <strong>Conduta Oficial NAPeN:</strong> Prosseguir para o protocolo de consolidação e manutenção periódica com redução gradual das sessões.`;
     } else {
-      comparativeFeedback = `<strong>[Resposta Clínica Insatisfatória (< MCID)]</strong> O ganho individual de <strong>${sign}${changeMagnitude.toFixed(1)} pontos (${percentFormatted})</strong> não atingiu o limiar mínimo de relevância clínica (${mcidLabel}). <strong>Conduta Oficial NAPeN:</strong> Transição para o Protocolo Alternativo da árvore de decisão. Caso persista sem melhora após os protocolos alternativos, caracteriza-se Falha Terapêutica formal.`;
+      comparativeFeedback = `<strong>[Resposta Clínica Insatisfatória (< MCID)]</strong> O ganho individual de <strong>${sign}${changeMagnitude.toFixed(1)} pontos (${percentFormatted})</strong> não atingiu o limiar mínimo de relevância clínica (${mcidLabel}). <strong>Conduta Oficial NAPeN:</strong> Avançar para o próximo protocolo da sequência clínica no Assistente de Resposta Pós-Indução. Caso persista sem melhora após os protocolos seguintes e ajustes, caracteriza-se Falha Terapêutica formal.`;
     }
 
     return {
@@ -549,8 +584,32 @@ class DecisionEngine {
   }
 
   setContinuingStage(stage) {
-    const valid = ['primary', 'evaluation', 'alt1', 'alt2', 'failure'];
-    this.continuingStage = valid.includes(stage) ? stage : 'evaluation';
+    const str = String(stage || '');
+    if (['primary', 'evaluation', 'failure'].includes(str) || /^alt\d+$/.test(str)) {
+      this.continuingStage = str;
+    } else {
+      this.continuingStage = 'evaluation';
+    }
+  }
+
+  getNextStageFrom(stage = this.continuingStage) {
+    const chain = this.getProtocolChain();
+    if (!chain || chain.length === 0 || stage === 'failure') {
+      return { nextStage: 'failure', nextStep: null, nextIndex: -1, isFailure: true };
+    }
+    const baseStage = stage === 'evaluation' ? 'primary' : (stage || 'primary');
+    const idx = chain.findIndex(s => s.stageKey === baseStage);
+    const currentIdx = idx >= 0 ? idx : 0;
+    const nextIdx = currentIdx + 1;
+    if (nextIdx < chain.length) {
+      return {
+        nextStage: chain[nextIdx].stageKey,
+        nextStep: chain[nextIdx],
+        nextIndex: nextIdx,
+        isFailure: false
+      };
+    }
+    return { nextStage: 'failure', nextStep: null, nextIndex: -1, isFailure: true };
   }
 
   setTolerabilityStatus(tol) {
@@ -614,52 +673,77 @@ class DecisionEngine {
     const tree = this.getActiveTree();
     if (!m || stage === 'adjustment') return null;
 
+    const AJUSTES_DOTTED_RATIONALE =
+      'Protocolos com borda pontilhada e opções da Seção de Ajustes indicam condutas cujo nível de evidência científica ainda não foi validado por metanálises (base científica exploratória respaldada em ensaios clínicos individuais).';
+
     if (stage && stage.startsWith('alt')) {
       const chain = this.getProtocolChain();
       const matched = chain.find(s => s.stageKey === stage);
       if (matched) {
+        const fase = matched.fase_etapa || 'sequencia';
+        const linha = matched.linha_fluxograma || 'solida';
+        const needsRationale = fase === 'ajustes' || linha === 'pontilhada';
+        const badge = fase === 'ajustes'
+          ? 'Seção de Ajustes — Opção Clínica'
+          : (linha === 'pontilhada'
+              ? 'Próximo Protocolo na Sequência (Linha Pontilhada)'
+              : 'Próximo Protocolo na Sequência');
         return {
           stage,
-          badge: matched.etapa_rotulo || `Protocolo Alternativo ${stage.replace('alt', '')}`,
-          titulo: matched.nome || matched.etapa_rotulo || `Alternativo ${stage.replace('alt', '')}`,
+          badge,
+          faseEtapa: fase,
+          ordem: matched.ordem,
+          titulo: matched.nome || matched.etapa_rotulo || 'Próximo Protocolo na Sequência',
           tecnica: matched.tecnica || '—',
           alvo: matched.alvo || '—',
           parametros: `${matched.parametros || '—'}${matched.sessoes ? ` · ${matched.sessoes}` : ''}`,
-          linhaFluxograma: matched.linha_fluxograma || 'solida',
+          sessoes: matched.sessoes || '',
+          linhaFluxograma: linha,
+          motivoAjuste: needsRationale ? AJUSTES_DOTTED_RATIONALE : '',
           efeitoEsperado: matched.efeito_esperado || '',
           referencia: matched.referencia || '',
-          observacoes: matched.observacoes || 'Transição sequencial prevista no fluxograma oficial da condição.',
-          referenciaPrimaria: `${m.tecnica || '1ª Linha'} (${m.alvo || '—'})`
+          observacoes: matched.observacoes || (fase === 'ajustes'
+            ? 'Opção prevista na Seção de Ajustes após ausência de resposta aos protocolos principais da sequência.'
+            : 'Próxima etapa prevista pelas setas do fluxograma diante de resposta clínica insatisfatória.'),
+          referenciaPrimaria: `${m.tecnica || 'Protocolo Inicial'} (${m.alvo || '—'})`
         };
       }
 
       if (stage === 'alt1') {
         const alt1 = m.protocolo_alternativo || {};
+        const fase1 = alt1.fase_etapa || 'sequencia';
+        const linha1 = alt1.linha_fluxograma || 'solida';
         return {
           stage: 'alt1',
-          badge: 'Protocolo Alternativo 1',
-          titulo: alt1.nome || 'Protocolo Alternativo 1',
+          badge: fase1 === 'ajustes' ? 'Seção de Ajustes — Opção Clínica' : 'Próximo Protocolo na Sequência',
+          faseEtapa: fase1,
+          titulo: alt1.nome || 'Próximo Protocolo na Sequência',
           tecnica: alt1.tecnica || '—',
           alvo: alt1.alvo || '—',
           parametros: alt1.parametros || '—',
-          linhaFluxograma: alt1.linha_fluxograma || 'solida',
-          observacoes: alt1.observacoes || 'Transição sequencial indicada diante de ausência de resposta ou intolerância à 1ª linha.',
-          referenciaPrimaria: `${m.tecnica || '1ª Linha'} (${m.alvo || '—'})`
+          linhaFluxograma: linha1,
+          motivoAjuste: (fase1 === 'ajustes' || linha1 === 'pontilhada') ? AJUSTES_DOTTED_RATIONALE : '',
+          observacoes: alt1.observacoes || 'Transição sequencial indicada diante de ausência de resposta ou intolerância.',
+          referenciaPrimaria: `${m.tecnica || 'Protocolo Inicial'} (${m.alvo || '—'})`
         };
       }
 
       if (stage === 'alt2') {
         const alt2 = (tree && tree.protocolo_alternativo_2) || m.protocolo_alternativo_2 || {};
+        const fase2 = alt2.fase_etapa || 'ajustes';
+        const linha2 = alt2.linha_fluxograma || 'solida';
         return {
           stage: 'alt2',
-          badge: 'Protocolo Alternativo 2',
-          titulo: alt2.nome || 'Protocolo Alternativo 2 Sequencial',
+          badge: 'Seção de Ajustes — Opção Clínica',
+          faseEtapa: fase2,
+          titulo: alt2.nome || 'Seção de Ajustes',
           tecnica: alt2.tecnica || '—',
           alvo: alt2.alvo || '—',
           parametros: alt2.parametros || '—',
-          linhaFluxograma: alt2.linha_fluxograma || 'solida',
-          observacoes: alt2.observacoes || 'Alternativa sequencial prévia à caracterização de falha terapêutica formal.',
-          referenciaPrimaria: `${m.tecnica || '1ª Linha'} (${m.alvo || '—'})`
+          linhaFluxograma: linha2,
+          motivoAjuste: (fase2 === 'ajustes' || linha2 === 'pontilhada') ? AJUSTES_DOTTED_RATIONALE : '',
+          observacoes: alt2.observacoes || 'Etapa de ajustes prévia à caracterização de falha terapêutica formal.',
+          referenciaPrimaria: `${m.tecnica || 'Protocolo Inicial'} (${m.alvo || '—'})`
         };
       }
     }
@@ -669,26 +753,30 @@ class DecisionEngine {
       return {
         stage: 'failure',
         badge: 'Falha Terapêutica Formal',
+        faseEtapa: 'falha',
         titulo: falha.titulo || 'Critérios e Condutas na Falha Terapêutica Formal (Rede NAPeN)',
-        criterio: falha.criterios_definicao || falha.criterio || 'Persistência de resposta clínica inferior à MCID após indução completa e conclusão da cadeia sequencial de protocolos.',
+        criterio: falha.criterios_definicao || falha.criterio || 'Persistência de resposta clínica inferior à MCID após indução completa e conclusão da sequência e ajustes.',
         condutas: Array.isArray(falha.condutas)
           ? falha.condutas
           : String(falha.conduta_oficial || '1. Encerramento formal do ciclo vigente;\n2. Investigação de fatores de resistência;\n3. Encaminhamento interdisciplinar.').split('\n'),
-        referenciaPrimaria: `${m.tecnica || '1ª Linha'} (${m.alvo || '—'})`
+        referenciaPrimaria: `${m.tecnica || 'Protocolo Inicial'} (${m.alvo || '—'})`
       };
     }
 
+    const primaryLinha = m.linha_fluxograma || 'solida';
     return {
       stage: 'primary',
-      badge: '1ª Linha de Prescrição',
-      titulo: m.tecnica || 'Prescrição Terapêutica Primária',
+      badge: 'Protocolo Inicial Indicado',
+      faseEtapa: 'inicial',
+      titulo: m.tecnica || 'Prescrição Terapêutica Inicial',
       tecnica: m.tecnica,
       alvo: m.alvo,
       frequencia: m.frequencia,
       intensidade: m.intensidade,
       pulsos_duracao: m.pulsos_duracao,
       sessoes: m.sessoes,
-      linhaFluxograma: m.linha_fluxograma || 'solida'
+      linhaFluxograma: primaryLinha,
+      motivoAjuste: primaryLinha === 'pontilhada' ? AJUSTES_DOTTED_RATIONALE : ''
     };
   }
 
@@ -701,17 +789,15 @@ class DecisionEngine {
     const tol = tolerabilityStatus || this.tolerabilityStatus || 'boa';
     const guidance = this.getTolerabilityGuidance();
     const hasScores = Boolean(deltaResult && deltaResult.isSuccess);
+    const activeMod = this.getActiveModality();
     const reevalObs = this.getContextualObservations({ slot: 'reeval' });
-    const reevalRuleText = reevalObs.length > 0 ? reevalObs[0].texto : '';
+    const reevalRuleText = reevalObs.length > 0
+      ? reevalObs[0].texto
+      : (activeMod?.sessoes_ajuste?.quando_reavaliar || '');
 
-    const chain = this.getProtocolChain();
-    const currentIdx = chain.findIndex((s) => (s.stageKey || 'primary') === this.continuingStage);
-    const nextStep = (currentIdx >= 0 && currentIdx + 1 < chain.length)
-      ? chain[currentIdx + 1]
-      : (chain.length > 1 && this.continuingStage !== 'failure' ? chain[1] : null);
-    const nextProtocolStage = nextStep ? nextStep.stageKey : 'failure';
+    const { nextStage: nextProtocolStage, nextStep, isFailure } = this.getNextStageFrom(this.continuingStage);
     const nextProtocolLabel = nextStep
-      ? (nextStep.nome || nextStep.etapa_rotulo || 'Próximo Protocolo')
+      ? (nextStep.nome || nextStep.etapa_rotulo || 'Próximo Protocolo na Sequência')
       : 'Falha Terapêutica Formal';
 
     // 1. Evento adverso grave ou contraindicação superveniente sobrepõe qualquer pontuação
@@ -746,9 +832,8 @@ class DecisionEngine {
 
     // 2. Avaliação com escores numéricos preenchidos
     if (hasScores) {
-      const m = this.getActiveModality();
-      const eff = m?.efeito_clinico || {};
-      const estudo = eff.estudo_referencia || m?.ensaio_clinico?.autores || 'o ensaio clínico de referência do protocolo';
+      const eff = activeMod?.efeito_clinico || {};
+      const estudo = eff.estudo_referencia || activeMod?.ensaio_clinico?.autores || 'o ensaio clínico de referência do protocolo';
       const scoreSummary = deltaResult.isOrdinal
         ? `${Math.abs(deltaResult.delta)} nível(is) na EAM`
         : `${deltaResult.delta >= 0 ? '+' : ''}${deltaResult.delta.toFixed(1)} pts (${deltaResult.percentFormatted})`;
@@ -761,7 +846,7 @@ class DecisionEngine {
         return {
           recommendationType: 'success',
           outcomeButton: 'success',
-          recommendedStage: 'primary',
+          recommendedStage: this.continuingStage === 'evaluation' ? 'primary' : this.continuingStage,
           needsAdverseReport: tol === 'leve',
           adverseBankUrl: guidance.adverseBankUrl,
           badgeLabel: tol === 'leve'
@@ -791,7 +876,9 @@ class DecisionEngine {
         : `A variação obtida (<strong>${scoreSummary}</strong>) não atingiu a meta clínica esperada (${deltaResult.mcidLabel}).`;
       const tolReason = tol === 'intolerante'
         ? ' Com intolerância moderada associada, não manter carga atual — priorizar transição direta ao próximo protocolo.'
-        : ` Caso persista resposta insatisfatória ao concluir toda a cadeia sequencial, caracteriza-se Falha Terapêutica formal.`;
+        : (isFailure
+            ? ' Todas as etapas da cadeia e seção de ajustes foram percorridas — caracteriza-se Falha Terapêutica formal.'
+            : ' Caso persista resposta insatisfatória ao concluir toda a cadeia e os ajustes, caracteriza-se Falha Terapêutica formal.');
       const ruleContext = roadmapSpecificReason || (reevalRuleText ? ` Regra clínica: ${reevalRuleText}` : '');
       return {
         recommendationType: 'danger',

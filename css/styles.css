@@ -1754,6 +1754,76 @@ body {
   gap: 8px;
 }
 
+.assistant-sequence-trail {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 10px 12px;
+  background-color: #F8FAFC;
+  border-left: 3px solid var(--napen-teal-dark);
+  border-radius: var(--radius-sm);
+}
+
+.seq-trail-chip {
+  background-color: #FFFFFF;
+  border: 1px solid var(--border-medium);
+  color: var(--text-muted);
+  padding: 5px 10px;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-family-nav);
+  font-size: 0.74rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.seq-trail-chip:hover {
+  border-color: var(--napen-teal-dark);
+  color: var(--napen-navy);
+}
+
+.seq-trail-chip.completed {
+  background-color: #F1F5F9;
+  color: var(--text-faint);
+  text-decoration: line-through;
+}
+
+.seq-trail-chip.active {
+  background-color: var(--napen-navy);
+  border-color: var(--napen-navy);
+  color: #FFFFFF;
+  text-decoration: none;
+}
+
+.seq-trail-chip.dotted {
+  border-style: dashed;
+}
+
+.seq-trail-chip.ajustes {
+  border-color: #D97706;
+}
+
+.seq-trail-chip.ajustes.active {
+  background-color: #B45309;
+  border-color: #B45309;
+}
+
+.seq-trail-chip.failure {
+  border-color: #DC2626;
+}
+
+.seq-trail-chip.failure.active {
+  background-color: #991B1B;
+  border-color: #991B1B;
+}
+
+.seq-trail-arrow {
+  color: #B91C1C;
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+
 .outcome-buttons-row {
   display: flex;
   gap: 12px;
@@ -1843,6 +1913,32 @@ body {
   display: flex;
   flex-direction: column;
   gap: 8px;
+}
+
+.alternative-protocol-box.is-ajustes {
+  border-color: #D97706;
+}
+
+.alternative-protocol-box.is-dotted {
+  border: 1.5px dashed #B45309;
+  background-color: #FFFDF7;
+}
+
+.alternative-protocol-box.is-ajustes .alt-title-line,
+.alternative-protocol-box.is-dotted .alt-title-line {
+  color: #92400E;
+}
+
+.ajustes-evidence-rationale {
+  margin-top: 4px;
+  background-color: #FFFBEB;
+  border: 1px dashed #D97706;
+  border-left: 3px solid #B45309;
+  border-radius: var(--radius-sm);
+  padding: 9px 12px;
+  font-size: 0.81rem;
+  line-height: 1.5;
+  color: #78350F;
 }
 
 .alt-title-line {
@@ -3619,6 +3715,11 @@ body {
 
 .param-box-obs {
   margin-top: 6px;
+}
+
+.param-box-obs:empty {
+  display: none !important;
+  margin-top: 0;
 }
 
 .step-inline-obs-slot {

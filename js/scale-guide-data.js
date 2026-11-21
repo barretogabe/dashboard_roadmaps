@@ -1354,7 +1354,7 @@ window.NAPEN_SCALE_GUIDE = {
       }
     ],
     "interpretacao_clinica": "Essencial na dor neuropática para detectar melhora em alodinia, hiperalgesia ou hiperpatia quando a intensidade bruta da dor pouco oscila.",
-    "mcid": "Redução de ~30% no escore total (Protocolo 3 rPMS/alodinia: -32% após 3 sessões).",
+    "mcid": "Redução ≥ 20% a 32% no escore total após sessões seriadas.",
     "referencia_abnt": "Bouhassira, D., et al. (2004). Development and validation of the Neuropathic Pain Symptom Inventory. Pain, 108(3), 248-257.",
     "doi": "10.1016/j.pain.2003.12.024",
     "link_artigo": "https://doi.org/10.1016/j.pain.2003.12.024",
@@ -1607,8 +1607,8 @@ window.NAPEN_SCALE_GUIDE = {
         "descricao": "Remissão clínica."
       }
     ],
-    "interpretacao_clinica": "Protocolo 1 Convencional para Depressão espera redução média de 55% (DP 16,4%) na HDRS-21.",
-    "mcid": "Redução ≥ 50% do escore basal (Protocolo 1: 55%).",
+    "interpretacao_clinica": "Em depressão resistente, espera-se redução média de 55% (DP 16,4%) na HDRS-21 com HF-rTMS 10 Hz em F3.",
+    "mcid": "Redução ≥ 50% do escore basal.",
     "referencia_abnt": "Hamilton, M. (1960). A rating scale for depression. J Neurol Neurosurg Psychiatry, 23(1), 56-62.",
     "doi": "10.1136/jnnp.23.1.56",
     "link_artigo": "https://doi.org/10.1136/jnnp.23.1.56",
@@ -1645,8 +1645,8 @@ window.NAPEN_SCALE_GUIDE = {
         "descricao": "Remissão sintomática."
       }
     ],
-    "interpretacao_clinica": "Protocolo SNT Acelerado espera redução média de 52,5% na MADRS.",
-    "mcid": "Redução ≥ 50% (Protocolo SNT Acelerado: 52,5%).",
+    "interpretacao_clinica": "O regime acelerado SNT (Stanford) espera redução média de 52,5% na MADRS.",
+    "mcid": "Redução ≥ 50% do escore basal.",
     "referencia_abnt": "Montgomery, S. A., & Asberg, M. (1979). A new depression scale designed to be sensitive to change. Br J Psychiatry, 134, 382-389.",
     "doi": "10.1002/mpr.1388",
     "link_artigo": "https://doi.org/10.1002/mpr.1388",
@@ -1815,7 +1815,7 @@ window.NAPEN_SCALE_GUIDE = {
         "descricao": "Provável depressão maior associada à demência."
       }
     ],
-    "interpretacao_clinica": "Protocolo 2 Temporoparietal de tDCS obteve melhora média de 43,3% na Escala de Cornell após 10 sessões.",
+    "interpretacao_clinica": "A estimulação temporoparietal bilateral de tDCS obteve melhora média de 43,3% na Escala de Cornell após 10 sessões.",
     "mcid": "Redução ≥ 30% a 43% no escore total.",
     "referencia_abnt": "Alexopoulos, G. S., et al. (1988). Cornell Scale for Depression in Dementia. Biol Psychiatry, 23(3), 271-284.",
     "doi": "10.1016/0006-3223(88)90038-8",
@@ -1954,7 +1954,7 @@ window.NAPEN_SCALE_GUIDE = {
     "criterios_pontuacao": [
       {
         "grau": "Percentil / Escore Padrão",
-        "descricao": "Quantifica melhora em manipulação fina; Protocolo 1 rTMS relata +49,7%."
+        "descricao": "Quantifica melhora em manipulação fina (séries clínicas de rTMS sequencial relatam +49,7%)."
       }
     ],
     "interpretacao_clinica": "Escala de referência nas Habilidades Manipulativas da Paralisia Cerebral.",
@@ -1991,7 +1991,7 @@ window.NAPEN_SCALE_GUIDE = {
         "descricao": "Quanto maior o percentual, melhor a qualidade dissociada do membro superior."
       }
     ],
-    "interpretacao_clinica": "Protocolo 3 rTMS Priming (Gupta et al., 2023) apresentou melhora de 11,7% no escore QUEST após 10 sessões.",
+    "interpretacao_clinica": "rTMS Priming 6 Hz + 1 Hz contralesional (Gupta et al., 2023) apresentou melhora de 11,7% no escore QUEST após 10 sessões.",
     "mcid": "Ganho ≥ 4,9 a 11,7 pontos percentuais.",
     "referencia_abnt": "DeMatteo, C., et al. (1993). The reliability and validity of the Quality of Upper Extremity Skills Test. Phys Occup Ther Pediatr, 13(2), 1-18.",
     "doi": "10.1080/J006v13n02_01",
@@ -2025,7 +2025,7 @@ window.NAPEN_SCALE_GUIDE = {
         "descricao": "Maior número de blocos transferidos indica maior destreza manual."
       }
     ],
-    "interpretacao_clinica": "Protocolo 2 tDCS na hemiparesia pediátrica relata aumento de 14,1% na pontuação do BBT após 5 sessões.",
+    "interpretacao_clinica": "tDCS anódica C3/C4 na hemiparesia pediátrica relata aumento de 14,1% na pontuação do BBT após 5 sessões.",
     "mcid": "Aumento ≥ 5,5 blocos/minuto (~14% em pediatria).",
     "referencia_abnt": "Mathiowetz, V., et al. (1985). Adult norms for the Box and Block Test of manual dexterity. Am J Occup Ther, 39(6), 386-391.",
     "doi": "10.5014/ajot.39.6.386",
@@ -2059,7 +2059,7 @@ window.NAPEN_SCALE_GUIDE = {
         "descricao": "Maior pontuação indica melhor controle postural funcional."
       }
     ],
-    "interpretacao_clinica": "Em Habilidades Estabilizadoras na Diparesia Espástica (Protocolo 1), tDCS gerou +11,9% na PBS após 10 sessões.",
+    "interpretacao_clinica": "Em Habilidades Estabilizadoras na Diparesia Espástica, tDCS C3/C4 gerou +11,9% na PBS após 10 sessões.",
     "mcid": "Aumento ≥ 3,6 pontos (~10%–12% em pediatria).",
     "referencia_abnt": "Franjoine, M. R., et al. (2003). Pediatric Balance Scale: a modified version of the Berg Balance Scale for the school-age child with mild to moderate motor impairment. Pediatr Phys Ther, 15(2), 114-128.",
     "doi": "10.1097/01.PEP.0000068117.48023.18",
@@ -2093,7 +2093,7 @@ window.NAPEN_SCALE_GUIDE = {
         "descricao": "Redução do escore total ou da subescala Compulsive indica melhora clínica."
       }
     ],
-    "interpretacao_clinica": "Protocolos 1 e 2 de rTMS no TEA obtiveram ~35% de redução na RBS-R; HD-tDCS CP5/CP6 reduziu 21,9% em Compulsive Behavior.",
+    "interpretacao_clinica": "LF-rTMS 1 Hz pré-frontal no TEA obteve ~35% de redução na RBS-R; HD-tDCS CP5/CP6 reduziu 21,9% em Compulsive Behavior.",
     "mcid": "Redução ≥ 20% a 35% na RBS-R.",
     "referencia_abnt": "Bodfish, J. W., et al. (2000). Varieties of repetitive behavior in autism: comparisons to mental retardation. J Autism Dev Disord, 30(3), 237-243.",
     "doi": "10.1023/A:1005596502855",
@@ -2127,7 +2127,7 @@ window.NAPEN_SCALE_GUIDE = {
         "descricao": "Pontuações menores indicam menor gravidade sintomática e melhor adaptação."
       }
     ],
-    "interpretacao_clinica": "Protocolo 1 tDCS social reduziu 12,5% no total ATEC e Protocolo 4 reduziu 23,5% em Sociabilidade.",
+    "interpretacao_clinica": "tDCS anódica F3 + deltoide D reduziu 12,5% no total ATEC e tDCS bilateral FC1/FC2 reduziu 23,5% em Sociabilidade.",
     "mcid": "Redução ≥ 12% a 23% no total ou domínio-alvo da ATEC.",
     "referencia_abnt": "Rimland, B., & Edelson, S. M. (1999). Autism Treatment Evaluation Checklist (ATEC). Autism Research Institute.",
     "doi": "10.3390/children5020025",
@@ -2161,7 +2161,7 @@ window.NAPEN_SCALE_GUIDE = {
         "descricao": "Maior escore indica maior gravidade atáxica."
       }
     ],
-    "interpretacao_clinica": "Protocolo 1 csDCS (Benussi et al., 2021) reduziu ICARS de 46,9 para 33,7 (-13,2 pts / ~28%).",
+    "interpretacao_clinica": "csDCS cerebelo-espinal (Benussi et al., 2021) reduziu ICARS de 46,9 para 33,7 (-13,2 pts / ~28%).",
     "mcid": "Redução ≥ 3,5 a 5 pontos na ICARS.",
     "referencia_abnt": "Trouillas, P., et al. (1997). International Cooperative Ataxia Rating Scale for pharmacological assessment of the cerebellar syndrome. J Neurol Sci, 145(2), 205-211.",
     "doi": "10.1016/s0022-510x(96)00231-6",
@@ -2195,7 +2195,7 @@ window.NAPEN_SCALE_GUIDE = {
         "descricao": "Quanto menor o escore após 10 sessões, maior redução do congelamento."
       }
     ],
-    "interpretacao_clinica": "Reduções esperadas na FOGQ/NFOG-Q: 9,24% (P5 AMS), 15,59%–21,32% (P6 M1 contralateral ao dimídio mais comprometido) e 23,02% (P7 M1+tsMS).",
+    "interpretacao_clinica": "Reduções esperadas na FOGQ/NFOG-Q: 9,24% (AMS, Mi et al., 2019), 15,59%–21,32% (M1 contralateral ao dimídio mais comprometido, Song et al., 2024) e 23,02% (M1+tsMS T10-T12, Wang et al., 2024).",
     "mcid": "Redução ≥ 15% a 23% no escore total.",
     "referencia_abnt": "Nieuwboer, A., et al. (2009). Reliability of the new freezing of gait questionnaire: agreement between patients with Parkinson's disease and their carers. Gait & Posture, 30(4), 459-463.",
     "doi": "10.1016/j.gaitpost.2009.07.108",

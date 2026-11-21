@@ -206,7 +206,7 @@
               </button>
               <button type="button" class="btn-cascade-choice" id="btnHomeEntryReturning">
                 <span>Sim — Já realizou protocolo</span>
-                <span class="btn-cascade-sub">Ir direto para Avaliação, Alternativo ou Falha</span>
+                <span class="btn-cascade-sub">Ir direto para Avaliação ou Próximo Protocolo (Assistente Pós-Indução)</span>
               </button>
             </div>
           </div>
@@ -226,18 +226,22 @@
                 <label class="continuity-inline-label" for="homeContProtocol">Protocolo / Desfecho Prévio</label>
                 <select id="homeContProtocol" class="continuity-inline-select home-continuity-select"></select>
               </div>
+              <div class="home-continuity-field home-continuity-field-wide" id="homeContStoppedWrap">
+                <label class="continuity-inline-label" for="homeContStoppedProtocol">Em qual protocolo o paciente parou?</label>
+                <select id="homeContStoppedProtocol" class="continuity-inline-select home-continuity-select"></select>
+              </div>
             </div>
 
             <div class="home-continuity-stage-row">
-              <span class="continuity-inline-label">Conduta após o protocolo selecionado:</span>
+              <span class="continuity-inline-label">Conduta após o protocolo em que parou:</span>
               <div class="continuity-stage-shortcuts" id="homeContStageShortcuts">
+                <button type="button" class="btn-stage-shortcut stage-danger" data-home-stage="alt1">Resposta Insatisfatória ➔ Próximo Protocolo</button>
                 <button type="button" class="btn-stage-shortcut" data-home-stage="evaluation">Avaliar Resposta do Protocolo (Calculadora)</button>
-                <button type="button" class="btn-stage-shortcut stage-danger" data-home-stage="alt1">Não Respondeu ao Protocolo ➔ Próximo Passo</button>
               </div>
             </div>
 
             <p class="home-continuity-hint">
-              Modo continuidade ativo: você também pode escolher a condição pela barra de busca acima ou pelo menu <strong>PRESCRIÇÃO INTERATIVA</strong> que ela abrirá já sem a triagem inicial.
+              Ao escolher em qual protocolo o paciente parou e indicar resposta insatisfatória, o sistema abre diretamente a aba <strong>Assistente de Resposta Clínica (Pós-Indução)</strong> já posicionada no protocolo seguinte.
             </p>
           </div>
         </section>
@@ -281,7 +285,7 @@
           <span class="step-divider">➔</span>
           <div class="step-node" id="stepNode4">
             <span class="step-num">4</span>
-            <span>Reavaliação & Protocolo Alternativo</span>
+            <span>Assistente de Resposta (Pós-Indução)</span>
           </div>
         </div>
 
@@ -435,11 +439,11 @@
                 <span class="monitoring-text" id="monitoringReeval">—</span>
               </div>
               <div class="monitoring-item">
-                <span class="monitoring-label">Critério Individual de Resposta Insatisfatória</span>
-                <span class="monitoring-text" id="monitoringDoseAdjust">—</span>
+                <span class="monitoring-label">Manutenção e Platô Funcional</span>
+                <span class="monitoring-text" id="monitoringCriterion">—</span>
               </div>
               <div class="monitoring-item">
-                <span class="monitoring-label">Critério de Interrupção & Falha</span>
+                <span class="monitoring-label">Esgotamento e Falha Terapêutica</span>
                 <span class="monitoring-text" id="monitoringStopRule">—</span>
               </div>
             </div>
@@ -634,7 +638,7 @@
               <span class="assistant-title">
                 Assistente de Resposta Clínica (Pós-Indução)
               </span>
-              <span style="font-size: 0.8rem; color: var(--text-faint);">Desfecho integrado (pontuação + tolerabilidade) e transição no algoritmo:</span>
+              <span style="font-size: 0.8rem; color: var(--text-faint);">Progressão passo a passo após resposta insatisfatória: sequência indicada ➔ seção de ajustes ➔ falha terapêutica</span>
             </div>
 
             <div class="outcome-buttons-row">
@@ -647,6 +651,9 @@
                 <span>Resposta Insatisfatória (Avançar Sequência)</span>
               </button>
             </div>
+
+            <!-- Trilha Visual da Sequência Clínica -->
+            <div class="assistant-sequence-trail" id="assistantSequenceTrail" style="display: none;"></div>
 
             <!-- Painel Dinâmico da Ramificação do Algoritmo -->
             <div class="branch-result-panel" id="branchResultPanel"></div>
@@ -799,7 +806,7 @@
         <div style="display: flex; flex-direction: column; gap: 14px;">
           <h3 style="font-size: 1.15rem; color: var(--napen-navy); font-weight: 700;">2. Algoritmos Clínicos Estruturados e Transição Sequencial</h3>
           <p style="font-size: 0.92rem; color: var(--text-muted); line-height: 1.6;">
-            Cada protocolo clínico constitui uma árvore de decisão direcionada. A estratificação clínica inicial pelo <strong>Fator Limitante Principal (Sintoma-Alvo)</strong> define o protocolo de indução mais eficaz para o desfecho clínico prioritário. Diante de resposta insatisfatória na escala avaliada ou de intolerância ao regime vigente, o algoritmo estipula otimização de parâmetros, transição direta para o <strong>Protocolo Alternativo</strong> correspondente ou critérios formais de encerramento da sequência, salvaguardando as orientações de segurança e terapias adjuvantes recomendadas.
+            Cada protocolo clínico constitui uma árvore de decisão direcionada. A estratificação clínica inicial pelo <strong>Desfecho Clínico / Fator Limitante Principal</strong> define o protocolo inicial mais eficaz após a definição do alvo de aplicação. Diante de resposta insatisfatória na escala avaliada ou de intolerância ao regime vigente, o algoritmo conduz o clínico no <strong>Assistente de Resposta Clínica (Pós-Indução)</strong> pela sequência de protocolos seguintes até a <strong>Seção de Ajustes</strong> e os critérios formais de falha terapêutica, salvaguardando as orientações de segurança e terapias adjuvantes recomendadas.
           </p>
         </div>
 

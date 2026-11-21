@@ -329,21 +329,23 @@ class TestRedeNAPeNPrescriptionPlatform(unittest.TestCase):
         with open(json_file, 'r', encoding='utf-8') as f:
             data = json.load(f)
 
-        # Verifica Ataxias (ataxia-cerebelar, equilíbrio): SARA e BBS devem ter tamanhos de efeito distintos e isolados
+        # Verifica Ataxias (ataxia-cerebelar): equilíbrio isola apenas BBS; severidade_motora mantém SARA e ICARS com efeitos isolados
         atax = next(c for c in data['condicoes'] if c['id'] == 'ataxia-cerebelar')
-        f_eq = atax['modalidades']['equilibrio']
-        scales_atax = f_eq.get('escalas_detalhadas', [])
-        self.assertEqual(len(scales_atax), 2)
-        sara = next(s for s in scales_atax if s['id'] == 'sara')
-        bbs = next(s for s in scales_atax if s['id'] == 'bbs')
-
-        self.assertIn('9,1%', sara['meta_texto'])
-        self.assertNotIn('11,77%', sara['meta_texto'])
-        self.assertIsInstance(sara['tamanho_efeito'], (int, float))
-
+        scales_eq = atax['modalidades']['equilibrio'].get('escalas_detalhadas', [])
+        self.assertEqual([s['id'] for s in scales_eq], ['bbs'])
+        bbs = scales_eq[0]
         self.assertIn('11,77%', bbs['meta_texto'])
         self.assertNotIn('14,8%', bbs['meta_texto'])
         self.assertIsInstance(bbs['tamanho_efeito'], (int, float))
+
+        scales_sev = atax['modalidades']['severidade_motora'].get('escalas_detalhadas', [])
+        self.assertEqual(len(scales_sev), 2)
+        sara = next(s for s in scales_sev if s['id'] == 'sara')
+        icars = next(s for s in scales_sev if s['id'] == 'icars')
+        self.assertIn('9,1%', sara['meta_texto'])
+        self.assertNotIn('11,77%', sara['meta_texto'])
+        self.assertIsInstance(sara['tamanho_efeito'], (int, float))
+        self.assertIsInstance(icars['tamanho_efeito'], (int, float))
 
         # Verifica integridade no app.js: sincronização dinâmica de tamanho de efeito e meta
         app_js = os.path.join(BASE_DIR, 'js', 'app.js')
@@ -514,13 +516,14 @@ class TestRedeNAPeNPrescriptionPlatform(unittest.TestCase):
         self.assertIn('id="prescEscala"', html)
         self.assertIn('id="prescMeta"', html)
 
-        # 4. Verificação no JSON da modalidade sem_pem (Protocolo 4 do RM01)
+        # 4. Verificação no JSON da modalidade sem_pem (sem numeração artificial Protocolo 4)
         with open(json_file, 'r', encoding='utf-8') as f:
             data = json.load(f)
         avc = next(c for c in data['condicoes'] if c['id'] == 'avc-membro-superior')
         self.assertIn('sem_pem', avc['modalidades'])
         sem_pem_mod = avc['modalidades']['sem_pem']
-        self.assertIn('Protocolo 4', sem_pem_mod['tecnica'])
+        self.assertNotIn('Protocolo 4', sem_pem_mod['tecnica'])
+        self.assertIn('Wang', sem_pem_mod['tecnica'])
         self.assertEqual(sem_pem_mod['mcid_valor'], 3.7)
 
         # 5. CSS dos componentes
@@ -815,7 +818,8 @@ class TestRedeNAPeNPrescriptionPlatform(unittest.TestCase):
         self.assertIn('id="tolGuideTolerance"', html)
         self.assertIn('id="tolGuideDose"', html)
         self.assertIn('id="tolGuideCalibration"', html)
-        self.assertIn('Critério Individual de Resposta Insatisfatória', html)
+        self.assertIn('Manutenção e Platô Funcional', html)
+        self.assertIn('id="monitoringCriterion"', html)
         self.assertIn('evaluateClinicalResponse', engine_js)
         self.assertIn('https://www.neuromodulation-net.com/banco-efeitos-adversos-napen', engine_js)
 
@@ -850,7 +854,7 @@ class TestRedeNAPeNPrescriptionPlatform(unittest.TestCase):
             }
 
             // 3. Evento adverso grave sobrepõe MCID atingida
-            var deltaOk = { isSuccess: true, mcidMet: true, isImproved: true, delta: 8, percentFormatted: '+40%', mcidLabel: '>= 6,6' };
+            var deltaOk = { isSuccess: true, mcidMet: true, isImproved: true, delta: 8, percentFormatted: '+40%', mcidLabel: '+5,0 pontos na FMA-UE' };
             var rGrave = eng.evaluateClinicalResponse(deltaOk, 'grave');
             if (rGrave.recommendationType !== 'adverse_halt' || rGrave.recommendedStage !== 'failure' || !rGrave.needsAdverseReport) {
               throw new Error('Evento grave não sobrepôs sucesso numérico: ' + JSON.stringify(rGrave));
@@ -863,7 +867,7 @@ class TestRedeNAPeNPrescriptionPlatform(unittest.TestCase):
             }
 
             // 5. Melhora parcial (< MCID) + boa tolerabilidade avança diretamente ao próximo protocolo (alt1, depois alt2)
-            var deltaPartial = { isSuccess: true, mcidMet: false, isImproved: true, delta: 3, percentFormatted: '+15%', mcidLabel: '>= 6,6' };
+            var deltaPartial = { isSuccess: true, mcidMet: false, isImproved: true, delta: 3, percentFormatted: '+15%', mcidLabel: '+5,0 pontos na FMA-UE' };
             var rPartial = eng.evaluateClinicalResponse(deltaPartial, 'boa');
             if (rPartial.recommendationType !== 'danger' || rPartial.recommendedStage !== 'alt1') {
               throw new Error('Melhora parcial (< MCID) não avançou diretamente para alt1: ' + JSON.stringify(rPartial));
@@ -941,10 +945,10 @@ class TestRedeNAPeNPrescriptionPlatform(unittest.TestCase):
                 self.assertIn('tolerabilidade_roadmap', m)
                 self.assertIn('titulo', m.get('meta_analise', {}))
 
-        self.assertEqual(total_mods, 78)
+        self.assertEqual(total_mods, 73)
 
     def test_20_full_18_roadmaps_trees_and_contextual_observations(self):
-        """Valida integralmente as 13 condições (18 roadmaps / 77 protocolos), 10 slots cirúrgicos, 52 escalas e execução real em JavaScriptCore."""
+        """Valida integralmente as 13 condições (18 roadmaps / 73 protocolos), 8 slots cirúrgicos ativos pós-deduplicação, 52 escalas e execução real em JavaScriptCore."""
         json_path = os.path.join(BASE_DIR, 'data', 'napen_roadmaps_data.json')
         scale_path = os.path.join(BASE_DIR, 'data', 'escalas_guia_clinico.json')
         html_path = os.path.join(BASE_DIR, 'index.html')
@@ -964,7 +968,7 @@ class TestRedeNAPeNPrescriptionPlatform(unittest.TestCase):
         with open(engine_path, 'r', encoding='utf-8') as f:
             engine_js = f.read()
 
-        # 1. Cobertura completa das 13 condições e dos 10 slots contextuais
+        # 1. Cobertura completa das 13 condições e dos 8 slots contextuais pós-deduplicação
         self.assertEqual(len(data['condicoes']), 13)
         all_slots = set()
         for c in data['condicoes']:
@@ -977,7 +981,7 @@ class TestRedeNAPeNPrescriptionPlatform(unittest.TestCase):
             for obs in c.get('observacoes_contextuais', []):
                 all_slots.add(obs['slot'])
 
-        expected_slots = {'pre', 'step', 'tec', 'alvo', 'intensidade', 'sessoes', 'scale', 'reeval', 'tol', 'stage'}
+        expected_slots = {'pre', 'step', 'tec', 'alvo', 'sessoes', 'scale', 'tol', 'stage'}
         self.assertEqual(all_slots, expected_slots)
 
         # 2. Slots cirúrgicos e DOI oficial do guia PEM no HTML e app.js
@@ -1195,12 +1199,13 @@ print('JSC_SUITE_OK');
         for expected in ['Perda de sinergia', 'Espasticidade', 'Fraqueza muscular', 'Disfunção motora', 'Disfunção sensorial', 'Heminegligência']:
             self.assertIn(expected, factor_names)
 
-        # 2. PC Distonia = 2 sessões e TEA Comunicação Protocolo 2 tDCS Bifrontal (Zemestani)
+        # 2. PC Distonia = 2 sessões e TEA Comunicação = protocolo único (Aydin & Yildirim, 2025)
         pc = next(c for c in data['condicoes'] if c['id'] == 'paralisia-cerebral')
         self.assertIn('2 sessões', pc['modalidades']['pc_distonia']['sessoes'])
         tea = next(c for c in data['condicoes'] if c['id'] == 'transtorno-espectro-autista')
-        tea_alt = tea['modalidades']['tea_comunicacao'].get('protocolo_alternativo') or {}
-        self.assertTrue('F3' in tea_alt.get('alvo', '') and 'Zemestani' in tea_alt.get('referencia', ''))
+        tea_chain = tea['modalidades']['tea_comunicacao'].get('cadeia_sequencial') or []
+        self.assertEqual(len(tea_chain), 1)
+        self.assertIn('Aydin', tea_chain[0].get('referencia', ''))
 
         # 3. Verificação CSS/HTML do painel plano
         with open(os.path.join(BASE_DIR, 'css', 'styles.css'), 'r', encoding='utf-8') as f:
@@ -1238,10 +1243,11 @@ assert(alt2 && alt2.parametros.indexOf('10 minutos') !== -1, 'Expected alt2 10 m
 var guide = eng.getTolerabilityGuidance();
 assert(guide.tituloGuia && guide.orientacaoGeral && guide.dosePulsos && guide.calibracaoLimiar && guide.criterioInsatisfatoria, 'Incomplete guide object');
 
-// RM01: FMA <= 35 rota pontilhada -> rtms_m1_grave_p3 (rPMS + rTMS Excitatória)
+// RM01: FMA <= 35 inicia obrigatoriamente em rtms_m1_grave e avança para Zheng 2015 (solida) e Ajustes (pontilhada) após resposta insatisfatória
 eng.setPathChoice('gravidade_fma', 'fma_menor_35');
-eng.setPathChoice('rota_fma_menor_35', 'fma35_rota_pontilhada');
-assert(eng.activeFactorId === 'rtms_m1_grave_p3', 'Expected rtms_m1_grave_p3, got ' + eng.activeFactorId);
+assert(eng.activeFactorId === 'rtms_m1_grave', 'Expected rtms_m1_grave, got ' + eng.activeFactorId);
+var chainGrave = eng.getProtocolChain();
+assert(chainGrave.length === 3 && chainGrave[1].linha_fluxograma === 'solida' && chainGrave[2].fase_etapa === 'ajustes' && chainGrave[2].linha_fluxograma === 'pontilhada', 'Expected 3-step sequential chain with solid Zheng 2015 and dotted Ajustes');
 
 // Depressão Acelerado -> 2 steps [TTT, SNT]
 eng.setCondition('depressao-maior', {{ modalityType: 'rtms' }});
@@ -1346,8 +1352,8 @@ print('JSC_AUDIT_21_OK');
             self.assertEqual(scan_sym(payload, rel), [], f'Marcadores residuais (#/*/**/&/roadmap/nota) em {rel}')
 
         # Solução 3: Continuidade dinâmica de 2 botões na homepage e barras internas via JSC
-        self.assertIn('Conduta após o protocolo selecionado:', html)
-        self.assertIn('Cenário do paciente:', app_js)
+        self.assertIn('Conduta após o protocolo em que parou:', html)
+        self.assertIn('Ir no Assistente Pós-Indução:', app_js)
         self.assertIn('renderHomeContinuityStageButtons', app_js)
 
         jsc_bin = '/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc'
@@ -1407,6 +1413,7 @@ function makeEl(id) {{
 _els['homeContCondition'].tagName = 'SELECT';
 _els['homeContProtocol'].tagName = 'SELECT';
 _els['homeContModality'].tagName = 'SELECT';
+_els['homeContStoppedProtocol'].tagName = 'SELECT';
 var document = {{
   _cbs: {{}},
   addEventListener: function(ev, fn){{ if (ev === 'DOMContentLoaded') this._cbs.ready = fn; else (this._cbs[ev]=this._cbs[ev]||[]).push(fn); }},
@@ -1652,9 +1659,341 @@ print('JSC_NOMENCLATURE_23_OK');
                 if os.path.exists(tmp_js):
                     os.remove(tmp_js)
 
+    def test_24_sequential_arrows_scales_dedup_and_assistant(self):
+        """Valida eliminação de P1/Protocolo N, MCID 5.0 da FMA-UE, isolamento de escalas por desfecho, cadeia sequencial + Ajustes, continuidade na homepage e deduplicação global."""
+        import re
+        import subprocess
+        import tempfile
+
+        html_path = os.path.join(BASE_DIR, 'index.html')
+        app_path = os.path.join(BASE_DIR, 'js', 'app.js')
+        engine_path = os.path.join(BASE_DIR, 'js', 'decision-engine.js')
+        sg_path = os.path.join(BASE_DIR, 'js', 'scale-guide-data.js')
+        json_path = os.path.join(BASE_DIR, 'data', 'napen_roadmaps_data.json')
+
+        with open(html_path, 'r', encoding='utf-8') as f:
+            html = f.read()
+        with open(app_path, 'r', encoding='utf-8') as f:
+            app_js = f.read()
+        with open(engine_path, 'r', encoding='utf-8') as f:
+            engine_js = f.read()
+        with open(sg_path, 'r', encoding='utf-8') as f:
+            sg_js = f.read()
+        with open(json_path, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+
+        # 1. Zero 'Protocolo N', 'P1:'.. 'P15:' e '6,6'/'6.6' na UI e nos 3 JSONs
+        self.assertNotIn('Protocolo Alternativo', html)
+        self.assertNotIn('Protocolo Alternativo', engine_js)
+        self.assertNotIn('Protocolo Alternativo', app_js)
+        self.assertNotIn('6.6', engine_js)
+        self.assertNotIn('6,6', engine_js)
+        self.assertNotIn('6,6', sg_js)
+
+        skip_keys = {'id', 'roadmap_id', 'svg_file', 'protocolo_id', 'protocolo_ids',
+                     'redirecionar_para_protocolo', 'chave', 'modalidade_chave',
+                     'protocolo_alvo', 'step_id', 'etapa_id', 'etapa_ids'}
+        ban_re = re.compile(r'\bProtocolo\s+\d+\b|\bP(?:[1-9]|1[0-5])\s*:', re.I)
+
+        def scan_banned(obj, path=''):
+            hits = []
+            if isinstance(obj, dict):
+                for k, v in obj.items():
+                    if k in skip_keys:
+                        continue
+                    p = f'{path}.{k}' if path else k
+                    if isinstance(v, str) and ban_re.search(v):
+                        hits.append((p, v[:120]))
+                    elif ('mcid' in k or 'meta_melhora' in k or 'meta_texto' in k) and re.search(r'6[.,]6', str(v)):
+                        hits.append((p, str(v)[:120]))
+                    else:
+                        hits.extend(scan_banned(v, p))
+            elif isinstance(obj, list):
+                for idx, item in enumerate(obj):
+                    hits.extend(scan_banned(item, f'{path}[{idx}]'))
+            return hits
+
+        for rel in ['data/napen_roadmaps_data.json', 'data/grade_amstar_audit.json', 'data/escalas_guia_clinico.json']:
+            with open(os.path.join(BASE_DIR, rel), 'r', encoding='utf-8') as f:
+                payload = json.load(f)
+            self.assertEqual(scan_banned(payload, rel), [], f'Resíduos P1/Protocolo N/MCID 6,6 encontrados em {rel}')
+
+        # 2. Zero setas multi-protocolo em campos primários, normalização estrita da cadeia_sequencial e zero duplicatas 1.500 pulsos em observacoes da cadeia
+        for c in data['condicoes']:
+            for mk, m in c.get('modalidades', {}).items():
+                for fld in ['tecnica', 'alvo', 'frequencia', 'intensidade', 'pulsos_duracao', 'sessoes']:
+                    val = str(m.get(fld) or '')
+                    self.assertNotIn('->', val, f'Seta multi-protocolo em {c["id"]}::{mk}.{fld}: {val}')
+                    self.assertNotIn('➔', val, f'Seta multi-protocolo em {c["id"]}::{mk}.{fld}: {val}')
+                chain = m.get('cadeia_sequencial') or []
+                self.assertTrue(len(chain) >= 1, f'Cadeia vazia em {c["id"]}::{mk}')
+                self.assertEqual(chain[0].get('fase_etapa'), 'inicial', f'Step 0 deve ser inicial em {c["id"]}::{mk}')
+                orders = [step.get('ordem') for step in chain]
+                self.assertEqual(orders, list(range(1, len(chain) + 1)), f'Ordem inválida em {c["id"]}::{mk}: {orders}')
+                for st in chain:
+                    self.assertNotIn('1.500 pulsos', str(st.get('observacoes') or ''), f'Duplicata 1.500 pulsos em {c["id"]}::{mk}')
+
+        # 2b. Auditoria seta-a-seta dos 18 Roadmaps Oficiais
+        by_id = {c['id']: c for c in data['condicoes']}
+
+        # RM01/RM02 AVC MS
+        avc_ms = by_id['avc-membro-superior']
+        g_chain = avc_ms['modalidades']['rtms_m1_grave']['cadeia_sequencial']
+        self.assertEqual(len(g_chain), 3)
+        self.assertEqual(g_chain[1]['linha_fluxograma'], 'solida')
+        self.assertIn('Zheng', g_chain[1]['nome'])
+        self.assertEqual(g_chain[2]['fase_etapa'], 'ajustes')
+        self.assertEqual(g_chain[2]['linha_fluxograma'], 'pontilhada')
+        self.assertEqual(len(avc_ms['modalidades']['sensorial']['cadeia_sequencial']), 2)
+        self.assertIn('Kim', avc_ms['modalidades']['sensorial']['cadeia_sequencial'][1]['nome'])
+        s1_pos = next(o for e in avc_ms['arvore_algoritmo']['rtms']['etapas'] if e['etapa_id'] == 'lesao_s1' for o in e['opcoes'] if o['id'] == 'lesao_pos_sim')
+        self.assertEqual(s1_pos.get('protocolo_alvo'), 'sem_pem_ipsilesional')
+        tdcs_s1 = avc_ms['modalidades']['tdcs_sensorial_s1']['cadeia_sequencial']
+        self.assertEqual(len(tdcs_s1), 3)
+        self.assertEqual(tdcs_s1[1]['linha_fluxograma'], 'pontilhada')
+        self.assertEqual(tdcs_s1[2]['fase_etapa'], 'ajustes')
+        self.assertEqual(avc_ms['modalidades']['tdcs_negligencia']['cadeia_sequencial'][2]['linha_fluxograma'], 'pontilhada')
+
+        # RM03/RM04 AVC Mobilidade
+        avc_mob = by_id['avc-mobilidade']
+        for mk in ['equilibrio', 'velocidade_marcha', 'rtms_m1_aguda']:
+            self.assertEqual(avc_mob['modalidades'][mk]['linha_fluxograma'], 'solida')
+        self.assertEqual(len(avc_mob['modalidades']['rtms_m1_aguda']['cadeia_sequencial']), 3)
+        self.assertIn('Wang', avc_mob['modalidades']['rtms_m1_aguda']['cadeia_sequencial'][1]['nome'])
+        self.assertEqual(avc_mob['modalidades']['tdcs_ppc_mob']['cadeia_sequencial'][2]['linha_fluxograma'], 'pontilhada')
+
+        # RM06/RM07 Disfagia & RM08/RM09 Afasia
+        avc_disf = by_id['avc-disfagia']
+        self.assertEqual(len(avc_disf['modalidades']['orofaringea']['cadeia_sequencial']), 8)
+        self.assertEqual(len(avc_disf['modalidades']['tdcs_disf_uni']['cadeia_sequencial']), 3)
+        avc_afas = by_id['avc-afasia']
+        self.assertIn('Ren', avc_afas['modalidades']['compreensao']['cadeia_sequencial'][1]['referencia'])
+        self.assertEqual(avc_afas['modalidades']['tdcs_cerebelo_anomia']['cadeia_sequencial'][0]['linha_fluxograma'], 'solida')
+        self.assertEqual(avc_afas['modalidades']['tdcs_cerebelo_anomia']['cadeia_sequencial'][1]['linha_fluxograma'], 'solida')
+
+        # RM05 Dor Neuropática (2 entradas mantidas + dor_fantasma sem SII)
+        dor = by_id['dor-neuropatica']
+        dor_tree = next(iter(dor['arvore_algoritmo'].values()))
+        dor_init_opts = next(e['opcoes'] for e in dor_tree['etapas'] if e['etapa_id'] == 'dor_geral_inicial')
+        self.assertEqual(len(dor_init_opts), 2)
+        self.assertEqual(len(dor['modalidades']['dor_fantasma']['cadeia_sequencial']), 3)
+        self.assertTrue(all('SII' not in s['nome'] for s in dor['modalidades']['dor_fantasma']['cadeia_sequencial']))
+
+        # RM16 Ataxia Cerebelar (sem ataxia_prev_tdcs, 5 passos unificados em severidade_motora)
+        ataxia = by_id['ataxia-cerebelar']
+        ataxia_tree = next(iter(ataxia['arvore_algoritmo'].values()))
+        self.assertNotIn('ataxia_rtms_nao_resp', ataxia['modalidades'])
+        self.assertFalse(any(e['etapa_id'] == 'ataxia_prev_tdcs' for e in ataxia_tree['etapas']))
+        self.assertEqual(len(ataxia['modalidades']['severidade_motora']['cadeia_sequencial']), 5)
+        self.assertEqual(len(ataxia['modalidades']['destreza_manual']['cadeia_sequencial']), 2)
+        self.assertEqual(len(ataxia['modalidades']['mobilidade_funcional']['cadeia_sequencial']), 3)
+        self.assertEqual(ataxia['modalidades']['mobilidade_funcional']['linha_fluxograma'], 'solida')
+        self.assertEqual(len(ataxia['modalidades']['equilibrio']['cadeia_sequencial']), 2)
+
+        # RM17 Parkinson (5 cadeias fiéis)
+        pd = by_id['doenca-parkinson']
+        self.assertEqual(len(pd['modalidades']['funcao_global']['cadeia_sequencial']), 7)
+        self.assertEqual(len(pd['modalidades']['dp_ams']['cadeia_sequencial']), 5)
+        self.assertEqual(len(pd['modalidades']['dp_dlpfc']['cadeia_sequencial']), 3)
+        self.assertEqual(pd['modalidades']['dp_dlpfc']['linha_fluxograma'], 'solida')
+        self.assertEqual(len(pd['modalidades']['fog']['cadeia_sequencial']), 3)
+        self.assertEqual(len(pd['modalidades']['mobilidade']['cadeia_sequencial']), 4)
+        self.assertTrue(all('Mi et al.' not in s['nome'] for s in pd['modalidades']['mobilidade']['cadeia_sequencial']))
+
+        # RM10 Depressão, RM11 TAG, RM18 TEPT, RM15 TEA, RM12/RM13 Alzheimer
+        dep = by_id['depressao-maior']
+        self.assertNotIn('comorbidade_ansiedade', dep['modalidades'])
+        self.assertEqual(dep['modalidades']['moderada_grave']['cadeia_sequencial'][3]['fase_etapa'], 'sequencia')
+        tag = by_id['ansiedade-generalizada']
+        tag_tree = next(iter(tag['arvore_algoritmo'].values()))
+        self.assertNotIn('comorbidade_depressiva', tag['modalidades'])
+        tag_opts = next(e['opcoes'] for e in tag_tree['etapas'] if e['etapa_id'] == 'alvo_tag')
+        self.assertEqual([o['id'] for o in tag_opts], ['tag_f4', 'tag_p4'])
+        self.assertEqual(tag['modalidades']['moderada_alta']['cadeia_sequencial'][2]['linha_fluxograma'], 'solida')
+        tept = by_id['tept']
+        self.assertEqual(len(tept['modalidades']['sintomas_gerais']['cadeia_sequencial']), 2)
+        for single_k in ['tept_bilateral', 'tept_itbs_f4', 'comorbidade_depressiva']:
+            self.assertEqual(len(tept['modalidades'][single_k]['cadeia_sequencial']), 1)
+        tea = by_id['transtorno-espectro-autista']
+        self.assertEqual(len(tea['modalidades']['tea_comunicacao']['cadeia_sequencial']), 1)
+        ad = by_id['alzheimer-ccl']
+        self.assertEqual(len(ad['modalidades']['tdcs_ccl_cpfdl']['cadeia_sequencial']), 3)
+        self.assertIn('3.000 pulsos', ad['modalidades']['rm12_apatia_executiva']['pulsos_duracao'])
+        self.assertEqual(ad['modalidades']['rm12_apatia_executiva']['intensidade'], '120% LMR')
+
+        # 3. JavaScriptCore: isolamento de escalas por fator, MRC em fraqueza, MCID 5.0 FMA-UE, cadeia sequencial FMA<=35, assistente a partir do 2º protocolo e justificativa dos Ajustes
+        jsc_bin = '/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc'
+        if os.path.exists(jsc_bin):
+            with open(os.path.join(BASE_DIR, 'js', 'data.js'), 'r', encoding='utf-8') as f:
+                data_js = f.read()
+            dom_ids = sorted(set(re.findall(r'id="([^"]+)"', html)))
+            probe = f"""
+var window = {{ pageYOffset: 0, scrollTo: function(){{}} }};
+var _els = {{}};
+function makeEl(id) {{
+  var classes = new Set();
+  var _inner = '';
+  var el = {{
+    id: id, value: '', textContent: '', href: '', open: false,
+    style: {{}}, options: [], selectedIndex: 0, children: [], attrs: {{}},
+    classList: {{ add: function(c){{classes.add(c);}}, remove: function(c){{classes.delete(c);}}, toggle: function(c,f){{f?classes.add(c):classes.delete(c);}}, contains: function(c){{return classes.has(c);}} }},
+    listeners: {{}},
+    addEventListener: function(ev, fn){{ (this.listeners[ev]=this.listeners[ev]||[]).push(fn); }},
+    appendChild: function(c){{
+      this.children.push(c);
+      if (this.tagName === 'SELECT' && c && c.tagName === 'OPTGROUP') {{
+        (c.children || []).forEach(function(o){{ el.options.push(o); }});
+      }} else if (this.tagName === 'SELECT' && c && c.tagName === 'OPTION') {{
+        this.options.push(c);
+      }}
+    }},
+    querySelector: function(){{ return makeEl(''); }},
+    querySelectorAll: function(sel){{
+      var hits = [];
+      var attrRe = /\\[([a-z0-9-]+)\\]/i;
+      var mAttr = sel.match(attrRe);
+      var reTag = new RegExp('<button[^>]*' + (mAttr ? (mAttr[1] + '="([^"]+)"') : '') + '[^>]*>', 'gi');
+      var m;
+      while ((m = reTag.exec(_inner)) !== null) {{
+        (function(val){{
+          var b = makeEl('');
+          b.getAttribute = function(k){{ return k === (mAttr ? mAttr[1] : '') ? val : ''; }};
+          hits.push(b);
+        }})(m[1] || '');
+      }}
+      return hits;
+    }},
+    getAttribute: function(k){{ return this.attrs[k] || ''; }},
+    setAttribute: function(k, v){{ this.attrs[k] = String(v); }},
+    closest: function(){{ return null; }},
+    getBoundingClientRect: function(){{ return {{ top: 100 }}; }}
+  }};
+  Object.defineProperty(el, 'innerHTML', {{
+    get: function(){{ return _inner; }},
+    set: function(val){{
+      _inner = String(val || '');
+      if (this.tagName === 'SELECT') {{
+        this.options = [];
+        var re = /<option([^>]*)value="([^"]*)"([^>]*)>/g, m;
+        while ((m = re.exec(_inner)) !== null) {{
+          var fullTag = (m[1] || '') + ' ' + (m[3] || '');
+          var pm = fullTag.match(/data-primary="([^"]*)"/);
+          var prim = pm ? pm[1] : '';
+          (function(val, pVal){{
+            el.options.push({{ value: val, getAttribute: function(k){{ return k === 'data-primary' ? pVal : ''; }} }});
+          }})(m[2], prim);
+        }}
+        this.selectedIndex = 0;
+      }}
+    }}
+  }});
+  return el;
+}}
+{json.dumps(dom_ids)}.forEach(function(id){{ _els[id] = makeEl(id); }});
+['homeContCondition','homeContModality','homeContProtocol','homeContStoppedProtocol'].forEach(function(id){{
+  _els[id].tagName = 'SELECT';
+}});
+var document = {{
+  _cbs: {{}},
+  addEventListener: function(ev, fn){{ if (ev === 'DOMContentLoaded') this._cbs.ready = fn; }},
+  getElementById: function(id){{ if (!_els[id]) _els[id] = makeEl(id); return _els[id]; }},
+  createElement: function(tag){{ var e = makeEl(''); e.tagName = tag.toUpperCase(); return e; }},
+  querySelector: function(sel){{ return makeEl(sel); }},
+  querySelectorAll: function(){{ return []; }}
+}};
+{data_js}
+{sg_js}
+{engine_js}
+{app_js}
+if (document._cbs.ready) document._cbs.ready();
+
+function assert(cond, msg) {{ if (!cond) throw new Error(msg); }}
+
+// A. DecisionEngine: perda_sinergia isola FMA-UE (nunca EAM), MCID = 5.0, e RM01-MRC-FORCA dispara apenas em fraqueza
+var eng = new DecisionEngine(window.NAPEN_DATA);
+eng.setCondition('avc-membro-superior', {{ modalityType: 'rtms' }});
+eng.setPathChoice('pem_triage', 'pem_sim');
+eng.setPathChoice('fator_limitante', 'perda_sinergia');
+var scalesSin = eng.getScalesForCurrentPath();
+assert(scalesSin.length === 1 && scalesSin[0].id === 'fma_ue', 'perda_sinergia deve retornar apenas fma_ue, obtido: ' + JSON.stringify(scalesSin));
+var obsSinScale = eng.getContextualObservations({{ slot: 'scale' }});
+assert(!obsSinScale.some(function(o){{ return o.id === 'RM01-MRC-FORCA'; }}), 'RM01-MRC-FORCA nao deve aparecer em perda_sinergia');
+
+var resOk5 = eng.calculateDelta('20', '25', scalesSin[0], eng.getActiveModality());
+assert(resOk5.mcidMet === true && resOk5.goalMet === true, 'FMA-UE +5.0 pts deve atingir MCID');
+var resFail4 = eng.calculateDelta('20', '24.5', scalesSin[0], eng.getActiveModality());
+assert(resFail4.mcidMet === false, 'FMA-UE +4.5 pts nao deve atingir MCID de 5.0');
+
+// fraqueza mantem FMA-UE na calculadora e ativa observacao MRC
+eng.setPathChoice('fator_limitante', 'fraqueza');
+var obsFraqScale = eng.getContextualObservations({{ slot: 'scale' }});
+assert(obsFraqScale.some(function(o){{ return o.id === 'RM01-MRC-FORCA' && o.texto.indexOf('MRC') !== -1; }}), 'RM01-MRC-FORCA deve aparecer em fraqueza');
+
+// espasticidade isola apenas EAM
+eng.setPathChoice('fator_limitante', 'espasticidade');
+var scalesEsp = eng.getScalesForCurrentPath();
+assert(scalesEsp.length === 1 && scalesEsp[0].id === 'eam', 'espasticidade deve retornar apenas eam');
+
+// B. Cadeia sequencial FMA <= 35: Bilateral (Long 2018) -> LF-rTMS Contralesional (Zheng 2015, SOLIDA) -> Ajustes (Chang 2024, PONTILHADA) -> Falha
+eng.setFactor('fraqueza', false);
+eng.setPathChoice('pem_triage', 'pem_sim');
+eng.setPathChoice('gravidade_fma', 'fma_menor_35');
+var graveMod = eng.getActiveModality();
+assert(graveMod.tecnica.indexOf('Bilateral') !== -1, 'Primeiro protocolo FMA<=35 deve ser Bilateral, obtido: ' + graveMod.tecnica);
+var graveChain = eng.getProtocolChain();
+assert(graveChain.length === 3, 'FMA<=35 deve ter 3 etapas na cadeia');
+assert(graveChain[1].linha_fluxograma === 'solida' && graveChain[1].nome.indexOf('Zheng') !== -1, 'alt1 deve ser rota solida Zheng 2015');
+assert(graveChain[2].fase_etapa === 'ajustes' && graveChain[2].linha_fluxograma === 'pontilhada', 'alt2 deve estar na Seção de Ajustes com linha pontilhada');
+var alt2Presc = eng.getPrescriptionForStage('alt2');
+assert(alt2Presc && alt2Presc.motivoAjuste.indexOf('ainda não foi validado por metanálises') !== -1, 'alt2 deve expor motivoAjuste explicando ausencia de metanalises');
+
+// C. Homepage: selecionar em #homeContStoppedProtocol qual protocolo parou -> avança para o PRÓXIMO direto no Assistente Pós-Indução
+_els['btnHomeEntryReturning'].listeners['click'][0]();
+assert(_els['homeContStoppedProtocol'].options.length >= 2, 'homeContStoppedProtocol deve listar protocolos da cadeia');
+// Parou em alt1 -> botão principal deve apontar para alt2
+var hasAlt1 = _els['homeContStoppedProtocol'].options.some(function(o){{ return o.value === 'alt1'; }});
+assert(hasAlt1, 'alt1 deve existir em homeContStoppedProtocol para avc-membro-superior');
+_els['homeContStoppedProtocol'].value = 'alt1';
+_els['homeContStoppedProtocol'].listeners['change'][0]();
+var shortHtml = _els['homeContStageShortcuts'].innerHTML;
+assert(shortHtml.indexOf('data-home-stage="alt2"') !== -1, 'Ao parar em alt1, proximo passo deve ser alt2: ' + shortHtml);
+
+// Simula clique no atalho para alt2 e verifica UI no Assistente: trilha a partir do 2º protocolo (sem 1ª Indução) + motivo explícito dos Ajustes/pontilhado
+var fakeAlt2Btn = {{ getAttribute: function(k){{ return k === 'data-home-stage' ? 'alt2' : ''; }} }};
+_els['homeContStageShortcuts'].listeners['click'][0]({{ target: {{ closest: function(){{ return fakeAlt2Btn; }} }} }});
+assert(_els['assistantSequenceTrail'].style.display === 'flex', 'assistantSequenceTrail deve ficar visivel');
+assert(_els['assistantSequenceTrail'].innerHTML.indexOf('1ª Indução') === -1, 'assistantSequenceTrail NAO deve conter 1ª Indução (somente protocolos a partir do 2º)');
+assert(_els['assistantSequenceTrail'].innerHTML.indexOf('data-trail-stage="alt1"') !== -1, 'assistantSequenceTrail deve iniciar no 2º protocolo (alt1)');
+assert(_els['branchResultPanel'].innerHTML.indexOf('Seção de Ajustes') !== -1, 'branchResultPanel deve exibir Seção de Ajustes em alt2');
+assert(_els['branchResultPanel'].innerHTML.indexOf('ajustes-evidence-rationale') !== -1, 'branchResultPanel deve exibir bloco .ajustes-evidence-rationale em Ajustes/pontilhado');
+assert(_els['branchResultPanel'].innerHTML.indexOf('ainda não foi validado por metanálises') !== -1, 'Justificativa explicita de metanalises deve aparecer em Ajustes/pontilhado');
+assert(_els['branchResultPanel'].innerHTML.indexOf('is-dotted') !== -1, 'Box pontilhado deve receber classe is-dotted');
+assert(_els['continuingStageFocusSlot'].innerHTML.indexOf('continuing-focus-meta') === -1, 'continuingStageFocusSlot nao deve duplicar parâmetros no topo');
+
+// D. Deduplicação em #prescObsIntensidade, #tolGuideDose, #monitoringGrid e #calcScaleTabs
+assert(_els['prescObsIntensidade'].innerHTML === '' && _els['prescObsIntensidade'].style.display === 'none', 'prescObsIntensidade deve permanecer oculto');
+assert(_els['tolGuideDose'].innerHTML.indexOf('Conduta de Carga / Estímulo:') === -1, 'tolGuideDose nao deve duplicar bloco');
+assert(_els['monitoringReeval'].innerHTML.indexOf('obs-contextual-list') === -1, 'monitoringReeval nao deve reinjetar lista extra');
+assert(_els['monitoringReeval'].textContent !== _els['monitoringCriterion'].textContent, 'Reavaliação e Platô não devem duplicar');
+assert(_els['monitoringCriterion'].textContent !== _els['monitoringStopRule'].textContent, 'Platô e Falha não devem duplicar');
+
+print('JSC_SUITE_24_OK');
+"""
+            with tempfile.NamedTemporaryFile('w', suffix='.js', encoding='utf-8', delete=False) as tf:
+                tf.write(probe)
+                tmp_js = tf.name
+            try:
+                proc = subprocess.run([jsc_bin, tmp_js], cwd=BASE_DIR, capture_output=True, text=True, timeout=15)
+                self.assertEqual(proc.returncode, 0, f"JSC error: {proc.stderr}\n{proc.stdout}")
+                self.assertIn('JSC_SUITE_24_OK', proc.stdout)
+            finally:
+                if os.path.exists(tmp_js):
+                    os.remove(tmp_js)
+
 
 if __name__ == '__main__':
     unittest.main()
+
 
 
 

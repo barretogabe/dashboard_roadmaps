@@ -45,7 +45,7 @@ DIR_ROSSI_2009 = {
 }
 
 
-def make_ref(autores, ano, titulo, periodico, doi, url_doi=None, tipo='Estudos de referência', citacao_completa=None):
+def make_ref(autores, ano, titulo, periodico, doi, url_doi=None, tipo='Ensaio clínico de referência', citacao_completa=None):
     clean_doi = (doi or '').replace('https://doi.org/', '').replace('http://dx.doi.org/', '').strip()
     full_url = url_doi or (f'https://doi.org/{clean_doi}' if clean_doi else '')
     return {
@@ -175,8 +175,18 @@ def make_chain_step(
     efeito_esperado='',
     referencia='',
     linha_fluxograma='solida',
-    observacoes=''
+    observacoes='',
+    fase_etapa=None
 ):
+    resolved_fase = fase_etapa
+    if not resolved_fase:
+        combined = f'{etapa_rotulo} {nome}'.lower()
+        if 'ajuste' in combined or 'seção de ajustes' in combined or 'quadro de ajustes' in combined:
+            resolved_fase = 'ajustes'
+        elif ordem == 1:
+            resolved_fase = 'inicial'
+        else:
+            resolved_fase = 'sequencia'
     return {
         'ordem': ordem,
         'id': step_id,
@@ -189,7 +199,8 @@ def make_chain_step(
         'efeito_esperado': efeito_esperado,
         'referencia': referencia,
         'linha_fluxograma': linha_fluxograma,
-        'observacoes': observacoes
+        'observacoes': observacoes,
+        'fase_etapa': resolved_fase
     }
 
 
@@ -228,10 +239,21 @@ def make_mod(
     ic_min=None,
     ic_max=None,
     audit_meta=None,
-    mod_tipo='rtms'
+    mod_tipo='rtms',
+    escalas_por_fator=None
 ):
-    alt1_step = cadeia_sequencial[1] if len(cadeia_sequencial) > 1 else None
-    alt2_step = cadeia_sequencial[2] if len(cadeia_sequencial) > 2 else None
+    normalized_chain = []
+    for idx, step in enumerate(cadeia_sequencial or [], start=1):
+        s = dict(step)
+        s['ordem'] = idx
+        if idx == 1:
+            s['fase_etapa'] = 'inicial'
+        elif s.get('fase_etapa') != 'ajustes':
+            s['fase_etapa'] = 'sequencia'
+        normalized_chain.append(s)
+
+    alt1_step = normalized_chain[1] if len(normalized_chain) > 1 else None
+    alt2_step = normalized_chain[2] if len(normalized_chain) > 2 else None
 
     if alt1_step:
         prot_alt1 = {
@@ -243,6 +265,7 @@ def make_mod(
             'linha_fluxograma': alt1_step.get('linha_fluxograma', 'solida'),
             'efeito_esperado': alt1_step.get('efeito_esperado', ''),
             'referencia': alt1_step.get('referencia', ''),
+            'fase_etapa': alt1_step.get('fase_etapa', 'sequencia'),
             'observacoes': alt1_step.get('observacoes') or 'Transição sequencial indicada pelo algoritmo clínico diante de resposta insatisfatória ou intolerância.'
         }
     else:
@@ -252,6 +275,7 @@ def make_mod(
             'alvo': alvo,
             'parametros': 'Otimização gradual dentro da margem de segurança antes de declarar encerramento do ciclo.',
             'linha_fluxograma': linha_fluxograma,
+            'fase_etapa': 'ajustes',
             'observacoes': 'O fluxo clínico não prevê troca sequencial adicional neste ramo específico.'
         }
 
@@ -265,6 +289,7 @@ def make_mod(
             'linha_fluxograma': alt2_step.get('linha_fluxograma', 'solida'),
             'efeito_esperado': alt2_step.get('efeito_esperado', ''),
             'referencia': alt2_step.get('referencia', ''),
+            'fase_etapa': alt2_step.get('fase_etapa', 'ajustes'),
             'observacoes': alt2_step.get('observacoes') or 'Passo sequencial subsequente previsto no fluxograma antes da caracterização de falha terapêutica.'
         }
     else:
@@ -274,6 +299,7 @@ def make_mod(
             'alvo': alvo,
             'parametros': 'Conferir adesão, medicações interferentes (benzodiazepínicos) e terapia concomitante.',
             'linha_fluxograma': linha_fluxograma,
+            'fase_etapa': 'ajustes',
             'observacoes': 'Se não houver resposta após as tentativas indicadas neste ramo, caracteriza-se falha terapêutica.'
         }
 
@@ -319,7 +345,7 @@ def make_mod(
         'ajuste_parametros': ajuste_parametros,
         'protocolo_alternativo': prot_alt1,
         'protocolo_alternativo_2': prot_alt2,
-        'cadeia_sequencial': cadeia_sequencial,
+        'cadeia_sequencial': normalized_chain,
         'falha_terapeutica': falha_terapeutica,
         'sessoes_ajuste': sessoes_ajuste,
         'contraindicacoes': contraindicacoes or [
@@ -329,6 +355,8 @@ def make_mod(
         ],
         'notas_clinicas': notas_clinicas
     }
+    if escalas_por_fator:
+        mod['escalas_por_fator'] = escalas_por_fator
     if audit_meta:
         mod['audit_meta'] = audit_meta
     return mod

@@ -32,7 +32,7 @@ def higienizar_texto(text):
         return text
     text = re.sub(r'\bseminal\b', 'de referência', text, flags=re.IGNORECASE)
     text = re.sub(r'\bseminais\b', 'de referência', text, flags=re.IGNORECASE)
-    text = re.sub(r'Ensaio Clínico Randomizado de Referência', 'Estudos de referência', text, flags=re.IGNORECASE)
+    text = re.sub(r'Ensaio Clínico Randomizado de Referência', 'Ensaio clínico de referência', text, flags=re.IGNORECASE)
     text = re.sub(r'Tamanho de Efeito Padronizado', 'Tamanho de Efeito Esperado', text, flags=re.IGNORECASE)
     text = re.sub(r'Moderado a Grande', 'Moderado', text, flags=re.IGNORECASE)
     text = re.sub(r'moderado a grande', 'moderado', text, flags=re.IGNORECASE)

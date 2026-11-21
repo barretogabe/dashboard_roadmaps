@@ -1,16 +1,16 @@
 {
   "versao_auditoria": "2026-11-17-v2",
   "status_geral": "Avaliação preliminar — Em homologação pelo GT NAPeN",
-  "total_pares_auditados": 78,
+  "total_pares_auditados": 73,
   "distribuicao_amstar2": {
-    "Moderada": 69,
-    "Baixa": 7,
-    "Alta": 2
+    "Moderada": 67,
+    "Alta": 2,
+    "Baixa": 4
   },
   "distribuicao_grade": {
-    "Alta": 7,
-    "Moderada": 49,
-    "Baixa": 18,
+    "Alta": 6,
+    "Moderada": 50,
+    "Baixa": 13,
     "Muito Baixa": 4
   },
   "pares": {
@@ -187,40 +187,6 @@
         "fatores_moduladores": "Qualidade do sono, medicações em uso (não interromper terapias medicamentosas), integridade do trato corticoespinhal e fase pós-AVC (efeito mais pronunciado de 1 a 6 meses)."
       }
     },
-    "avc-membro-superior::rtms_m1_grave_p3": {
-      "condicao_id": "avc-membro-superior",
-      "fator_id": "rtms_m1_grave_p3",
-      "meta_analise": {
-        "autores": "Antonino, G. B., et al.",
-        "ano": 2025,
-        "titulo": "The impact of the number of sessions and stimulation parameters on repetitive transcranial magnetic stimulation efficacy for post-stroke upper extremity recovery: A systematic review and meta-analysis",
-        "periodico": "Clinical Rehabilitation",
-        "doi": "10.1177/02692155251328945",
-        "url_doi": "https://doi.org/10.1177/02692155251328945",
-        "amstar2": {
-          "instrumento": "AMSTAR 2 (Shea et al., 2017 — Avaliação crítica de revisões sistemáticas)",
-          "nivel": "Moderada",
-          "resumo_criterio": "Metanálise dose-resposta (Antonino et al., 2025).",
-          "justificativa_preliminar": "Ensaio clínico paralelo em comprometimento moderado-grave.",
-          "sinais_metodologicos": [
-            "Quadro pontilhado"
-          ],
-          "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
-        }
-      },
-      "grade": {
-        "certeza": "Moderada",
-        "simbolos": "⊕⊕⊕◯",
-        "forca_recomendacao": "Condicional",
-        "observacao_dominios": "Segue para iTBS cerebelar ipsilesional (80% LMA) em caso de resposta insatisfatória.",
-        "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
-      },
-      "tolerabilidade_roadmap": {
-        "orientacao_tolerabilidade": "Em caso de desconforto com a bobina, reduzir inicialmente a intensidade e progredir gradualmente conforme a tolerância do paciente até o valor previsto no protocolo.",
-        "ajuste_seguranca": "Na ausência de identificação do Limiar Motor de Repouso (LMR), calibrar pelo Limiar Motor Ativo (LMA); na ausência de PEM no hemisfério lesionado, testar o hemisfério contralesional para confirmar inervação e excluir limitação técnica.",
-        "fatores_moduladores": "Qualidade do sono, medicações em uso (não interromper terapias medicamentosas), integridade do trato corticoespinhal e fase pós-AVC (efeito mais pronunciado de 1 a 6 meses)."
-      }
-    },
     "avc-membro-superior::sem_pem": {
       "condicao_id": "avc-membro-superior",
       "fator_id": "sem_pem",
@@ -317,40 +283,6 @@
         "simbolos": "⊕⊕⊕◯",
         "forca_recomendacao": "Condicional",
         "observacao_dominios": "S1 3 cm posterior ao hotspot motor mostra ganho sensorial consistente.",
-        "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
-      },
-      "tolerabilidade_roadmap": {
-        "orientacao_tolerabilidade": "Em caso de desconforto com a bobina, reduzir inicialmente a intensidade e progredir gradualmente conforme a tolerância do paciente até o valor previsto no protocolo.",
-        "ajuste_seguranca": "Na ausência de identificação do Limiar Motor de Repouso (LMR), calibrar pelo Limiar Motor Ativo (LMA); na ausência de PEM no hemisfério lesionado, testar o hemisfério contralesional para confirmar inervação e excluir limitação técnica.",
-        "fatores_moduladores": "Qualidade do sono, medicações em uso (não interromper terapias medicamentosas), integridade do trato corticoespinhal e fase pós-AVC (efeito mais pronunciado de 1 a 6 meses)."
-      }
-    },
-    "avc-membro-superior::rtms_s1_pf_sim": {
-      "condicao_id": "avc-membro-superior",
-      "fator_id": "rtms_s1_pf_sim",
-      "meta_analise": {
-        "autores": "Chen, G., et al.",
-        "ano": 2023,
-        "titulo": "Non-invasive brain stimulation effectively improves post-stroke sensory impairment: a systematic review and meta-analysis",
-        "periodico": "Journal of Neural Transmission",
-        "doi": "10.1007/s00702-023-02674-x",
-        "url_doi": "https://doi.org/10.1007/s00702-023-02674-x",
-        "amstar2": {
-          "instrumento": "AMSTAR 2 (Shea et al., 2017 — Avaliação crítica de revisões sistemáticas)",
-          "nivel": "Moderada",
-          "resumo_criterio": "Metanálise em recuperação sensorial (Chen et al., 2023).",
-          "justificativa_preliminar": "Preserva segurança evitando estimulação sobre tecido pós-frontal extenso.",
-          "sinais_metodologicos": [
-            "Risco de viés"
-          ],
-          "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
-        }
-      },
-      "grade": {
-        "certeza": "Baixa",
-        "simbolos": "⊕⊕◯◯",
-        "forca_recomendacao": "Condicional",
-        "observacao_dominios": "Rota secundária anatômica quando S1 não está viável.",
         "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
       },
       "tolerabilidade_roadmap": {
@@ -576,9 +508,9 @@
         "url_doi": "https://doi.org/10.1007/s12311-024-01660-7",
         "amstar2": {
           "instrumento": "AMSTAR 2 (Shea et al., 2017 — Avaliação crítica de revisões sistemáticas)",
-          "nivel": "Baixa",
+          "nivel": "Moderada",
           "resumo_criterio": "Metanálise cerebelar em marcha e equilíbrio (Zeng et al., 2024).",
-          "justificativa_preliminar": "Pequeno número de ECRs por alvo cerebelar.",
+          "justificativa_preliminar": "Evidência favorável para modulação cerebelar em equilíbrio e marcha.",
           "sinais_metodologicos": [
             "Risco de viés"
           ],
@@ -589,7 +521,7 @@
         "certeza": "Moderada",
         "simbolos": "⊕⊕⊕◯",
         "forca_recomendacao": "Condicional",
-        "observacao_dominios": "Quadros pontilhados em cerebelo requerem reavaliação seriada após 5 sessões.",
+        "observacao_dominios": "Reavaliação clínica seriada após 5 sessões com fisioterapia associada.",
         "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
       },
       "tolerabilidade_roadmap": {
@@ -644,9 +576,9 @@
         "url_doi": "https://doi.org/10.1177/10538135241304991",
         "amstar2": {
           "instrumento": "AMSTAR 2 (Shea et al., 2017 — Avaliação crítica de revisões sistemáticas)",
-          "nivel": "Baixa",
+          "nivel": "Moderada",
           "resumo_criterio": "Metanálise iTBS/rTMS em MMII pós-AVC (Su et al., 2025).",
-          "justificativa_preliminar": "Heterogeneidade em ensaios de fase aguda.",
+          "justificativa_preliminar": "Heterogeneidade moderada em ensaios de fase aguda.",
           "sinais_metodologicos": [
             "Heterogeneidade"
           ],
@@ -657,7 +589,7 @@
         "certeza": "Moderada",
         "simbolos": "⊕⊕⊕◯",
         "forca_recomendacao": "Condicional",
-        "observacao_dominios": "Quadro pontilhado em lesão ≤ 1 mês.",
+        "observacao_dominios": "Indicado em lesão aguda ≤ 1 mês com progressão sequencial para HF-rTMS M1 se resposta insatisfatória.",
         "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
       },
       "tolerabilidade_roadmap": {
@@ -729,8 +661,8 @@
         "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
       },
       "tolerabilidade_roadmap": {
-        "orientacao_tolerabilidade": "Monitorar desconforto cutâneo e hidratar uniformemente as esponjas; em caso de incômodo facial no Protocolo Alternativo 1, deslocar o cátodo do músculo bucinador para o músculo deltoide direito.",
-        "ajuste_seguranca": "Otimização de Dose: quando tolerado em protocolos tDCS compatíveis, titular para 2 mA e 30 minutos simultaneamente à tarefa locomotora.",
+        "orientacao_tolerabilidade": "Monitorar desconforto cutâneo e hidratar uniformemente as esponjas; em caso de incômodo facial na montagem cerebelar, deslocar o cátodo do músculo bucinador para o músculo deltoide direito.",
+        "ajuste_seguranca": "Quando tolerado em protocolos tDCS compatíveis, titular para 2 mA e 30 minutos simultaneamente à tarefa locomotora.",
         "fatores_moduladores": "Cuidados cutâneos padrão, manutenção das medicações e ciclos > 15 sessões."
       }
     },
@@ -759,12 +691,12 @@
         "certeza": "Moderada",
         "simbolos": "⊕⊕⊕◯",
         "forca_recomendacao": "Condicional",
-        "observacao_dominios": "Alt 3 é quadro pontilhado de escalonamento.",
+        "observacao_dominios": "C3/C4 sensorial compõe a seção de Ajustes pontilhada.",
         "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
       },
       "tolerabilidade_roadmap": {
-        "orientacao_tolerabilidade": "Monitorar desconforto cutâneo e hidratar uniformemente as esponjas; em caso de incômodo facial no Protocolo Alternativo 1, deslocar o cátodo do músculo bucinador para o músculo deltoide direito.",
-        "ajuste_seguranca": "Otimização de Dose: quando tolerado em protocolos tDCS compatíveis, titular para 2 mA e 30 minutos simultaneamente à tarefa locomotora.",
+        "orientacao_tolerabilidade": "Monitorar desconforto cutâneo e hidratar uniformemente as esponjas; em caso de incômodo facial na montagem cerebelar, deslocar o cátodo do músculo bucinador para o músculo deltoide direito.",
+        "ajuste_seguranca": "Quando tolerado em protocolos tDCS compatíveis, titular para 2 mA e 30 minutos simultaneamente à tarefa locomotora.",
         "fatores_moduladores": "Cuidados cutâneos padrão, manutenção das medicações e ciclos > 15 sessões."
       }
     },
@@ -797,8 +729,8 @@
         "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
       },
       "tolerabilidade_roadmap": {
-        "orientacao_tolerabilidade": "Monitorar desconforto cutâneo e hidratar uniformemente as esponjas; em caso de incômodo facial no Protocolo Alternativo 1, deslocar o cátodo do músculo bucinador para o músculo deltoide direito.",
-        "ajuste_seguranca": "Otimização de Dose: quando tolerado em protocolos tDCS compatíveis, titular para 2 mA e 30 minutos simultaneamente à tarefa locomotora.",
+        "orientacao_tolerabilidade": "Monitorar desconforto cutâneo e hidratar uniformemente as esponjas; em caso de incômodo facial na montagem cerebelar, deslocar o cátodo do músculo bucinador para o músculo deltoide direito.",
+        "ajuste_seguranca": "Quando tolerado em protocolos tDCS compatíveis, titular para 2 mA e 30 minutos simultaneamente à tarefa locomotora.",
         "fatores_moduladores": "Cuidados cutâneos padrão, manutenção das medicações e ciclos > 15 sessões."
       }
     },
@@ -833,8 +765,8 @@
       },
       "tolerabilidade_roadmap": {
         "orientacao_tolerabilidade": "Realizar triagem de contraindicações (implantes metálicos cerebrais, implantes cocleares, histórico de convulsões não controladas e EEG/exames de imagem quando pertinentes) antes de iniciar protocolos excitatórios.",
-        "ajuste_seguranca": "No Protocolo 3 dual de rTMS, realizar obrigatoriamente a inibição contralesional (1 Hz FC6+F6) ANTES da excitação lesional (20 Hz FC5+F5). Em tDCS Protocolo 2, a estimulação dual F5/F6 ocorre simultaneamente.",
-        "fatores_moduladores": "Exames de imagem (RNM com tractografia, EEG, TC), dominância hemisférica (Inventário de Edimburgo), tecido viável remanescente e ciclos ≥ 15 sessões."
+        "ajuste_seguranca": "Reduzir para 80% do LMR caso haja espasmo ou desconforto no músculo temporal durante estimulação à esquerda (F5 / CP5).",
+        "fatores_moduladores": "Exames de imagem (RNM com tractografia, EEG, TC), dominância hemisférica (Inventário de Edimburgo) e presença de tecido viável remanescente."
       }
     },
     "avc-afasia::compreensao": {
@@ -867,8 +799,8 @@
       },
       "tolerabilidade_roadmap": {
         "orientacao_tolerabilidade": "Realizar triagem de contraindicações (implantes metálicos cerebrais, implantes cocleares, histórico de convulsões não controladas e EEG/exames de imagem quando pertinentes) antes de iniciar protocolos excitatórios.",
-        "ajuste_seguranca": "No Protocolo 3 dual de rTMS, realizar obrigatoriamente a inibição contralesional (1 Hz FC6+F6) ANTES da excitação lesional (20 Hz FC5+F5). Em tDCS Protocolo 2, a estimulação dual F5/F6 ocorre simultaneamente.",
-        "fatores_moduladores": "Exames de imagem (RNM com tractografia, EEG, TC), dominância hemisférica (Inventário de Edimburgo), tecido viável remanescente e ciclos ≥ 15 sessões."
+        "ajuste_seguranca": "Reduzir para 80% do LMR caso haja espasmo ou desconforto no músculo temporal durante estimulação à esquerda (F5 / CP5).",
+        "fatores_moduladores": "Exames de imagem (RNM com tractografia, EEG, TC), dominância hemisférica (Inventário de Edimburgo) e presença de tecido viável remanescente."
       }
     },
     "avc-afasia::tdcs_expressao_gfi": {
@@ -901,8 +833,8 @@
       },
       "tolerabilidade_roadmap": {
         "orientacao_tolerabilidade": "Realizar triagem de contraindicações (implantes metálicos cerebrais, implantes cocleares, histórico de convulsões não controladas e EEG/exames de imagem quando pertinentes) antes de iniciar protocolos excitatórios.",
-        "ajuste_seguranca": "No Protocolo 3 dual de rTMS, realizar obrigatoriamente a inibição contralesional (1 Hz FC6+F6) ANTES da excitação lesional (20 Hz FC5+F5). Em tDCS Protocolo 2, a estimulação dual F5/F6 ocorre simultaneamente.",
-        "fatores_moduladores": "Exames de imagem (RNM com tractografia, EEG, TC), dominância hemisférica (Inventário de Edimburgo), tecido viável remanescente e ciclos ≥ 15 sessões."
+        "ajuste_seguranca": "Reduzir para 80% do LMR caso haja espasmo ou desconforto no músculo temporal durante estimulação à esquerda (F5 / CP5).",
+        "fatores_moduladores": "Exames de imagem (RNM com tractografia, EEG, TC), dominância hemisférica (Inventário de Edimburgo) e presença de tecido viável remanescente."
       }
     },
     "avc-afasia::tdcs_compreensao_tp": {
@@ -935,8 +867,8 @@
       },
       "tolerabilidade_roadmap": {
         "orientacao_tolerabilidade": "Realizar triagem de contraindicações (implantes metálicos cerebrais, implantes cocleares, histórico de convulsões não controladas e EEG/exames de imagem quando pertinentes) antes de iniciar protocolos excitatórios.",
-        "ajuste_seguranca": "No Protocolo 3 dual de rTMS, realizar obrigatoriamente a inibição contralesional (1 Hz FC6+F6) ANTES da excitação lesional (20 Hz FC5+F5). Em tDCS Protocolo 2, a estimulação dual F5/F6 ocorre simultaneamente.",
-        "fatores_moduladores": "Exames de imagem (RNM com tractografia, EEG, TC), dominância hemisférica (Inventário de Edimburgo), tecido viável remanescente e ciclos ≥ 15 sessões."
+        "ajuste_seguranca": "Reduzir para 80% do LMR caso haja espasmo ou desconforto no músculo temporal durante estimulação à esquerda (F5 / CP5).",
+        "fatores_moduladores": "Exames de imagem (RNM com tractografia, EEG, TC), dominância hemisférica (Inventário de Edimburgo) e presença de tecido viável remanescente."
       }
     },
     "avc-afasia::tdcs_cerebelo_anomia": {
@@ -952,10 +884,10 @@
         "amstar2": {
           "instrumento": "AMSTAR 2 (Shea et al., 2017 — Avaliação crítica de revisões sistemáticas)",
           "nivel": "Moderada",
-          "resumo_criterio": "Evidência complementar cerebelar em anomia na afasia.",
-          "justificativa_preliminar": "Ramo exploratório pontilhado indicado para anomia.",
+          "resumo_criterio": "Evidência cerebelar em anomia na afasia.",
+          "justificativa_preliminar": "Protocolo cerebelar catódico seguido de anódico antes da seção de Ajustes.",
           "sinais_metodologicos": [
-            "Quadro pontilhado"
+            "Ensaio controlado"
           ],
           "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
         }
@@ -969,8 +901,8 @@
       },
       "tolerabilidade_roadmap": {
         "orientacao_tolerabilidade": "Realizar triagem de contraindicações (implantes metálicos cerebrais, implantes cocleares, histórico de convulsões não controladas e EEG/exames de imagem quando pertinentes) antes de iniciar protocolos excitatórios.",
-        "ajuste_seguranca": "No Protocolo 3 dual de rTMS, realizar obrigatoriamente a inibição contralesional (1 Hz FC6+F6) ANTES da excitação lesional (20 Hz FC5+F5). Em tDCS Protocolo 2, a estimulação dual F5/F6 ocorre simultaneamente.",
-        "fatores_moduladores": "Exames de imagem (RNM com tractografia, EEG, TC), dominância hemisférica (Inventário de Edimburgo), tecido viável remanescente e ciclos ≥ 15 sessões."
+        "ajuste_seguranca": "Reduzir para 80% do LMR caso haja espasmo ou desconforto no músculo temporal durante estimulação à esquerda (F5 / CP5).",
+        "fatores_moduladores": "Exames de imagem (RNM com tractografia, EEG, TC), dominância hemisférica (Inventário de Edimburgo) e presença de tecido viável remanescente."
       }
     },
     "avc-disfagia::orofaringea": {
@@ -1003,8 +935,8 @@
       },
       "tolerabilidade_roadmap": {
         "orientacao_tolerabilidade": "Avaliar contraindicações: presença de implantes metálicos no cérebro, histórico de convulsões não controladas e implantes cocleares.",
-        "ajuste_seguranca": "Protocolos Theta-Burst (iTBS/cTBS) requerem menos tempo de sessão e menor intensidade vs. rTMS tradicional. Em tDCS unilateral P1, considerar 1,4 mA por 20 min (Xie et al., 2023) conforme tolerância.",
-        "fatores_moduladores": "Avaliar extensão cortical/subcortical, déficit cognitivo ou de linguagem associado, fase aguda/subaguda (1–6 meses) e reavaliar cada consistência alimentar."
+        "ajuste_seguranca": "Protocolos Theta-Burst (iTBS/cTBS) requerem menos tempo de sessão e menor intensidade vs. rTMS tradicional; monitorar tolerabilidade local.",
+        "fatores_moduladores": "Avaliar extensão cortical/subcortical, déficit cognitivo ou de linguagem associado e fase aguda/subaguda (1–6 meses)."
       }
     },
     "avc-disfagia::rtms_cortical_extensa": {
@@ -1039,8 +971,8 @@
       },
       "tolerabilidade_roadmap": {
         "orientacao_tolerabilidade": "Avaliar contraindicações: presença de implantes metálicos no cérebro, histórico de convulsões não controladas e implantes cocleares.",
-        "ajuste_seguranca": "Protocolos Theta-Burst (iTBS/cTBS) requerem menos tempo de sessão e menor intensidade vs. rTMS tradicional. Em tDCS unilateral P1, considerar 1,4 mA por 20 min (Xie et al., 2023) conforme tolerância.",
-        "fatores_moduladores": "Avaliar extensão cortical/subcortical, déficit cognitivo ou de linguagem associado, fase aguda/subaguda (1–6 meses) e reavaliar cada consistência alimentar."
+        "ajuste_seguranca": "Protocolos Theta-Burst (iTBS/cTBS) requerem menos tempo de sessão e menor intensidade vs. rTMS tradicional; monitorar tolerabilidade local.",
+        "fatores_moduladores": "Avaliar extensão cortical/subcortical, déficit cognitivo ou de linguagem associado e fase aguda/subaguda (1–6 meses)."
       }
     },
     "avc-disfagia::tempo_transito": {
@@ -1073,8 +1005,8 @@
       },
       "tolerabilidade_roadmap": {
         "orientacao_tolerabilidade": "Avaliar contraindicações: presença de implantes metálicos no cérebro, histórico de convulsões não controladas e implantes cocleares.",
-        "ajuste_seguranca": "Protocolos Theta-Burst (iTBS/cTBS) requerem menos tempo de sessão e menor intensidade vs. rTMS tradicional. Em tDCS unilateral P1, considerar 1,4 mA por 20 min (Xie et al., 2023) conforme tolerância.",
-        "fatores_moduladores": "Avaliar extensão cortical/subcortical, déficit cognitivo ou de linguagem associado, fase aguda/subaguda (1–6 meses) e reavaliar cada consistência alimentar."
+        "ajuste_seguranca": "Protocolos Theta-Burst (iTBS/cTBS) requerem menos tempo de sessão e menor intensidade vs. rTMS tradicional; monitorar tolerabilidade local.",
+        "fatores_moduladores": "Avaliar extensão cortical/subcortical, déficit cognitivo ou de linguagem associado e fase aguda/subaguda (1–6 meses)."
       }
     },
     "avc-disfagia::rtms_tronco": {
@@ -1099,16 +1031,16 @@
         }
       },
       "grade": {
-        "certeza": "Baixa",
-        "simbolos": "⊕⊕◯◯",
+        "certeza": "Moderada",
+        "simbolos": "⊕⊕⊕◯",
         "forca_recomendacao": "Condicional",
-        "observacao_dominios": "Quadro pontilhado para tronco encefálico.",
+        "observacao_dominios": "Estimulação bilateral cerebelar superior à unilateral em AVC de tronco.",
         "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
       },
       "tolerabilidade_roadmap": {
         "orientacao_tolerabilidade": "Avaliar contraindicações: presença de implantes metálicos no cérebro, histórico de convulsões não controladas e implantes cocleares.",
-        "ajuste_seguranca": "Protocolos Theta-Burst (iTBS/cTBS) requerem menos tempo de sessão e menor intensidade vs. rTMS tradicional. Em tDCS unilateral P1, considerar 1,4 mA por 20 min (Xie et al., 2023) conforme tolerância.",
-        "fatores_moduladores": "Avaliar extensão cortical/subcortical, déficit cognitivo ou de linguagem associado, fase aguda/subaguda (1–6 meses) e reavaliar cada consistência alimentar."
+        "ajuste_seguranca": "Protocolos Theta-Burst (iTBS/cTBS) requerem menos tempo de sessão e menor intensidade vs. rTMS tradicional; monitorar tolerabilidade local.",
+        "fatores_moduladores": "Avaliar extensão cortical/subcortical, déficit cognitivo ou de linguagem associado e fase aguda/subaguda (1–6 meses)."
       }
     },
     "avc-disfagia::tdcs_disf_uni": {
@@ -1136,13 +1068,13 @@
         "certeza": "Moderada",
         "simbolos": "⊕⊕⊕◯",
         "forca_recomendacao": "Condicional",
-        "observacao_dominios": "Xie et al. (2023) sugerem 1,4 mA / 20 min no P1.",
+        "observacao_dominios": "Xie et al. (2023) sugerem 1,4 mA / 20 min como otimização clínica.",
         "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
       },
       "tolerabilidade_roadmap": {
         "orientacao_tolerabilidade": "Avaliar contraindicações: presença de implantes metálicos no cérebro, histórico de convulsões não controladas e implantes cocleares.",
-        "ajuste_seguranca": "Protocolos Theta-Burst (iTBS/cTBS) requerem menos tempo de sessão e menor intensidade vs. rTMS tradicional. Em tDCS unilateral P1, considerar 1,4 mA por 20 min (Xie et al., 2023) conforme tolerância.",
-        "fatores_moduladores": "Avaliar extensão cortical/subcortical, déficit cognitivo ou de linguagem associado, fase aguda/subaguda (1–6 meses) e reavaliar cada consistência alimentar."
+        "ajuste_seguranca": "Protocolos Theta-Burst (iTBS/cTBS) requerem menos tempo de sessão e menor intensidade vs. rTMS tradicional; monitorar tolerabilidade local.",
+        "fatores_moduladores": "Avaliar extensão cortical/subcortical, déficit cognitivo ou de linguagem associado e fase aguda/subaguda (1–6 meses)."
       }
     },
     "avc-disfagia::tdcs_disf_bi": {
@@ -1172,13 +1104,13 @@
         "certeza": "Baixa",
         "simbolos": "⊕⊕◯◯",
         "forca_recomendacao": "Condicional",
-        "observacao_dominios": "Alternar hemisférios antes de Alt A / tAVNS.",
+        "observacao_dominios": "Alternar hemisférios antes da etapa de ajustes e tAVNS.",
         "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
       },
       "tolerabilidade_roadmap": {
         "orientacao_tolerabilidade": "Avaliar contraindicações: presença de implantes metálicos no cérebro, histórico de convulsões não controladas e implantes cocleares.",
-        "ajuste_seguranca": "Protocolos Theta-Burst (iTBS/cTBS) requerem menos tempo de sessão e menor intensidade vs. rTMS tradicional. Em tDCS unilateral P1, considerar 1,4 mA por 20 min (Xie et al., 2023) conforme tolerância.",
-        "fatores_moduladores": "Avaliar extensão cortical/subcortical, déficit cognitivo ou de linguagem associado, fase aguda/subaguda (1–6 meses) e reavaliar cada consistência alimentar."
+        "ajuste_seguranca": "Protocolos Theta-Burst (iTBS/cTBS) requerem menos tempo de sessão e menor intensidade vs. rTMS tradicional; monitorar tolerabilidade local.",
+        "fatores_moduladores": "Avaliar extensão cortical/subcortical, déficit cognitivo ou de linguagem associado e fase aguda/subaguda (1–6 meses)."
       }
     },
     "doenca-parkinson::funcao_global": {
@@ -1211,7 +1143,7 @@
       },
       "tolerabilidade_roadmap": {
         "orientacao_tolerabilidade": "Cefaleia é o efeito adverso mais frequente durante/após estimulação; atenção a contraindicações (implantes metálicos e epilepsia não controlada).",
-        "ajuste_seguranca": "Aplicar sempre no estado 'ON' da medicação dopaminérgica. Ajuste de Segurança: no Protocolo 10 (Dual M1 + tsMS nível C7), aplicar a 50% da saída máxima no nível C7.",
+        "ajuste_seguranca": "Em protocolos combinados cervicais (M1 + tsMS nível C7), aplicar intensidade reduzida a 50% da saída máxima do estimulador no nível C7.",
         "fatores_moduladores": "Fenótipo rígido-acinético apresenta melhor prognóstico; benzodiazepínicos diminuem os efeitos terapêuticos. Se discinesia por levodopa ou freezing, priorizar protocolos voltados a esses sintomas."
       }
     },
@@ -1240,12 +1172,12 @@
         "certeza": "Moderada",
         "simbolos": "⊕⊕⊕◯",
         "forca_recomendacao": "Condicional",
-        "observacao_dominios": "Usar 3 cm à frente de Cz quando hotspot ausente.",
+        "observacao_dominios": "Usar 3 cm à frente de Cz quando hotspot do abdutor do hálux ausente.",
         "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
       },
       "tolerabilidade_roadmap": {
         "orientacao_tolerabilidade": "Cefaleia é o efeito adverso mais frequente durante/após estimulação; atenção a contraindicações (implantes metálicos e epilepsia não controlada).",
-        "ajuste_seguranca": "Aplicar sempre no estado 'ON' da medicação dopaminérgica. Ajuste de Segurança: no Protocolo 10 (Dual M1 + tsMS nível C7), aplicar a 50% da saída máxima no nível C7.",
+        "ajuste_seguranca": "Em protocolos combinados cervicais (M1 + tsMS nível C7), aplicar intensidade reduzida a 50% da saída máxima do estimulador no nível C7.",
         "fatores_moduladores": "Fenótipo rígido-acinético apresenta melhor prognóstico; benzodiazepínicos diminuem os efeitos terapêuticos. Se discinesia por levodopa ou freezing, priorizar protocolos voltados a esses sintomas."
       }
     },
@@ -1263,7 +1195,7 @@
           "instrumento": "AMSTAR 2 (Shea et al., 2017 — Avaliação crítica de revisões sistemáticas)",
           "nivel": "Moderada",
           "resumo_criterio": "Metanálise geral DP (Zhang et al., 2022).",
-          "justificativa_preliminar": "Protocolo dual F3+M1 com duplo cone oriundo de ensaio individual.",
+          "justificativa_preliminar": "Protocolo dual F3+M1 com bobina duplo cone e alta carga de pulsos.",
           "sinais_metodologicos": [
             "Protocolo registrado",
             "Análise de heterogeneidade"
@@ -1272,15 +1204,15 @@
         }
       },
       "grade": {
-        "certeza": "Baixa",
-        "simbolos": "⊕⊕◯◯",
+        "certeza": "Moderada",
+        "simbolos": "⊕⊕⊕◯",
         "forca_recomendacao": "Condicional",
-        "observacao_dominios": "Alta carga de pulsos (5.000–7.000 p) no estado ON.",
+        "observacao_dominios": "Alta carga de pulsos (5.000–7.000 p); escalona para tsMS C7 e T10-T12 em Ajustes.",
         "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
       },
       "tolerabilidade_roadmap": {
         "orientacao_tolerabilidade": "Cefaleia é o efeito adverso mais frequente durante/após estimulação; atenção a contraindicações (implantes metálicos e epilepsia não controlada).",
-        "ajuste_seguranca": "Aplicar sempre no estado 'ON' da medicação dopaminérgica. Ajuste de Segurança: no Protocolo 10 (Dual M1 + tsMS nível C7), aplicar a 50% da saída máxima no nível C7.",
+        "ajuste_seguranca": "Em protocolos combinados cervicais (M1 + tsMS nível C7), aplicar intensidade reduzida a 50% da saída máxima do estimulador no nível C7.",
         "fatores_moduladores": "Fenótipo rígido-acinético apresenta melhor prognóstico; benzodiazepínicos diminuem os efeitos terapêuticos. Se discinesia por levodopa ou freezing, priorizar protocolos voltados a esses sintomas."
       }
     },
@@ -1309,12 +1241,12 @@
         "certeza": "Moderada",
         "simbolos": "⊕⊕⊕◯",
         "forca_recomendacao": "Condicional",
-        "observacao_dominios": "P6 inicia pelo lado contralateral ao dimídio mais comprometido.",
+        "observacao_dominios": "Iniciar M1 pelo hemisfério contralateral ao dimídio mais comprometido.",
         "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
       },
       "tolerabilidade_roadmap": {
         "orientacao_tolerabilidade": "Cefaleia é o efeito adverso mais frequente durante/após estimulação; atenção a contraindicações (implantes metálicos e epilepsia não controlada).",
-        "ajuste_seguranca": "Aplicar sempre no estado 'ON' da medicação dopaminérgica. Ajuste de Segurança: no Protocolo 10 (Dual M1 + tsMS nível C7), aplicar a 50% da saída máxima no nível C7.",
+        "ajuste_seguranca": "Em protocolos combinados cervicais (M1 + tsMS nível C7), aplicar intensidade reduzida a 50% da saída máxima do estimulador no nível C7.",
         "fatores_moduladores": "Fenótipo rígido-acinético apresenta melhor prognóstico; benzodiazepínicos diminuem os efeitos terapêuticos. Se discinesia por levodopa ou freezing, priorizar protocolos voltados a esses sintomas."
       }
     },
@@ -1332,7 +1264,7 @@
           "instrumento": "AMSTAR 2 (Shea et al., 2017 — Avaliação crítica de revisões sistemáticas)",
           "nivel": "Moderada",
           "resumo_criterio": "Metanálise DP (Zhang et al., 2022) + ensaios recentes tsMS.",
-          "justificativa_preliminar": "Cadeia escalonada até tsMS T3 e C7 (com ajuste de segurança).",
+          "justificativa_preliminar": "Cadeia escalonada diretamente para tsMS T3, C7 (ajuste de segurança) e T10-T12.",
           "sinais_metodologicos": [
             "Protocolo registrado",
             "Análise de heterogeneidade"
@@ -1344,12 +1276,12 @@
         "certeza": "Moderada",
         "simbolos": "⊕⊕⊕◯",
         "forca_recomendacao": "Condicional",
-        "observacao_dominios": "P8 sólido; tsMS T3/C7 são exploratórios.",
+        "observacao_dominios": "M1 sólido; tsMS T3, C7 e T10-T12 são opções exploratórias da seção de Ajustes.",
         "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
       },
       "tolerabilidade_roadmap": {
         "orientacao_tolerabilidade": "Cefaleia é o efeito adverso mais frequente durante/após estimulação; atenção a contraindicações (implantes metálicos e epilepsia não controlada).",
-        "ajuste_seguranca": "Aplicar sempre no estado 'ON' da medicação dopaminérgica. Ajuste de Segurança: no Protocolo 10 (Dual M1 + tsMS nível C7), aplicar a 50% da saída máxima no nível C7.",
+        "ajuste_seguranca": "Em protocolos combinados cervicais (M1 + tsMS nível C7), aplicar intensidade reduzida a 50% da saída máxima do estimulador no nível C7.",
         "fatores_moduladores": "Fenótipo rígido-acinético apresenta melhor prognóstico; benzodiazepínicos diminuem os efeitos terapêuticos. Se discinesia por levodopa ou freezing, priorizar protocolos voltados a esses sintomas."
       }
     },
@@ -1384,8 +1316,8 @@
       },
       "tolerabilidade_roadmap": {
         "orientacao_tolerabilidade": "Reduzir a intensidade (em % do LMR) se houver intolerância do paciente nos primeiros trens de estimulação.",
-        "ajuste_seguranca": "Curva dose-resposta possui platô em 4.000 a 5.000 pulsos/sessão; associar tratamento medicamentoso potencializa eficácia.",
-        "fatores_moduladores": "Melhora sintomática atinge pico entre a 3ª e a 4ª semanas e pode decair após 3 meses — programar reavaliação após 3 meses da indução."
+        "ajuste_seguranca": "Frequência é parâmetro chave; a curva dose-resposta atinge platô entre 4.000 e 5.000 pulsos por sessão.",
+        "fatores_moduladores": "Acompanhar resposta até a 3ª–4ª semana e programar reavaliação estruturada após 3 meses da indução."
       }
     },
     "depressao-maior::tempo_reduzido": {
@@ -1418,42 +1350,8 @@
       },
       "tolerabilidade_roadmap": {
         "orientacao_tolerabilidade": "Reduzir a intensidade (em % do LMR) se houver intolerância do paciente nos primeiros trens de estimulação.",
-        "ajuste_seguranca": "Curva dose-resposta possui platô em 4.000 a 5.000 pulsos/sessão; associar tratamento medicamentoso potencializa eficácia.",
-        "fatores_moduladores": "Melhora sintomática atinge pico entre a 3ª e a 4ª semanas e pode decair após 3 meses — programar reavaliação após 3 meses da indução."
-      }
-    },
-    "depressao-maior::comorbidade_ansiedade": {
-      "condicao_id": "depressao-maior",
-      "fator_id": "comorbidade_ansiedade",
-      "meta_analise": {
-        "autores": "Li, H., et al.",
-        "ano": 2021,
-        "titulo": "Comparative efficacy and acceptability of neuromodulation procedures in the treatment of treatment-resistant depression: a network meta-analysis of randomized controlled trials",
-        "periodico": "Journal of Affective Disorders",
-        "doi": "10.1016/j.jad.2021.03.019",
-        "url_doi": "https://doi.org/10.1016/j.jad.2021.03.019",
-        "amstar2": {
-          "instrumento": "AMSTAR 2 (Shea et al., 2017 — Avaliação crítica de revisões sistemáticas)",
-          "nivel": "Moderada",
-          "resumo_criterio": "Metanálise em rede comparativa (Li et al., 2021 · Kishi et al., 2024).",
-          "justificativa_preliminar": "Bilateral F4+F3 demonstra boa aceitabilidade.",
-          "sinais_metodologicos": [
-            "PRISMA"
-          ],
-          "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
-        }
-      },
-      "grade": {
-        "certeza": "Alta",
-        "simbolos": "⊕⊕⊕⊕",
-        "forca_recomendacao": "Forte",
-        "observacao_dominios": "Protocolo 2 do ramo convencional.",
-        "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
-      },
-      "tolerabilidade_roadmap": {
-        "orientacao_tolerabilidade": "Reduzir a intensidade (em % do LMR) se houver intolerância do paciente nos primeiros trens de estimulação.",
-        "ajuste_seguranca": "Curva dose-resposta possui platô em 4.000 a 5.000 pulsos/sessão; associar tratamento medicamentoso potencializa eficácia.",
-        "fatores_moduladores": "Melhora sintomática atinge pico entre a 3ª e a 4ª semanas e pode decair após 3 meses — programar reavaliação após 3 meses da indução."
+        "ajuste_seguranca": "Frequência é parâmetro chave; a curva dose-resposta atinge platô entre 4.000 e 5.000 pulsos por sessão.",
+        "fatores_moduladores": "Acompanhar resposta até a 3ª–4ª semana e programar reavaliação estruturada após 3 meses da indução."
       }
     },
     "ansiedade-generalizada::moderada_alta": {
@@ -1470,7 +1368,7 @@
           "instrumento": "AMSTAR 2 (Shea et al., 2017 — Avaliação crítica de revisões sistemáticas)",
           "nivel": "Baixa",
           "resumo_criterio": "Metanálise em ansiedade e trauma (Cirillo et al., 2019).",
-          "justificativa_preliminar": "Replicação existente apenas para 1 Hz F4 (P1); P2 e P4 ainda limitados.",
+          "justificativa_preliminar": "Replicação existente apenas para 1 Hz F4; cTBS 600p e 20 Hz F4 ainda limitados.",
           "sinais_metodologicos": [
             "PRISMA"
           ],
@@ -1481,12 +1379,12 @@
         "certeza": "Baixa",
         "simbolos": "⊕⊕◯◯",
         "forca_recomendacao": "Condicional",
-        "observacao_dominios": "P2 limitado a 600 pulsos por segurança; P4 requer vigilância convulsiva.",
+        "observacao_dominios": "cTBS limitado a 600 pulsos por segurança; 20 Hz F4 requer vigilância convulsiva.",
         "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
       },
       "tolerabilidade_roadmap": {
-        "orientacao_tolerabilidade": "Em cTBS (Protocolo 2), embora 1.800 p ocorra em depressão, no TAG optou-se por 600 pulsos priorizando segurança. O Protocolo 4 (20 Hz F4) excede diretriz de segurança e registrou 1 crise tônico-clônica.",
-        "ajuste_seguranca": "Protocolos iniciam com 5 sessões/semana por 2–4 semanas, variando de 10 a 25 sessões, com desmame gradual para 3–2 sessões/semana antes de encerrar.",
+        "orientacao_tolerabilidade": "Em cTBS em F4 no TAG optou-se por 600 pulsos priorizando segurança clínica. A estimulação a 20 Hz em F4 excede a diretriz de segurança e registrou 1 crise tônico-clônica.",
+        "ajuste_seguranca": "Protocolos iniciam com 5 sessões/semana por 2–4 semanas (10 a 25 sessões totais) com desmame gradual para 3–2 sessões/semana antes de encerrar.",
         "fatores_moduladores": "Como a HAM-A não é validada no Brasil, associar BAI, GAD-7 ou DASS-21; falha = ausência de melhora após 5 tentativas com diferentes protocolos."
       }
     },
@@ -1519,42 +1417,8 @@
         "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
       },
       "tolerabilidade_roadmap": {
-        "orientacao_tolerabilidade": "Em cTBS (Protocolo 2), embora 1.800 p ocorra em depressão, no TAG optou-se por 600 pulsos priorizando segurança. O Protocolo 4 (20 Hz F4) excede diretriz de segurança e registrou 1 crise tônico-clônica.",
-        "ajuste_seguranca": "Protocolos iniciam com 5 sessões/semana por 2–4 semanas, variando de 10 a 25 sessões, com desmame gradual para 3–2 sessões/semana antes de encerrar.",
-        "fatores_moduladores": "Como a HAM-A não é validada no Brasil, associar BAI, GAD-7 ou DASS-21; falha = ausência de melhora após 5 tentativas com diferentes protocolos."
-      }
-    },
-    "ansiedade-generalizada::comorbidade_depressiva": {
-      "condicao_id": "ansiedade-generalizada",
-      "fator_id": "comorbidade_depressiva",
-      "meta_analise": {
-        "autores": "Cirillo, P., et al.",
-        "ano": 2019,
-        "titulo": "Transcranial magnetic stimulation in anxiety and trauma‐related disorders: A systematic review and meta‐analysis",
-        "periodico": "Brain and Behavior",
-        "doi": "10.1002/brb3.1284",
-        "url_doi": "https://doi.org/10.1002/brb3.1284",
-        "amstar2": {
-          "instrumento": "AMSTAR 2 (Shea et al., 2017 — Avaliação crítica de revisões sistemáticas)",
-          "nivel": "Baixa",
-          "resumo_criterio": "Metanálise transtornos de ansiedade (Cirillo et al., 2019).",
-          "justificativa_preliminar": "Indicado na presença de sintomas depressivos comórbidos.",
-          "sinais_metodologicos": [
-            "PRISMA"
-          ],
-          "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
-        }
-      },
-      "grade": {
-        "certeza": "Baixa",
-        "simbolos": "⊕⊕◯◯",
-        "forca_recomendacao": "Condicional",
-        "observacao_dominios": "Indicado quando há comorbidade depressiva associada.",
-        "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
-      },
-      "tolerabilidade_roadmap": {
-        "orientacao_tolerabilidade": "Em cTBS (Protocolo 2), embora 1.800 p ocorra em depressão, no TAG optou-se por 600 pulsos priorizando segurança. O Protocolo 4 (20 Hz F4) excede diretriz de segurança e registrou 1 crise tônico-clônica.",
-        "ajuste_seguranca": "Protocolos iniciam com 5 sessões/semana por 2–4 semanas, variando de 10 a 25 sessões, com desmame gradual para 3–2 sessões/semana antes de encerrar.",
+        "orientacao_tolerabilidade": "Em cTBS em F4 no TAG optou-se por 600 pulsos priorizando segurança clínica. A estimulação a 20 Hz em F4 excede a diretriz de segurança e registrou 1 crise tônico-clônica.",
+        "ajuste_seguranca": "Protocolos iniciam com 5 sessões/semana por 2–4 semanas (10 a 25 sessões totais) com desmame gradual para 3–2 sessões/semana antes de encerrar.",
         "fatores_moduladores": "Como a HAM-A não é validada no Brasil, associar BAI, GAD-7 ou DASS-21; falha = ausência de melhora após 5 tentativas com diferentes protocolos."
       }
     },
@@ -1589,8 +1453,8 @@
       },
       "tolerabilidade_roadmap": {
         "orientacao_tolerabilidade": "Reduzir intensidade da estimulação caso haja intolerância nos primeiros trens de pulso e aumentar a dose gradualmente.",
-        "ajuste_seguranca": "Em casos graves, ideação suicida ou risco de abandono, preferir Protocolo 3 bilateral (resposta rápida já a partir da 4ª sessão).",
-        "fatores_moduladores": "Associar fortemente psicoterapias focadas no trauma (Exposição Prolongada, TCC Focada no Trauma, EMDR); resposta < 25% CAPS/PCL-5 exige investigar borderline/substâncias e estressores."
+        "ajuste_seguranca": "Em casos graves, ideação suicida ou risco de abandono, preferir estimulação bilateral F3+F4 (resposta rápida já a partir da 4ª sessão).",
+        "fatores_moduladores": "Associar fortemente psicoterapias focadas no trauma (Exposição Prolongada, TCC Focada no Trauma, EMDR)."
       }
     },
     "tept::tept_bilateral": {
@@ -1623,8 +1487,8 @@
       },
       "tolerabilidade_roadmap": {
         "orientacao_tolerabilidade": "Reduzir intensidade da estimulação caso haja intolerância nos primeiros trens de pulso e aumentar a dose gradualmente.",
-        "ajuste_seguranca": "Em casos graves, ideação suicida ou risco de abandono, preferir Protocolo 3 bilateral (resposta rápida já a partir da 4ª sessão).",
-        "fatores_moduladores": "Associar fortemente psicoterapias focadas no trauma (Exposição Prolongada, TCC Focada no Trauma, EMDR); resposta < 25% CAPS/PCL-5 exige investigar borderline/substâncias e estressores."
+        "ajuste_seguranca": "Em casos graves, ideação suicida ou risco de abandono, preferir estimulação bilateral F3+F4 (resposta rápida já a partir da 4ª sessão).",
+        "fatores_moduladores": "Associar fortemente psicoterapias focadas no trauma (Exposição Prolongada, TCC Focada no Trauma, EMDR)."
       }
     },
     "tept::tept_itbs_f4": {
@@ -1657,8 +1521,8 @@
       },
       "tolerabilidade_roadmap": {
         "orientacao_tolerabilidade": "Reduzir intensidade da estimulação caso haja intolerância nos primeiros trens de pulso e aumentar a dose gradualmente.",
-        "ajuste_seguranca": "Em casos graves, ideação suicida ou risco de abandono, preferir Protocolo 3 bilateral (resposta rápida já a partir da 4ª sessão).",
-        "fatores_moduladores": "Associar fortemente psicoterapias focadas no trauma (Exposição Prolongada, TCC Focada no Trauma, EMDR); resposta < 25% CAPS/PCL-5 exige investigar borderline/substâncias e estressores."
+        "ajuste_seguranca": "Em casos graves, ideação suicida ou risco de abandono, preferir estimulação bilateral F3+F4 (resposta rápida já a partir da 4ª sessão).",
+        "fatores_moduladores": "Associar fortemente psicoterapias focadas no trauma (Exposição Prolongada, TCC Focada no Trauma, EMDR)."
       }
     },
     "tept::comorbidade_depressiva": {
@@ -1693,8 +1557,8 @@
       },
       "tolerabilidade_roadmap": {
         "orientacao_tolerabilidade": "Reduzir intensidade da estimulação caso haja intolerância nos primeiros trens de pulso e aumentar a dose gradualmente.",
-        "ajuste_seguranca": "Em casos graves, ideação suicida ou risco de abandono, preferir Protocolo 3 bilateral (resposta rápida já a partir da 4ª sessão).",
-        "fatores_moduladores": "Associar fortemente psicoterapias focadas no trauma (Exposição Prolongada, TCC Focada no Trauma, EMDR); resposta < 25% CAPS/PCL-5 exige investigar borderline/substâncias e estressores."
+        "ajuste_seguranca": "Em casos graves, ideação suicida ou risco de abandono, preferir estimulação bilateral F3+F4 (resposta rápida já a partir da 4ª sessão).",
+        "fatores_moduladores": "Associar fortemente psicoterapias focadas no trauma (Exposição Prolongada, TCC Focada no Trauma, EMDR)."
       }
     },
     "dor-neuropatica::geral": {
@@ -1728,8 +1592,8 @@
       },
       "tolerabilidade_roadmap": {
         "orientacao_tolerabilidade": "Em rTMS, posicionar bobina em figura de 8 com cabo virado para trás e angulado a 45 graus com o plano sagital. Na alodinia mecânica, preferir rPMS (sem encostar a bobina na pele).",
-        "ajuste_seguranca": "Manter avaliação de alterações sensoriais (alodinia, hiperalgesia, hiperpatia), sono, humor e qualidade de vida, pois a analgesia pode consolidar nas semanas pós-indução.",
-        "fatores_moduladores": "Redução < 20% na EVA em 5 sessões define resposta insatisfatória. Associar estimulação elétrica ou magnética periférica de forma segura quando indicado."
+        "ajuste_seguranca": "Manter avaliação de alterações sensoriais (alodinia, hiperalgesia, hiperpatia), sono, humor e qualidade de vida.",
+        "fatores_moduladores": "Avaliar consolidação analgésica nas semanas subsequentes ao término da indução e considerar manutenção quando houver resposta sustentada."
       }
     },
     "dor-neuropatica::dor_geral_p2": {
@@ -1757,13 +1621,13 @@
         "certeza": "Alta",
         "simbolos": "⊕⊕⊕⊕",
         "forca_recomendacao": "Forte",
-        "observacao_dominios": "Protocolo clássico de 10 Hz / 2.000 pulsos em M1.",
+        "observacao_dominios": "Regime clássico de 10 Hz / 2.000 pulsos em M1.",
         "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
       },
       "tolerabilidade_roadmap": {
         "orientacao_tolerabilidade": "Em rTMS, posicionar bobina em figura de 8 com cabo virado para trás e angulado a 45 graus com o plano sagital. Na alodinia mecânica, preferir rPMS (sem encostar a bobina na pele).",
-        "ajuste_seguranca": "Manter avaliação de alterações sensoriais (alodinia, hiperalgesia, hiperpatia), sono, humor e qualidade de vida, pois a analgesia pode consolidar nas semanas pós-indução.",
-        "fatores_moduladores": "Redução < 20% na EVA em 5 sessões define resposta insatisfatória. Associar estimulação elétrica ou magnética periférica de forma segura quando indicado."
+        "ajuste_seguranca": "Manter avaliação de alterações sensoriais (alodinia, hiperalgesia, hiperpatia), sono, humor e qualidade de vida.",
+        "fatores_moduladores": "Avaliar consolidação analgésica nas semanas subsequentes ao término da indução e considerar manutenção quando houver resposta sustentada."
       }
     },
     "dor-neuropatica::dor_fantasma": {
@@ -1796,8 +1660,8 @@
       },
       "tolerabilidade_roadmap": {
         "orientacao_tolerabilidade": "Em rTMS, posicionar bobina em figura de 8 com cabo virado para trás e angulado a 45 graus com o plano sagital. Na alodinia mecânica, preferir rPMS (sem encostar a bobina na pele).",
-        "ajuste_seguranca": "Manter avaliação de alterações sensoriais (alodinia, hiperalgesia, hiperpatia), sono, humor e qualidade de vida, pois a analgesia pode consolidar nas semanas pós-indução.",
-        "fatores_moduladores": "Redução < 20% na EVA em 5 sessões define resposta insatisfatória. Associar estimulação elétrica ou magnética periférica de forma segura quando indicado."
+        "ajuste_seguranca": "Manter avaliação de alterações sensoriais (alodinia, hiperalgesia, hiperpatia), sono, humor e qualidade de vida.",
+        "fatores_moduladores": "Avaliar consolidação analgésica nas semanas subsequentes ao término da indução e considerar manutenção quando houver resposta sustentada."
       }
     },
     "dor-neuropatica::espinhal": {
@@ -1825,13 +1689,13 @@
         "certeza": "Moderada",
         "simbolos": "⊕⊕⊕◯",
         "forca_recomendacao": "Condicional",
-        "observacao_dominios": "Sequência direta tDCS -> tsDCS medular.",
+        "observacao_dominios": "Sequência direta para tsDCS medular em caso de resposta insatisfatória.",
         "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
       },
       "tolerabilidade_roadmap": {
         "orientacao_tolerabilidade": "Em rTMS, posicionar bobina em figura de 8 com cabo virado para trás e angulado a 45 graus com o plano sagital. Na alodinia mecânica, preferir rPMS (sem encostar a bobina na pele).",
-        "ajuste_seguranca": "Manter avaliação de alterações sensoriais (alodinia, hiperalgesia, hiperpatia), sono, humor e qualidade de vida, pois a analgesia pode consolidar nas semanas pós-indução.",
-        "fatores_moduladores": "Redução < 20% na EVA em 5 sessões define resposta insatisfatória. Associar estimulação elétrica ou magnética periférica de forma segura quando indicado."
+        "ajuste_seguranca": "Manter avaliação de alterações sensoriais (alodinia, hiperalgesia, hiperpatia), sono, humor e qualidade de vida.",
+        "fatores_moduladores": "Avaliar consolidação analgésica nas semanas subsequentes ao término da indução e considerar manutenção quando houver resposta sustentada."
       }
     },
     "ataxia-cerebelar::severidade_motora": {
@@ -1848,7 +1712,7 @@
           "instrumento": "AMSTAR 2 (Shea et al., 2017 — Avaliação crítica de revisões sistemáticas)",
           "nivel": "Moderada",
           "resumo_criterio": "Metanálise cerebelar em ataxia (Matsugi et al., 2024).",
-          "justificativa_preliminar": "Consistência de csDCS e ctDCS sobre escores SARA/ICARS.",
+          "justificativa_preliminar": "Consistência de csDCS, ctDCS e escalonamento para iTBS/rTMS sobre escores SARA/ICARS.",
           "sinais_metodologicos": [
             "Protocolo registrado",
             "Avaliação de risco de viés",
@@ -1862,50 +1726,13 @@
         "certeza": "Moderada",
         "simbolos": "⊕⊕⊕◯",
         "forca_recomendacao": "Condicional",
-        "observacao_dominios": "P1 reduz SARA em ~25% (mantido até 6 meses); P2 reduz 14,8%.",
+        "observacao_dominios": "csDCS reduz SARA em ~25% mantido até 6 meses; ctDCS reduz ~14,8%; escalona para iTBS, núcleo denteado e M1.",
         "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
       },
       "tolerabilidade_roadmap": {
         "orientacao_tolerabilidade": "Atentar para eventos adversos durante e após a estimulação e para o efeito terapêutico reduzido na presença de certas medicações (ex.: benzodiazepínicos).",
-        "ajuste_seguranca": "Em estimulação medular T11 (csDCS), usar eletrodo de 8 × 6 cm (48 cm²). Em núcleo denteado, utilizar obrigatoriamente neuronavegação; para estimular vérmis considerar 1 cm abaixo do ínion e para hemisférios cerebelares 1 cm abaixo e 3 cm laterais.",
-        "fatores_moduladores": "Qualidade da resposta em avaliação semanal + auto-relato do paciente; uso de benzodiazepínicos e extensão de ciclos para 10 a 20 sessões."
-      }
-    },
-    "ataxia-cerebelar::ataxia_rtms_nao_resp": {
-      "condicao_id": "ataxia-cerebelar",
-      "fator_id": "ataxia_rtms_nao_resp",
-      "meta_analise": {
-        "autores": "Akiyoshi Matsugi et al.",
-        "ano": 2024,
-        "titulo": "Effects of Non‐Invasive Brain Stimulation for Degenerative Cerebellar Ataxia: A Systematic Review and Meta‐Analysis",
-        "periodico": "Movement Disorders Clinical Practice",
-        "doi": "10.1002/mdc3.14205",
-        "url_doi": "https://doi.org/10.1002/mdc3.14205",
-        "amstar2": {
-          "instrumento": "AMSTAR 2 (Shea et al., 2017 — Avaliação crítica de revisões sistemáticas)",
-          "nivel": "Moderada",
-          "resumo_criterio": "Metanálise cerebelar (Matsugi et al., 2024).",
-          "justificativa_preliminar": "Inclui ECRs em iTBS e rTMS cerebelar.",
-          "sinais_metodologicos": [
-            "Protocolo registrado",
-            "Avaliação de risco de viés",
-            "Análise de heterogeneidade",
-            "GRADE / Certeza relatados"
-          ],
-          "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
-        }
-      },
-      "grade": {
-        "certeza": "Baixa",
-        "simbolos": "⊕⊕◯◯",
-        "forca_recomendacao": "Condicional",
-        "observacao_dominios": "Núcleo denteado é protocolo experimental tracejado.",
-        "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
-      },
-      "tolerabilidade_roadmap": {
-        "orientacao_tolerabilidade": "Atentar para eventos adversos durante e após a estimulação e para o efeito terapêutico reduzido na presença de certas medicações (ex.: benzodiazepínicos).",
-        "ajuste_seguranca": "Em estimulação medular T11 (csDCS), usar eletrodo de 8 × 6 cm (48 cm²). Em núcleo denteado, utilizar obrigatoriamente neuronavegação; para estimular vérmis considerar 1 cm abaixo do ínion e para hemisférios cerebelares 1 cm abaixo e 3 cm laterais.",
-        "fatores_moduladores": "Qualidade da resposta em avaliação semanal + auto-relato do paciente; uso de benzodiazepínicos e extensão de ciclos para 10 a 20 sessões."
+        "ajuste_seguranca": "Em estimulação medular T11 (csDCS), usar eletrodo de 8 × 6 cm (48 cm²). Em núcleo denteado, utilizar obrigatoriamente neuronavegação.",
+        "fatores_moduladores": "Avaliar qualidade da resposta semanalmente combinando escala do pré-teste e auto-relato do paciente."
       }
     },
     "ataxia-cerebelar::destreza_manual": {
@@ -1941,8 +1768,8 @@
       },
       "tolerabilidade_roadmap": {
         "orientacao_tolerabilidade": "Atentar para eventos adversos durante e após a estimulação e para o efeito terapêutico reduzido na presença de certas medicações (ex.: benzodiazepínicos).",
-        "ajuste_seguranca": "Em estimulação medular T11 (csDCS), usar eletrodo de 8 × 6 cm (48 cm²). Em núcleo denteado, utilizar obrigatoriamente neuronavegação; para estimular vérmis considerar 1 cm abaixo do ínion e para hemisférios cerebelares 1 cm abaixo e 3 cm laterais.",
-        "fatores_moduladores": "Qualidade da resposta em avaliação semanal + auto-relato do paciente; uso de benzodiazepínicos e extensão de ciclos para 10 a 20 sessões."
+        "ajuste_seguranca": "Em estimulação medular T11 (csDCS), usar eletrodo de 8 × 6 cm (48 cm²). Em núcleo denteado, utilizar obrigatoriamente neuronavegação.",
+        "fatores_moduladores": "Avaliar qualidade da resposta semanalmente combinando escala do pré-teste e auto-relato do paciente."
       }
     },
     "ataxia-cerebelar::mobilidade_funcional": {
@@ -1976,8 +1803,8 @@
       },
       "tolerabilidade_roadmap": {
         "orientacao_tolerabilidade": "Atentar para eventos adversos durante e após a estimulação e para o efeito terapêutico reduzido na presença de certas medicações (ex.: benzodiazepínicos).",
-        "ajuste_seguranca": "Em estimulação medular T11 (csDCS), usar eletrodo de 8 × 6 cm (48 cm²). Em núcleo denteado, utilizar obrigatoriamente neuronavegação; para estimular vérmis considerar 1 cm abaixo do ínion e para hemisférios cerebelares 1 cm abaixo e 3 cm laterais.",
-        "fatores_moduladores": "Qualidade da resposta em avaliação semanal + auto-relato do paciente; uso de benzodiazepínicos e extensão de ciclos para 10 a 20 sessões."
+        "ajuste_seguranca": "Em estimulação medular T11 (csDCS), usar eletrodo de 8 × 6 cm (48 cm²). Em núcleo denteado, utilizar obrigatoriamente neuronavegação.",
+        "fatores_moduladores": "Avaliar qualidade da resposta semanalmente combinando escala do pré-teste e auto-relato do paciente."
       }
     },
     "ataxia-cerebelar::equilibrio": {
@@ -1994,7 +1821,7 @@
           "instrumento": "AMSTAR 2 (Shea et al., 2017 — Avaliação crítica de revisões sistemáticas)",
           "nivel": "Moderada",
           "resumo_criterio": "Metanálise equilíbrio em ataxia (Yin et al., 2023).",
-          "justificativa_preliminar": "Efeito clínico de 9,1% na SARA e 11,77% na BBS.",
+          "justificativa_preliminar": "Efeito clínico na BBS e SARA.",
           "sinais_metodologicos": [
             "Protocolo registrado",
             "Avaliação de risco de viés"
@@ -2006,13 +1833,13 @@
         "certeza": "Moderada",
         "simbolos": "⊕⊕⊕◯",
         "forca_recomendacao": "Condicional",
-        "observacao_dominios": "Reavaliar semanalmente via pré-teste + auto-relato.",
+        "observacao_dominios": "Reavaliar semanalmente via pré-teste e auto-relato.",
         "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
       },
       "tolerabilidade_roadmap": {
         "orientacao_tolerabilidade": "Atentar para eventos adversos durante e após a estimulação e para o efeito terapêutico reduzido na presença de certas medicações (ex.: benzodiazepínicos).",
-        "ajuste_seguranca": "Em estimulação medular T11 (csDCS), usar eletrodo de 8 × 6 cm (48 cm²). Em núcleo denteado, utilizar obrigatoriamente neuronavegação; para estimular vérmis considerar 1 cm abaixo do ínion e para hemisférios cerebelares 1 cm abaixo e 3 cm laterais.",
-        "fatores_moduladores": "Qualidade da resposta em avaliação semanal + auto-relato do paciente; uso de benzodiazepínicos e extensão de ciclos para 10 a 20 sessões."
+        "ajuste_seguranca": "Em estimulação medular T11 (csDCS), usar eletrodo de 8 × 6 cm (48 cm²). Em núcleo denteado, utilizar obrigatoriamente neuronavegação.",
+        "fatores_moduladores": "Avaliar qualidade da resposta semanalmente combinando escala do pré-teste e auto-relato do paciente."
       }
     },
     "ataxia-cerebelar::disartria": {
@@ -2041,13 +1868,13 @@
         "certeza": "Muito Baixa",
         "simbolos": "⊕◯◯◯",
         "forca_recomendacao": "Condicional",
-        "observacao_dominios": "Sub-ramo experimental tracejado (disartria atáxica).",
+        "observacao_dominios": "Sub-ramo de disartria com cTBS cerebelar direito em linha pontilhada.",
         "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
       },
       "tolerabilidade_roadmap": {
         "orientacao_tolerabilidade": "Atentar para eventos adversos durante e após a estimulação e para o efeito terapêutico reduzido na presença de certas medicações (ex.: benzodiazepínicos).",
-        "ajuste_seguranca": "Em estimulação medular T11 (csDCS), usar eletrodo de 8 × 6 cm (48 cm²). Em núcleo denteado, utilizar obrigatoriamente neuronavegação; para estimular vérmis considerar 1 cm abaixo do ínion e para hemisférios cerebelares 1 cm abaixo e 3 cm laterais.",
-        "fatores_moduladores": "Qualidade da resposta em avaliação semanal + auto-relato do paciente; uso de benzodiazepínicos e extensão de ciclos para 10 a 20 sessões."
+        "ajuste_seguranca": "Em estimulação medular T11 (csDCS), usar eletrodo de 8 × 6 cm (48 cm²). Em núcleo denteado, utilizar obrigatoriamente neuronavegação.",
+        "fatores_moduladores": "Avaliar qualidade da resposta semanalmente combinando escala do pré-teste e auto-relato do paciente."
       }
     },
     "paralisia-cerebral::deficits_motores": {
@@ -2080,8 +1907,8 @@
       },
       "tolerabilidade_roadmap": {
         "orientacao_tolerabilidade": "Rampa tDCS recomendada: 10 segundos (subida/descida), ajustável às sensibilidades sensoriais pediátricas. Monitorar irritabilidade, cefaleia, fadiga e desconforto local.",
-        "ajuste_seguranca": "PAUSA IMEDIATA diante de qualquer sintoma neurológico agudo (confusão, alteração de consciência, sinais motores abruptos). Proibido protocolo acelerado (> 1 sessão/dia).",
-        "fatores_moduladores": "Não aplicar com fontanelas abertas ou alterações craniofaciais (micro/macro/plagiocefalia); aguardar 3 a 4 meses entre ciclos e respeitar máximo ≤ 25 sessões totais."
+        "ajuste_seguranca": "PAUSA IMEDIATA diante de qualquer sintoma neurológico agudo (confusão, alteração de consciência, sinais motores abruptos).",
+        "fatores_moduladores": "Não aplicar com fontanelas abertas ou alterações craniofaciais (micro/macro/plagiocefalia); aguardar 3 a 4 meses entre ciclos."
       }
     },
     "paralisia-cerebral::pc_manip_hemi": {
@@ -2109,13 +1936,13 @@
         "certeza": "Moderada",
         "simbolos": "⊕⊕⊕◯",
         "forca_recomendacao": "Condicional",
-        "observacao_dominios": "Protocolo 3 oferece opção de priming com terapia de contensão.",
+        "observacao_dominios": "Inclui opção de priming com terapia de contensão induzida.",
         "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
       },
       "tolerabilidade_roadmap": {
         "orientacao_tolerabilidade": "Rampa tDCS recomendada: 10 segundos (subida/descida), ajustável às sensibilidades sensoriais pediátricas. Monitorar irritabilidade, cefaleia, fadiga e desconforto local.",
-        "ajuste_seguranca": "PAUSA IMEDIATA diante de qualquer sintoma neurológico agudo (confusão, alteração de consciência, sinais motores abruptos). Proibido protocolo acelerado (> 1 sessão/dia).",
-        "fatores_moduladores": "Não aplicar com fontanelas abertas ou alterações craniofaciais (micro/macro/plagiocefalia); aguardar 3 a 4 meses entre ciclos e respeitar máximo ≤ 25 sessões totais."
+        "ajuste_seguranca": "PAUSA IMEDIATA diante de qualquer sintoma neurológico agudo (confusão, alteração de consciência, sinais motores abruptos).",
+        "fatores_moduladores": "Não aplicar com fontanelas abertas ou alterações craniofaciais (micro/macro/plagiocefalia); aguardar 3 a 4 meses entre ciclos."
       }
     },
     "paralisia-cerebral::pc_manip_tetra": {
@@ -2148,8 +1975,8 @@
       },
       "tolerabilidade_roadmap": {
         "orientacao_tolerabilidade": "Rampa tDCS recomendada: 10 segundos (subida/descida), ajustável às sensibilidades sensoriais pediátricas. Monitorar irritabilidade, cefaleia, fadiga e desconforto local.",
-        "ajuste_seguranca": "PAUSA IMEDIATA diante de qualquer sintoma neurológico agudo (confusão, alteração de consciência, sinais motores abruptos). Proibido protocolo acelerado (> 1 sessão/dia).",
-        "fatores_moduladores": "Não aplicar com fontanelas abertas ou alterações craniofaciais (micro/macro/plagiocefalia); aguardar 3 a 4 meses entre ciclos e respeitar máximo ≤ 25 sessões totais."
+        "ajuste_seguranca": "PAUSA IMEDIATA diante de qualquer sintoma neurológico agudo (confusão, alteração de consciência, sinais motores abruptos).",
+        "fatores_moduladores": "Não aplicar com fontanelas abertas ou alterações craniofaciais (micro/macro/plagiocefalia); aguardar 3 a 4 meses entre ciclos."
       }
     },
     "paralisia-cerebral::pc_estab_dip": {
@@ -2182,8 +2009,8 @@
       },
       "tolerabilidade_roadmap": {
         "orientacao_tolerabilidade": "Rampa tDCS recomendada: 10 segundos (subida/descida), ajustável às sensibilidades sensoriais pediátricas. Monitorar irritabilidade, cefaleia, fadiga e desconforto local.",
-        "ajuste_seguranca": "PAUSA IMEDIATA diante de qualquer sintoma neurológico agudo (confusão, alteração de consciência, sinais motores abruptos). Proibido protocolo acelerado (> 1 sessão/dia).",
-        "fatores_moduladores": "Não aplicar com fontanelas abertas ou alterações craniofaciais (micro/macro/plagiocefalia); aguardar 3 a 4 meses entre ciclos e respeitar máximo ≤ 25 sessões totais."
+        "ajuste_seguranca": "PAUSA IMEDIATA diante de qualquer sintoma neurológico agudo (confusão, alteração de consciência, sinais motores abruptos).",
+        "fatores_moduladores": "Não aplicar com fontanelas abertas ou alterações craniofaciais (micro/macro/plagiocefalia); aguardar 3 a 4 meses entre ciclos."
       }
     },
     "paralisia-cerebral::pc_estab_hemi": {
@@ -2216,8 +2043,8 @@
       },
       "tolerabilidade_roadmap": {
         "orientacao_tolerabilidade": "Rampa tDCS recomendada: 10 segundos (subida/descida), ajustável às sensibilidades sensoriais pediátricas. Monitorar irritabilidade, cefaleia, fadiga e desconforto local.",
-        "ajuste_seguranca": "PAUSA IMEDIATA diante de qualquer sintoma neurológico agudo (confusão, alteração de consciência, sinais motores abruptos). Proibido protocolo acelerado (> 1 sessão/dia).",
-        "fatores_moduladores": "Não aplicar com fontanelas abertas ou alterações craniofaciais (micro/macro/plagiocefalia); aguardar 3 a 4 meses entre ciclos e respeitar máximo ≤ 25 sessões totais."
+        "ajuste_seguranca": "PAUSA IMEDIATA diante de qualquer sintoma neurológico agudo (confusão, alteração de consciência, sinais motores abruptos).",
+        "fatores_moduladores": "Não aplicar com fontanelas abertas ou alterações craniofaciais (micro/macro/plagiocefalia); aguardar 3 a 4 meses entre ciclos."
       }
     },
     "paralisia-cerebral::pc_ataxia": {
@@ -2250,8 +2077,8 @@
       },
       "tolerabilidade_roadmap": {
         "orientacao_tolerabilidade": "Rampa tDCS recomendada: 10 segundos (subida/descida), ajustável às sensibilidades sensoriais pediátricas. Monitorar irritabilidade, cefaleia, fadiga e desconforto local.",
-        "ajuste_seguranca": "PAUSA IMEDIATA diante de qualquer sintoma neurológico agudo (confusão, alteração de consciência, sinais motores abruptos). Proibido protocolo acelerado (> 1 sessão/dia).",
-        "fatores_moduladores": "Não aplicar com fontanelas abertas ou alterações craniofaciais (micro/macro/plagiocefalia); aguardar 3 a 4 meses entre ciclos e respeitar máximo ≤ 25 sessões totais."
+        "ajuste_seguranca": "PAUSA IMEDIATA diante de qualquer sintoma neurológico agudo (confusão, alteração de consciência, sinais motores abruptos).",
+        "fatores_moduladores": "Não aplicar com fontanelas abertas ou alterações craniofaciais (micro/macro/plagiocefalia); aguardar 3 a 4 meses entre ciclos."
       }
     },
     "paralisia-cerebral::pc_distonia": {
@@ -2284,8 +2111,8 @@
       },
       "tolerabilidade_roadmap": {
         "orientacao_tolerabilidade": "Rampa tDCS recomendada: 10 segundos (subida/descida), ajustável às sensibilidades sensoriais pediátricas. Monitorar irritabilidade, cefaleia, fadiga e desconforto local.",
-        "ajuste_seguranca": "PAUSA IMEDIATA diante de qualquer sintoma neurológico agudo (confusão, alteração de consciência, sinais motores abruptos). Proibido protocolo acelerado (> 1 sessão/dia).",
-        "fatores_moduladores": "Não aplicar com fontanelas abertas ou alterações craniofaciais (micro/macro/plagiocefalia); aguardar 3 a 4 meses entre ciclos e respeitar máximo ≤ 25 sessões totais."
+        "ajuste_seguranca": "PAUSA IMEDIATA diante de qualquer sintoma neurológico agudo (confusão, alteração de consciência, sinais motores abruptos).",
+        "fatores_moduladores": "Não aplicar com fontanelas abertas ou alterações craniofaciais (micro/macro/plagiocefalia); aguardar 3 a 4 meses entre ciclos."
       }
     },
     "transtorno-espectro-autista::comportamental": {
@@ -2314,12 +2141,12 @@
         "certeza": "Baixa",
         "simbolos": "⊕⊕◯◯",
         "forca_recomendacao": "Condicional",
-        "observacao_dominios": "Associar tarefas comportamentais/sociais e manter psicofármacos estáveis.",
+        "observacao_dominios": "Associar tarefas comportamentais/sociais.",
         "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
       },
       "tolerabilidade_roadmap": {
         "orientacao_tolerabilidade": "VIGILÂNCIA ATÉ 24H PÓS-SESSÃO (Gupta & Adnan, 2018): observar fala excessiva, agitação psicomotora, insônia, euforia, impulsividade ou irritabilidade acentuada.",
-        "ajuste_seguranca": "Condutas escalonadas na intensificação de sintomas: (1) espaçar sessões (ex.: 5×/sem -> 2–3×/sem); (2) reduzir mA/% LMR, duração/trens/pulsos ou trocar para alvo menos ativador; (3) suspender definitivamente se risco de hipomania/descompensação.",
+        "ajuste_seguranca": "Condutas escalonadas na intensificação de sintomas: (1) espaçar sessões (2–3×/sem); (2) reduzir intensidade/duração ou trocar alvo; (3) suspender se risco de hipomania/descompensação.",
         "fatores_moduladores": "Monitorar aceitação tátil e auditiva durante posicionamento de eletrodos/bobina em crianças com hipersensibilidade."
       }
     },
@@ -2337,7 +2164,7 @@
           "instrumento": "AMSTAR 2 (Shea et al., 2017 — Avaliação crítica de revisões sistemáticas)",
           "nivel": "Moderada",
           "resumo_criterio": "Metanálise TEA (Liu et al., 2023).",
-          "justificativa_preliminar": "Rotação progressiva F3 -> F4 -> Bilateral a cada 6 sessões.",
+          "justificativa_preliminar": "Rotação progressiva F3, F4 e Bilateral a cada 6 sessões.",
           "sinais_metodologicos": [
             "Avaliação de risco de viés",
             "Viés de publicação avaliado"
@@ -2354,7 +2181,7 @@
       },
       "tolerabilidade_roadmap": {
         "orientacao_tolerabilidade": "VIGILÂNCIA ATÉ 24H PÓS-SESSÃO (Gupta & Adnan, 2018): observar fala excessiva, agitação psicomotora, insônia, euforia, impulsividade ou irritabilidade acentuada.",
-        "ajuste_seguranca": "Condutas escalonadas na intensificação de sintomas: (1) espaçar sessões (ex.: 5×/sem -> 2–3×/sem); (2) reduzir mA/% LMR, duração/trens/pulsos ou trocar para alvo menos ativador; (3) suspender definitivamente se risco de hipomania/descompensação.",
+        "ajuste_seguranca": "Condutas escalonadas na intensificação de sintomas: (1) espaçar sessões (2–3×/sem); (2) reduzir intensidade/duração ou trocar alvo; (3) suspender se risco de hipomania/descompensação.",
         "fatores_moduladores": "Monitorar aceitação tátil e auditiva durante posicionamento de eletrodos/bobina em crianças com hipersensibilidade."
       }
     },
@@ -2388,7 +2215,7 @@
       },
       "tolerabilidade_roadmap": {
         "orientacao_tolerabilidade": "VIGILÂNCIA ATÉ 24H PÓS-SESSÃO (Gupta & Adnan, 2018): observar fala excessiva, agitação psicomotora, insônia, euforia, impulsividade ou irritabilidade acentuada.",
-        "ajuste_seguranca": "Condutas escalonadas na intensificação de sintomas: (1) espaçar sessões (ex.: 5×/sem -> 2–3×/sem); (2) reduzir mA/% LMR, duração/trens/pulsos ou trocar para alvo menos ativador; (3) suspender definitivamente se risco de hipomania/descompensação.",
+        "ajuste_seguranca": "Condutas escalonadas na intensificação de sintomas: (1) espaçar sessões (2–3×/sem); (2) reduzir intensidade/duração ou trocar alvo; (3) suspender se risco de hipomania/descompensação.",
         "fatores_moduladores": "Monitorar aceitação tátil e auditiva durante posicionamento de eletrodos/bobina em crianças com hipersensibilidade."
       }
     },
@@ -2422,7 +2249,7 @@
       },
       "tolerabilidade_roadmap": {
         "orientacao_tolerabilidade": "VIGILÂNCIA ATÉ 24H PÓS-SESSÃO (Gupta & Adnan, 2018): observar fala excessiva, agitação psicomotora, insônia, euforia, impulsividade ou irritabilidade acentuada.",
-        "ajuste_seguranca": "Condutas escalonadas na intensificação de sintomas: (1) espaçar sessões (ex.: 5×/sem -> 2–3×/sem); (2) reduzir mA/% LMR, duração/trens/pulsos ou trocar para alvo menos ativador; (3) suspender definitivamente se risco de hipomania/descompensação.",
+        "ajuste_seguranca": "Condutas escalonadas na intensificação de sintomas: (1) espaçar sessões (2–3×/sem); (2) reduzir intensidade/duração ou trocar alvo; (3) suspender se risco de hipomania/descompensação.",
         "fatores_moduladores": "Monitorar aceitação tátil e auditiva durante posicionamento de eletrodos/bobina em crianças com hipersensibilidade."
       }
     },
@@ -2440,7 +2267,7 @@
           "instrumento": "AMSTAR 2 (Shea et al., 2017 — Avaliação crítica de revisões sistemáticas)",
           "nivel": "Moderada",
           "resumo_criterio": "Metanálise em rede no TEA (Chen et al., 2024).",
-          "justificativa_preliminar": "Ensaio recente de comunicação em tDCS F3/Fp2 com alternativa bifrontal F3/F4.",
+          "justificativa_preliminar": "Ensaio recente de comunicação em tDCS F3/Fp2 (protocolo único exploratório).",
           "sinais_metodologicos": [
             "Protocolo registrado"
           ],
@@ -2456,7 +2283,7 @@
       },
       "tolerabilidade_roadmap": {
         "orientacao_tolerabilidade": "VIGILÂNCIA ATÉ 24H PÓS-SESSÃO (Gupta & Adnan, 2018): observar fala excessiva, agitação psicomotora, insônia, euforia, impulsividade ou irritabilidade acentuada.",
-        "ajuste_seguranca": "Condutas escalonadas na intensificação de sintomas: (1) espaçar sessões (ex.: 5×/sem -> 2–3×/sem); (2) reduzir mA/% LMR, duração/trens/pulsos ou trocar para alvo menos ativador; (3) suspender definitivamente se risco de hipomania/descompensação.",
+        "ajuste_seguranca": "Condutas escalonadas na intensificação de sintomas: (1) espaçar sessões (2–3×/sem); (2) reduzir intensidade/duração ou trocar alvo; (3) suspender se risco de hipomania/descompensação.",
         "fatores_moduladores": "Monitorar aceitação tátil e auditiva durante posicionamento de eletrodos/bobina em crianças com hipersensibilidade."
       }
     },
@@ -2489,9 +2316,9 @@
         "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
       },
       "tolerabilidade_roadmap": {
-        "orientacao_tolerabilidade": "Em quadros confusionais ou alterações do sono durante a rTMS, reduzir o número de pulsos pela metade. Observar agitação, confusão, humor (atenção se linguagem prejudicada).",
+        "orientacao_tolerabilidade": "Em quadros confusionais ou alterações do sono durante a rTMS, reduzir o número de pulsos pela metade. Observar agitação, confusão e humor (atenção se linguagem prejudicada).",
         "ajuste_seguranca": "Pacientes com dificuldade de locomoção ou histórico de convulsão podem ser beneficiados pela tDCS. Nunca posicionar eletrodos sobre lesões teciduais.",
-        "fatores_moduladores": "Evitar fim do dia em pacientes com Sundowning; não alterar medicações; benzodiazepínicos diminuem efeito; realizar atividades cognitivas dirigidas na sessão."
+        "fatores_moduladores": "Evitar fim do dia em pacientes com Sundowning; não alterar medicações basais; benzodiazepínicos diminuem efeito terapêutico."
       }
     },
     "alzheimer-ccl::ccl_cognicao": {
@@ -2524,9 +2351,9 @@
         "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
       },
       "tolerabilidade_roadmap": {
-        "orientacao_tolerabilidade": "Em quadros confusionais ou alterações do sono durante a rTMS, reduzir o número de pulsos pela metade. Observar agitação, confusão, humor (atenção se linguagem prejudicada).",
+        "orientacao_tolerabilidade": "Em quadros confusionais ou alterações do sono durante a rTMS, reduzir o número de pulsos pela metade. Observar agitação, confusão e humor (atenção se linguagem prejudicada).",
         "ajuste_seguranca": "Pacientes com dificuldade de locomoção ou histórico de convulsão podem ser beneficiados pela tDCS. Nunca posicionar eletrodos sobre lesões teciduais.",
-        "fatores_moduladores": "Evitar fim do dia em pacientes com Sundowning; não alterar medicações; benzodiazepínicos diminuem efeito; realizar atividades cognitivas dirigidas na sessão."
+        "fatores_moduladores": "Evitar fim do dia em pacientes com Sundowning; não alterar medicações basais; benzodiazepínicos diminuem efeito terapêutico."
       }
     },
     "alzheimer-ccl::rtms_parietal_temporal": {
@@ -2554,13 +2381,13 @@
         "certeza": "Moderada",
         "simbolos": "⊕⊕⊕◯",
         "forca_recomendacao": "Condicional",
-        "observacao_dominios": "Pode ser selecionado diretamente ou após falha em CPFDL.",
+        "observacao_dominios": "Pode ser selecionado diretamente ou após resposta insuficiente em CPFDL.",
         "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
       },
       "tolerabilidade_roadmap": {
-        "orientacao_tolerabilidade": "Em quadros confusionais ou alterações do sono durante a rTMS, reduzir o número de pulsos pela metade. Observar agitação, confusão, humor (atenção se linguagem prejudicada).",
+        "orientacao_tolerabilidade": "Em quadros confusionais ou alterações do sono durante a rTMS, reduzir o número de pulsos pela metade. Observar agitação, confusão e humor (atenção se linguagem prejudicada).",
         "ajuste_seguranca": "Pacientes com dificuldade de locomoção ou histórico de convulsão podem ser beneficiados pela tDCS. Nunca posicionar eletrodos sobre lesões teciduais.",
-        "fatores_moduladores": "Evitar fim do dia em pacientes com Sundowning; não alterar medicações; benzodiazepínicos diminuem efeito; realizar atividades cognitivas dirigidas na sessão."
+        "fatores_moduladores": "Evitar fim do dia em pacientes com Sundowning; não alterar medicações basais; benzodiazepínicos diminuem efeito terapêutico."
       }
     },
     "alzheimer-ccl::rm12_apatia_executiva": {
@@ -2592,9 +2419,9 @@
         "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
       },
       "tolerabilidade_roadmap": {
-        "orientacao_tolerabilidade": "Em quadros confusionais ou alterações do sono durante a rTMS, reduzir o número de pulsos pela metade. Observar agitação, confusão, humor (atenção se linguagem prejudicada).",
+        "orientacao_tolerabilidade": "Em quadros confusionais ou alterações do sono durante a rTMS, reduzir o número de pulsos pela metade. Observar agitação, confusão e humor (atenção se linguagem prejudicada).",
         "ajuste_seguranca": "Pacientes com dificuldade de locomoção ou histórico de convulsão podem ser beneficiados pela tDCS. Nunca posicionar eletrodos sobre lesões teciduais.",
-        "fatores_moduladores": "Evitar fim do dia em pacientes com Sundowning; não alterar medicações; benzodiazepínicos diminuem efeito; realizar atividades cognitivas dirigidas na sessão."
+        "fatores_moduladores": "Evitar fim do dia em pacientes com Sundowning; não alterar medicações basais; benzodiazepínicos diminuem efeito terapêutico."
       }
     },
     "alzheimer-ccl::tdcs_ad_cpfdl": {
@@ -2626,9 +2453,9 @@
         "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
       },
       "tolerabilidade_roadmap": {
-        "orientacao_tolerabilidade": "Em quadros confusionais ou alterações do sono durante a rTMS, reduzir o número de pulsos pela metade. Observar agitação, confusão, humor (atenção se linguagem prejudicada).",
+        "orientacao_tolerabilidade": "Em quadros confusionais ou alterações do sono durante a rTMS, reduzir o número de pulsos pela metade. Observar agitação, confusão e humor (atenção se linguagem prejudicada).",
         "ajuste_seguranca": "Pacientes com dificuldade de locomoção ou histórico de convulsão podem ser beneficiados pela tDCS. Nunca posicionar eletrodos sobre lesões teciduais.",
-        "fatores_moduladores": "Evitar fim do dia em pacientes com Sundowning; não alterar medicações; benzodiazepínicos diminuem efeito; realizar atividades cognitivas dirigidas na sessão."
+        "fatores_moduladores": "Evitar fim do dia em pacientes com Sundowning; não alterar medicações basais; benzodiazepínicos diminuem efeito terapêutico."
       }
     },
     "alzheimer-ccl::tdcs_ccl_cpfdl": {
@@ -2645,7 +2472,7 @@
           "instrumento": "AMSTAR 2 (Shea et al., 2017 — Avaliação crítica de revisões sistemáticas)",
           "nivel": "Moderada",
           "resumo_criterio": "Metanálise NIBS + treino cognitivo (Yang et al., 2024).",
-          "justificativa_preliminar": "Protocolo CCL estruturado em 10 sessões.",
+          "justificativa_preliminar": "Montagem estruturada para CCL em 10 sessões.",
           "sinais_metodologicos": [
             "PRISMA",
             "Avaliação de risco de viés"
@@ -2661,9 +2488,9 @@
         "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
       },
       "tolerabilidade_roadmap": {
-        "orientacao_tolerabilidade": "Em quadros confusionais ou alterações do sono durante a rTMS, reduzir o número de pulsos pela metade. Observar agitação, confusão, humor (atenção se linguagem prejudicada).",
+        "orientacao_tolerabilidade": "Em quadros confusionais ou alterações do sono durante a rTMS, reduzir o número de pulsos pela metade. Observar agitação, confusão e humor (atenção se linguagem prejudicada).",
         "ajuste_seguranca": "Pacientes com dificuldade de locomoção ou histórico de convulsão podem ser beneficiados pela tDCS. Nunca posicionar eletrodos sobre lesões teciduais.",
-        "fatores_moduladores": "Evitar fim do dia em pacientes com Sundowning; não alterar medicações; benzodiazepínicos diminuem efeito; realizar atividades cognitivas dirigidas na sessão."
+        "fatores_moduladores": "Evitar fim do dia em pacientes com Sundowning; não alterar medicações basais; benzodiazepínicos diminuem efeito terapêutico."
       }
     },
     "alzheimer-ccl::sintomas_neuropsiquiatricos": {
@@ -2695,9 +2522,9 @@
         "status_homologacao": "Avaliação preliminar — Em homologação pelo GT NAPeN"
       },
       "tolerabilidade_roadmap": {
-        "orientacao_tolerabilidade": "Em quadros confusionais ou alterações do sono durante a rTMS, reduzir o número de pulsos pela metade. Observar agitação, confusão, humor (atenção se linguagem prejudicada).",
+        "orientacao_tolerabilidade": "Em quadros confusionais ou alterações do sono durante a rTMS, reduzir o número de pulsos pela metade. Observar agitação, confusão e humor (atenção se linguagem prejudicada).",
         "ajuste_seguranca": "Pacientes com dificuldade de locomoção ou histórico de convulsão podem ser beneficiados pela tDCS. Nunca posicionar eletrodos sobre lesões teciduais.",
-        "fatores_moduladores": "Evitar fim do dia em pacientes com Sundowning; não alterar medicações; benzodiazepínicos diminuem efeito; realizar atividades cognitivas dirigidas na sessão."
+        "fatores_moduladores": "Evitar fim do dia em pacientes com Sundowning; não alterar medicações basais; benzodiazepínicos diminuem efeito terapêutico."
       }
     }
   }

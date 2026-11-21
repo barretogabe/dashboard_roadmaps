@@ -550,7 +550,7 @@ TOLERABILITY_PROFILES = {
         'fatores_moduladores': 'Uso de benzodiazepínicos/miorrelaxantes, fadiga cerebelar e posicionamento estável sobre hemisférios cerebelares.',
     },
     'rm17_parkinson': {
-        'orientacao_tolerabilidade': 'Cefaleia é o efeito adverso mais frequente; aplicar os protocolos preferencialmente no estado medicamentoso ON e observar orientações de segurança (&) dos parâmetros.',
+        'orientacao_tolerabilidade': 'Cefaleia é o efeito adverso mais frequente; aplicar os protocolos preferencialmente no estado medicamentoso ON e observar orientações clínicas de segurança dos parâmetros.',
         'ajuste_seguranca': 'Utilizar bobina circular para alvos motores de membro inferior e área motora suplementar; reavaliar semanalmente e indicar ciclo de manutenção quando atingir platô.',
         'fatores_moduladores': 'Estado ON/OFF da levodopa, discinesia induzida por levodopa e uso de benzodiazepínicos.',
     },

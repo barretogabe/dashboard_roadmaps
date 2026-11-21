@@ -57,6 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const homeContModalityWrap = document.getElementById('homeContModalityWrap');
   const homeContModality = document.getElementById('homeContModality');
   const homeContProtocol = document.getElementById('homeContProtocol');
+  const homeContStoppedProtocol = document.getElementById('homeContStoppedProtocol');
   const homeContStageShortcuts = document.getElementById('homeContStageShortcuts');
 
   const algorithmActiveContainer = document.getElementById('algorithmActiveContainer');
@@ -113,8 +114,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const btnPemNao = document.getElementById('btnPemNao');
 
   // Botões de Desfecho Oficial da Rede NAPeN
+  const responseAssistantPanel = document.getElementById('responseAssistantPanel');
   const btnOutcomeSuccess = document.getElementById('btnOutcomeSuccess');
   const btnOutcomeDanger = document.getElementById('btnOutcomeDanger');
+  const assistantSequenceTrail = document.getElementById('assistantSequenceTrail');
   const branchResultPanel = document.getElementById('branchResultPanel');
 
   // Evidência Científica e Referências Formais (+ AMSTAR 2 / GRADE)
@@ -176,7 +179,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Elementos do Painel de Monitoramento Clínico & Guia Estratégico de Tolerabilidade/Dose
   const monitoringReeval = document.getElementById('monitoringReeval');
-  const monitoringDoseAdjust = document.getElementById('monitoringDoseAdjust');
+  const monitoringCriterion = document.getElementById('monitoringCriterion');
   const monitoringStopRule = document.getElementById('monitoringStopRule');
   const monitoringNotesText = document.getElementById('monitoringNotesText');
   const tolerabilityDoseGuidePanel = document.getElementById('tolerabilityDoseGuidePanel');
@@ -608,7 +611,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function formatDottedIndicator(linhaFluxograma) {
     if (linhaFluxograma !== 'pontilhada') return '';
-    return '<span class="protocol-dotted-flag" title="Linha pontilhada no fluxograma oficial NAPeN: evidência preliminar ou conduta exploratória">Linha pontilhada · Conduta exploratória / evidência limitada</span>';
+    return '<span class="protocol-dotted-flag" title="Quadrado pontilhado no fluxograma oficial NAPeN: protocolo cujo nível de evidência científica ainda não foi validado por metanálises">Borda pontilhada · Evidência ainda não validada por metanálises</span>';
   }
 
   // ==========================================================================
@@ -657,17 +660,37 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 100);
   }
 
+  function scrollToResponseAssistantHighlight() {
+    setTimeout(() => {
+      if (!responseAssistantPanel) return;
+      const headerEl = document.querySelector('.site-header');
+      const headerHeight = headerEl ? headerEl.offsetHeight : 140;
+      const rect = responseAssistantPanel.getBoundingClientRect();
+      const targetScrollY = window.pageYOffset + rect.top - headerHeight - 16;
+      window.scrollTo({ top: Math.max(0, targetScrollY), behavior: 'smooth' });
+      responseAssistantPanel.classList.add('calc-highlight-pulse');
+      setTimeout(() => responseAssistantPanel.classList.remove('calc-highlight-pulse'), 2500);
+    }, 120);
+  }
+
   function getDynamicAltStagesForActiveModality() {
     const m = engine.getActiveModality();
     const chain = engine.getProtocolChain();
     const altSteps = chain.filter(s => s.stageKey !== 'primary');
     if (altSteps.length > 0) {
-      return altSteps.map((s, idx) => ({
-        stageKey: s.stageKey,
-        shortLabel: `Alternativo ${idx + 1}`,
-        nome: s.nome || `Protocolo Alternativo ${idx + 1}`,
-        etapaRotulo: s.etapa_rotulo || `Alternativo ${idx + 1}`
-      }));
+      return altSteps.map((s) => {
+        const isAj = s.fase_etapa === 'ajustes';
+        const isDot = s.linha_fluxograma === 'pontilhada';
+        const shortLabel = isAj ? 'Seção de Ajustes' : (isDot ? 'Linha Pontilhada' : 'Próximo Protocolo');
+        return {
+          stageKey: s.stageKey,
+          faseEtapa: s.fase_etapa || (isAj ? 'ajustes' : 'sequencia'),
+          linhaFluxograma: s.linha_fluxograma || '',
+          shortLabel,
+          nome: s.nome || shortLabel,
+          etapaRotulo: s.etapa_rotulo || shortLabel
+        };
+      });
     }
     if (chain.length > 0) {
       return [];
@@ -676,17 +699,21 @@ document.addEventListener('DOMContentLoaded', () => {
     if (m?.protocolo_alternativo && !String(m.protocolo_alternativo.nome || '').includes('Protocolo Único')) {
       fallback.push({
         stageKey: 'alt1',
-        shortLabel: 'Alternativo 1',
-        nome: m.protocolo_alternativo.nome || 'Protocolo Alternativo 1',
-        etapaRotulo: 'Protocolo Alternativo 1'
+        faseEtapa: 'sequencia',
+        linhaFluxograma: m.protocolo_alternativo.linha_fluxograma || '',
+        shortLabel: 'Próximo Protocolo',
+        nome: m.protocolo_alternativo.nome || 'Próximo Protocolo na Sequência',
+        etapaRotulo: 'Próximo Protocolo na Sequência'
       });
     }
     if (m?.protocolo_alternativo_2 && !String(m.protocolo_alternativo_2.nome || '').includes('Protocolo Único')) {
       fallback.push({
         stageKey: 'alt2',
-        shortLabel: 'Alternativo 2',
-        nome: m.protocolo_alternativo_2.nome || 'Protocolo Alternativo 2',
-        etapaRotulo: 'Protocolo Alternativo 2'
+        faseEtapa: 'ajustes',
+        linhaFluxograma: m.protocolo_alternativo_2.linha_fluxograma || '',
+        shortLabel: 'Seção de Ajustes',
+        nome: m.protocolo_alternativo_2.nome || 'Seção de Ajustes',
+        etapaRotulo: 'Seção de Ajustes'
       });
     }
     return fallback;
@@ -705,66 +732,22 @@ document.addEventListener('DOMContentLoaded', () => {
     const stageData = engine.getPrescriptionForStage(stage);
     if (!stageData) return;
 
-    const altStages = getDynamicAltStagesForActiveModality();
     continuingStageFocusSlot.style.display = 'flex';
     continuingStageFocusSlot.className = `continuing-focus-slot stage-${stage}`;
-
-    let bodyHtml = '';
-    let nextActionsHtml = '';
-
-    if (stage && stage.startsWith('alt')) {
-      const dottedHtml = formatDottedIndicator(stageData.linhaFluxograma);
-      bodyHtml = `
-        ${dottedHtml ? `<div style="margin-bottom: 6px;">${dottedHtml}</div>` : ''}
-        <div class="continuing-focus-meta">
-          <div class="continuing-meta-item"><strong>Técnica:</strong><br>${escHtml(stageData.tecnica)}</div>
-          <div class="continuing-meta-item"><strong>Alvo Anatômico:</strong><br>${escHtml(stageData.alvo)}</div>
-          <div class="continuing-meta-item"><strong>Parâmetros:</strong><br>${escHtml(stageData.parametros)}</div>
-          <div class="continuing-meta-item"><strong>Observações Clínicas:</strong><br>${escHtml(stageData.observacoes)}</div>
-          ${stageData.efeitoEsperado ? `<div class="continuing-meta-item"><strong>Efeito Esperado:</strong><br>${escHtml(stageData.efeitoEsperado)}</div>` : ''}
-          ${stageData.referencia ? `<div class="continuing-meta-item"><strong>Referência:</strong><br>${escHtml(stageData.referencia)}</div>` : ''}
-        </div>
-      `;
-      const curIdx = altStages.findIndex(a => a.stageKey === stage);
-      const nextAlt = (curIdx >= 0 && curIdx + 1 < altStages.length) ? altStages[curIdx + 1] : null;
-      nextActionsHtml = `
-        <button type="button" class="btn-step-action secondary" id="btnTopJumpCalc">Avaliar Resposta (${escHtml(stageData.badge)}) na Calculadora</button>
-        ${nextAlt
-          ? `<button type="button" class="btn-step-action primary" data-next-cont-stage="${nextAlt.stageKey}">Sem Resposta ➔ ${escHtml(nextAlt.nome)}</button>`
-          : `<button type="button" class="btn-step-action danger" data-next-cont-stage="failure">Sem Resposta ➔ Encerramento / Esgotamento da Sequência</button>`}
-      `;
-    } else if (stage === 'failure') {
-      const conductList = (stageData.condutas || []).map(c => `<li>${escHtml(c)}</li>`).join('');
-      bodyHtml = `
-        <div style="font-size: 0.86rem; color: #7F1D1D; line-height: 1.5;">
-          <strong>Critério de Enquadramento:</strong> ${escHtml(stageData.criterio)}
-        </div>
-        <div class="failure-conduct-box">
-          <div class="failure-conduct-title">Condutas Sistematizadas da Rede NAPeN:</div>
-          <ul style="margin: 4px 0 0 18px; line-height: 1.5;">${conductList}</ul>
-        </div>
-      `;
-      nextActionsHtml = `
-        <button type="button" class="btn-step-action secondary" id="btnTopJumpCalc">Registrar Última Avaliação / Tolerabilidade</button>
-      `;
-    }
-
-    const stageObsHtml = buildObservationsHtml(engine.getContextualObservations({ slot: 'stage', stage }));
-
     continuingStageFocusSlot.innerHTML = `
       <div class="continuing-focus-header">
         <div>
-          <span class="continuing-focus-kicker">Acompanhamento Direto · ${escHtml(stageData.badge)} (Base: ${escHtml(stageData.referenciaPrimaria)})</span>
+          <span class="continuing-focus-kicker">Acompanhamento Direto · Assistente de Resposta Clínica (Pós-Indução)</span>
           <h3 class="continuing-focus-title">${escHtml(stageData.titulo)}</h3>
         </div>
-        <button type="button" class="btn-reopen-triage" id="btnReopenFullTriage">Reabrir triagem diagnóstica completa</button>
+        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+          <button type="button" class="btn-step-action primary" id="btnTopJumpAssistant">Ver Protocolo no Assistente ↓</button>
+          <button type="button" class="btn-reopen-triage" id="btnReopenFullTriage">Reabrir triagem diagnóstica completa</button>
+        </div>
       </div>
-      ${bodyHtml}
-      ${stageObsHtml}
-      <div class="adjustment-actions-row">${nextActionsHtml}</div>
     `;
 
-    bindObsRedirectButtons(continuingStageFocusSlot);
+    document.getElementById('btnTopJumpAssistant')?.addEventListener('click', scrollToResponseAssistantHighlight);
     document.getElementById('btnReopenFullTriage')?.addEventListener('click', () => {
       engine.setEntryMode('new');
       state.therapeuticStage = 'primary';
@@ -776,13 +759,6 @@ document.addEventListener('DOMContentLoaded', () => {
       renderTolerabilityUI();
       updatePrescriptionDisplay();
       updateOutcomeDisplay();
-    });
-    document.getElementById('btnTopJumpCalc')?.addEventListener('click', scrollToCalculatorHighlight);
-    continuingStageFocusSlot.querySelectorAll('[data-next-cont-stage]').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const nextStage = btn.getAttribute('data-next-cont-stage');
-        if (nextStage) selectContinuityStage(cond, nextStage);
-      });
     });
   }
 
@@ -799,6 +775,7 @@ document.addEventListener('DOMContentLoaded', () => {
       renderContinuityBar(cond);
       updatePrescriptionDisplay();
       updateOutcomeDisplay();
+      scrollToResponseAssistantHighlight();
     }
   }
 
@@ -834,7 +811,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const protOptions = getContinuityProtocolOptions(cond);
     const activeProtKey = engine.activeFactorId || engine.primaryFactorId;
     const protSelectHtml = `
-      <label class="continuity-inline-label" for="contSelectProtocol">Protocolo prévio:</label>
+      <label class="continuity-inline-label" for="contSelectProtocol">Desfecho / Árvore Clínica:</label>
       <select id="contSelectProtocol" class="continuity-inline-select">
         ${protOptions.map(o => `<option value="${o.key}" data-primary="${o.primary}" ${activeProtKey === o.key ? 'selected' : ''}>${escHtml(o.label)}</option>`).join('')}
       </select>
@@ -843,7 +820,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const curStage = engine.continuingStage || 'evaluation';
     const altStages = getDynamicAltStagesForActiveModality();
     const altBtnsHtml = altStages.map(a => `
-      <button type="button" class="btn-stage-shortcut ${curStage === a.stageKey ? 'active' : ''}" data-stage="${a.stageKey}" title="${escHtml(a.nome)}">${escHtml(a.shortLabel)}</button>
+      <button type="button" class="btn-stage-shortcut ${a.faseEtapa === 'ajustes' ? 'stage-adjust' : ''} ${curStage === a.stageKey ? 'active' : ''}" data-stage="${a.stageKey}" title="${escHtml(a.nome)}">${escHtml(a.faseEtapa === 'ajustes' ? `Ajustes: ${a.nome}` : a.nome)}</button>
     `).join('');
 
     continuityInlineContext.innerHTML = `
@@ -852,10 +829,10 @@ document.addEventListener('DOMContentLoaded', () => {
         ${protSelectHtml}
       </div>
       <div class="continuity-stage-shortcuts">
-        <span class="continuity-inline-label">Cenário do paciente:</span>
+        <span class="continuity-inline-label">Ir no Assistente Pós-Indução:</span>
         <button type="button" class="btn-stage-shortcut ${curStage === 'evaluation' ? 'active' : ''}" data-stage="evaluation">Avaliar Resposta (Calculadora)</button>
         ${altBtnsHtml}
-        <button type="button" class="btn-stage-shortcut stage-danger ${curStage === 'failure' ? 'active' : ''}" data-stage="failure">Sem Resposta a Toda a Sequência (Encerramento)</button>
+        <button type="button" class="btn-stage-shortcut stage-danger ${curStage === 'failure' ? 'active' : ''}" data-stage="failure">Falha Terapêutica (Encerramento)</button>
         <button type="button" class="btn-reopen-triage" id="btnReopenFullTriageBar">Voltar à triagem inicial</button>
       </div>
     `;
@@ -942,25 +919,97 @@ document.addEventListener('DOMContentLoaded', () => {
     homeContCondition.value = state.homeSelectedConditionId;
   }
 
-  function renderHomeContinuityStageButtons(cond) {
-    if (!homeContStageShortcuts || !cond) return;
+  function getHomeModalityForSelection(cond) {
+    if (!cond) return null;
     const selectedProtOpt = homeContProtocol && homeContProtocol.options[homeContProtocol.selectedIndex];
     const protOptions = getContinuityProtocolOptions(cond, state.homeSelectedModality);
     const factorKey = (selectedProtOpt && selectedProtOpt.value) || protOptions[0]?.key || null;
-    const mod = (factorKey && cond.modalidades?.[factorKey]) || Object.values(cond.modalidades || {})[0];
-    const chain = (mod && Array.isArray(mod.cadeia_sequencial)) ? mod.cadeia_sequencial : [];
-    const alt1Step = chain.length > 1 ? chain[1] : null;
-    const alt1Fallback = (chain.length === 0 && mod?.protocolo_alternativo && !String(mod.protocolo_alternativo.nome || '').includes('Protocolo Único'))
-      ? mod.protocolo_alternativo
-      : null;
-    const hasAlt = Boolean(alt1Step || alt1Fallback);
-    const altLabel = alt1Step?.nome || alt1Fallback?.nome || 'Protocolo Alternativo 1';
+    return (factorKey && cond.modalidades?.[factorKey]) || Object.values(cond.modalidades || {})[0] || null;
+  }
 
-    homeContStageShortcuts.innerHTML = hasAlt
-      ? `<button type="button" class="btn-stage-shortcut" data-home-stage="evaluation">Avaliar Resposta do Protocolo (Calculadora)</button>
-         <button type="button" class="btn-stage-shortcut stage-danger" data-home-stage="alt1">Não Respondeu ao Protocolo ➔ Ver ${escHtml(altLabel)}</button>`
-      : `<button type="button" class="btn-stage-shortcut" data-home-stage="evaluation">Avaliar Resposta do Protocolo (Calculadora)</button>
-         <button type="button" class="btn-stage-shortcut stage-danger" data-home-stage="failure">Sem Resposta ao Protocolo Único ➔ Conduta de Encerramento</button>`;
+  function getStoppedChainForHomeModality(mod) {
+    if (!mod) return [];
+    const chain = Array.isArray(mod.cadeia_sequencial) ? mod.cadeia_sequencial : [];
+    if (chain.length > 0) {
+      return chain.map((step, idx) => ({
+        stageKey: idx === 0 ? 'primary' : `alt${idx}`,
+        nome: step.nome || step.tecnica || mod.tecnica || 'Protocolo Clínico',
+        faseEtapa: idx === 0
+          ? 'inicial'
+          : ((step.fase_etapa === 'ajustes' || /ajustes/i.test(step.etapa_rotulo || '')) ? 'ajustes' : 'sequencia'),
+        linhaFluxograma: step.linha_fluxograma || mod.linha_fluxograma || ''
+      }));
+    }
+    const items = [{
+      stageKey: 'primary',
+      nome: mod.tecnica || 'Protocolo Inicial',
+      faseEtapa: 'inicial',
+      linhaFluxograma: mod.linha_fluxograma || ''
+    }];
+    if (mod.protocolo_alternativo && !String(mod.protocolo_alternativo.nome || '').includes('Protocolo Único')) {
+      items.push({
+        stageKey: 'alt1',
+        nome: mod.protocolo_alternativo.nome || 'Próximo Protocolo na Sequência',
+        faseEtapa: 'sequencia',
+        linhaFluxograma: mod.protocolo_alternativo.linha_fluxograma || ''
+      });
+    }
+    if (mod.protocolo_alternativo_2 && !String(mod.protocolo_alternativo_2.nome || '').includes('Protocolo Único')) {
+      items.push({
+        stageKey: 'alt2',
+        nome: mod.protocolo_alternativo_2.nome || 'Seção de Ajustes',
+        faseEtapa: 'ajustes',
+        linhaFluxograma: mod.protocolo_alternativo_2.linha_fluxograma || ''
+      });
+    }
+    return items;
+  }
+
+  function populateHomeStoppedProtocols(cond) {
+    if (!homeContStoppedProtocol || !cond) return;
+    const mod = getHomeModalityForSelection(cond);
+    const steps = getStoppedChainForHomeModality(mod);
+    const prevVal = homeContStoppedProtocol.value;
+    homeContStoppedProtocol.innerHTML = steps.map((step, idx) => {
+      const tag = idx === 0
+        ? 'Protocolo Inicial'
+        : (step.faseEtapa === 'ajustes'
+          ? 'Seção de Ajustes'
+          : (step.linhaFluxograma === 'pontilhada' ? 'Linha Pontilhada' : 'Na Sequência'));
+      return `<option value="${escHtml(step.stageKey)}">[${tag}] ${escHtml(step.nome)}</option>`;
+    }).join('');
+    if (steps.some(s => s.stageKey === prevVal)) {
+      homeContStoppedProtocol.value = prevVal;
+    } else if (steps.length > 0) {
+      homeContStoppedProtocol.value = steps[0].stageKey;
+    }
+  }
+
+  function renderHomeContinuityStageButtons(cond) {
+    if (!homeContStageShortcuts || !cond) return;
+    const mod = getHomeModalityForSelection(cond);
+    const steps = getStoppedChainForHomeModality(mod);
+    const stoppedStage = (homeContStoppedProtocol && homeContStoppedProtocol.value) || 'primary';
+    const stoppedIdx = Math.max(0, steps.findIndex(s => s.stageKey === stoppedStage));
+    const hasNext = stoppedIdx + 1 < steps.length;
+    const nextStep = hasNext ? steps[stoppedIdx + 1] : null;
+    const isUnique = steps.length <= 1;
+
+    let nextBtnHtml = '';
+    if (nextStep) {
+      const isAj = nextStep.faseEtapa === 'ajustes';
+      const prefix = isAj ? 'Ir para Seção de Ajustes: ' : 'Avançar para ';
+      nextBtnHtml = `<button type="button" class="btn-stage-shortcut stage-danger" data-home-stage="${escHtml(nextStep.stageKey)}">Resposta Insatisfatória ➔ ${prefix}${escHtml(nextStep.nome)}</button>`;
+    } else if (isUnique) {
+      nextBtnHtml = `<button type="button" class="btn-stage-shortcut stage-danger" data-home-stage="failure">Sem Resposta ao Protocolo Único ➔ Falha Terapêutica / Encerramento</button>`;
+    } else {
+      nextBtnHtml = `<button type="button" class="btn-stage-shortcut stage-danger" data-home-stage="failure">Sem Resposta após Sequência e Ajustes ➔ Falha Terapêutica</button>`;
+    }
+
+    homeContStageShortcuts.innerHTML = `
+      ${nextBtnHtml}
+      <button type="button" class="btn-stage-shortcut" data-home-stage="evaluation">Avaliar Resposta do Protocolo (Calculadora)</button>
+    `;
   }
 
   function renderHomeContinuityPanel() {
@@ -1008,6 +1057,7 @@ document.addEventListener('DOMContentLoaded', () => {
         .map(o => `<option value="${o.key}" data-primary="${o.primary}">${escHtml(o.label)}</option>`)
         .join('');
     }
+    populateHomeStoppedProtocols(cond);
     renderHomeContinuityStageButtons(cond);
   }
 
@@ -1029,6 +1079,7 @@ document.addEventListener('DOMContentLoaded', () => {
     homeContCondition.addEventListener('change', (e) => {
       state.homeSelectedConditionId = e.target.value;
       state.homeSelectedModality = 'rtms';
+      if (homeContStoppedProtocol) homeContStoppedProtocol.value = '';
       renderHomeContinuityPanel();
     });
   }
@@ -1036,12 +1087,23 @@ document.addEventListener('DOMContentLoaded', () => {
   if (homeContModality) {
     homeContModality.addEventListener('change', (e) => {
       state.homeSelectedModality = e.target.value;
+      if (homeContStoppedProtocol) homeContStoppedProtocol.value = '';
       renderHomeContinuityPanel();
     });
   }
 
   if (homeContProtocol) {
     homeContProtocol.addEventListener('change', () => {
+      const condId = (homeContCondition && homeContCondition.value) || state.homeSelectedConditionId;
+      const cond = engine.getCondition(condId);
+      if (homeContStoppedProtocol) homeContStoppedProtocol.value = '';
+      populateHomeStoppedProtocols(cond);
+      renderHomeContinuityStageButtons(cond);
+    });
+  }
+
+  if (homeContStoppedProtocol) {
+    homeContStoppedProtocol.addEventListener('change', () => {
       const condId = (homeContCondition && homeContCondition.value) || state.homeSelectedConditionId;
       renderHomeContinuityStageButtons(engine.getCondition(condId));
     });
@@ -1070,6 +1132,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
       if (targetStage === 'evaluation') {
         scrollToCalculatorHighlight();
+      } else {
+        scrollToResponseAssistantHighlight();
       }
     });
   }
@@ -1425,9 +1489,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const m = engine.getActiveModality();
     if (!m) return;
 
-    const scales = m.escalas_detalhadas || [];
+    const scales = engine.getScalesForCurrentPath();
 
-    // 1. Seletor de Múltiplas Escalas (Tabs)
+    // 1. Seletor de Múltiplas Escalas (Exibido apenas quando o desfecho selecionado possui mais de um instrumento)
     if (calcScaleTabs) {
       if (scales.length > 1) {
         calcScaleTabs.innerHTML = '';
@@ -1478,7 +1542,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (calcStudyMcid) {
-      calcStudyMcid.textContent = effObj.mcid_label || activeScale?.meta_texto || m.meta_melhora || 'Ganho clínico relevante';
+      calcStudyMcid.textContent = activeScale?.mcid_label || effObj.mcid_label || activeScale?.meta_texto || m.meta_melhora || 'Ganho clínico relevante';
     }
 
     // 3. Alternância entre Modo EAM (Graus 0 a 4) e Modo Contínuo
@@ -1533,8 +1597,14 @@ document.addEventListener('DOMContentLoaded', () => {
       calcComparisonFeedback.textContent = 'Ao informar os escores, o sistema analisará se o ganho clínico individual é compatível com o intervalo de confiança do ensaio clínico de referência do protocolo e se superou a MCID da escala.';
     }
 
-    // Reseta desfecho ao alternar escala ou fator
-    engine.setOutcome(null);
+    // Reseta desfecho ao alternar escala/fator, preservando quando em salto direto de continuidade para etapa sequencial/Ajustes/Falha
+    const keepReturningOutcome = engine.entryMode === 'returning'
+      && state.therapeuticStage
+      && state.therapeuticStage !== 'primary'
+      && state.therapeuticStage !== 'evaluation';
+    if (!keepReturningOutcome) {
+      engine.setOutcome(null);
+    }
     updateOutcomeDisplay();
   }
 
@@ -1734,10 +1804,10 @@ document.addEventListener('DOMContentLoaded', () => {
     if (prescPulsos) prescPulsos.textContent = m.pulsos_duracao || '—';
     if (prescSessoes) prescSessoes.textContent = `Dose e Sessões: ${m.sessoes || '—'}`;
 
-    // Observações cirúrgicas nos slots dos parâmetros
+    // Observações cirúrgicas nos slots dos parâmetros (otimização de carga/intensidade consolidada no Guia de Tolerabilidade & Dose)
     renderObservationsSlot(prescObsTecnica, engine.getContextualObservations({ slot: 'tec', stage: state.therapeuticStage }), { compact: true });
     renderObservationsSlot(prescObsAlvo, engine.getContextualObservations({ slot: 'alvo', stage: state.therapeuticStage }), { compact: true });
-    renderObservationsSlot(prescObsIntensidade, engine.getContextualObservations({ slot: 'intensidade', stage: state.therapeuticStage }), { compact: true });
+    renderObservationsSlot(prescObsIntensidade, [], { compact: true });
     renderObservationsSlot(prescObsSessoes, engine.getContextualObservations({ slot: 'sessoes', stage: state.therapeuticStage }), { compact: true });
 
     // Dissociação Conceitual NAPeN: Desfecho Clínico Alvo vs. Instrumento de Avaliação
@@ -1822,24 +1892,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     renderEvidenceQualityDisplays(m);
 
-    // Monitoramento Clínico e Regras de Reavaliação (+ SLOT-REEVAL)
+    // Monitoramento Clínico e Regras de Reavaliação (3 cartões não sobrepostos)
     const sa = m.sessoes_ajuste || {};
     if (monitoringReeval) {
-      const reevalBase = sa.quando_reavaliar || 'Reavaliar pontuação na escala clínica após 5 a 10 sessões de indução.';
-      const reevalObs = engine.getContextualObservations({ slot: 'reeval', stage: state.therapeuticStage });
-      const reevalObsHtml = buildObservationsHtml(reevalObs, { compact: true });
-      if (reevalObsHtml) {
-        monitoringReeval.innerHTML = `<div>${escHtml(reevalBase)}</div><div style="margin-top: 6px;">${reevalObsHtml}</div>`;
-        bindObsRedirectButtons(monitoringReeval);
-      } else {
-        monitoringReeval.textContent = reevalBase;
-      }
+      monitoringReeval.textContent = sa.quando_reavaliar || 'Avaliar evolução clínica após 5 a 10 sessões de indução; ausência de melhora indica resposta insatisfatória.';
     }
-    if (monitoringDoseAdjust) {
-      monitoringDoseAdjust.textContent = m.falha_terapeutica?.criterio || sa.regra_interrupcao || sa.ajuste_dose || 'Resposta clínica inferior à MCID esperada após a janela clínica avança diretamente ao próximo protocolo.';
+    if (monitoringCriterion) {
+      monitoringCriterion.textContent = sa.regra_interrupcao || 'Ao atingir platô funcional sustentado, interromper o ciclo intensivo e iniciar redução gradual da frequência das sessões.';
     }
     if (monitoringStopRule) {
-      monitoringStopRule.textContent = sa.regra_interrupcao || 'Interromper o ciclo de indução e avançar diretamente para o próximo protocolo (ou falha terapêutica) caso não haja ganho clínico mínimo na reavaliação.';
+      monitoringStopRule.textContent = m.falha_terapeutica?.criterio || 'Caracteriza-se falha terapêutica ao concluir toda a sequência prevista (incluindo a Seção de Ajustes) sem alcançar a MCID na escala clínica.';
     }
     if (monitoringNotesText) {
       monitoringNotesText.innerHTML = formatObservationTextHtml(
@@ -1883,33 +1945,14 @@ document.addEventListener('DOMContentLoaded', () => {
           tolTexts.push(norm);
         }
       });
-      const intensityObs = engine.getContextualObservations({ slot: 'intensidade', stage: state.therapeuticStage }) || [];
-      const tolObs = engine.getContextualObservations({ slot: 'tol', stage: state.therapeuticStage }) || [];
-      const combinedObs = [];
-      const seenObs = new Set();
-      [...intensityObs, ...tolObs].forEach(o => {
-        const key = o?.id || o?.texto;
-        if (key && !seenObs.has(key)) {
-          seenObs.add(key);
-          combinedObs.push(o);
-        }
-      });
-      const obsHtml = buildObservationsHtml(combinedObs, { compact: true });
-      tolGuideTolerance.innerHTML = `
-        ${tolTexts.map((t, idx) => `<p${idx > 0 ? ' class="tol-guide-col-note"' : ''}>${formatObservationTextHtml(t)}</p>`).join('')}
-        ${obsHtml ? `<div style="margin-top: 8px;">${obsHtml}</div>` : ''}
-      `;
-      bindObsRedirectButtons(tolGuideTolerance);
+      tolGuideTolerance.innerHTML = tolTexts
+        .map((t, idx) => `<p${idx > 0 ? ' class="tol-guide-col-note"' : ''}>${formatObservationTextHtml(t)}</p>`)
+        .join('');
     }
 
     if (tolGuideDose) {
       const doseMain = (tolGuide.dosePulsos || '').trim();
-      const doseExtra = (sa?.ajuste_dose || '').trim();
-      const hasExtra = Boolean(doseExtra && (!doseMain || (!doseMain.includes(doseExtra) && !doseExtra.includes(doseMain))));
-      tolGuideDose.innerHTML = `
-        ${doseMain ? `<p>${formatObservationTextHtml(doseMain)}</p>` : ''}
-        ${hasExtra ? `<div class="tol-guide-col-note"><strong>Conduta de Carga / Estímulo:</strong> ${formatObservationTextHtml(doseExtra)}</div>` : ''}
-      `;
+      tolGuideDose.innerHTML = doseMain ? `<p>${formatObservationTextHtml(doseMain)}</p>` : '';
     }
 
     if (tolGuideCalibration) {
@@ -1948,6 +1991,10 @@ document.addEventListener('DOMContentLoaded', () => {
     if (btnOutcomeDanger) btnOutcomeDanger.classList.toggle('active', outcome === 'danger');
 
     if (!outcome) {
+      if (assistantSequenceTrail) {
+        assistantSequenceTrail.style.display = 'none';
+        assistantSequenceTrail.innerHTML = '';
+      }
       branchResultPanel.className = 'branch-result-panel';
       branchResultPanel.innerHTML = '';
       if (stepNode4) stepNode4.classList.remove('completed', 'current');
@@ -1958,6 +2005,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Estado 1: Resposta Clínica Satisfatória
     if (outcome === 'success') {
+      if (assistantSequenceTrail) {
+        assistantSequenceTrail.style.display = 'none';
+        assistantSequenceTrail.innerHTML = '';
+      }
       branchResultPanel.className = 'branch-result-panel success visible';
       const tolNoteHtml = tol === 'leve'
         ? `<div style="margin-top: 8px; padding-top: 8px; border-top: 1px dashed rgba(6,95,70,0.25);"><strong>Manejo de Desconforto Leve:</strong> ${escHtml(guidance.orientacaoGeral)}</div>`
@@ -1981,6 +2032,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Estado Especial de Segurança: Evento Adverso Grave
     if (tol === 'grave' && outcome === 'danger') {
+      if (assistantSequenceTrail) {
+        assistantSequenceTrail.style.display = 'none';
+        assistantSequenceTrail.innerHTML = '';
+      }
       branchResultPanel.className = 'branch-result-panel danger visible';
       branchResultPanel.innerHTML = `
         <div class="failure-therapeutic-card" style="margin-top: 0;">
@@ -2005,29 +2060,60 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    // Estado 2: Transição Direta para Protocolo Alternativo Dinâmico ou Encerramento da Sequência
+    // Estado 2: Progressão Sequencial Pós-Resposta Insatisfatória (Protocolos -> Seção de Ajustes -> Falha Terapêutica)
     branchResultPanel.className = 'branch-result-panel danger visible';
 
     const altStages = getDynamicAltStagesForActiveModality();
     const curStage = state.therapeuticStage || 'primary';
     const stageObsHtml = buildObservationsHtml(engine.getContextualObservations({ slot: 'stage', stage: curStage }), { compact: true });
+
+    if (assistantSequenceTrail) {
+      const chips = [];
+      const activeIdxInAlt = curStage === 'failure'
+        ? altStages.length
+        : altStages.findIndex(s => s.stageKey === curStage);
+
+      if (altStages.length > 0) {
+        altStages.forEach((step, idx) => {
+          const isCompleted = activeIdxInAlt > idx;
+          const isCurrent = activeIdxInAlt === idx;
+          const isAj = step.faseEtapa === 'ajustes';
+          const isDot = step.linhaFluxograma === 'pontilhada';
+          const prefix = isAj ? 'Seção de Ajustes' : (isDot ? 'Linha Pontilhada' : 'Na Sequência');
+          const cls = [
+            'seq-trail-chip',
+            isCompleted ? 'completed' : '',
+            isCurrent ? 'active' : '',
+            isAj ? 'ajustes' : '',
+            isDot ? 'dotted' : ''
+          ].filter(Boolean).join(' ');
+          chips.push(`<button type="button" class="${cls}" data-trail-stage="${escHtml(step.stageKey)}" title="${escHtml(step.nome)}">${escHtml(prefix)}: ${escHtml(step.nome)}</button>`);
+          chips.push('<span class="seq-trail-arrow" aria-hidden="true">➔</span>');
+        });
+      }
+      chips.push(`<button type="button" class="seq-trail-chip failure ${curStage === 'failure' ? 'active' : ''}" data-trail-stage="failure">Falha Terapêutica</button>`);
+      assistantSequenceTrail.style.display = 'flex';
+      assistantSequenceTrail.innerHTML = chips.join('');
+    }
+
     let stageHtml = '';
 
     if (curStage === 'primary') {
       const firstAlt = altStages[0];
+      const nextStepIsAjustes = firstAlt?.faseEtapa === 'ajustes';
       stageHtml = `
         <div style="font-weight: 700; margin-bottom: 6px; display: flex; align-items: center; gap: 8px;">
           <span class="outcome-bullet status-danger"></span>
-          [Resposta Insatisfatória — Avanço Direto no Algoritmo]
+          [Resposta Insatisfatória no Protocolo Inicial]
         </div>
         <div style="line-height: 1.55; margin-bottom: 12px;">
           Paciente não atingiu o benefício terapêutico mínimo após a janela clínica esperada.
-          Caso necessário revisar parâmetros de tolerabilidade ou dose do ciclo vigente, utilize o <a href="#tolerabilityDoseGuidePanel" class="adverse-bank-link js-scroll-tol-guide">Guia Estratégico de Tolerabilidade &amp; Dose ↑</a>.
+          Caso necessário revisar conforto ou calibração de dose do ciclo vigente antes da transição, consulte o <a href="#tolerabilityDoseGuidePanel" class="adverse-bank-link js-scroll-tol-guide">Guia de Tolerabilidade, Limiar &amp; Dose ↑</a>.
         </div>
         ${stageObsHtml}
         <div class="adjustment-actions-row">
           ${firstAlt
-            ? `<button type="button" class="btn-step-action primary" id="btnGoAlt1" data-target-stage="${firstAlt.stageKey}">Avançar para ${escHtml(firstAlt.nome)} ➔</button>`
+            ? `<button type="button" class="btn-step-action primary" id="btnGoAlt1" data-target-stage="${firstAlt.stageKey}">Resposta Insatisfatória ➔ ${nextStepIsAjustes ? 'Ir para Seção de Ajustes: ' : 'Avançar para '}${escHtml(firstAlt.nome)}</button>`
             : `<button type="button" class="btn-step-action danger" id="btnGoFailure" data-target-stage="failure">Sem Resposta no Protocolo Único ➔ Conduta de Encerramento</button>`}
         </div>
       `;
@@ -2039,44 +2125,62 @@ document.addEventListener('DOMContentLoaded', () => {
       const dottedHtml = formatDottedIndicator(altData?.linhaFluxograma);
       const prevBtnId = prevStage ? (prevStage.stageKey === 'alt1' ? 'btnGoAlt1' : `btnGo${prevStage.stageKey}`) : 'btnBackPrimary';
       const nextBtnId = nextAlt ? (nextAlt.stageKey === 'alt2' ? 'btnGoAlt2' : `btnGo${nextAlt.stageKey}`) : 'btnGoFailure';
+      const isCurAjustes = altData?.faseEtapa === 'ajustes' || altStages[curIdx]?.faseEtapa === 'ajustes';
+      const isCurDotted = altData?.linhaFluxograma === 'pontilhada' || altStages[curIdx]?.linhaFluxograma === 'pontilhada';
+      const badgeColor = isCurAjustes ? '#B45309' : 'var(--napen-teal-dark)';
+      const boxCls = [
+        'alternative-protocol-box',
+        isCurAjustes ? 'is-ajustes' : '',
+        isCurDotted ? 'is-dotted' : ''
+      ].filter(Boolean).join(' ');
+      const rationaleTitle = isCurAjustes && isCurDotted
+        ? 'Seção de Ajustes · Borda Pontilhada'
+        : (isCurAjustes ? 'Seção de Ajustes' : 'Borda Pontilhada');
+      const rationaleText = altData?.motivoAjuste
+        || 'Protocolos com borda pontilhada e opções da Seção de Ajustes indicam condutas cujo nível de evidência científica ainda não foi validado por metanálises (base científica exploratória respaldada em ensaios clínicos individuais).';
+      const ajustesRationaleHtml = (isCurAjustes || isCurDotted)
+        ? `<div class="ajustes-evidence-rationale"><strong>Motivo da classificação (${rationaleTitle}):</strong> ${escHtml(rationaleText)}</div>`
+        : '';
 
       stageHtml = `
-        <div class="alternative-protocol-box" style="margin-top: 6px;">
+        <div class="${boxCls}" style="margin-top: 6px;">
           <div class="alt-title-line" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
-            <span><strong>${escHtml(altData?.badge || `Alternativo ${curIdx + 1}`)}:</strong> ${escHtml(altData?.titulo || 'Protocolo Alternativo')}</span>
-            <span class="failure-badge" style="background-color: var(--napen-teal-dark);">${escHtml(altStages[curIdx]?.shortLabel || curStage.toUpperCase())}</span>
+            <span><strong>${escHtml(altData?.badge || altStages[curIdx]?.shortLabel || 'Próximo Protocolo na Sequência')}:</strong> ${escHtml(altData?.titulo || 'Protocolo Subsequente')}</span>
+            <span class="failure-badge" style="background-color: ${badgeColor};">${escHtml(altStages[curIdx]?.shortLabel || 'Na Sequência')}</span>
           </div>
           ${dottedHtml ? `<div style="margin-top: 6px;">${dottedHtml}</div>` : ''}
+          ${ajustesRationaleHtml}
           <div style="margin-top: 6px;"><strong>Técnica:</strong> ${escHtml(altData?.tecnica || '—')}</div>
           <div><strong>Alvo Anatômico:</strong> ${escHtml(altData?.alvo || '—')}</div>
           <div><strong>Parâmetros:</strong> ${escHtml(altData?.parametros || '—')}</div>
           ${altData?.efeitoEsperado ? `<div><strong>Efeito Esperado:</strong> ${escHtml(altData.efeitoEsperado)}</div>` : ''}
           ${altData?.referencia ? `<div><strong>Referência:</strong> ${escHtml(altData.referencia)}</div>` : ''}
           <div class="alt-clinical-notes" style="margin-top: 8px;">
-            <strong>Observações Clínicas:</strong> ${formatObservationTextHtml(altData?.observacoes || 'Transição sequencial indicada conforme a sequência terapêutica.')}
+            <strong>Observações Clínicas:</strong> ${formatObservationTextHtml(altData?.observacoes || 'Transição sequencial indicada conforme a árvore de decisão clínica.')}
           </div>
           ${stageObsHtml}
           <div class="adjustment-actions-row" style="margin-top: 14px;">
             <button type="button" class="btn-step-action secondary" id="${prevBtnId}" data-target-stage="${prevStage ? prevStage.stageKey : 'primary'}">
-              ${prevStage ? `← ${escHtml(prevStage.shortLabel)}` : '← 1ª Linha'}
+              ${prevStage ? `← ${escHtml(prevStage.nome)}` : '← Rever Protocolo Inicial'}
             </button>
             ${nextAlt
-              ? `<button type="button" class="btn-step-action primary" id="${nextBtnId}" data-target-stage="${nextAlt.stageKey}">Sem Resposta no ${escHtml(altStages[curIdx]?.shortLabel || '')} ➔ Avançar para ${escHtml(nextAlt.nome)}</button>`
-              : `<button type="button" class="btn-step-action danger" id="${nextBtnId}" data-target-stage="failure">Sem Resposta ➔ Encerrar Sequência Terapêutica</button>`}
+              ? `<button type="button" class="btn-step-action primary" id="${nextBtnId}" data-target-stage="${nextAlt.stageKey}">Sem Resposta neste Protocolo ➔ ${nextAlt.faseEtapa === 'ajustes' ? 'Seção de Ajustes: ' : 'Avançar para '}${escHtml(nextAlt.nome)}</button>`
+              : `<button type="button" class="btn-step-action danger" id="${nextBtnId}" data-target-stage="failure">Sem Resposta após Sequência e Ajustes ➔ Indicar Falha Terapêutica</button>`}
           </div>
         </div>
       `;
     } else if (curStage === 'failure') {
       const failData = engine.getPrescriptionForStage('failure');
       const conductList = (failData?.condutas || []).map(c => `<li>${escHtml(c)}</li>`).join('');
+      const lastAlt = altStages.length > 0 ? altStages[altStages.length - 1] : null;
       stageHtml = `
         <div class="failure-therapeutic-card">
           <div class="failure-head">
-            <span class="failure-badge">Desfecho do Algoritmo</span>
-            <span class="failure-title">${escHtml(failData?.titulo || 'Sem Resposta Terapêutica (Encerramento da Sequência NAPeN)')}</span>
+            <span class="failure-badge">Falha Terapêutica</span>
+            <span class="failure-title">${escHtml(failData?.titulo || 'Falha Terapêutica / Encerramento da Sequência NAPeN')}</span>
           </div>
           <div class="failure-description">
-            ${escHtml(failData?.criterio || 'Paciente concluiu o ciclo de indução pleno e os protocolos alternativos sequenciais previstos sem apresentar resposta clínica mínima relevante.')}
+            ${escHtml(failData?.criterio || 'Paciente concluiu o ciclo inicial, os protocolos subsequentes e a seção de ajustes sem apresentar resposta clínica mínima relevante.')}
           </div>
           <div class="failure-conduct-box">
             <div class="failure-conduct-title">Conduta Clínica Sistematizada da Rede NAPeN:</div>
@@ -2084,8 +2188,9 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
           ${stageObsHtml}
           <div class="adjustment-actions-row" style="margin-top: 14px;">
+            ${lastAlt ? `<button type="button" class="btn-step-action secondary" data-target-stage="${lastAlt.stageKey}">← Retornar a ${escHtml(lastAlt.nome)}</button>` : ''}
             <button type="button" class="btn-step-action secondary" id="btnBackPrimary" data-target-stage="primary">
-              ← Reiniciar Ciclo / Retornar à 1ª Linha
+              ← Retornar ao Protocolo Inicial
             </button>
           </div>
         </div>
@@ -2104,10 +2209,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function switchTherapeuticStage(stage) {
       state.therapeuticStage = stage;
-      if (stage === 'primary') {
-        engine.setOutcome(null);
-      } else {
-        engine.setOutcome('danger');
+      engine.setOutcome('danger');
+      if (engine.entryMode === 'returning') {
+        engine.setContinuingStage(stage);
       }
       updateOutcomeDisplay();
     }
@@ -2118,12 +2222,25 @@ document.addEventListener('DOMContentLoaded', () => {
         if (nextStage) switchTherapeuticStage(nextStage);
       });
     });
+
+    if (assistantSequenceTrail) {
+      assistantSequenceTrail.querySelectorAll('[data-trail-stage]').forEach(chip => {
+        chip.addEventListener('click', () => {
+          const nextStage = chip.getAttribute('data-trail-stage');
+          if (nextStage) switchTherapeuticStage(nextStage);
+        });
+      });
+    }
   }
 
   // Interação manual com os botões de desfecho
   if (btnOutcomeSuccess) {
     btnOutcomeSuccess.addEventListener('click', () => {
       state.therapeuticStage = 'primary';
+      if (assistantSequenceTrail) {
+        assistantSequenceTrail.style.display = 'none';
+        assistantSequenceTrail.innerHTML = '';
+      }
       engine.toggleOutcome('success');
       updateOutcomeDisplay();
     });
@@ -2134,6 +2251,10 @@ document.addEventListener('DOMContentLoaded', () => {
       if (engine.activeOutcome === 'danger') {
         state.therapeuticStage = 'primary';
         engine.setOutcome(null);
+        if (assistantSequenceTrail) {
+          assistantSequenceTrail.style.display = 'none';
+          assistantSequenceTrail.innerHTML = '';
+        }
       } else if (engine.tolerabilityStatus === 'grave') {
         state.therapeuticStage = 'primary';
         engine.setOutcome('danger');
@@ -2254,7 +2375,8 @@ document.addEventListener('DOMContentLoaded', () => {
       state.therapeuticStage = 'primary';
       engine.setOutcome('danger');
     } else {
-      state.therapeuticStage = evalMatrix.recommendedStage || 'alt1';
+      const altStages = getDynamicAltStagesForActiveModality();
+      state.therapeuticStage = evalMatrix.recommendedStage || altStages[0]?.stageKey || 'failure';
       engine.setOutcome('danger');
     }
     updateOutcomeDisplay();
