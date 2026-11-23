@@ -771,12 +771,20 @@ class TestRedeNAPeNPrescriptionPlatform(unittest.TestCase):
         self.assertIn('id="btnHomeEntryNew"', html)
         self.assertIn('id="btnHomeEntryReturning"', html)
         self.assertIn('id="homeContinuityQuickPanel"', html)
-        self.assertIn('id="homeContCondition"', html)
-        self.assertIn('id="homeContProtocol"', html)
+        self.assertIn('id="homeContSearchInput"', html)
+        self.assertIn('id="homeContConditionGrid"', html)
+        self.assertIn('id="homeContProtocolGrid"', html)
+        self.assertIn('id="homeContStoppedGrid"', html)
         self.assertIn('id="btnSwitchToContinuing"', html)
         self.assertIn('id="continuityEntryBar"', html)
         self.assertIn('id="continuityCompactBar"', html)
         self.assertIn('id="continuingStageFocusSlot"', html)
+
+        # Nenhum <select> dropdown nos painéis de continuidade (somente cards clicáveis amigáveis)
+        home_panel_slice = html[html.index('id="homeContinuityQuickPanel"'):html.index('id="algorithmActiveContainer"')]
+        self.assertNotIn('<select', home_panel_slice.lower())
+        self.assertNotIn('id="contInlineProtocol"', app_js)
+        self.assertNotIn('id="contInlineModality"', app_js)
 
         # Pergunta deve estar dentro da homepage (#searchHeroPanel), antes de #algorithmActiveContainer
         self.assertLess(
@@ -794,6 +802,9 @@ class TestRedeNAPeNPrescriptionPlatform(unittest.TestCase):
         self.assertIn('renderHomeContinuityPanel', app_js)
         self.assertIn('.home-continuity-panel', css)
         self.assertIn('.continuing-focus-slot', css)
+        self.assertIn('.home-cont-card', css)
+        self.assertIn('.calc-stage-btn', css)
+        self.assertIn('.doi-inline-link', css)
 
         # Sem balões/pílulas elipsoides nos novos controles
         new_css_block = css[css.index('.home-continuity-panel'):]
@@ -996,8 +1007,12 @@ class TestRedeNAPeNPrescriptionPlatform(unittest.TestCase):
         self.assertIn(pem_doi, html)
         self.assertIn(pem_doi, raw_json)
 
-        # 3. 52 escalas oficiais, UPDRS-III ON e restrição privativa de psicólogos
-        self.assertEqual(len(scales), 52)
+        # 3. 54 escalas oficiais (incluindo star_cancellation e psqi), UPDRS-III ON e restrição privativa de psicólogos
+        self.assertEqual(len(scales), 54)
+        self.assertIn('star_cancellation', scales)
+        self.assertEqual(scales['star_cancellation'].get('doi'), '10.1080/09602019108401377')
+        self.assertIn('psqi', scales)
+        self.assertEqual(scales['psqi'].get('doi'), '10.1016/0165-1781(89)90047-4')
         updrs_str = json.dumps(scales['updrs_iii'], ensure_ascii=False)
         self.assertIn('estado ON', updrs_str)
         self.assertNotIn('estado OFF', updrs_str)
@@ -1118,8 +1133,10 @@ var deltaTept15 = eng.calculateDelta(60, 51, sPcl, mTept);
 var evalTept15 = eng.evaluateClinicalResponse(deltaTept15, 'boa');
 assert(evalTept15.recommendationType !== 'success', 'RM18 <25% must not be success');
 
-// E. Todas as 52 escalas presentes no NAPEN_SCALE_GUIDE
-assert(Object.keys(window.NAPEN_SCALE_GUIDE).length === 52, 'Expected 52 scales in JS guide');
+// E. Todas as 54 escalas presentes no NAPEN_SCALE_GUIDE (incluindo star_cancellation e psqi)
+assert(Object.keys(window.NAPEN_SCALE_GUIDE).length === 54, 'Expected 54 scales in JS guide');
+assert(Boolean(window.NAPEN_SCALE_GUIDE.star_cancellation), 'star_cancellation missing in JS guide');
+assert(Boolean(window.NAPEN_SCALE_GUIDE.psqi), 'psqi missing in JS guide');
 print('JSC_SUITE_OK');
 '''
             with tempfile.NamedTemporaryFile('w', suffix='.js', encoding='utf-8', delete=False) as tf:
@@ -1410,10 +1427,6 @@ function makeEl(id) {{
   return el;
 }}
 {json.dumps(dom_ids)}.forEach(function(id){{ _els[id] = makeEl(id); }});
-_els['homeContCondition'].tagName = 'SELECT';
-_els['homeContProtocol'].tagName = 'SELECT';
-_els['homeContModality'].tagName = 'SELECT';
-_els['homeContStoppedProtocol'].tagName = 'SELECT';
 var document = {{
   _cbs: {{}},
   addEventListener: function(ev, fn){{ if (ev === 'DOMContentLoaded') this._cbs.ready = fn; else (this._cbs[ev]=this._cbs[ev]||[]).push(fn); }},
@@ -1433,17 +1446,14 @@ var htmlMulti = _els['homeContStageShortcuts'].innerHTML;
 if (htmlMulti.indexOf('data-home-stage="evaluation"') === -1 || htmlMulti.indexOf('data-home-stage="alt1"') === -1) {{
   throw new Error('Esperado 2 botoes (evaluation + alt1) para AVC MS, obtido: ' + htmlMulti);
 }}
-// Muda para Paralisia Cerebral (pc_distonia = protocolo unico sem alt)
-_els['homeContCondition'].value = 'paralisia-cerebral';
-_els['homeContCondition'].listeners['change'][0]({{ target: _els['homeContCondition'] }});
-var singleIdx = -1;
-for (var i = 0; i < _els['homeContProtocol'].options.length; i++) {{
-  if (_els['homeContProtocol'].options[i].value === 'pc_distonia') {{ singleIdx = i; break; }}
+// Muda para Paralisia Cerebral clicando no card da condição e depois no card pc_distonia (protocolo único sem alt)
+var fakePcCard = {{ getAttribute: function(k){{ return k === 'data-home-cond' ? 'paralisia-cerebral' : ''; }} }};
+_els['homeContConditionGrid'].listeners['click'][0]({{ target: {{ closest: function(){{ return fakePcCard; }} }} }});
+if (_els['homeContProtocolGrid'].innerHTML.indexOf('data-home-prot="pc_distonia"') === -1) {{
+  throw new Error('pc_distonia nao encontrado nos cards de protocolo de Paralisia Cerebral');
 }}
-if (singleIdx === -1) throw new Error('pc_distonia nao encontrado no select');
-_els['homeContProtocol'].selectedIndex = singleIdx;
-_els['homeContProtocol'].value = 'pc_distonia';
-_els['homeContProtocol'].listeners['change'][0]({{ target: _els['homeContProtocol'] }});
+var fakeDistoniaCard = {{ getAttribute: function(k){{ return k === 'data-home-prot' ? 'pc_distonia' : (k === 'data-home-primary' ? 'pc_distonia' : ''); }} }};
+_els['homeContProtocolGrid'].listeners['click'][0]({{ target: {{ closest: function(){{ return fakeDistoniaCard; }} }} }});
 var htmlSingle = _els['homeContStageShortcuts'].innerHTML;
 if (htmlSingle.indexOf('data-home-stage="failure"') === -1 || htmlSingle.indexOf('Protocolo Único') === -1) {{
   throw new Error('Esperado botao unico failure para pc_distonia, obtido: ' + htmlSingle);
@@ -1744,8 +1754,17 @@ print('JSC_NOMENCLATURE_23_OK');
         self.assertIn('Zheng', g_chain[1]['nome'])
         self.assertEqual(g_chain[2]['fase_etapa'], 'ajustes')
         self.assertEqual(g_chain[2]['linha_fluxograma'], 'pontilhada')
-        self.assertEqual(len(avc_ms['modalidades']['sensorial']['cadeia_sequencial']), 2)
-        self.assertIn('Kim', avc_ms['modalidades']['sensorial']['cadeia_sequencial'][1]['nome'])
+
+        # Disfunção Sensorial S1 rTMS: cadeia exata de 4 etapas (Zanona 2022 -> Guo 2016 -> Long 2018 -> Kim 2025 pontilhada)
+        s1_chain = avc_ms['modalidades']['sensorial']['cadeia_sequencial']
+        self.assertEqual(len(s1_chain), 4)
+        self.assertIn('Zanona', s1_chain[0]['referencia'])
+        self.assertIn('Guo', s1_chain[1]['referencia'])
+        self.assertIn('Long', s1_chain[2]['referencia'])
+        self.assertIn('Kim', s1_chain[3]['referencia'])
+        self.assertEqual(s1_chain[3]['fase_etapa'], 'sequencia')
+        self.assertEqual(s1_chain[3]['linha_fluxograma'], 'pontilhada')
+
         s1_pos = next(o for e in avc_ms['arvore_algoritmo']['rtms']['etapas'] if e['etapa_id'] == 'lesao_s1' for o in e['opcoes'] if o['id'] == 'lesao_pos_sim')
         self.assertEqual(s1_pos.get('protocolo_alvo'), 'sem_pem_ipsilesional')
         tdcs_s1 = avc_ms['modalidades']['tdcs_sensorial_s1']['cadeia_sequencial']
@@ -1754,8 +1773,41 @@ print('JSC_NOMENCLATURE_23_OK');
         self.assertEqual(tdcs_s1[2]['fase_etapa'], 'ajustes')
         self.assertEqual(avc_ms['modalidades']['tdcs_negligencia']['cadeia_sequencial'][2]['linha_fluxograma'], 'pontilhada')
 
-        # RM03/RM04 AVC Mobilidade
+        # Heminegligência (4 rotas: rTMS e tDCS em AVC MS e AVC Mobilidade): SOMENTE Teste de Cancelamento de Estrelas (sem CBS)
         avc_mob = by_id['avc-mobilidade']
+        for cond_obj, mod_key in [
+            (avc_ms, 'negligencia'),
+            (avc_ms, 'tdcs_negligencia'),
+            (avc_mob, 'rtms_ppc_mob'),
+            (avc_mob, 'tdcs_ppc_mob'),
+        ]:
+            mod_obj = cond_obj['modalidades'][mod_key]
+            sc_ids = [s.get('id') for s in mod_obj.get('escalas_detalhadas', [])]
+            self.assertEqual(sc_ids, ['star_cancellation'], f'{cond_obj["id"]}::{mod_key} deve ter apenas star_cancellation, obtido {sc_ids}')
+            self.assertNotIn('catherine', str(mod_obj.get('escala_recomendada', '')).lower())
+            self.assertNotIn('cbs', str(mod_obj.get('escala_recomendada', '')).lower())
+
+        # EAM ordinal preservado e PC tetraparesia usando FMA-UE
+        eam_scales = [
+            s for m in avc_ms['modalidades'].values()
+            for s in m.get('escalas_detalhadas', [])
+            if s.get('id') == 'eam'
+        ]
+        self.assertTrue(len(eam_scales) >= 1)
+        self.assertTrue(all(s.get('tipo') == 'ordinal_eam' for s in eam_scales), 'scale_eam deve possuir tipo="ordinal_eam"')
+        pc = by_id['paralisia-cerebral']
+        pc_tetra_scales = [s.get('id') for s in pc['modalidades']['pc_manip_tetra'].get('escalas_detalhadas', [])]
+        self.assertEqual(pc_tetra_scales, ['fma_ue'])
+
+        # Zero observações mortas em slot='alvo'/'tec' cujos estagios excluam 'primary'
+        for cond_obj in data['condicoes']:
+            for obs in cond_obj.get('observacoes_contextuais', []):
+                if obs.get('slot') in ('alvo', 'tec'):
+                    est = obs.get('estagios') or []
+                    if est:
+                        self.assertIn('primary', est, f'Observação morta em {cond_obj["id"]}: {obs.get("id")} ({obs.get("slot")}/{est})')
+
+        # RM03/RM04 AVC Mobilidade
         for mk in ['equilibrio', 'velocidade_marcha', 'rtms_m1_aguda']:
             self.assertEqual(avc_mob['modalidades'][mk]['linha_fluxograma'], 'solida')
         self.assertEqual(len(avc_mob['modalidades']['rtms_m1_aguda']['cadeia_sequencial']), 3)
@@ -1821,7 +1873,8 @@ print('JSC_NOMENCLATURE_23_OK');
         self.assertIn('3.000 pulsos', ad['modalidades']['rm12_apatia_executiva']['pulsos_duracao'])
         self.assertEqual(ad['modalidades']['rm12_apatia_executiva']['intensidade'], '120% LMR')
 
-        # 3. JavaScriptCore: isolamento de escalas por fator, MRC em fraqueza, MCID 5.0 FMA-UE, cadeia sequencial FMA<=35, assistente a partir do 2º protocolo e justificativa dos Ajustes
+        # 3. JavaScriptCore: escalas, MRC, MCID 5.0 FMA-UE, EAM ordinal, Cancelamento de Estrelas por etapa (IC 95%),
+        #    DOIs clicáveis (inclusive com parênteses), busca por siglas/autores, UI amigável em cards e observações corrigidas
         jsc_bin = '/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc'
         if os.path.exists(jsc_bin):
             with open(os.path.join(BASE_DIR, 'js', 'data.js'), 'r', encoding='utf-8') as f:
@@ -1839,14 +1892,7 @@ function makeEl(id) {{
     classList: {{ add: function(c){{classes.add(c);}}, remove: function(c){{classes.delete(c);}}, toggle: function(c,f){{f?classes.add(c):classes.delete(c);}}, contains: function(c){{return classes.has(c);}} }},
     listeners: {{}},
     addEventListener: function(ev, fn){{ (this.listeners[ev]=this.listeners[ev]||[]).push(fn); }},
-    appendChild: function(c){{
-      this.children.push(c);
-      if (this.tagName === 'SELECT' && c && c.tagName === 'OPTGROUP') {{
-        (c.children || []).forEach(function(o){{ el.options.push(o); }});
-      }} else if (this.tagName === 'SELECT' && c && c.tagName === 'OPTION') {{
-        this.options.push(c);
-      }}
-    }},
+    appendChild: function(c){{ this.children.push(c); }},
     querySelector: function(){{ return makeEl(''); }},
     querySelectorAll: function(sel){{
       var hits = [];
@@ -1866,33 +1912,16 @@ function makeEl(id) {{
     getAttribute: function(k){{ return this.attrs[k] || ''; }},
     setAttribute: function(k, v){{ this.attrs[k] = String(v); }},
     closest: function(){{ return null; }},
+    focus: function(){{}},
     getBoundingClientRect: function(){{ return {{ top: 100 }}; }}
   }};
   Object.defineProperty(el, 'innerHTML', {{
     get: function(){{ return _inner; }},
-    set: function(val){{
-      _inner = String(val || '');
-      if (this.tagName === 'SELECT') {{
-        this.options = [];
-        var re = /<option([^>]*)value="([^"]*)"([^>]*)>/g, m;
-        while ((m = re.exec(_inner)) !== null) {{
-          var fullTag = (m[1] || '') + ' ' + (m[3] || '');
-          var pm = fullTag.match(/data-primary="([^"]*)"/);
-          var prim = pm ? pm[1] : '';
-          (function(val, pVal){{
-            el.options.push({{ value: val, getAttribute: function(k){{ return k === 'data-primary' ? pVal : ''; }} }});
-          }})(m[2], prim);
-        }}
-        this.selectedIndex = 0;
-      }}
-    }}
+    set: function(val){{ _inner = String(val || ''); }}
   }});
   return el;
 }}
 {json.dumps(dom_ids)}.forEach(function(id){{ _els[id] = makeEl(id); }});
-['homeContCondition','homeContModality','homeContProtocol','homeContStoppedProtocol'].forEach(function(id){{
-  _els[id].tagName = 'SELECT';
-}});
 var document = {{
   _cbs: {{}},
   addEventListener: function(ev, fn){{ if (ev === 'DOMContentLoaded') this._cbs.ready = fn; }},
@@ -1909,7 +1938,7 @@ if (document._cbs.ready) document._cbs.ready();
 
 function assert(cond, msg) {{ if (!cond) throw new Error(msg); }}
 
-// A. DecisionEngine: perda_sinergia isola FMA-UE (nunca EAM), MCID = 5.0, e RM01-MRC-FORCA dispara apenas em fraqueza
+// A. DecisionEngine: perda_sinergia isola FMA-UE, MCID = 5.0, MRC em fraqueza, EAM ordinal em espasticidade
 var eng = new DecisionEngine(window.NAPEN_DATA);
 eng.setCondition('avc-membro-superior', {{ modalityType: 'rtms' }});
 eng.setPathChoice('pem_triage', 'pem_sim');
@@ -1929,12 +1958,68 @@ eng.setPathChoice('fator_limitante', 'fraqueza');
 var obsFraqScale = eng.getContextualObservations({{ slot: 'scale' }});
 assert(obsFraqScale.some(function(o){{ return o.id === 'RM01-MRC-FORCA' && o.texto.indexOf('MRC') !== -1; }}), 'RM01-MRC-FORCA deve aparecer em fraqueza');
 
-// espasticidade isola apenas EAM
+// espasticidade isola apenas EAM com modo ordinal_eam funcional
 eng.setPathChoice('fator_limitante', 'espasticidade');
 var scalesEsp = eng.getScalesForCurrentPath();
-assert(scalesEsp.length === 1 && scalesEsp[0].id === 'eam', 'espasticidade deve retornar apenas eam');
+assert(scalesEsp.length === 1 && scalesEsp[0].id === 'eam' && scalesEsp[0].tipo === 'ordinal_eam', 'espasticidade deve retornar apenas eam ordinal');
+var eamOk = eng.calculateDelta('2', '1', scalesEsp[0], eng.getActiveModality());
+assert(eamOk.isOrdinal === true && eamOk.mcidMet === true, 'EAM 2->1 (-1 grau) deve atingir MCID');
+var eamHalf = eng.calculateDelta('2', '1+', scalesEsp[0], eng.getActiveModality());
+assert(eamHalf.isOrdinal === true && eamHalf.mcidMet === false, 'EAM 2->1+ (-0.5 grau) nao deve atingir MCID de 1 grau');
+
+// A2. S1 Disfunção Sensorial: 4 etapas + RM01-N11-CEREBELO-S1 dispara em alt3 (Kim 2025)
+eng.setCondition('avc-membro-superior', {{ modalityType: 'rtms' }});
+eng.setPathChoice('fator_limitante', 'sensorial');
+eng.setPathChoice('alvo_sensorial', 'sensorial_s1');
+eng.setPathChoice('lesao_s1', 'lesao_pos_nao');
+var s1Chain = eng.getProtocolChain();
+assert(s1Chain.length === 4, 'sensorial deve ter 4 etapas na cadeia');
+var obsS1Alt3 = eng.getContextualObservations({{ slot: 'stage', stage: 'alt3' }});
+assert(obsS1Alt3.some(function(o){{ return o.id === 'RM01-N11-CEREBELO-S1'; }}), 'RM01-N11-CEREBELO-S1 deve disparar em stage=alt3');
+
+// A3. Heminegligência (rTMS P3/P4): SOMENTE Teste de Cancelamento de Estrelas + Calculadora sensível ao protocolo (IC 95%)
+eng.setCondition('avc-membro-superior', {{ modalityType: 'rtms' }});
+eng.setPathChoice('fator_limitante', 'negligencia');
+var negScales = eng.getScalesForCurrentPath();
+assert(negScales.length === 1 && negScales[0].id === 'star_cancellation', 'negligencia deve expor apenas star_cancellation');
+
+// Protocolo Inicial (Kim 2013 10 Hz): corte >= +8,0 pts (IC 95%: 8,0 a 12,7)
+eng.setActiveCalcStage('primary');
+var negP1Ok = eng.calculateDelta('30', '39', negScales[0], eng.getActiveModality());
+var evalP1Ok = eng.evaluateClinicalResponse(negP1Ok, 'boa');
+assert(negP1Ok.mcidMet === true && negP1Ok.withinCI === true && evalP1Ok.recommendationType === 'success', 'Kim 10 Hz +9 pts deve ser success dentro do IC 8.0-12.7');
+var negP1Fail = eng.calculateDelta('30', '37', negScales[0], eng.getActiveModality());
+var evalP1Fail = eng.evaluateClinicalResponse(negP1Fail, 'boa');
+assert(negP1Fail.mcidMet === false && evalP1Fail.recommendationType === 'danger' && evalP1Fail.recommendedStage === 'alt1', 'Kim 10 Hz +7 pts deve ser danger e avançar para alt1');
+
+// 2º Protocolo (Kim 2013 1 Hz): corte >= +13,0 pts (IC 95%: 13,0 a 20,0)
+eng.setActiveCalcStage('alt1');
+var negP2Ok = eng.calculateDelta('20', '34', negScales[0], eng.getActiveModality());
+var evalP2Ok = eng.evaluateClinicalResponse(negP2Ok, 'boa');
+assert(negP2Ok.mcidMet === true && negP2Ok.withinCI === true && evalP2Ok.recommendationType === 'success', 'Kim 1 Hz +14 pts deve ser success dentro do IC 13.0-20.0');
+var negP2Fail = eng.calculateDelta('20', '30', negScales[0], eng.getActiveModality());
+var evalP2Fail = eng.evaluateClinicalResponse(negP2Fail, 'boa');
+assert(negP2Fail.mcidMet === false && evalP2Fail.recommendationType === 'danger' && evalP2Fail.recommendedStage === 'alt2', 'Kim 1 Hz +10 pts (<13.0) deve ser danger e avançar para alt2');
+
+// Seção de Ajustes (Cao 2016 iTBS F5): corte >= +37%
+eng.setActiveCalcStage('alt2');
+var negP3Ok = eng.calculateDelta('20', '28', negScales[0], eng.getActiveModality());
+var evalP3Ok = eng.evaluateClinicalResponse(negP3Ok, 'boa');
+assert(negP3Ok.mcidMet === true && evalP3Ok.recommendationType === 'success', 'Cao iTBS +40% (>=37%) deve ser success');
+var negP3Fail = eng.calculateDelta('20', '25', negScales[0], eng.getActiveModality());
+var evalP3Fail = eng.evaluateClinicalResponse(negP3Fail, 'boa');
+assert(negP3Fail.mcidMet === false && evalP3Fail.recommendationType === 'danger' && evalP3Fail.recommendedStage === 'failure', 'Cao iTBS +25% (<37%) deve indicar failure');
+
+// A4. Observações auditadas: RM04-DELTOIDE em AVC Mobilidade tDCS (stage/alt2) e RM09-DUAL-ORDEM em AVC Afasia rTMS (stage/alt2)
+eng.setCondition('avc-mobilidade', {{ modalityType: 'tdcs' }});
+eng.setFactor('tdcs_m1_mob', true);
+assert(eng.getContextualObservations({{ slot: 'stage', stage: 'alt2' }}).some(function(o){{ return o.id === 'RM04-DELTOIDE'; }}), 'RM04-DELTOIDE deve disparar em avc-mobilidade::tdcs_m1_mob (stage/alt2)');
+eng.setCondition('avc-afasia', {{ modalityType: 'rtms' }});
+eng.setFactor('expressao', true);
+assert(eng.getContextualObservations({{ slot: 'stage', stage: 'alt2' }}).some(function(o){{ return o.id === 'RM09-DUAL-ORDEM'; }}), 'RM09-DUAL-ORDEM deve disparar em avc-afasia::expressao (stage/alt2)');
 
 // B. Cadeia sequencial FMA <= 35: Bilateral (Long 2018) -> LF-rTMS Contralesional (Zheng 2015, SOLIDA) -> Ajustes (Chang 2024, PONTILHADA) -> Falha
+eng.setCondition('avc-membro-superior', {{ modalityType: 'rtms' }});
 eng.setFactor('fraqueza', false);
 eng.setPathChoice('pem_triage', 'pem_sim');
 eng.setPathChoice('gravidade_fma', 'fma_menor_35');
@@ -1947,18 +2032,61 @@ assert(graveChain[2].fase_etapa === 'ajustes' && graveChain[2].linha_fluxograma 
 var alt2Presc = eng.getPrescriptionForStage('alt2');
 assert(alt2Presc && alt2Presc.motivoAjuste.indexOf('ainda não foi validado por metanálises') !== -1, 'alt2 deve expor motivoAjuste explicando ausencia de metanalises');
 
-// C. Homepage: selecionar em #homeContStoppedProtocol qual protocolo parou -> avança para o PRÓXIMO direto no Assistente Pós-Indução
+// C. Utilitários exportados: linkifyDoisHtml (inclui parênteses balanceados), resolveScaleKey (sem fallback silencioso p/ EAM) e searchPlatformCatalog (siglas + autores)
+var U = window.NAPEN_APP_UTILS;
+assert(Boolean(U), 'window.NAPEN_APP_UTILS deve estar exposto');
+
+var doiLink1 = U.linkifyDoisHtml('Long et al. (2018) · DOI: 10.3233/RNN-170733');
+assert(doiLink1.indexOf('href="https://doi.org/10.3233/RNN-170733"') !== -1 && doiLink1.indexOf('target="_blank"') !== -1, 'DOI RNN-170733 deve virar link clicável: ' + doiLink1);
+var doiLink2 = U.linkifyDoisHtml('Buysse et al. (1989) (DOI: 10.1016/0165-1781(89)90047-4).');
+assert(doiLink2.indexOf('href="https://doi.org/10.1016/0165-1781(89)90047-4"') !== -1, 'DOI com parênteses balanceados deve preservar (89) e remover ) externo: ' + doiLink2);
+
+assert(U.resolveScaleKey('star_cancellation') === 'star_cancellation', 'resolveScaleKey(star_cancellation) falhou');
+assert(U.resolveScaleKey('Teste de Cancelamento de Estrelas') === 'star_cancellation', 'resolveScaleKey(Cancelamento de Estrelas) falhou');
+assert(U.resolveScaleKey('CBS') === 'catherine_bergego', 'resolveScaleKey(CBS) falhou');
+assert(U.resolveScaleKey('PSQI') === 'psqi', 'resolveScaleKey(PSQI) falhou');
+assert(U.resolveScaleKey('Cognitivo (Uso Privativo Psicólogos)') === 'd2_psico', 'resolveScaleKey(Cognitivo Psicólogos) não deve cair em eam');
+
+var acronymsToCheck = [
+  ['AVC', 'avc-membro-superior'],
+  ['TAG', 'ansiedade-generalizada'],
+  ['TEPT', 'tept'],
+  ['TEA', 'transtorno-espectro-autista'],
+  ['PC', 'paralisia-cerebral'],
+  ['DP', 'doenca-parkinson'],
+  ['DA', 'alzheimer-ccl'],
+  ['CCL', 'alzheimer-ccl'],
+  ['TDM', 'depressao-maior'],
+  ['depressao', 'depressao-maior'],
+  ['EMT', 'avc-membro-superior'],
+  ['ETCC', 'avc-membro-superior'],
+  ['CPFDL', 'depressao-maior']
+];
+acronymsToCheck.forEach(function(pair) {{
+  var res = U.searchPlatformCatalog(pair[0]);
+  var found = res.conditions.some(function(item){{ return item.condition.id === pair[1]; }});
+  assert(found, 'Busca por "' + pair[0] + '" deve encontrar ' + pair[1]);
+}});
+var longSearch = U.searchPlatformCatalog('Long');
+assert(longSearch.directProtocols.length >= 1, 'Busca por "Long" deve retornar atalhos diretos em directProtocols');
+
+// D. Homepage amigável em cards + busca instantânea (sem <select>): selecionar alt1 -> avançar para alt2 com DOI clicável no Assistente
 _els['btnHomeEntryReturning'].listeners['click'][0]();
-assert(_els['homeContStoppedProtocol'].options.length >= 2, 'homeContStoppedProtocol deve listar protocolos da cadeia');
-// Parou em alt1 -> botão principal deve apontar para alt2
-var hasAlt1 = _els['homeContStoppedProtocol'].options.some(function(o){{ return o.value === 'alt1'; }});
-assert(hasAlt1, 'alt1 deve existir em homeContStoppedProtocol para avc-membro-superior');
-_els['homeContStoppedProtocol'].value = 'alt1';
-_els['homeContStoppedProtocol'].listeners['change'][0]();
+assert(_els['homeContConditionGrid'].innerHTML.indexOf('btn-cascade-choice') !== -1, 'homeContConditionGrid deve renderizar cards btn-cascade-choice');
+assert(_els['homeContStoppedGrid'].innerHTML.indexOf('data-home-stopped="alt1"') !== -1, 'homeContStoppedGrid deve listar card alt1 para avc-membro-superior');
+
+// Testar busca instantânea no painel de continuidade
+_els['homeContSearchInput'].value = 'Long';
+_els['homeContSearchInput'].listeners['input'][0]({{ target: _els['homeContSearchInput'] }});
+assert(_els['homeContDirectMatches'].style.display === 'block' && _els['homeContDirectMatches'].innerHTML.indexOf('data-direct-cond=') !== -1, 'Busca "Long" na continuidade deve exibir cards de atalho direto');
+// Limpar busca e testar clique no card alt1
+_els['homeContSearchClearBtn'].listeners['click'][0]();
+var fakeAlt1Card = {{ getAttribute: function(k){{ return k === 'data-home-stopped' ? 'alt1' : ''; }} }};
+_els['homeContStoppedGrid'].listeners['click'][0]({{ target: {{ closest: function(){{ return fakeAlt1Card; }} }} }});
 var shortHtml = _els['homeContStageShortcuts'].innerHTML;
 assert(shortHtml.indexOf('data-home-stage="alt2"') !== -1, 'Ao parar em alt1, proximo passo deve ser alt2: ' + shortHtml);
 
-// Simula clique no atalho para alt2 e verifica UI no Assistente: trilha a partir do 2º protocolo (sem 1ª Indução) + motivo explícito dos Ajustes/pontilhado
+// Simula clique no atalho para alt2 e verifica UI no Assistente: trilha a partir do 2º protocolo + motivo explícito + DOI clicável + botão Avaliar na Calculadora
 var fakeAlt2Btn = {{ getAttribute: function(k){{ return k === 'data-home-stage' ? 'alt2' : ''; }} }};
 _els['homeContStageShortcuts'].listeners['click'][0]({{ target: {{ closest: function(){{ return fakeAlt2Btn; }} }} }});
 assert(_els['assistantSequenceTrail'].style.display === 'flex', 'assistantSequenceTrail deve ficar visivel');
@@ -1968,9 +2096,12 @@ assert(_els['branchResultPanel'].innerHTML.indexOf('Seção de Ajustes') !== -1,
 assert(_els['branchResultPanel'].innerHTML.indexOf('ajustes-evidence-rationale') !== -1, 'branchResultPanel deve exibir bloco .ajustes-evidence-rationale em Ajustes/pontilhado');
 assert(_els['branchResultPanel'].innerHTML.indexOf('ainda não foi validado por metanálises') !== -1, 'Justificativa explicita de metanalises deve aparecer em Ajustes/pontilhado');
 assert(_els['branchResultPanel'].innerHTML.indexOf('is-dotted') !== -1, 'Box pontilhado deve receber classe is-dotted');
+assert(_els['branchResultPanel'].innerHTML.indexOf('https://doi.org/') !== -1, 'Referência no Assistente deve renderizar link DOI clicável');
+assert(_els['branchResultPanel'].innerHTML.indexOf('js-eval-stage-calc') !== -1, 'Cartão do Assistente deve oferecer botão Avaliar este Protocolo na Calculadora');
 assert(_els['continuingStageFocusSlot'].innerHTML.indexOf('continuing-focus-meta') === -1, 'continuingStageFocusSlot nao deve duplicar parâmetros no topo');
+assert(_els['calcStageSelectorBar'].style.display === 'flex', 'calcStageSelectorBar deve aparecer para cadeias com múltiplos protocolos');
 
-// D. Deduplicação em #prescObsIntensidade, #tolGuideDose, #monitoringGrid e #calcScaleTabs
+// E. Deduplicação em #prescObsIntensidade, #tolGuideDose, #monitoringGrid e #calcScaleTabs
 assert(_els['prescObsIntensidade'].innerHTML === '' && _els['prescObsIntensidade'].style.display === 'none', 'prescObsIntensidade deve permanecer oculto');
 assert(_els['tolGuideDose'].innerHTML.indexOf('Conduta de Carga / Estímulo:') === -1, 'tolGuideDose nao deve duplicar bloco');
 assert(_els['monitoringReeval'].innerHTML.indexOf('obs-contextual-list') === -1, 'monitoringReeval nao deve reinjetar lista extra');

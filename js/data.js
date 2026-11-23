@@ -52,7 +52,7 @@ window.NAPEN_DATA = {
         {
           "id": "negligencia",
           "nome": "Heminegligência",
-          "instrumento_sugerido": "Catherine Bergego / Cancelamento",
+          "instrumento_sugerido": "Teste de Cancelamento de Estrelas (BIT)",
           "descricao": "Heminegligência espacial unilateral (PPC).",
           "label": "Heminegligência"
         }
@@ -110,10 +110,10 @@ window.NAPEN_DATA = {
                 {
                   "id": "negligencia",
                   "rotulo": "Heminegligência",
-                  "criterio": "Teste de Cancelamento / Escala Catherine Bergego",
+                  "criterio": "Teste de Cancelamento de Estrelas (BIT)",
                   "descricao": "Desatenção espacial unilateral para o hemicorpo afetado.",
                   "protocolo_alvo": "negligencia",
-                  "subtexto": "Teste de Cancelamento / Escala Catherine Bergego",
+                  "subtexto": "Teste de Cancelamento de Estrelas (BIT)",
                   "modalidade_chave": "negligencia"
                 }
               ],
@@ -309,10 +309,10 @@ window.NAPEN_DATA = {
                 {
                   "id": "negligencia",
                   "rotulo": "Heminegligência",
-                  "criterio": "Cancelamento / Catherine Bergego",
+                  "criterio": "Teste de Cancelamento de Estrelas (BIT)",
                   "descricao": "Rota para Córtex Parietal Posterior (P3/P4).",
                   "protocolo_alvo": "tdcs_negligencia",
-                  "subtexto": "Cancelamento / Catherine Bergego",
+                  "subtexto": "Teste de Cancelamento de Estrelas (BIT)",
                   "modalidade_chave": "tdcs_negligencia"
                 }
               ],
@@ -544,23 +544,56 @@ window.NAPEN_DATA = {
           "referencia_rotulo": "Ver guia prático para testar a presença de PEM (Albuquerque et al., 2023 · DOI: 10.17267/2965-3738bis.2023.e5097)"
         },
         {
-          "id": "RM01-N11-CEREBELO",
+          "id": "RM01-N11-CEREBELO-PEM",
           "texto": "Bobinas parabólicas e duplo cone são as mais indicadas para a estimulação profunda do cerebelo.",
-          "slot": "alvo",
+          "slot": "stage",
           "categoria": "equipamento",
           "severidade": "info",
           "gatilho": {
             "protocolo_ids": [
-              "sem_pem",
-              "sem_pem_ipsilesional",
+              "sem_pem"
+            ],
+            "modalidades_tipo": [
+              "rtms"
+            ],
+            "estagios": [
+              "alt1"
+            ]
+          }
+        },
+        {
+          "id": "RM01-N11-CEREBELO-IPSI",
+          "texto": "Bobinas parabólicas e duplo cone são as mais indicadas para a estimulação profunda do cerebelo.",
+          "slot": "stage",
+          "categoria": "equipamento",
+          "severidade": "info",
+          "gatilho": {
+            "protocolo_ids": [
+              "sem_pem_ipsilesional"
+            ],
+            "modalidades_tipo": [
+              "rtms"
+            ],
+            "estagios": [
+              "alt2"
+            ]
+          }
+        },
+        {
+          "id": "RM01-N11-CEREBELO-S1",
+          "texto": "Bobinas parabólicas e duplo cone são as mais indicadas para a estimulação profunda do cerebelo.",
+          "slot": "stage",
+          "categoria": "equipamento",
+          "severidade": "info",
+          "gatilho": {
+            "protocolo_ids": [
               "sensorial"
             ],
             "modalidades_tipo": [
               "rtms"
             ],
             "estagios": [
-              "alt1",
-              "alt2"
+              "alt3"
             ]
           }
         },
@@ -582,7 +615,6 @@ window.NAPEN_DATA = {
               "rtms"
             ],
             "estagios": [
-              "alt1",
               "alt2"
             ]
           }
@@ -770,7 +802,7 @@ window.NAPEN_DATA = {
               "id": "eam",
               "nome": "Escala de Ashworth Modificada (EAM)",
               "sigla": "EAM",
-              "tipo": "continua",
+              "tipo": "ordinal_eam",
               "placeholder": "Ex: 2.0",
               "direcao_melhora": "reducao",
               "meta_texto": "Redução ≥ 1,0 ponto no escore de tônus muscular",
@@ -1232,7 +1264,7 @@ window.NAPEN_DATA = {
               "id": "eam",
               "nome": "Escala de Ashworth Modificada (EAM)",
               "sigla": "EAM",
-              "tipo": "continua",
+              "tipo": "ordinal_eam",
               "placeholder": "Ex: 2.0",
               "direcao_melhora": "reducao",
               "meta_texto": "Redução ≥ 1,0 ponto no escore de tônus muscular",
@@ -1676,7 +1708,7 @@ window.NAPEN_DATA = {
               "id": "eam",
               "nome": "Escala de Ashworth Modificada (EAM)",
               "sigla": "EAM",
-              "tipo": "continua",
+              "tipo": "ordinal_eam",
               "placeholder": "Ex: 2.0",
               "direcao_melhora": "reducao",
               "meta_texto": "Redução ≥ 1,0 ponto no escore de tônus muscular",
@@ -1936,7 +1968,7 @@ window.NAPEN_DATA = {
               "id": "eam",
               "nome": "Escala de Ashworth Modificada (EAM)",
               "sigla": "EAM",
-              "tipo": "continua",
+              "tipo": "ordinal_eam",
               "placeholder": "Ex: 2.0",
               "direcao_melhora": "reducao",
               "meta_texto": "Redução ≥ 1,0 ponto no escore de tônus muscular",
@@ -2177,7 +2209,7 @@ window.NAPEN_DATA = {
               "id": "eam",
               "nome": "Escala de Ashworth Modificada (EAM)",
               "sigla": "EAM",
-              "tipo": "continua",
+              "tipo": "ordinal_eam",
               "placeholder": "Ex: 2.0",
               "direcao_melhora": "reducao",
               "meta_texto": "Redução ≥ 1,0 ponto no escore de tônus muscular",
@@ -2452,25 +2484,28 @@ window.NAPEN_DATA = {
             "calibracao_limiar": "Na ausência de identificação do LMR, calibrar pelo Limiar Motor Ativo (LMA). Para cerebelo, utilizar bobinas parabólicas ou duplo cone."
           },
           "protocolo_alternativo": {
-            "id": "RM01-P6",
-            "nome": "cTBS Contralesional + HF-rTMS Cerebelar Contralesional (Kim et al., 2025)",
-            "tecnica": "cTBS M1 Contralesional + HF-rTMS Cerebelar Contralesional",
-            "alvo": "M1 contralesional + Cerebelo contralesional (3 cm lateral ao ínion)",
-            "parametros": "cTBS (3 pulsos a 50 Hz repetidos a cada 200 ms / 5 Hz, 40 s contínuos, 600 pulsos, 70% LMR) contralesional seguido por rTMS cerebelar (10 Hz, 100% LMR, 1.000 pulsos, 20 trens de 50 pulsos, 25 s de intervalo) a 3 cm lateral ao ínion contralesional · 10 sessões diárias",
-            "linha_fluxograma": "pontilhada",
-            "efeito_esperado": "+12,5 pts na FMA-UE (IC 95%: 9,9 a 21,1)",
-            "referencia": "Kim et al. (2025) · DOI: 10.3390/jcm14072315",
+            "id": "RM01-P5-SEQ",
+            "nome": "HF-rTMS (10 Hz) — M1 Ipsilesional (Guo et al., 2016)",
+            "tecnica": "rTMS Excitatória (10 Hz) — M1 Ipsilesional",
+            "alvo": "Córtex Motor Primário (M1) — hemisfério ipsilesional",
+            "parametros": "10 Hz | 90% LMR (ou calibrar pelo LMA se LMR ausente) | 1.500 pulsos (30 trens de 50 pulsos, 25 s de intervalo) · 10 sessões diárias associadas à terapia convencional",
+            "linha_fluxograma": "solida",
+            "efeito_esperado": "+23,3 pts na FMA-UE (IC 95%: -3,5 a 50,0)",
+            "referencia": "Guo et al. (2016) · DOI: 10.1155/2016/6238575",
             "fase_etapa": "sequencia",
             "observacoes": "Transição sequencial indicada pelo algoritmo clínico diante de resposta insatisfatória ou intolerância."
           },
           "protocolo_alternativo_2": {
-            "nome": "Reavaliação Direta Pré-Falha",
-            "tecnica": "Consolidação Clínica ou Transição p/ Falha Terapêutica",
-            "alvo": "S1 — hemisfério ipsilesional (3 cm posterior a M1/C3-C4 via PEM)",
-            "parametros": "Conferir adesão, medicações interferentes (benzodiazepínicos) e terapia concomitante.",
+            "id": "RM01-P2",
+            "nome": "rTMS Bilateral (1 Hz Contralesional + 10 Hz Ipsilesional — Long et al., 2018)",
+            "tecnica": "rTMS Bilateral (1 Hz contralesional seguido de 10 Hz ipsilesional)",
+            "alvo": "M1 contralesional (1 Hz) seguido de M1 ipsilesional (10 Hz)",
+            "parametros": "1 Hz, 90% LMR, 1.000 pulsos no hemisfério contralesional seguido de 10 Hz, 90% LMR, 1.000 pulsos (10 s trens, 50 s de intervalo) no hemisfério ipsilesional · 15 sessões diárias associadas à fisioterapia e terapia ocupacional",
             "linha_fluxograma": "solida",
-            "fase_etapa": "ajustes",
-            "observacoes": "Se não houver resposta após as tentativas indicadas neste ramo, caracteriza-se falha terapêutica."
+            "efeito_esperado": "+6,6 pts na FMA-UE (IC 95%: 4,1 a 9,1) após 15 sessões diárias",
+            "referencia": "Long et al. (2018) · DOI: 10.3233/RNN-170733",
+            "fase_etapa": "sequencia",
+            "observacoes": "Passo sequencial subsequente previsto no fluxograma antes da caracterização de falha terapêutica."
           },
           "cadeia_sequencial": [
             {
@@ -2490,6 +2525,36 @@ window.NAPEN_DATA = {
             },
             {
               "ordem": 2,
+              "id": "RM01-P5-SEQ",
+              "etapa_rotulo": "Próximo Protocolo — HF-rTMS M1 Ipsilesional",
+              "nome": "HF-rTMS (10 Hz) — M1 Ipsilesional (Guo et al., 2016)",
+              "tecnica": "rTMS Excitatória (10 Hz) — M1 Ipsilesional",
+              "alvo": "Córtex Motor Primário (M1) — hemisfério ipsilesional",
+              "parametros": "10 Hz | 90% LMR (ou calibrar pelo LMA se LMR ausente) | 1.500 pulsos (30 trens de 50 pulsos, 25 s de intervalo)",
+              "sessoes": "10 sessões diárias associadas à terapia convencional",
+              "efeito_esperado": "+23,3 pts na FMA-UE (IC 95%: -3,5 a 50,0)",
+              "referencia": "Guo et al. (2016) · DOI: 10.1155/2016/6238575",
+              "linha_fluxograma": "solida",
+              "observacoes": "",
+              "fase_etapa": "sequencia"
+            },
+            {
+              "ordem": 3,
+              "id": "RM01-P2",
+              "etapa_rotulo": "Próximo Protocolo — rTMS Bilateral Sequencial",
+              "nome": "rTMS Bilateral (1 Hz Contralesional + 10 Hz Ipsilesional — Long et al., 2018)",
+              "tecnica": "rTMS Bilateral (1 Hz contralesional seguido de 10 Hz ipsilesional)",
+              "alvo": "M1 contralesional (1 Hz) seguido de M1 ipsilesional (10 Hz)",
+              "parametros": "1 Hz, 90% LMR, 1.000 pulsos no hemisfério contralesional seguido de 10 Hz, 90% LMR, 1.000 pulsos (10 s trens, 50 s de intervalo) no hemisfério ipsilesional",
+              "sessoes": "15 sessões diárias associadas à fisioterapia e terapia ocupacional",
+              "efeito_esperado": "+6,6 pts na FMA-UE (IC 95%: 4,1 a 9,1) após 15 sessões diárias",
+              "referencia": "Long et al. (2018) · DOI: 10.3233/RNN-170733",
+              "linha_fluxograma": "solida",
+              "observacoes": "",
+              "fase_etapa": "sequencia"
+            },
+            {
+              "ordem": 4,
               "id": "RM01-P6",
               "etapa_rotulo": "Escalonamento Combinado (Linha Pontilhada) — cTBS + Cerebelo",
               "nome": "cTBS Contralesional + HF-rTMS Cerebelar Contralesional (Kim et al., 2025)",
@@ -2559,8 +2624,8 @@ window.NAPEN_DATA = {
           "intensidade": "90% LMR",
           "pulsos_duracao": "1.000 pulsos (20 trens de 50 pulsos, 55 s de intervalo)",
           "sessoes": "10 sessões diárias associadas à varredura visual",
-          "escala_recomendada": "Escala Catherine Bergego / Cancelamento",
-          "meta_melhora": "-3,0 pontos na CBS / ganho no cancelamento de estrelas",
+          "escala_recomendada": "Teste de Cancelamento de Estrelas (BIT — 0 a 54)",
+          "meta_melhora": "Aumento de 10,4 pontos (IC 95%: 8,0 a 12,7) no teste de cancelamento de estrelas após 10 sessões diárias",
           "tamanho_efeito": 0.54,
           "evidencia": "Nível B — Eficácia clínica em heminegligência",
           "linha_fluxograma": "solida",
@@ -2616,31 +2681,33 @@ window.NAPEN_DATA = {
           },
           "escalas_detalhadas": [
             {
-              "id": "cbs",
-              "nome": "Escala Catherine Bergego / Teste de Cancelamento",
-              "sigla": "CBS / Cancelamento",
+              "id": "star_cancellation",
+              "nome": "Teste de Cancelamento de Estrelas (BIT — Star Cancellation Test)",
+              "sigla": "Cancelamento de Estrelas",
               "tipo": "continua",
-              "placeholder": "Ex: 15",
-              "direcao_melhora": "reducao",
-              "meta_texto": "Redução ≥ 3,0 pontos na CBS ou ganho significativo no cancelamento de estrelas",
+              "placeholder": "Ex: 32",
+              "direcao_melhora": "aumento",
+              "meta_texto": "Aumento esperado de +10,4 pontos (IC 95%: 8,0 a 12,7) após 10 sessões diárias (corte satisfatório ≥ +8,0 pontos)",
               "tamanho_efeito": 0.54,
               "min": 0,
-              "max": 30,
-              "mcid_valor": 3.0,
-              "mcid_label": "-3,0 pontos na CBS"
+              "max": 54,
+              "mcid_valor": 8.0,
+              "mcid_label": "≥ +8,0 pontos (limite inferior do IC 95%: 8,0–12,7 · média +10,4 pts)"
             }
           ],
           "cohen_d": "d ≈ 0.54 (Moderado)",
-          "mcid_valor": 3.0,
-          "mcid_label": "-3,0 pontos na CBS",
+          "mcid_valor": 8.0,
+          "mcid_label": "≥ +8,0 pontos (IC 95%: 8,0 a 12,7 · média +10,4 pts)",
           "efeito_clinico": {
             "cohen_d_esperado": 0.54,
             "interpretacao_cohen": "Moderado",
-            "mcid_valor": 3.0,
-            "mcid_label": "-3,0 pontos na CBS",
-            "efeito_esperado_resumo": "+10,4 pts no teste de cancelamento de estrelas após 10 sessões",
+            "mcid_valor": 8.0,
+            "mcid_label": "≥ +8,0 pontos (IC 95%: 8,0 a 12,7 · média +10,4 pts)",
+            "efeito_esperado_resumo": "Aumento de 10,4 pontos (IC 95%: 8,0 a 12,7) no teste de cancelamento de estrelas após 10 sessões diárias em pacientes em fase aguda com lesões corticais ou subcorticais",
             "estudo_referencia": "Kim et al. (2013)",
-            "cohen_d": "d ≈ 0.54 (Moderado)"
+            "cohen_d": "d ≈ 0.54 (Moderado)",
+            "ic_min": 8.0,
+            "ic_max": 12.7
           },
           "ajuste_parametros": {
             "titulo": "Ajustes de Tolerabilidade, Dose e Calibração em rTMS (Membro Superior)",
@@ -2655,7 +2722,7 @@ window.NAPEN_DATA = {
             "alvo": "P3/P4 contralesional",
             "parametros": "1 Hz | 90% LMR | 1.200 pulsos · 10 sessões diárias",
             "linha_fluxograma": "solida",
-            "efeito_esperado": "+16,4 pts no cancelamento de estrelas",
+            "efeito_esperado": "Aumento de 16,4 pontos (IC 95%: 13,0 a 20,0) no teste de cancelamento de estrelas após 10 sessões diárias em pacientes em fase aguda com lesões corticais ou subcorticais",
             "referencia": "Kim et al. (2013) · DOI: 10.1016/j.apmr.2012.12.016",
             "fase_etapa": "sequencia",
             "observacoes": "Transição sequencial indicada pelo algoritmo clínico diante de resposta insatisfatória ou intolerância."
@@ -2667,7 +2734,7 @@ window.NAPEN_DATA = {
             "alvo": "F5 (entre F3 e F7) — Córtex pré-frontal dorsolateral esquerdo",
             "parametros": "iTBS: 2 sessões separadas por 15 min, 3 pulsos a 50 Hz repetidos a 200 ms (5 Hz), 2 s estímulo e 8 s pausa, 600 pulsos, 80% LMR · 10 dias de tratamento",
             "linha_fluxograma": "pontilhada",
-            "efeito_esperado": "+37% no teste de cancelamento de estrelas",
+            "efeito_esperado": "+37% no teste de cancelamento de estrelas após 10 dias de tratamento",
             "referencia": "Cao et al. (2016) · DOI: 10.1097/WNR.0000000000000689",
             "fase_etapa": "ajustes",
             "observacoes": "Passo sequencial subsequente previsto no fluxograma antes da caracterização de falha terapêutica."
@@ -2682,11 +2749,20 @@ window.NAPEN_DATA = {
               "alvo": "P3/P4 ipsilesional",
               "parametros": "10 Hz | 90% LMR | 1.000 pulsos (20 trens de 50 pulsos, 55 s de intervalo)",
               "sessoes": "10 sessões diárias",
-              "efeito_esperado": "+10,4 pts no cancelamento de estrelas",
+              "efeito_esperado": "Aumento de 10,4 pontos (IC 95%: 8,0 a 12,7) no teste de cancelamento de estrelas após 10 sessões diárias em pacientes em fase aguda com lesões corticais ou subcorticais",
               "referencia": "Kim et al. (2013) · DOI: 10.1016/j.apmr.2012.12.016",
               "linha_fluxograma": "solida",
               "observacoes": "",
-              "fase_etapa": "inicial"
+              "fase_etapa": "inicial",
+              "calc_meta": {
+                "mcid_valor": 8.0,
+                "mcid_label": "≥ +8,0 pontos (limite inferior do IC 95%: 8,0–12,7 · média +10,4 pts)",
+                "meta_texto": "Aumento esperado de +10,4 pontos (IC 95%: 8,0 a 12,7) no teste de cancelamento de estrelas após 10 sessões diárias",
+                "ic_min": 8.0,
+                "ic_max": 12.7,
+                "estudo_referencia": "Kim et al. (2013) — HF-rTMS 10 Hz P3/P4 Ipsilesional",
+                "efeito_esperado_resumo": "Aumento de 10,4 pontos (IC 95%: 8,0 a 12,7) no teste de cancelamento de estrelas após 10 sessões diárias em pacientes em fase aguda com lesões corticais ou subcorticais"
+              }
             },
             {
               "ordem": 2,
@@ -2697,11 +2773,20 @@ window.NAPEN_DATA = {
               "alvo": "P3/P4 contralesional",
               "parametros": "1 Hz | 90% LMR | 1.200 pulsos",
               "sessoes": "10 sessões diárias",
-              "efeito_esperado": "+16,4 pts no cancelamento de estrelas",
+              "efeito_esperado": "Aumento de 16,4 pontos (IC 95%: 13,0 a 20,0) no teste de cancelamento de estrelas após 10 sessões diárias em pacientes em fase aguda com lesões corticais ou subcorticais",
               "referencia": "Kim et al. (2013) · DOI: 10.1016/j.apmr.2012.12.016",
               "linha_fluxograma": "solida",
               "observacoes": "",
-              "fase_etapa": "sequencia"
+              "fase_etapa": "sequencia",
+              "calc_meta": {
+                "mcid_valor": 13.0,
+                "mcid_label": "≥ +13,0 pontos (limite inferior do IC 95%: 13,0–20,0 · média +16,4 pts)",
+                "meta_texto": "Aumento esperado de +16,4 pontos (IC 95%: 13,0 a 20,0) no teste de cancelamento de estrelas após 10 sessões diárias",
+                "ic_min": 13.0,
+                "ic_max": 20.0,
+                "estudo_referencia": "Kim et al. (2013) — LF-rTMS 1 Hz P3/P4 Contralesional",
+                "efeito_esperado_resumo": "Aumento de 16,4 pontos (IC 95%: 13,0 a 20,0) no teste de cancelamento de estrelas após 10 sessões diárias em pacientes em fase aguda com lesões corticais ou subcorticais"
+              }
             },
             {
               "ordem": 3,
@@ -2712,11 +2797,19 @@ window.NAPEN_DATA = {
               "alvo": "F5 (entre F3 e F7) — Córtex pré-frontal dorsolateral esquerdo",
               "parametros": "iTBS: 2 sessões separadas por 15 min, 3 pulsos a 50 Hz repetidos a 200 ms (5 Hz), 2 s estímulo e 8 s pausa, 600 pulsos, 80% LMR",
               "sessoes": "10 dias de tratamento",
-              "efeito_esperado": "+37% no teste de cancelamento de estrelas",
+              "efeito_esperado": "+37% no teste de cancelamento de estrelas após 10 dias de tratamento",
               "referencia": "Cao et al. (2016) · DOI: 10.1097/WNR.0000000000000689",
               "linha_fluxograma": "pontilhada",
               "observacoes": "",
-              "fase_etapa": "ajustes"
+              "fase_etapa": "ajustes",
+              "calc_meta": {
+                "mcid_valor": 37.0,
+                "mcid_label": "≥ +37% no teste de cancelamento de estrelas (Cao et al., 2016)",
+                "meta_texto": "Aumento esperado ≥ +37% no teste de cancelamento de estrelas após 10 dias de tratamento",
+                "is_percent": true,
+                "estudo_referencia": "Cao et al. (2016) — iTBS DLPFC Esquerdo (F5)",
+                "efeito_esperado_resumo": "Aumento de +37% no teste de cancelamento de estrelas após 10 dias de tratamento"
+              }
             }
           ],
           "falha_terapeutica": {
@@ -2847,7 +2940,7 @@ window.NAPEN_DATA = {
               "id": "eam",
               "nome": "Escala de Ashworth Modificada (EAM)",
               "sigla": "EAM",
-              "tipo": "continua",
+              "tipo": "ordinal_eam",
               "placeholder": "Ex: 2.0",
               "direcao_melhora": "reducao",
               "meta_texto": "Redução ≥ 1,0 ponto no escore de tônus muscular",
@@ -3137,7 +3230,7 @@ window.NAPEN_DATA = {
               "id": "eam",
               "nome": "Escala de Ashworth Modificada (EAM)",
               "sigla": "EAM",
-              "tipo": "continua",
+              "tipo": "ordinal_eam",
               "placeholder": "Ex: 2.0",
               "direcao_melhora": "reducao",
               "meta_texto": "Redução ≥ 1,0 ponto no escore de tônus muscular",
@@ -3396,7 +3489,7 @@ window.NAPEN_DATA = {
               "id": "eam",
               "nome": "Escala de Ashworth Modificada (EAM)",
               "sigla": "EAM",
-              "tipo": "continua",
+              "tipo": "ordinal_eam",
               "placeholder": "Ex: 2.0",
               "direcao_melhora": "reducao",
               "meta_texto": "Redução ≥ 1,0 ponto no escore de tônus muscular",
@@ -3810,8 +3903,8 @@ window.NAPEN_DATA = {
           "intensidade": "1,0 mA",
           "pulsos_duracao": "20 min (eletrodos 35 cm²)",
           "sessoes": "15 sessões combinadas a feedback visual",
-          "escala_recomendada": "Catherine Bergego / Teste de Cancelamento",
-          "meta_melhora": "-3,0 pontos na CBS / -6,0 mm bissecção",
+          "escala_recomendada": "Teste de Cancelamento de Estrelas (BIT — 0 a 54)",
+          "meta_melhora": "Ganho ≥ +5,0 estrelas no Teste de Cancelamento de Estrelas (Bang et al., 2015: -6,0 mm bissecção)",
           "tamanho_efeito": 0.5,
           "evidencia": "Nível B — Eficácia clínica (Fan et al., 2017)",
           "linha_fluxograma": "solida",
@@ -3867,29 +3960,29 @@ window.NAPEN_DATA = {
           },
           "escalas_detalhadas": [
             {
-              "id": "cbs",
-              "nome": "Escala Catherine Bergego / Teste de Cancelamento",
-              "sigla": "CBS / Cancelamento",
+              "id": "star_cancellation",
+              "nome": "Teste de Cancelamento de Estrelas (BIT — Star Cancellation Test)",
+              "sigla": "Cancelamento de Estrelas",
               "tipo": "continua",
-              "placeholder": "Ex: 15",
-              "direcao_melhora": "reducao",
-              "meta_texto": "Redução ≥ 3,0 pontos na CBS ou ganho significativo no cancelamento de estrelas",
-              "tamanho_efeito": 0.54,
+              "placeholder": "Ex: 32",
+              "direcao_melhora": "aumento",
+              "meta_texto": "Aumento ≥ +5,0 estrelas (0–54) no Teste de Cancelamento de Estrelas (ou ≥ +7,0 pontos na etapa catódica P3/Cz — Yi et al., 2016)",
+              "tamanho_efeito": 0.5,
               "min": 0,
-              "max": 30,
-              "mcid_valor": 3.0,
-              "mcid_label": "-3,0 pontos na CBS"
+              "max": 54,
+              "mcid_valor": 5.0,
+              "mcid_label": "≥ +5,0 estrelas no Cancelamento de Estrelas (0–54)"
             }
           ],
           "cohen_d": "d ≈ 0.50 (Moderado)",
-          "mcid_valor": 3.0,
-          "mcid_label": "-3,0 pontos na CBS",
+          "mcid_valor": 5.0,
+          "mcid_label": "≥ +5,0 estrelas no Cancelamento de Estrelas (0–54)",
           "efeito_clinico": {
             "cohen_d_esperado": 0.5,
             "interpretacao_cohen": "Moderado",
-            "mcid_valor": 3.0,
-            "mcid_label": "-3,0 pontos na CBS",
-            "efeito_esperado_resumo": "-6,0 mm na bissecção de linhas após 15 sessões",
+            "mcid_valor": 5.0,
+            "mcid_label": "≥ +5,0 estrelas no Cancelamento de Estrelas (0–54)",
+            "efeito_esperado_resumo": "-6,0 mm na bissecção de linhas após 15 sessões (acompanhamento quantitativo pelo Teste de Cancelamento de Estrelas)",
             "estudo_referencia": "Bang et al. (2015)",
             "cohen_d": "d ≈ 0.50 (Moderado)"
           },
@@ -3906,7 +3999,7 @@ window.NAPEN_DATA = {
             "alvo": "Ânodo P6 + Cátodo FP1 (35 cm²)",
             "parametros": "2,0 mA | 20 min · 10 sessões",
             "linha_fluxograma": "solida",
-            "efeito_esperado": "+19 pts BIT",
+            "efeito_esperado": "+19 pts na bateria BIT",
             "referencia": "Làdavas et al. (2015) · DOI: 10.3233/RNN-140464",
             "fase_etapa": "sequencia",
             "observacoes": "Transição sequencial indicada pelo algoritmo clínico diante de resposta insatisfatória ou intolerância."
@@ -3918,7 +4011,7 @@ window.NAPEN_DATA = {
             "alvo": "Cátodo P3 + Ânodo Cz (25 cm²)",
             "parametros": "2,0 mA | 30 min · 15 sessões",
             "linha_fluxograma": "pontilhada",
-            "efeito_esperado": "+7,0 cancelamento",
+            "efeito_esperado": "+7,0 pontos no teste de cancelamento de estrelas",
             "referencia": "Yi et al. (2016) · DOI: 10.5535/arm.2016.40.2.223",
             "fase_etapa": "sequencia",
             "observacoes": "Passo sequencial subsequente previsto no fluxograma antes da caracterização de falha terapêutica."
@@ -3933,11 +4026,18 @@ window.NAPEN_DATA = {
               "alvo": "Ânodo P4 + Cátodo P3 (35 cm²)",
               "parametros": "1,0 mA | 20 min",
               "sessoes": "15 sessões",
-              "efeito_esperado": "-6,0 mm bissecção",
+              "efeito_esperado": "-6,0 mm bissecção de linhas após 15 sessões",
               "referencia": "Bang et al. (2015) · DOI: 10.1589/jpts.27.2759",
               "linha_fluxograma": "solida",
               "observacoes": "",
-              "fase_etapa": "inicial"
+              "fase_etapa": "inicial",
+              "calc_meta": {
+                "mcid_valor": 5.0,
+                "mcid_label": "≥ +5,0 estrelas no Teste de Cancelamento de Estrelas (0–54)",
+                "meta_texto": "Ganho ≥ +5,0 estrelas no Teste de Cancelamento de Estrelas (Bang et al., 2015: -6,0 mm bissecção)",
+                "estudo_referencia": "Bang et al. (2015) — tDCS Anódica P4 / Cátodo P3",
+                "efeito_esperado_resumo": "-6,0 mm na bissecção de linhas após 15 sessões (avaliação na calculadora pelo Teste de Cancelamento de Estrelas)"
+              }
             },
             {
               "ordem": 2,
@@ -3948,11 +4048,18 @@ window.NAPEN_DATA = {
               "alvo": "Ânodo P6 + Cátodo FP1 (35 cm²)",
               "parametros": "2,0 mA | 20 min",
               "sessoes": "10 sessões",
-              "efeito_esperado": "+19 pts BIT",
+              "efeito_esperado": "+19 pts na bateria BIT",
               "referencia": "Làdavas et al. (2015) · DOI: 10.3233/RNN-140464",
               "linha_fluxograma": "solida",
               "observacoes": "",
-              "fase_etapa": "sequencia"
+              "fase_etapa": "sequencia",
+              "calc_meta": {
+                "mcid_valor": 5.0,
+                "mcid_label": "≥ +5,0 estrelas no Teste de Cancelamento de Estrelas (BIT)",
+                "meta_texto": "Ganho ≥ +5,0 estrelas no Teste de Cancelamento de Estrelas (Làdavas et al., 2015: +19 pts BIT)",
+                "estudo_referencia": "Làdavas et al. (2015) — tDCS Anódica P6 / Cátodo FP1",
+                "efeito_esperado_resumo": "+19 pontos na bateria BIT após 10 sessões"
+              }
             },
             {
               "ordem": 3,
@@ -3963,11 +4070,18 @@ window.NAPEN_DATA = {
               "alvo": "Cátodo P3 + Ânodo Cz (25 cm²)",
               "parametros": "2,0 mA | 30 min",
               "sessoes": "15 sessões",
-              "efeito_esperado": "+7,0 cancelamento",
+              "efeito_esperado": "+7,0 pontos no teste de cancelamento de estrelas",
               "referencia": "Yi et al. (2016) · DOI: 10.5535/arm.2016.40.2.223",
               "linha_fluxograma": "pontilhada",
               "observacoes": "",
-              "fase_etapa": "sequencia"
+              "fase_etapa": "sequencia",
+              "calc_meta": {
+                "mcid_valor": 7.0,
+                "mcid_label": "≥ +7,0 pontos no Teste de Cancelamento de Estrelas (Yi et al., 2016)",
+                "meta_texto": "Aumento esperado de +7,0 pontos no Teste de Cancelamento de Estrelas após 15 sessões",
+                "estudo_referencia": "Yi et al. (2016) — tDCS Catódica P3 / Ânodo Cz",
+                "efeito_esperado_resumo": "Aumento de +7,0 pontos no teste de cancelamento de estrelas após 15 sessões"
+              }
             }
           ],
           "falha_terapeutica": {
@@ -4016,6 +4130,20 @@ window.NAPEN_DATA = {
         }
       },
       "tags_busca": {
+        "siglas": [
+          "AVC",
+          "AVE",
+          "MS",
+          "MMSS",
+          "M1",
+          "S1",
+          "PPC",
+          "PEM",
+          "LMR",
+          "LMA",
+          "SCT",
+          "BIT"
+        ],
         "coordenadas_10_20": [
           "C3",
           "C4",
@@ -4044,7 +4172,8 @@ window.NAPEN_DATA = {
           "hemiparesis",
           "arm recovery",
           "motor impairment",
-          "unilateral spatial neglect"
+          "unilateral spatial neglect",
+          "star cancellation test"
         ],
         "sintomas_pt": [
           "paralisia",
@@ -4068,7 +4197,9 @@ window.NAPEN_DATA = {
           "Ashworth",
           "MRC",
           "MAL-Brazil",
-          "Catherine Bergego"
+          "Cancelamento de Estrelas",
+          "Star Cancellation",
+          "BIT"
         ],
         "tecnicas": [
           "rTMS",
@@ -4133,7 +4264,7 @@ window.NAPEN_DATA = {
         {
           "id": "negligencia",
           "nome": "Heminegligência",
-          "instrumento_sugerido": "Catherine Bergego / Cancelamento",
+          "instrumento_sugerido": "Teste de Cancelamento de Estrelas (BIT)",
           "descricao": "Heminegligência espacial impactando deslocamento.",
           "label": "Heminegligência"
         }
@@ -4175,10 +4306,10 @@ window.NAPEN_DATA = {
                 {
                   "id": "negligencia",
                   "rotulo": "Heminegligência",
-                  "criterio": "Cancelamento / Catherine Bergego",
+                  "criterio": "Teste de Cancelamento de Estrelas (BIT)",
                   "descricao": "Desatenção espacial afetando a marcha.",
                   "protocolo_alvo": "rtms_ppc_mob",
-                  "subtexto": "Cancelamento / Catherine Bergego",
+                  "subtexto": "Teste de Cancelamento de Estrelas (BIT)",
                   "modalidade_chave": "rtms_ppc_mob"
                 }
               ],
@@ -4338,10 +4469,10 @@ window.NAPEN_DATA = {
                 {
                   "id": "negligencia_tdcs_mi",
                   "rotulo": "Heminegligência",
-                  "criterio": "Catherine Bergego / Cancelamento",
+                  "criterio": "Teste de Cancelamento de Estrelas (BIT)",
                   "descricao": "Inicia por tDCS Parietal Posterior (P4/P3).",
                   "protocolo_alvo": "tdcs_ppc_mob",
-                  "subtexto": "Catherine Bergego / Cancelamento",
+                  "subtexto": "Teste de Cancelamento de Estrelas (BIT)",
                   "modalidade_chave": "tdcs_ppc_mob"
                 }
               ],
@@ -4480,11 +4611,15 @@ window.NAPEN_DATA = {
           "categoria": "parametros",
           "severidade": "info",
           "gatilho": {
+            "protocolo_ids": [
+              "equilibrio",
+              "velocidade_marcha",
+              "rtms_m1_aguda"
+            ],
             "modalidades_tipo": [
               "rtms"
             ],
             "estagios": [
-              "alt1",
               "alt2"
             ]
           }
@@ -4535,7 +4670,7 @@ window.NAPEN_DATA = {
         {
           "id": "RM04-DELTOIDE",
           "texto": "Regra de Aplicação: na montagem cerebelar, o cátodo originalmente no músculo bucinador pode ser posicionado sobre o músculo deltoide direito em caso de desconforto facial.",
-          "slot": "alvo",
+          "slot": "stage",
           "categoria": "anatomia",
           "severidade": "info",
           "gatilho": {
@@ -4546,7 +4681,6 @@ window.NAPEN_DATA = {
               "tdcs"
             ],
             "estagios": [
-              "alt1",
               "alt2"
             ]
           }
@@ -5367,8 +5501,8 @@ window.NAPEN_DATA = {
           "intensidade": "90% LMR",
           "pulsos_duracao": "1.000 pulsos (20 trens × 50 pulsos, 55 s IIT)",
           "sessoes": "10 sessões diárias",
-          "escala_recomendada": "Catherine Bergego / Cancelamento",
-          "meta_melhora": "-3,0 pontos CBS (+10,4 pts no teste de cancelamento)",
+          "escala_recomendada": "Teste de Cancelamento de Estrelas (BIT — 0 a 54)",
+          "meta_melhora": "Aumento de 10,4 pontos (IC 95%: 8,0 a 12,7) no teste de cancelamento de estrelas após 10 sessões diárias",
           "tamanho_efeito": 0.54,
           "evidencia": "Nível B — Quadro sólido em Mobilidade",
           "linha_fluxograma": "solida",
@@ -5424,31 +5558,33 @@ window.NAPEN_DATA = {
           },
           "escalas_detalhadas": [
             {
-              "id": "cbs",
-              "nome": "Escala Catherine Bergego / Cancelamento",
-              "sigla": "CBS / Cancelamento",
+              "id": "star_cancellation",
+              "nome": "Teste de Cancelamento de Estrelas (BIT — Star Cancellation Test)",
+              "sigla": "Cancelamento de Estrelas",
               "tipo": "continua",
-              "placeholder": "Ex: 14",
-              "direcao_melhora": "reducao",
-              "meta_texto": "Redução ≥ 3,0 pontos na CBS ou ganho no teste de cancelamento",
+              "placeholder": "Ex: 32",
+              "direcao_melhora": "aumento",
+              "meta_texto": "Aumento esperado de +10,4 pontos (IC 95%: 8,0 a 12,7) após 10 sessões diárias (corte satisfatório ≥ +8,0 pontos)",
               "tamanho_efeito": 0.54,
               "min": 0,
-              "max": 30,
-              "mcid_valor": 3.0,
-              "mcid_label": "-3,0 pontos CBS"
+              "max": 54,
+              "mcid_valor": 8.0,
+              "mcid_label": "≥ +8,0 pontos (limite inferior do IC 95%: 8,0–12,7 · média +10,4 pts)"
             }
           ],
           "cohen_d": "d ≈ 0.54 (Moderado)",
-          "mcid_valor": 3.0,
-          "mcid_label": "-3,0 pontos CBS",
+          "mcid_valor": 8.0,
+          "mcid_label": "≥ +8,0 pontos (IC 95%: 8,0 a 12,7 · média +10,4 pts)",
           "efeito_clinico": {
             "cohen_d_esperado": 0.54,
             "interpretacao_cohen": "Moderado",
-            "mcid_valor": 3.0,
-            "mcid_label": "-3,0 pontos CBS",
-            "efeito_esperado_resumo": "+10,4 pts no cancelamento de estrelas (ipsilesional)",
+            "mcid_valor": 8.0,
+            "mcid_label": "≥ +8,0 pontos (IC 95%: 8,0 a 12,7 · média +10,4 pts)",
+            "efeito_esperado_resumo": "Aumento de 10,4 pontos (IC 95%: 8,0 a 12,7) no teste de cancelamento de estrelas após 10 sessões diárias em pacientes em fase aguda com lesões corticais ou subcorticais",
             "estudo_referencia": "Kim et al. (2013)",
-            "cohen_d": "d ≈ 0.54 (Moderado)"
+            "cohen_d": "d ≈ 0.54 (Moderado)",
+            "ic_min": 8.0,
+            "ic_max": 12.7
           },
           "ajuste_parametros": {
             "titulo": "Ajustes de Tolerabilidade, Distribuição de Trens e Calibração (Mobilidade)",
@@ -5463,7 +5599,7 @@ window.NAPEN_DATA = {
             "alvo": "P3/P4 contralesional",
             "parametros": "1 Hz | 90% LMR | 1.200 pulsos · 10 sessões diárias",
             "linha_fluxograma": "solida",
-            "efeito_esperado": "+16,4 pts",
+            "efeito_esperado": "Aumento de 16,4 pontos (IC 95%: 13,0 a 20,0) no teste de cancelamento de estrelas após 10 sessões diárias em pacientes em fase aguda com lesões corticais ou subcorticais",
             "referencia": "Kim et al. (2013) · DOI: 10.1016/j.apmr.2012.12.016",
             "fase_etapa": "sequencia",
             "observacoes": "Transição sequencial indicada pelo algoritmo clínico diante de resposta insatisfatória ou intolerância."
@@ -5475,7 +5611,7 @@ window.NAPEN_DATA = {
             "alvo": "F5 (entre F3 e F7) — Córtex pré-frontal dorsolateral esquerdo",
             "parametros": "iTBS: 2 sessões separadas por 15 min | 3 pulsos a 50 Hz / 5 Hz (2 s ON, 8 s OFF) | 600 pulsos | 80% LMR · 10 dias",
             "linha_fluxograma": "pontilhada",
-            "efeito_esperado": "+37% cancelamento",
+            "efeito_esperado": "+37% no teste de cancelamento de estrelas após 10 dias de tratamento",
             "referencia": "Cao et al. (2016) · DOI: 10.1097/WNR.0000000000000689",
             "fase_etapa": "ajustes",
             "observacoes": "Passo sequencial subsequente previsto no fluxograma antes da caracterização de falha terapêutica."
@@ -5490,11 +5626,20 @@ window.NAPEN_DATA = {
               "alvo": "P3/P4 ipsilesional",
               "parametros": "10 Hz | 90% LMR | 1.000 pulsos (20 trens × 50 p, 55 s IIT)",
               "sessoes": "10 sessões diárias",
-              "efeito_esperado": "+10,4 pts",
+              "efeito_esperado": "Aumento de 10,4 pontos (IC 95%: 8,0 a 12,7) no teste de cancelamento de estrelas após 10 sessões diárias em pacientes em fase aguda com lesões corticais ou subcorticais",
               "referencia": "Kim et al. (2013) · DOI: 10.1016/j.apmr.2012.12.016",
               "linha_fluxograma": "solida",
               "observacoes": "",
-              "fase_etapa": "inicial"
+              "fase_etapa": "inicial",
+              "calc_meta": {
+                "mcid_valor": 8.0,
+                "mcid_label": "≥ +8,0 pontos (limite inferior do IC 95%: 8,0–12,7 · média +10,4 pts)",
+                "meta_texto": "Aumento esperado de +10,4 pontos (IC 95%: 8,0 a 12,7) no teste de cancelamento de estrelas após 10 sessões diárias",
+                "ic_min": 8.0,
+                "ic_max": 12.7,
+                "estudo_referencia": "Kim et al. (2013) — HF-rTMS 10 Hz P3/P4 Ipsilesional",
+                "efeito_esperado_resumo": "Aumento de 10,4 pontos (IC 95%: 8,0 a 12,7) no teste de cancelamento de estrelas após 10 sessões diárias em pacientes em fase aguda com lesões corticais ou subcorticais"
+              }
             },
             {
               "ordem": 2,
@@ -5505,11 +5650,20 @@ window.NAPEN_DATA = {
               "alvo": "P3/P4 contralesional",
               "parametros": "1 Hz | 90% LMR | 1.200 pulsos",
               "sessoes": "10 sessões diárias",
-              "efeito_esperado": "+16,4 pts",
+              "efeito_esperado": "Aumento de 16,4 pontos (IC 95%: 13,0 a 20,0) no teste de cancelamento de estrelas após 10 sessões diárias em pacientes em fase aguda com lesões corticais ou subcorticais",
               "referencia": "Kim et al. (2013) · DOI: 10.1016/j.apmr.2012.12.016",
               "linha_fluxograma": "solida",
               "observacoes": "",
-              "fase_etapa": "sequencia"
+              "fase_etapa": "sequencia",
+              "calc_meta": {
+                "mcid_valor": 13.0,
+                "mcid_label": "≥ +13,0 pontos (limite inferior do IC 95%: 13,0–20,0 · média +16,4 pts)",
+                "meta_texto": "Aumento esperado de +16,4 pontos (IC 95%: 13,0 a 20,0) no teste de cancelamento de estrelas após 10 sessões diárias",
+                "ic_min": 13.0,
+                "ic_max": 20.0,
+                "estudo_referencia": "Kim et al. (2013) — LF-rTMS 1 Hz P3/P4 Contralesional",
+                "efeito_esperado_resumo": "Aumento de 16,4 pontos (IC 95%: 13,0 a 20,0) no teste de cancelamento de estrelas após 10 sessões diárias em pacientes em fase aguda com lesões corticais ou subcorticais"
+              }
             },
             {
               "ordem": 3,
@@ -5520,11 +5674,19 @@ window.NAPEN_DATA = {
               "alvo": "F5 (entre F3 e F7) — Córtex pré-frontal dorsolateral esquerdo",
               "parametros": "iTBS: 2 sessões separadas por 15 min | 3 pulsos a 50 Hz / 5 Hz (2 s ON, 8 s OFF) | 600 pulsos | 80% LMR",
               "sessoes": "10 dias",
-              "efeito_esperado": "+37% cancelamento",
+              "efeito_esperado": "+37% no teste de cancelamento de estrelas após 10 dias de tratamento",
               "referencia": "Cao et al. (2016) · DOI: 10.1097/WNR.0000000000000689",
               "linha_fluxograma": "pontilhada",
               "observacoes": "",
-              "fase_etapa": "ajustes"
+              "fase_etapa": "ajustes",
+              "calc_meta": {
+                "mcid_valor": 37.0,
+                "mcid_label": "≥ +37% no teste de cancelamento de estrelas (Cao et al., 2016)",
+                "meta_texto": "Aumento esperado ≥ +37% no teste de cancelamento de estrelas após 10 dias de tratamento",
+                "is_percent": true,
+                "estudo_referencia": "Cao et al. (2016) — iTBS DLPFC Esquerdo (F5)",
+                "efeito_esperado_resumo": "Aumento de +37% no teste de cancelamento de estrelas após 10 dias de tratamento"
+              }
             }
           ],
           "falha_terapeutica": {
@@ -6060,8 +6222,8 @@ window.NAPEN_DATA = {
           "intensidade": "1,0 mA",
           "pulsos_duracao": "20 min (eletrodos 35 cm²)",
           "sessoes": "15 sessões associadas à varredura visual",
-          "escala_recomendada": "Catherine Bergego / Cancelamento",
-          "meta_melhora": "-3,0 pontos CBS / -6,0 mm bissecção",
+          "escala_recomendada": "Teste de Cancelamento de Estrelas (BIT — 0 a 54)",
+          "meta_melhora": "Ganho ≥ +5,0 estrelas no Teste de Cancelamento de Estrelas (Bang et al., 2015: -6,0 mm bissecção)",
           "tamanho_efeito": 0.5,
           "evidencia": "Nível B — Eficácia clínica (Fan 2017)",
           "linha_fluxograma": "solida",
@@ -6117,29 +6279,29 @@ window.NAPEN_DATA = {
           },
           "escalas_detalhadas": [
             {
-              "id": "cbs",
-              "nome": "Escala Catherine Bergego / Cancelamento",
-              "sigla": "CBS / Cancelamento",
+              "id": "star_cancellation",
+              "nome": "Teste de Cancelamento de Estrelas (BIT — Star Cancellation Test)",
+              "sigla": "Cancelamento de Estrelas",
               "tipo": "continua",
-              "placeholder": "Ex: 14",
-              "direcao_melhora": "reducao",
-              "meta_texto": "Redução ≥ 3,0 pontos na CBS ou ganho no teste de cancelamento",
-              "tamanho_efeito": 0.54,
+              "placeholder": "Ex: 32",
+              "direcao_melhora": "aumento",
+              "meta_texto": "Aumento ≥ +5,0 estrelas (0–54) no Teste de Cancelamento de Estrelas (ou ≥ +7,0 pontos na etapa catódica P3/Cz — Yi et al., 2016)",
+              "tamanho_efeito": 0.5,
               "min": 0,
-              "max": 30,
-              "mcid_valor": 3.0,
-              "mcid_label": "-3,0 pontos CBS"
+              "max": 54,
+              "mcid_valor": 5.0,
+              "mcid_label": "≥ +5,0 estrelas no Cancelamento de Estrelas (0–54)"
             }
           ],
           "cohen_d": "d ≈ 0.50 (Moderado)",
-          "mcid_valor": 3.0,
-          "mcid_label": "-3,0 pontos CBS",
+          "mcid_valor": 5.0,
+          "mcid_label": "≥ +5,0 estrelas no Cancelamento de Estrelas (0–54)",
           "efeito_clinico": {
             "cohen_d_esperado": 0.5,
             "interpretacao_cohen": "Moderado",
-            "mcid_valor": 3.0,
-            "mcid_label": "-3,0 pontos CBS",
-            "efeito_esperado_resumo": "-6,0 mm bissecção após 15 sessões",
+            "mcid_valor": 5.0,
+            "mcid_label": "≥ +5,0 estrelas no Cancelamento de Estrelas (0–54)",
+            "efeito_esperado_resumo": "-6,0 mm na bissecção de linhas após 15 sessões (acompanhamento quantitativo pelo Teste de Cancelamento de Estrelas)",
             "estudo_referencia": "Bang et al. (2015)",
             "cohen_d": "d ≈ 0.50 (Moderado)"
           },
@@ -6156,7 +6318,7 @@ window.NAPEN_DATA = {
             "alvo": "Ânodo P6 + Cátodo FP1 (35 cm²)",
             "parametros": "2,0 mA | 20 min · 10 sessões",
             "linha_fluxograma": "solida",
-            "efeito_esperado": "+19 pts BIT",
+            "efeito_esperado": "+19 pts na bateria BIT",
             "referencia": "Làdavas et al. (2015) · DOI: 10.3233/RNN-140464",
             "fase_etapa": "sequencia",
             "observacoes": "Transição sequencial indicada pelo algoritmo clínico diante de resposta insatisfatória ou intolerância."
@@ -6168,7 +6330,7 @@ window.NAPEN_DATA = {
             "alvo": "Cátodo P3 + Ânodo Cz (25 cm²)",
             "parametros": "2,0 mA | 30 min · 15 sessões",
             "linha_fluxograma": "pontilhada",
-            "efeito_esperado": "+7,0 pts cancelamento",
+            "efeito_esperado": "+7,0 pontos no teste de cancelamento de estrelas",
             "referencia": "Yi et al. (2016) · DOI: 10.5535/arm.2016.40.2.223",
             "fase_etapa": "sequencia",
             "observacoes": "Passo sequencial subsequente previsto no fluxograma antes da caracterização de falha terapêutica."
@@ -6183,11 +6345,18 @@ window.NAPEN_DATA = {
               "alvo": "Ânodo P4 + Cátodo P3 (35 cm²)",
               "parametros": "1,0 mA | 20 min",
               "sessoes": "15 sessões",
-              "efeito_esperado": "-6,0 mm bissecção",
+              "efeito_esperado": "-6,0 mm bissecção de linhas após 15 sessões",
               "referencia": "Bang et al. (2015) · DOI: 10.1589/jpts.27.2759",
               "linha_fluxograma": "solida",
               "observacoes": "",
-              "fase_etapa": "inicial"
+              "fase_etapa": "inicial",
+              "calc_meta": {
+                "mcid_valor": 5.0,
+                "mcid_label": "≥ +5,0 estrelas no Teste de Cancelamento de Estrelas (0–54)",
+                "meta_texto": "Ganho ≥ +5,0 estrelas no Teste de Cancelamento de Estrelas (Bang et al., 2015: -6,0 mm bissecção)",
+                "estudo_referencia": "Bang et al. (2015) — tDCS Anódica P4 / Cátodo P3",
+                "efeito_esperado_resumo": "-6,0 mm na bissecção de linhas após 15 sessões (avaliação na calculadora pelo Teste de Cancelamento de Estrelas)"
+              }
             },
             {
               "ordem": 2,
@@ -6198,11 +6367,18 @@ window.NAPEN_DATA = {
               "alvo": "Ânodo P6 + Cátodo FP1 (35 cm²)",
               "parametros": "2,0 mA | 20 min",
               "sessoes": "10 sessões",
-              "efeito_esperado": "+19 pts BIT",
+              "efeito_esperado": "+19 pts na bateria BIT",
               "referencia": "Làdavas et al. (2015) · DOI: 10.3233/RNN-140464",
               "linha_fluxograma": "solida",
               "observacoes": "",
-              "fase_etapa": "sequencia"
+              "fase_etapa": "sequencia",
+              "calc_meta": {
+                "mcid_valor": 5.0,
+                "mcid_label": "≥ +5,0 estrelas no Teste de Cancelamento de Estrelas (BIT)",
+                "meta_texto": "Ganho ≥ +5,0 estrelas no Teste de Cancelamento de Estrelas (Làdavas et al., 2015: +19 pts BIT)",
+                "estudo_referencia": "Làdavas et al. (2015) — tDCS Anódica P6 / Cátodo FP1",
+                "efeito_esperado_resumo": "+19 pontos na bateria BIT após 10 sessões"
+              }
             },
             {
               "ordem": 3,
@@ -6213,11 +6389,18 @@ window.NAPEN_DATA = {
               "alvo": "Cátodo P3 + Ânodo Cz (25 cm²)",
               "parametros": "2,0 mA | 30 min",
               "sessoes": "15 sessões",
-              "efeito_esperado": "+7,0 pts cancelamento",
+              "efeito_esperado": "+7,0 pontos no teste de cancelamento de estrelas",
               "referencia": "Yi et al. (2016) · DOI: 10.5535/arm.2016.40.2.223",
               "linha_fluxograma": "pontilhada",
               "observacoes": "",
-              "fase_etapa": "sequencia"
+              "fase_etapa": "sequencia",
+              "calc_meta": {
+                "mcid_valor": 7.0,
+                "mcid_label": "≥ +7,0 pontos no Teste de Cancelamento de Estrelas (Yi et al., 2016)",
+                "meta_texto": "Aumento esperado de +7,0 pontos no Teste de Cancelamento de Estrelas após 15 sessões",
+                "estudo_referencia": "Yi et al. (2016) — tDCS Catódica P3 / Ânodo Cz",
+                "efeito_esperado_resumo": "Aumento de +7,0 pontos no teste de cancelamento de estrelas após 15 sessões"
+              }
             }
           ],
           "falha_terapeutica": {
@@ -6266,6 +6449,21 @@ window.NAPEN_DATA = {
         }
       },
       "tags_busca": {
+        "siglas": [
+          "AVC",
+          "AVE",
+          "MI",
+          "MMII",
+          "M1",
+          "S1",
+          "PPC",
+          "BBS",
+          "TC10m",
+          "10MWT",
+          "FMA-LE",
+          "SCT",
+          "BIT"
+        ],
         "coordenadas_10_20": [
           "Cz",
           "C3",
@@ -6291,7 +6489,8 @@ window.NAPEN_DATA = {
           "balance",
           "falls risk",
           "lower limb",
-          "locomotion"
+          "locomotion",
+          "star cancellation test"
         ],
         "sintomas_pt": [
           "marcha",
@@ -6301,7 +6500,8 @@ window.NAPEN_DATA = {
           "passo",
           "velocidade de caminhada",
           "deambulação",
-          "membros inferiores"
+          "membros inferiores",
+          "heminegligência"
         ],
         "escalas": [
           "BBS",
@@ -6311,7 +6511,9 @@ window.NAPEN_DATA = {
           "TC10m",
           "FMA-LE",
           "DGI",
-          "Catherine Bergego"
+          "Cancelamento de Estrelas",
+          "Star Cancellation",
+          "BIT"
         ],
         "tecnicas": [
           "rTMS",
@@ -6646,7 +6848,7 @@ window.NAPEN_DATA = {
         {
           "id": "RM09-DUAL-ORDEM",
           "texto": "Na estimulação bilateral sequencial de rTMS (FC6+F6 1 Hz seguido de FC5+F5 20 Hz), realizar obrigatoriamente a inibição contralesional (1 Hz) ANTES da estimulação lesional (20 Hz).",
-          "slot": "tec",
+          "slot": "stage",
           "categoria": "seguranca",
           "severidade": "warning",
           "gatilho": {
@@ -6657,7 +6859,6 @@ window.NAPEN_DATA = {
               "rtms"
             ],
             "estagios": [
-              "primary",
               "alt2"
             ]
           }
@@ -6665,7 +6866,7 @@ window.NAPEN_DATA = {
         {
           "id": "RM08-DUAL-SIMULTANEO",
           "texto": "Na montagem dual bilateral de tDCS (F5/F6), considerar que a estimulação dos eletrodos ocorre de forma simultânea.",
-          "slot": "tec",
+          "slot": "stage",
           "categoria": "parametros",
           "severidade": "info",
           "gatilho": {
@@ -6674,6 +6875,9 @@ window.NAPEN_DATA = {
             ],
             "modalidades_tipo": [
               "tdcs"
+            ],
+            "estagios": [
+              "alt1"
             ]
           }
         },
@@ -6708,24 +6912,6 @@ window.NAPEN_DATA = {
           "categoria": "clinica",
           "severidade": "info",
           "gatilho": {}
-        },
-        {
-          "id": "RM09-PONTILHADO-TEC",
-          "texto": "Os protocolos com borda tracejada/pontilhada na seção de Ajustes (M1-E C3 e tsDCS Medular T10) representam estudos com menor força de evidência, cujo nível científico ainda não foi validado por metanálises.",
-          "slot": "stage",
-          "categoria": "evidencia",
-          "severidade": "info",
-          "gatilho": {
-            "protocolo_ids": [
-              "tdcs_expressao_gfi",
-              "tdcs_compreensao_tp",
-              "tdcs_cerebelo_anomia"
-            ],
-            "estagios": [
-              "alt2",
-              "alt3"
-            ]
-          }
         }
       ],
       "modalidades": {
@@ -7948,6 +8134,15 @@ window.NAPEN_DATA = {
         }
       },
       "tags_busca": {
+        "siglas": [
+          "AVC",
+          "AVE",
+          "GFI",
+          "MTL",
+          "WAB",
+          "BNT",
+          "tsDCS"
+        ],
         "coordenadas_10_20": [
           "F5",
           "F6",
@@ -8245,30 +8440,6 @@ window.NAPEN_DATA = {
           }
         },
         {
-          "id": "RM07-PONTILHADO-TEC",
-          "texto": "A linha tracejada nos protocolos de Ajustes representa estudos com menor força de evidência, que ainda não foram incluídos em metanálises.",
-          "slot": "stage",
-          "categoria": "evidencia",
-          "severidade": "info",
-          "gatilho": {
-            "protocolo_ids": [
-              "orofaringea",
-              "rtms_cortical_extensa",
-              "tempo_transito",
-              "rtms_tronco",
-              "tdcs_disf_bi"
-            ],
-            "estagios": [
-              "alt2",
-              "alt3",
-              "alt4",
-              "alt5",
-              "alt6",
-              "alt7"
-            ]
-          }
-        },
-        {
           "id": "RM07-COORD-SUPRA",
           "texto": "Coordenada anatômica suprahioidea: 2–4 cm à frente de Cz e 4–6 cm lateralmente.",
           "slot": "alvo",
@@ -8313,9 +8484,7 @@ window.NAPEN_DATA = {
               "rtms"
             ],
             "estagios": [
-              "primary",
-              "alt1",
-              "alt2"
+              "primary"
             ]
           }
         },
@@ -9868,6 +10037,15 @@ window.NAPEN_DATA = {
         }
       },
       "tags_busca": {
+        "siglas": [
+          "AVC",
+          "AVE",
+          "FOIS",
+          "DOSS",
+          "MASA",
+          "SSA",
+          "PAS"
+        ],
         "coordenadas_10_20": [
           "M1 Suprahioideo",
           "C5",
@@ -10085,30 +10263,6 @@ window.NAPEN_DATA = {
           "categoria": "clinica",
           "severidade": "warning",
           "gatilho": {}
-        },
-        {
-          "id": "RM17-EXPLORATORIO-TEC",
-          "texto": "Protocolos com borda pontilhada e opções da Seção de Ajustes (tsMS T3, C7 e T10-T12) representam base científica exploratória cujo nível de evidência ainda não foi validado por metanálises.",
-          "slot": "stage",
-          "categoria": "evidencia",
-          "severidade": "info",
-          "gatilho": {
-            "protocolo_ids": [
-              "funcao_global",
-              "dp_ams",
-              "dp_dlpfc",
-              "fog",
-              "mobilidade"
-            ],
-            "estagios": [
-              "alt1",
-              "alt2",
-              "alt3",
-              "alt4",
-              "alt5",
-              "alt6"
-            ]
-          }
         },
         {
           "id": "RM17-CONTRALAT-STAR",
@@ -11362,6 +11516,20 @@ window.NAPEN_DATA = {
         }
       },
       "tags_busca": {
+        "siglas": [
+          "DP",
+          "PD",
+          "FOG",
+          "AMS",
+          "SMA",
+          "DLPFC",
+          "CPFDL",
+          "UPDRS",
+          "NFOG",
+          "TUG",
+          "TC6min",
+          "tsMS"
+        ],
         "coordenadas_10_20": [
           "M1",
           "AMS (3 cm anterior)",
@@ -12057,6 +12225,20 @@ window.NAPEN_DATA = {
         }
       },
       "tags_busca": {
+        "siglas": [
+          "TDM",
+          "DM",
+          "MDD",
+          "DRT",
+          "TRD",
+          "CPFDL",
+          "DLPFC",
+          "HDRS",
+          "MADRS",
+          "TTT",
+          "SNT",
+          "SAINT"
+        ],
         "coordenadas_10_20": [
           "F3",
           "F4",
@@ -12698,6 +12880,17 @@ window.NAPEN_DATA = {
         }
       },
       "tags_busca": {
+        "siglas": [
+          "TAG",
+          "GAD",
+          "CPFDL",
+          "DLPFC",
+          "HAM-A",
+          "BAI",
+          "GAD-7",
+          "DASS-21",
+          "PSQI"
+        ],
         "coordenadas_10_20": [
           "F4",
           "F3",
@@ -13719,6 +13912,16 @@ window.NAPEN_DATA = {
         }
       },
       "tags_busca": {
+        "siglas": [
+          "TEPT",
+          "PTSD",
+          "CPFDL",
+          "DLPFC",
+          "PCL-5",
+          "CAPS",
+          "EMDR",
+          "TCC"
+        ],
         "coordenadas_10_20": [
           "F4",
           "F3",
@@ -14933,6 +15136,21 @@ window.NAPEN_DATA = {
         }
       },
       "tags_busca": {
+        "siglas": [
+          "DN",
+          "EM",
+          "MS",
+          "SDRC",
+          "CRPS",
+          "EVA",
+          "VAS",
+          "NRS",
+          "NPSI",
+          "BPI",
+          "tsDCS",
+          "rPMS",
+          "PEP"
+        ],
         "coordenadas_10_20": [
           "C3",
           "C4",
@@ -15159,7 +15377,7 @@ window.NAPEN_DATA = {
         {
           "id": "RM16-COORD-DENTEADO",
           "texto": "Núcleo denteado: requer obrigatoriamente utilização de neuronavegação (3 cm lateral e 1 cm inferior ao ínion).",
-          "slot": "alvo",
+          "slot": "stage",
           "categoria": "equipamento",
           "severidade": "warning",
           "gatilho": {
@@ -15167,7 +15385,6 @@ window.NAPEN_DATA = {
               "severidade_motora"
             ],
             "estagios": [
-              "alt2",
               "alt3"
             ]
           }
@@ -15197,19 +15414,16 @@ window.NAPEN_DATA = {
         },
         {
           "id": "RM16-TRACEJADO-EXP",
-          "texto": "Protocolos em linha tracejada são experimentais (evidência ainda não validada por metanálises); opções para disartria atáxica ainda carecem de estudos mais robustos.",
+          "texto": "Observação específica para disartria atáxica: as opções de neuromodulação voltadas à fala ainda carecem de estudos controlados mais robustos; monitorar fala e diadococinesia semanalmente.",
           "slot": "stage",
           "categoria": "evidencia",
           "severidade": "info",
           "gatilho": {
             "protocolo_ids": [
-              "severidade_motora",
               "disartria"
             ],
             "estagios": [
-              "alt1",
-              "alt2",
-              "alt3"
+              "alt1"
             ]
           }
         },
@@ -16353,6 +16567,19 @@ window.NAPEN_DATA = {
         }
       },
       "tags_busca": {
+        "siglas": [
+          "SCA",
+          "SCA3",
+          "AC",
+          "SARA",
+          "ICARS",
+          "9HPT",
+          "BBT",
+          "csDCS",
+          "ctDCS",
+          "cbTMS",
+          "DDK"
+        ],
         "coordenadas_10_20": [
           "Inion",
           "Cerebelo",
@@ -17166,28 +17393,28 @@ window.NAPEN_DATA = {
           },
           "escalas_detalhadas": [
             {
-              "id": "pdms_bbt_quest",
-              "nome": "Destreza e Função Manual (PDMS-FM / BBT / QUEST / FMA)",
-              "sigla": "PDMS-FM / BBT / QUEST",
+              "id": "fma_ue",
+              "nome": "Fugl-Meyer Assessment — Membros Superiores (FMA-MS)",
+              "sigla": "FMA-MS",
               "tipo": "continua",
-              "placeholder": "Ex: 38",
+              "placeholder": "Ex: 24",
               "direcao_melhora": "aumento",
-              "meta_texto": "Ganho ≥ 11,7% na QUEST ou 14,1% no BBT (e evolução clínica em PDMS-FM / FMA-MS)",
-              "tamanho_efeito": 0.56,
+              "meta_texto": "Ganho ≥ +5,0 pontos na FMA-MS (+142,6% em Waqas et al., 2025)",
+              "tamanho_efeito": 0.58,
               "min": 0,
-              "max": 100,
+              "max": 66,
               "mcid_valor": 5.0,
-              "mcid_label": "+11,7% QUEST / +14,1% BBT"
+              "mcid_label": "+5,0 pontos na FMA-MS"
             }
           ],
           "cohen_d": "d ≈ 0.58 (Moderado)",
           "mcid_valor": 5.0,
-          "mcid_label": "+142,6% na FMA-MS",
+          "mcid_label": "+5,0 pontos na FMA-MS",
           "efeito_clinico": {
             "cohen_d_esperado": 0.58,
             "interpretacao_cohen": "Moderado",
             "mcid_valor": 5.0,
-            "mcid_label": "+142,6% na FMA-MS",
+            "mcid_label": "+5,0 pontos na FMA-MS",
             "efeito_esperado_resumo": "Aumento de 142,6% na FMA-MS em 10 sessões",
             "estudo_referencia": "Waqas et al. (2025)",
             "cohen_d": "d ≈ 0.58 (Moderado)"
@@ -17991,6 +18218,20 @@ window.NAPEN_DATA = {
         }
       },
       "tags_busca": {
+        "siglas": [
+          "PC",
+          "CP",
+          "GMFCS",
+          "MACS",
+          "GMFM",
+          "6MWT",
+          "10MWT",
+          "PDMS-FM",
+          "BBT",
+          "QUEST",
+          "FMA",
+          "PBS"
+        ],
         "coordenadas_10_20": [
           "C3",
           "C4",
@@ -18213,20 +18454,16 @@ window.NAPEN_DATA = {
         },
         {
           "id": "RM15-EXPLORATORIO-TEC",
-          "texto": "Evidência exploratória (estudos observacionais/relatos): mudança de alvo para junção temporoparietal CP5/CP6 ou cerebelo D e o ramo Déficits em Comunicação.",
+          "texto": "Evidência exploratória (estudo individual em linha pontilhada): o ramo Déficits em Comunicação ainda não foi consolidado por metanálises; aplicar com monitoramento próximo de comunicação funcional e tolerabilidade.",
           "slot": "tec",
           "categoria": "evidencia",
           "severidade": "info",
           "gatilho": {
             "protocolo_ids": [
-              "tea_comunicacao",
-              "tea_repetitivos",
-              "social"
+              "tea_comunicacao"
             ],
             "estagios": [
-              "primary",
-              "alt1",
-              "alt2"
+              "primary"
             ]
           }
         },
@@ -19299,6 +19536,21 @@ window.NAPEN_DATA = {
         }
       },
       "tags_busca": {
+        "siglas": [
+          "TEA",
+          "ASD",
+          "CPFDL",
+          "DLPFC",
+          "HD-tDCS",
+          "ATEC",
+          "ABC",
+          "RBS-R",
+          "SRS-2",
+          "FER",
+          "GARS",
+          "VABS",
+          "CGI"
+        ],
         "coordenadas_10_20": [
           "F3",
           "F4",
@@ -19612,19 +19864,6 @@ window.NAPEN_DATA = {
           "gatilho": {
             "modalidades_tipo": [
               "tdcs"
-            ]
-          }
-        },
-        {
-          "id": "RM12-EXPLORATORIO-TEC",
-          "texto": "Base científica exploratória (ensaios individuais): Cerebelo bilateral (Yao 2022), Precúneo (Koch 2022), Cerebelo D tDCS (Kim 2024) e Multissítio 6 regiões (Andrade 2022).",
-          "slot": "tec",
-          "categoria": "evidencia",
-          "severidade": "info",
-          "gatilho": {
-            "estagios": [
-              "alt1",
-              "alt2"
             ]
           }
         },
@@ -21473,6 +21712,21 @@ window.NAPEN_DATA = {
         }
       },
       "tags_busca": {
+        "siglas": [
+          "DA",
+          "AD",
+          "CCL",
+          "MCI",
+          "CPFDL",
+          "DLPFC",
+          "MMSE",
+          "MEEM",
+          "MoCA",
+          "ADAS",
+          "NPI",
+          "DAS",
+          "TAVEC"
+        ],
         "coordenadas_10_20": [
           "F3",
           "F4",

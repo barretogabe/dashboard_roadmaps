@@ -326,6 +326,7 @@ def _avc_shared_observations(prefix, device_noun, therapy_domain, mod_tipo, sess
 def _build_avc_ms():
     cid = "avc-membro-superior"
     tags = {
+        "siglas": ["AVC", "AVE", "MS", "MMSS", "M1", "S1", "PPC", "PEM", "LMR", "LMA", "SCT", "BIT"],
         "coordenadas_10_20": ["C3", "C4", "M1", "P3", "P4", "F5", "CP3", "CP4"],
         "alvos_anatomicos": [
             "Córtex Motor Primário", "M1", "Área Motora da Mão",
@@ -334,14 +335,14 @@ def _build_avc_ms():
         ],
         "sinonimos_en": [
             "stroke", "spasticity", "upper extremity", "upper limb",
-            "hand motor function", "hemiparesis", "arm recovery", "motor impairment", "unilateral spatial neglect",
+            "hand motor function", "hemiparesis", "arm recovery", "motor impairment", "unilateral spatial neglect", "star cancellation test",
         ],
         "sintomas_pt": [
             "paralisia", "hemiparesia", "membro superior", "braço", "mão", "preensão",
             "destreza", "espasticidade", "tônus", "perda de sinergia",
             "disfunção motora", "disfunção sensorial", "heminegligência",
         ],
-        "escalas": ["FMA-UE", "Fugl-Meyer", "EAM", "Ashworth", "MRC", "MAL-Brazil", "Catherine Bergego"],
+        "escalas": ["FMA-UE", "Fugl-Meyer", "EAM", "Ashworth", "MRC", "MAL-Brazil", "Cancelamento de Estrelas", "Star Cancellation", "BIT"],
         "tecnicas": ["rTMS", "HF-rTMS", "LF-rTMS", "iTBS", "cTBS", "rPMS", "tDCS", "taVNS"],
     }
 
@@ -409,6 +410,14 @@ def _build_avc_ms():
         referencia="Guo et al. (2016) · DOI: 10.1155/2016/6238575",
         fase_etapa="inicial",
     )
+    step_p5_seq = make_chain_step(
+        2, "RM01-P5-SEQ", "Próximo Protocolo — HF-rTMS M1 Ipsilesional", "HF-rTMS (10 Hz) — M1 Ipsilesional (Guo et al., 2016)",
+        "rTMS Excitatória (10 Hz) — M1 Ipsilesional", "Córtex Motor Primário (M1) — hemisfério ipsilesional",
+        "10 Hz | 90% LMR (ou calibrar pelo LMA se LMR ausente) | 1.500 pulsos (30 trens de 50 pulsos, 25 s de intervalo)",
+        sessoes="10 sessões diárias associadas à terapia convencional", efeito_esperado="+23,3 pts na FMA-UE (IC 95%: -3,5 a 50,0)",
+        referencia="Guo et al. (2016) · DOI: 10.1155/2016/6238575",
+        fase_etapa="sequencia",
+    )
     step_p6 = make_chain_step(
         3, "RM01-P6", "Escalonamento Combinado (Linha Pontilhada) — cTBS + Cerebelo", "cTBS Contralesional + HF-rTMS Cerebelar Contralesional (Kim et al., 2025)",
         "cTBS M1 Contralesional + HF-rTMS Cerebelar Contralesional", "M1 contralesional + Cerebelo contralesional (3 cm lateral ao ínion)",
@@ -418,7 +427,7 @@ def _build_avc_ms():
         fase_etapa="sequencia",
     )
     step_p6_s1 = make_chain_step(
-        2, "RM01-P6", "Escalonamento Combinado (Linha Pontilhada) — cTBS + Cerebelo", "cTBS Contralesional + HF-rTMS Cerebelar Contralesional (Kim et al., 2025)",
+        4, "RM01-P6", "Escalonamento Combinado (Linha Pontilhada) — cTBS + Cerebelo", "cTBS Contralesional + HF-rTMS Cerebelar Contralesional (Kim et al., 2025)",
         "cTBS M1 Contralesional + HF-rTMS Cerebelar Contralesional", "M1 contralesional + Cerebelo contralesional (3 cm lateral ao ínion)",
         "cTBS (3 pulsos a 50 Hz repetidos a cada 200 ms / 5 Hz, 40 s contínuos, 600 pulsos, 70% LMR) contralesional seguido por rTMS cerebelar (10 Hz, 100% LMR, 1.000 pulsos, 20 trens de 50 pulsos, 25 s de intervalo) a 3 cm lateral ao ínion contralesional",
         sessoes="10 sessões diárias", efeito_esperado="+12,5 pts na FMA-UE (IC 95%: 9,9 a 21,1)",
@@ -457,17 +466,24 @@ def _build_avc_ms():
     scale_eam = make_scale(
         "eam", "Escala de Ashworth Modificada (EAM)", "EAM", "reducao",
         "Redução ≥ 1,0 ponto no escore de tônus muscular",
-        0.52, placeholder="Ex: 2.0", min_val=0, max_val=4, mcid_valor=1.0, mcid_label="-1,0 ponto na EAM",
+        0.52, tipo="ordinal_eam", placeholder="Ex: 2.0", min_val=0, max_val=4, mcid_valor=1.0, mcid_label="-1,0 ponto na EAM",
     )
     scale_fma_sens = make_scale(
         "fma_ue_sens", "FMA-UE — Subescala Sensorial (Seção II)", "FMA-UE Sensorial", "aumento",
         "+3,4 pontos na subescala sensorial da FMA-UE (IC 95%: 2,1 a 4,6 — Zanona et al., 2022)",
         0.56, placeholder="Ex: 6", min_val=0, max_val=12, mcid_valor=3.4, mcid_label="+3,4 pontos sensoriais",
     )
-    scale_catherine = make_scale(
-        "cbs", "Escala Catherine Bergego / Teste de Cancelamento", "CBS / Cancelamento", "reducao",
-        "Redução ≥ 3,0 pontos na CBS ou ganho significativo no cancelamento de estrelas",
-        0.54, placeholder="Ex: 15", min_val=0, max_val=30, mcid_valor=3.0, mcid_label="-3,0 pontos na CBS",
+    scale_star_cancel_rtms = make_scale(
+        "star_cancellation", "Teste de Cancelamento de Estrelas (BIT — Star Cancellation Test)", "Cancelamento de Estrelas", "aumento",
+        "Aumento esperado de +10,4 pontos (IC 95%: 8,0 a 12,7) após 10 sessões diárias (corte satisfatório ≥ +8,0 pontos)",
+        0.54, placeholder="Ex: 32", min_val=0, max_val=54, mcid_valor=8.0,
+        mcid_label="≥ +8,0 pontos (limite inferior do IC 95%: 8,0–12,7 · média +10,4 pts)",
+    )
+    scale_star_cancel_tdcs = make_scale(
+        "star_cancellation", "Teste de Cancelamento de Estrelas (BIT — Star Cancellation Test)", "Cancelamento de Estrelas", "aumento",
+        "Aumento ≥ +5,0 estrelas (0–54) no Teste de Cancelamento de Estrelas (ou ≥ +7,0 pontos na etapa catódica P3/Cz — Yi et al., 2016)",
+        0.50, placeholder="Ex: 32", min_val=0, max_val=54, mcid_valor=5.0,
+        mcid_label="≥ +5,0 estrelas no Cancelamento de Estrelas (0–54)",
     )
 
     motor_scales_map = {
@@ -632,6 +648,8 @@ def _build_avc_ms():
             escalas_detalhadas=[scale_fma_sens],
             cadeia_sequencial=[
                 make_chain_step(1, "RM01-PS1-1", "Protocolo Inicial — HF-rTMS S1", "HF-rTMS (10 Hz) — S1 Ipsilesional (Zanona et al., 2022)", "rTMS Excitatória (10 Hz)", "S1 ipsilesional — 3 cm posterior a M1 (C3/C4 via PEM)", "10 Hz | 120% LMR | 1.500 pulsos (30 trens × 50 pulsos, 30 s intervalo)", sessoes="10 sessões diárias", efeito_esperado="+3,4 pts subescala sensorial FMA-UE (IC 95%: 2,1 a 4,6)", referencia="Zanona et al. (2022) · DOI: 10.3389/fnhum.2022.860965", fase_etapa="inicial"),
+                step_p5_seq,
+                step_p2,
                 step_p6_s1,
             ],
             ajuste_parametros=adj_rtms, falha_terapeutica=falha_rtms_mod, sessoes_ajuste=sa_rtms,
@@ -642,17 +660,63 @@ def _build_avc_ms():
             protocolo_id="RM01-PPC", tecnica="HF-rTMS (10 Hz) — Córtex Parietal Posterior Ipsilesional (Kim et al., 2013)", modalidade_sigla="rTMS PPC",
             alvo="Córtex Parietal Posterior (PPC) — P3/P4 ipsilesional", frequencia="10 Hz", intensidade="90% LMR",
             pulsos_duracao="1.000 pulsos (20 trens de 50 pulsos, 55 s de intervalo)", sessoes="10 sessões diárias associadas à varredura visual",
-            escala_recomendada="Escala Catherine Bergego / Cancelamento", meta_melhora="-3,0 pontos na CBS / ganho no cancelamento de estrelas",
+            escala_recomendada="Teste de Cancelamento de Estrelas (BIT — 0 a 54)", meta_melhora="Aumento de 10,4 pontos (IC 95%: 8,0 a 12,7) no teste de cancelamento de estrelas após 10 sessões diárias",
             tamanho_efeito=0.54, evidencia="Nível B — Eficácia clínica em heminegligência", linha_fluxograma="solida",
             diretriz_internacional="Nível B (Lefaucheur et al., 2020)", diretriz_ref=DIR_IFCN_RTMS_2020,
             artigo_referencia=REF_KIM_2013, meta_analise=REF_FAN_2017,
-            mcid_valor=3.0, mcid_label="-3,0 pontos na CBS", cohen_d_valor=0.54, cohen_d_interp="Moderado",
-            estudo_referencia="Kim et al. (2013)", efeito_resumo="+10,4 pts no teste de cancelamento de estrelas após 10 sessões",
-            escalas_detalhadas=[scale_catherine],
+            mcid_valor=8.0, mcid_label="≥ +8,0 pontos (IC 95%: 8,0 a 12,7 · média +10,4 pts)", cohen_d_valor=0.54, cohen_d_interp="Moderado",
+            estudo_referencia="Kim et al. (2013)", efeito_resumo="Aumento de 10,4 pontos (IC 95%: 8,0 a 12,7) no teste de cancelamento de estrelas após 10 sessões diárias em pacientes em fase aguda com lesões corticais ou subcorticais",
+            ic_min=8.0, ic_max=12.7,
+            escalas_detalhadas=[scale_star_cancel_rtms],
             cadeia_sequencial=[
-                make_chain_step(1, "RM01-PPC-1", "Protocolo Inicial — HF-rTMS PPC Ipsilesional", "HF-rTMS (10 Hz) — PPC P3/P4 Ipsilesional (Kim et al., 2013)", "rTMS Excitatória (10 Hz)", "P3/P4 ipsilesional", "10 Hz | 90% LMR | 1.000 pulsos (20 trens de 50 pulsos, 55 s de intervalo)", sessoes="10 sessões diárias", efeito_esperado="+10,4 pts no cancelamento de estrelas", referencia="Kim et al. (2013) · DOI: 10.1016/j.apmr.2012.12.016", fase_etapa="inicial"),
-                make_chain_step(2, "RM01-PPC-2", "Próximo Protocolo — LF-rTMS PPC Contralesional", "LF-rTMS (1 Hz) — PPC P3/P4 Contralesional (Kim et al., 2013)", "rTMS Inibitória (1 Hz)", "P3/P4 contralesional", "1 Hz | 90% LMR | 1.200 pulsos", sessoes="10 sessões diárias", efeito_esperado="+16,4 pts no cancelamento de estrelas", referencia="Kim et al. (2013) · DOI: 10.1016/j.apmr.2012.12.016", fase_etapa="sequencia"),
-                make_chain_step(3, "RM01-ALT3", "Seção de Ajustes — iTBS F5 (Linha Pontilhada)", "iTBS DLPFC Esquerdo F5 (Cao et al., 2016)", "iTBS DLPFC Esquerdo", "F5 (entre F3 e F7) — Córtex pré-frontal dorsolateral esquerdo", "iTBS: 2 sessões separadas por 15 min, 3 pulsos a 50 Hz repetidos a 200 ms (5 Hz), 2 s estímulo e 8 s pausa, 600 pulsos, 80% LMR", sessoes="10 dias de tratamento", efeito_esperado="+37% no teste de cancelamento de estrelas", referencia="Cao et al. (2016) · DOI: 10.1097/WNR.0000000000000689", linha_fluxograma="pontilhada", fase_etapa="ajustes"),
+                make_chain_step(
+                    1, "RM01-PPC-1", "Protocolo Inicial — HF-rTMS PPC Ipsilesional", "HF-rTMS (10 Hz) — PPC P3/P4 Ipsilesional (Kim et al., 2013)",
+                    "rTMS Excitatória (10 Hz)", "P3/P4 ipsilesional", "10 Hz | 90% LMR | 1.000 pulsos (20 trens de 50 pulsos, 55 s de intervalo)",
+                    sessoes="10 sessões diárias",
+                    efeito_esperado="Aumento de 10,4 pontos (IC 95%: 8,0 a 12,7) no teste de cancelamento de estrelas após 10 sessões diárias em pacientes em fase aguda com lesões corticais ou subcorticais",
+                    referencia="Kim et al. (2013) · DOI: 10.1016/j.apmr.2012.12.016", fase_etapa="inicial",
+                    calc_meta={
+                        "mcid_valor": 8.0,
+                        "mcid_label": "≥ +8,0 pontos (limite inferior do IC 95%: 8,0–12,7 · média +10,4 pts)",
+                        "meta_texto": "Aumento esperado de +10,4 pontos (IC 95%: 8,0 a 12,7) no teste de cancelamento de estrelas após 10 sessões diárias",
+                        "ic_min": 8.0,
+                        "ic_max": 12.7,
+                        "estudo_referencia": "Kim et al. (2013) — HF-rTMS 10 Hz P3/P4 Ipsilesional",
+                        "efeito_esperado_resumo": "Aumento de 10,4 pontos (IC 95%: 8,0 a 12,7) no teste de cancelamento de estrelas após 10 sessões diárias em pacientes em fase aguda com lesões corticais ou subcorticais",
+                    },
+                ),
+                make_chain_step(
+                    2, "RM01-PPC-2", "Próximo Protocolo — LF-rTMS PPC Contralesional", "LF-rTMS (1 Hz) — PPC P3/P4 Contralesional (Kim et al., 2013)",
+                    "rTMS Inibitória (1 Hz)", "P3/P4 contralesional", "1 Hz | 90% LMR | 1.200 pulsos",
+                    sessoes="10 sessões diárias",
+                    efeito_esperado="Aumento de 16,4 pontos (IC 95%: 13,0 a 20,0) no teste de cancelamento de estrelas após 10 sessões diárias em pacientes em fase aguda com lesões corticais ou subcorticais",
+                    referencia="Kim et al. (2013) · DOI: 10.1016/j.apmr.2012.12.016", fase_etapa="sequencia",
+                    calc_meta={
+                        "mcid_valor": 13.0,
+                        "mcid_label": "≥ +13,0 pontos (limite inferior do IC 95%: 13,0–20,0 · média +16,4 pts)",
+                        "meta_texto": "Aumento esperado de +16,4 pontos (IC 95%: 13,0 a 20,0) no teste de cancelamento de estrelas após 10 sessões diárias",
+                        "ic_min": 13.0,
+                        "ic_max": 20.0,
+                        "estudo_referencia": "Kim et al. (2013) — LF-rTMS 1 Hz P3/P4 Contralesional",
+                        "efeito_esperado_resumo": "Aumento de 16,4 pontos (IC 95%: 13,0 a 20,0) no teste de cancelamento de estrelas após 10 sessões diárias em pacientes em fase aguda com lesões corticais ou subcorticais",
+                    },
+                ),
+                make_chain_step(
+                    3, "RM01-ALT3", "Seção de Ajustes — iTBS F5 (Linha Pontilhada)", "iTBS DLPFC Esquerdo F5 (Cao et al., 2016)",
+                    "iTBS DLPFC Esquerdo", "F5 (entre F3 e F7) — Córtex pré-frontal dorsolateral esquerdo",
+                    "iTBS: 2 sessões separadas por 15 min, 3 pulsos a 50 Hz repetidos a 200 ms (5 Hz), 2 s estímulo e 8 s pausa, 600 pulsos, 80% LMR",
+                    sessoes="10 dias de tratamento",
+                    efeito_esperado="+37% no teste de cancelamento de estrelas após 10 dias de tratamento",
+                    referencia="Cao et al. (2016) · DOI: 10.1097/WNR.0000000000000689", linha_fluxograma="pontilhada", fase_etapa="ajustes",
+                    calc_meta={
+                        "mcid_valor": 37.0,
+                        "mcid_label": "≥ +37% no teste de cancelamento de estrelas (Cao et al., 2016)",
+                        "meta_texto": "Aumento esperado ≥ +37% no teste de cancelamento de estrelas após 10 dias de tratamento",
+                        "is_percent": True,
+                        "estudo_referencia": "Cao et al. (2016) — iTBS DLPFC Esquerdo (F5)",
+                        "efeito_esperado_resumo": "Aumento de +37% no teste de cancelamento de estrelas após 10 dias de tratamento",
+                    },
+                ),
             ],
             ajuste_parametros=adj_rtms, falha_terapeutica=falha_rtms_mod, sessoes_ajuste=sa_rtms,
             notas_clinicas="Associar à terapia de varredura visual e feedback espacial; manter terapias medicamentosas em uso.",
@@ -750,17 +814,50 @@ def _build_avc_ms():
             protocolo_id="RM02-PPC", tecnica="tDCS Anódica — Córtex Parietal Posterior P4/P3 (Bang et al., 2015)", modalidade_sigla="tDCS PPC",
             alvo="Ânodo P4 + Cátodo P3 no Córtex Parietal Posterior (35 cm²)", frequencia="Contínua", intensidade="1,0 mA",
             pulsos_duracao="20 min (eletrodos 35 cm²)", sessoes="15 sessões combinadas a feedback visual",
-            escala_recomendada="Catherine Bergego / Teste de Cancelamento", meta_melhora="-3,0 pontos na CBS / -6,0 mm bissecção",
+            escala_recomendada="Teste de Cancelamento de Estrelas (BIT — 0 a 54)", meta_melhora="Ganho ≥ +5,0 estrelas no Teste de Cancelamento de Estrelas (Bang et al., 2015: -6,0 mm bissecção)",
             tamanho_efeito=0.50, evidencia="Nível B — Eficácia clínica (Fan et al., 2017)", linha_fluxograma="solida",
             diretriz_internacional="Nível B (Lefaucheur et al., 2017)", diretriz_ref=DIR_IFCN_TDCS_2017,
             artigo_referencia=REF_BANG_2015, meta_analise=REF_FAN_2017,
-            mcid_valor=3.0, mcid_label="-3,0 pontos na CBS", cohen_d_valor=0.50, cohen_d_interp="Moderado",
-            estudo_referencia="Bang et al. (2015)", efeito_resumo="-6,0 mm na bissecção de linhas após 15 sessões",
-            escalas_detalhadas=[scale_catherine],
+            mcid_valor=5.0, mcid_label="≥ +5,0 estrelas no Cancelamento de Estrelas (0–54)", cohen_d_valor=0.50, cohen_d_interp="Moderado",
+            estudo_referencia="Bang et al. (2015)", efeito_resumo="-6,0 mm na bissecção de linhas após 15 sessões (acompanhamento quantitativo pelo Teste de Cancelamento de Estrelas)",
+            escalas_detalhadas=[scale_star_cancel_tdcs],
             cadeia_sequencial=[
-                make_chain_step(1, "RM02-PPC-1", "Protocolo Inicial — tDCS Anódica P4 / P3", "tDCS Anódica P4 / Cátodo P3 (Bang et al., 2015)", "tDCS PPC", "Ânodo P4 + Cátodo P3 (35 cm²)", "1,0 mA | 20 min", sessoes="15 sessões", efeito_esperado="-6,0 mm bissecção", referencia="Bang et al. (2015) · DOI: 10.1589/jpts.27.2759", fase_etapa="inicial"),
-                make_chain_step(2, "RM02-PPC-2", "Próximo Protocolo — tDCS P6 / FP1", "tDCS Anódica P6 / Cátodo FP1 (Làdavas et al., 2015)", "tDCS PPC", "Ânodo P6 + Cátodo FP1 (35 cm²)", "2,0 mA | 20 min", sessoes="10 sessões", efeito_esperado="+19 pts BIT", referencia="Làdavas et al. (2015) · DOI: 10.3233/RNN-140464", fase_etapa="sequencia"),
-                make_chain_step(3, "RM02-PPC-3", "Próximo Protocolo (Linha Pontilhada) — tDCS Catódica P3 / Cz", "tDCS Catódica P3 / Ânodo Cz (Yi et al., 2016)", "tDCS Catódica PPC", "Cátodo P3 + Ânodo Cz (25 cm²)", "2,0 mA | 30 min", sessoes="15 sessões", efeito_esperado="+7,0 cancelamento", referencia="Yi et al. (2016) · DOI: 10.5535/arm.2016.40.2.223", linha_fluxograma="pontilhada", fase_etapa="sequencia"),
+                make_chain_step(
+                    1, "RM02-PPC-1", "Protocolo Inicial — tDCS Anódica P4 / P3", "tDCS Anódica P4 / Cátodo P3 (Bang et al., 2015)",
+                    "tDCS PPC", "Ânodo P4 + Cátodo P3 (35 cm²)", "1,0 mA | 20 min", sessoes="15 sessões",
+                    efeito_esperado="-6,0 mm bissecção de linhas após 15 sessões", referencia="Bang et al. (2015) · DOI: 10.1589/jpts.27.2759", fase_etapa="inicial",
+                    calc_meta={
+                        "mcid_valor": 5.0,
+                        "mcid_label": "≥ +5,0 estrelas no Teste de Cancelamento de Estrelas (0–54)",
+                        "meta_texto": "Ganho ≥ +5,0 estrelas no Teste de Cancelamento de Estrelas (Bang et al., 2015: -6,0 mm bissecção)",
+                        "estudo_referencia": "Bang et al. (2015) — tDCS Anódica P4 / Cátodo P3",
+                        "efeito_esperado_resumo": "-6,0 mm na bissecção de linhas após 15 sessões (avaliação na calculadora pelo Teste de Cancelamento de Estrelas)",
+                    },
+                ),
+                make_chain_step(
+                    2, "RM02-PPC-2", "Próximo Protocolo — tDCS P6 / FP1", "tDCS Anódica P6 / Cátodo FP1 (Làdavas et al., 2015)",
+                    "tDCS PPC", "Ânodo P6 + Cátodo FP1 (35 cm²)", "2,0 mA | 20 min", sessoes="10 sessões",
+                    efeito_esperado="+19 pts na bateria BIT", referencia="Làdavas et al. (2015) · DOI: 10.3233/RNN-140464", fase_etapa="sequencia",
+                    calc_meta={
+                        "mcid_valor": 5.0,
+                        "mcid_label": "≥ +5,0 estrelas no Teste de Cancelamento de Estrelas (BIT)",
+                        "meta_texto": "Ganho ≥ +5,0 estrelas no Teste de Cancelamento de Estrelas (Làdavas et al., 2015: +19 pts BIT)",
+                        "estudo_referencia": "Làdavas et al. (2015) — tDCS Anódica P6 / Cátodo FP1",
+                        "efeito_esperado_resumo": "+19 pontos na bateria BIT após 10 sessões",
+                    },
+                ),
+                make_chain_step(
+                    3, "RM02-PPC-3", "Próximo Protocolo (Linha Pontilhada) — tDCS Catódica P3 / Cz", "tDCS Catódica P3 / Ânodo Cz (Yi et al., 2016)",
+                    "tDCS Catódica PPC", "Cátodo P3 + Ânodo Cz (25 cm²)", "2,0 mA | 30 min", sessoes="15 sessões",
+                    efeito_esperado="+7,0 pontos no teste de cancelamento de estrelas", referencia="Yi et al. (2016) · DOI: 10.5535/arm.2016.40.2.223", linha_fluxograma="pontilhada", fase_etapa="sequencia",
+                    calc_meta={
+                        "mcid_valor": 7.0,
+                        "mcid_label": "≥ +7,0 pontos no Teste de Cancelamento de Estrelas (Yi et al., 2016)",
+                        "meta_texto": "Aumento esperado de +7,0 pontos no Teste de Cancelamento de Estrelas após 15 sessões",
+                        "estudo_referencia": "Yi et al. (2016) — tDCS Catódica P3 / Ânodo Cz",
+                        "efeito_esperado_resumo": "Aumento de +7,0 pontos no teste de cancelamento de estrelas após 15 sessões",
+                    },
+                ),
             ],
             ajuste_parametros=adj_tdcs, falha_terapeutica=falha_tdcs_mod, sessoes_ajuste=sa_tdcs,
             notas_clinicas="Aplicar simultaneamente a treino visuoespacial e feedback visual.",
@@ -783,7 +880,7 @@ def _build_avc_ms():
                     {"id": "fraqueza", "rotulo": "Fraqueza muscular", "criterio": "Escala MRC (Medical Research Council)", "descricao": "Paresia proximal ou distal de membro superior.", "proxima_etapa": "pem_triage"},
                     {"id": "disfuncao_motora", "rotulo": "Disfunção motora", "criterio": "FMA-UE Seções III-IV (66 pts)", "descricao": "Déficit global de coordenação e controle motor.", "proxima_etapa": "pem_triage"},
                     {"id": "sensorial", "rotulo": "Disfunção sensorial", "criterio": "FMA-UE Seção II (12 pts)", "descricao": "Hipoestesia ou déficit proprioceptivo no membro afetado.", "proxima_etapa": "alvo_sensorial"},
-                    {"id": "negligencia", "rotulo": "Heminegligência", "criterio": "Teste de Cancelamento / Escala Catherine Bergego", "descricao": "Desatenção espacial unilateral para o hemicorpo afetado.", "protocolo_alvo": "negligencia"},
+                    {"id": "negligencia", "rotulo": "Heminegligência", "criterio": "Teste de Cancelamento de Estrelas (BIT)", "descricao": "Desatenção espacial unilateral para o hemicorpo afetado.", "protocolo_alvo": "negligencia"},
                 ],
             },
             "alvo_sensorial": {
@@ -865,7 +962,7 @@ def _build_avc_ms():
                     {"id": "disfuncao_motora", "rotulo": "Disfunção motora", "criterio": "FMA-UE Seções III-IV", "descricao": "Comprometimento motor em M1.", "proxima_etapa": "lesao_tdcs_m1"},
                     {"id": "espasticidade", "rotulo": "Espasticidade", "criterio": "EAM", "descricao": "Hipertonia em membro superior.", "proxima_etapa": "lesao_tdcs_m1"},
                     {"id": "sensorial", "rotulo": "Disfunção sensorial", "criterio": "FMA-UE Seção II", "descricao": "Déficit somatossensorial.", "proxima_etapa": "alvo_sensorial_tdcs"},
-                    {"id": "negligencia", "rotulo": "Heminegligência", "criterio": "Cancelamento / Catherine Bergego", "descricao": "Rota para Córtex Parietal Posterior (P3/P4).", "protocolo_alvo": "tdcs_negligencia"},
+                    {"id": "negligencia", "rotulo": "Heminegligência", "criterio": "Teste de Cancelamento de Estrelas (BIT)", "descricao": "Rota para Córtex Parietal Posterior (P3/P4).", "protocolo_alvo": "tdcs_negligencia"},
                 ],
             },
             "alvo_sensorial_tdcs": {
@@ -938,16 +1035,28 @@ def _build_avc_ms():
             referencia_doi=PEM_GUIDE_DOI, referencia_rotulo=PEM_GUIDE_LABEL,
         ),
         make_obs(
-            "RM01-N11-CEREBELO",
+            "RM01-N11-CEREBELO-PEM",
             "Bobinas parabólicas e duplo cone são as mais indicadas para a estimulação profunda do cerebelo.",
-            "alvo", categoria="equipamento", protocolo_ids=["sem_pem", "sem_pem_ipsilesional", "sensorial"],
-            estagios=["alt1", "alt2"], modalidades_tipo=["rtms"],
+            "stage", categoria="equipamento", protocolo_ids=["sem_pem"],
+            estagios=["alt1"], modalidades_tipo=["rtms"],
+        ),
+        make_obs(
+            "RM01-N11-CEREBELO-IPSI",
+            "Bobinas parabólicas e duplo cone são as mais indicadas para a estimulação profunda do cerebelo.",
+            "stage", categoria="equipamento", protocolo_ids=["sem_pem_ipsilesional"],
+            estagios=["alt2"], modalidades_tipo=["rtms"],
+        ),
+        make_obs(
+            "RM01-N11-CEREBELO-S1",
+            "Bobinas parabólicas e duplo cone são as mais indicadas para a estimulação profunda do cerebelo.",
+            "stage", categoria="equipamento", protocolo_ids=["sensorial"],
+            estagios=["alt3"], modalidades_tipo=["rtms"],
         ),
         make_obs(
             "RM01-RPMS-REGRAS",
             "Regras operacionais de rPMS: em músculos fracos (deltoide, extensores do punho, pronador redondo) usar modo intermitente (3 pulsos a 50 Hz repetidos a 5 Hz, 2 s ON / 8 s OFF, 600 pulsos por músculo); em músculos espásticos (flexores do punho, bíceps braquial, peitoral maior) usar modo contínuo (600 pulsos sem pausas); posicionar bobina perpendicular às fibras gerando contração visível.",
             "stage", categoria="parametros", protocolo_ids=["fraqueza", "perda_sinergia", "espasticidade", "disfuncao_motora", "rtms_m1_grave"],
-            estagios=["alt1", "alt2"], modalidades_tipo=["rtms"],
+            estagios=["alt2"], modalidades_tipo=["rtms"],
         ),
         make_obs(
             "RM01-MRC-FORCA",
@@ -978,7 +1087,7 @@ def _build_avc_ms():
             {"id": "fraqueza", "nome": "Fraqueza muscular", "instrumento_sugerido": "Escala MRC", "descricao": "Déficit de força no membro parético."},
             {"id": "disfuncao_motora", "nome": "Disfunção motora", "instrumento_sugerido": "FMA-UE Seção III-IV (66 pts)", "descricao": "Comprometimento motor global do membro superior."},
             {"id": "sensorial", "nome": "Disfunção sensorial", "instrumento_sugerido": "FMA-UE Seção II (12 pts)", "descricao": "Alteração tátil ou proprioceptiva (M1 ou S1)."},
-            {"id": "negligencia", "nome": "Heminegligência", "instrumento_sugerido": "Catherine Bergego / Cancelamento", "descricao": "Heminegligência espacial unilateral (PPC)."},
+            {"id": "negligencia", "nome": "Heminegligência", "instrumento_sugerido": "Teste de Cancelamento de Estrelas (BIT)", "descricao": "Heminegligência espacial unilateral (PPC)."},
         ],
         "arvore_algoritmo": arvore_rtms,
         "arvores_por_modalidade": {"rtms": arvore_rtms, "tdcs": arvore_tdcs},
@@ -991,11 +1100,12 @@ def _build_avc_ms():
 def _build_avc_mobilidade():
     cid = "avc-mobilidade"
     tags = {
+        "siglas": ["AVC", "AVE", "MI", "MMII", "M1", "S1", "PPC", "BBS", "TC10m", "10MWT", "FMA-LE", "SCT", "BIT"],
         "coordenadas_10_20": ["Cz", "C3", "C4", "P3", "P4", "F5", "CP3", "CP4"],
         "alvos_anatomicos": ["Cerebelo", "Córtex Motor Primário (M1)", "Vértice Craniano (Cz)", "Córtex Somatossensorial Primário (S1)", "Córtex Parietal Posterior (PPC)"],
-        "sinonimos_en": ["stroke", "gait", "mobility", "walking speed", "balance", "falls risk", "lower limb", "locomotion"],
-        "sintomas_pt": ["marcha", "mobilidade", "equilíbrio", "quedas", "passo", "velocidade de caminhada", "deambulação", "membros inferiores"],
-        "escalas": ["BBS", "Berg", "Mini-BESTest", "10MWT", "TC10m", "FMA-LE", "DGI", "Catherine Bergego"],
+        "sinonimos_en": ["stroke", "gait", "mobility", "walking speed", "balance", "falls risk", "lower limb", "locomotion", "star cancellation test"],
+        "sintomas_pt": ["marcha", "mobilidade", "equilíbrio", "quedas", "passo", "velocidade de caminhada", "deambulação", "membros inferiores", "heminegligência"],
+        "escalas": ["BBS", "Berg", "Mini-BESTest", "10MWT", "TC10m", "FMA-LE", "DGI", "Cancelamento de Estrelas", "Star Cancellation", "BIT"],
         "tecnicas": ["rTMS", "iTBS", "rPMS", "tDCS", "taVNS"],
     }
     tol_mob_rtms = _tol_profile(
@@ -1012,7 +1122,18 @@ def _build_avc_mobilidade():
     scale_bbs = make_scale("bbs", "Escala de Equilíbrio de Berg (BBS)", "BBS", "aumento", "+5,0 pontos na Escala de Equilíbrio de Berg (MCID)", 0.58, placeholder="Ex: 38", min_val=0, max_val=56, mcid_valor=5.0, mcid_label="+5,0 pontos na BBS")
     scale_10mwt = make_scale("tc10m", "Teste de Caminhada de 10 Metros (TC10m / 10MWT)", "TC10m / 10MWT", "reducao", "Redução ≥ 1,5 s no tempo de caminhada (10MWT)", 0.50, placeholder="Ex: 18.0", min_val=1, max_val=120, mcid_valor=1.5, mcid_label="-1,5 s no TC10m")
     scale_fma_le = make_scale("fma_le", "Fugl-Meyer — Membro Inferior (FMA-LE)", "FMA-LE", "aumento", "+4,0 pontos na FMA-LE (ganho funcional de membro inferior)", 0.52, placeholder="Ex: 20", min_val=0, max_val=34, mcid_valor=4.0, mcid_label="+4,0 pontos FMA-LE")
-    scale_catherine = make_scale("cbs", "Escala Catherine Bergego / Cancelamento", "CBS / Cancelamento", "reducao", "Redução ≥ 3,0 pontos na CBS ou ganho no teste de cancelamento", 0.54, placeholder="Ex: 14", min_val=0, max_val=30, mcid_valor=3.0, mcid_label="-3,0 pontos CBS")
+    scale_star_cancel_rtms = make_scale(
+        "star_cancellation", "Teste de Cancelamento de Estrelas (BIT — Star Cancellation Test)", "Cancelamento de Estrelas", "aumento",
+        "Aumento esperado de +10,4 pontos (IC 95%: 8,0 a 12,7) após 10 sessões diárias (corte satisfatório ≥ +8,0 pontos)",
+        0.54, placeholder="Ex: 32", min_val=0, max_val=54, mcid_valor=8.0,
+        mcid_label="≥ +8,0 pontos (limite inferior do IC 95%: 8,0–12,7 · média +10,4 pts)",
+    )
+    scale_star_cancel_tdcs = make_scale(
+        "star_cancellation", "Teste de Cancelamento de Estrelas (BIT — Star Cancellation Test)", "Cancelamento de Estrelas", "aumento",
+        "Aumento ≥ +5,0 estrelas (0–54) no Teste de Cancelamento de Estrelas (ou ≥ +7,0 pontos na etapa catódica P3/Cz — Yi et al., 2016)",
+        0.50, placeholder="Ex: 32", min_val=0, max_val=54, mcid_valor=5.0,
+        mcid_label="≥ +5,0 estrelas no Cancelamento de Estrelas (0–54)",
+    )
 
     mob_scales_map = {
         "equilibrio": ["bbs"],
@@ -1093,17 +1214,63 @@ def _build_avc_mobilidade():
             protocolo_id="RM03-PPC", tecnica="HF-rTMS (10 Hz) — Córtex Parietal Posterior Ipsilesional (Kim et al., 2013)", modalidade_sigla="rTMS PPC",
             alvo="Córtex Parietal Posterior (P3/P4) ipsilesional", frequencia="10 Hz", intensidade="90% LMR",
             pulsos_duracao="1.000 pulsos (20 trens × 50 pulsos, 55 s IIT)", sessoes="10 sessões diárias",
-            escala_recomendada="Catherine Bergego / Cancelamento", meta_melhora="-3,0 pontos CBS (+10,4 pts no teste de cancelamento)",
+            escala_recomendada="Teste de Cancelamento de Estrelas (BIT — 0 a 54)", meta_melhora="Aumento de 10,4 pontos (IC 95%: 8,0 a 12,7) no teste de cancelamento de estrelas após 10 sessões diárias",
             tamanho_efeito=0.54, evidencia="Nível B — Quadro sólido em Mobilidade", linha_fluxograma="solida",
             diretriz_internacional="Nível B (Lefaucheur et al., 2020)", diretriz_ref=DIR_IFCN_RTMS_2020,
             artigo_referencia=REF_KIM_2013, meta_analise=REF_FAN_2017,
-            mcid_valor=3.0, mcid_label="-3,0 pontos CBS", cohen_d_valor=0.54, cohen_d_interp="Moderado",
-            estudo_referencia="Kim et al. (2013)", efeito_resumo="+10,4 pts no cancelamento de estrelas (ipsilesional)",
-            escalas_detalhadas=[scale_catherine],
+            mcid_valor=8.0, mcid_label="≥ +8,0 pontos (IC 95%: 8,0 a 12,7 · média +10,4 pts)", cohen_d_valor=0.54, cohen_d_interp="Moderado",
+            estudo_referencia="Kim et al. (2013)", efeito_resumo="Aumento de 10,4 pontos (IC 95%: 8,0 a 12,7) no teste de cancelamento de estrelas após 10 sessões diárias em pacientes em fase aguda com lesões corticais ou subcorticais",
+            ic_min=8.0, ic_max=12.7,
+            escalas_detalhadas=[scale_star_cancel_rtms],
             cadeia_sequencial=[
-                make_chain_step(1, "RM03-PPC-1", "Protocolo Inicial — HF-rTMS PPC Ipsilesional", "HF-rTMS (10 Hz) — P3/P4 Ipsilesional (Kim et al., 2013)", "HF-rTMS", "P3/P4 ipsilesional", "10 Hz | 90% LMR | 1.000 pulsos (20 trens × 50 p, 55 s IIT)", sessoes="10 sessões diárias", efeito_esperado="+10,4 pts", referencia="Kim et al. (2013) · DOI: 10.1016/j.apmr.2012.12.016", fase_etapa="inicial"),
-                make_chain_step(2, "RM03-PPC-2", "Próximo Protocolo — LF-rTMS PPC Contralesional", "LF-rTMS (1 Hz) — P3/P4 Contralesional (Kim et al., 2013)", "LF-rTMS", "P3/P4 contralesional", "1 Hz | 90% LMR | 1.200 pulsos", sessoes="10 sessões diárias", efeito_esperado="+16,4 pts", referencia="Kim et al. (2013) · DOI: 10.1016/j.apmr.2012.12.016", fase_etapa="sequencia"),
-                make_chain_step(3, "RM03-ALT2", "Seção de Ajustes — iTBS F5 (Linha Pontilhada)", "iTBS F5 DLPFC Esquerdo (Cao et al., 2016)", "iTBS", "F5 (entre F3 e F7) — Córtex pré-frontal dorsolateral esquerdo", "iTBS: 2 sessões separadas por 15 min | 3 pulsos a 50 Hz / 5 Hz (2 s ON, 8 s OFF) | 600 pulsos | 80% LMR", sessoes="10 dias", efeito_esperado="+37% cancelamento", referencia="Cao et al. (2016) · DOI: 10.1097/WNR.0000000000000689", linha_fluxograma="pontilhada", fase_etapa="ajustes"),
+                make_chain_step(
+                    1, "RM03-PPC-1", "Protocolo Inicial — HF-rTMS PPC Ipsilesional", "HF-rTMS (10 Hz) — P3/P4 Ipsilesional (Kim et al., 2013)",
+                    "HF-rTMS", "P3/P4 ipsilesional", "10 Hz | 90% LMR | 1.000 pulsos (20 trens × 50 p, 55 s IIT)",
+                    sessoes="10 sessões diárias",
+                    efeito_esperado="Aumento de 10,4 pontos (IC 95%: 8,0 a 12,7) no teste de cancelamento de estrelas após 10 sessões diárias em pacientes em fase aguda com lesões corticais ou subcorticais",
+                    referencia="Kim et al. (2013) · DOI: 10.1016/j.apmr.2012.12.016", fase_etapa="inicial",
+                    calc_meta={
+                        "mcid_valor": 8.0,
+                        "mcid_label": "≥ +8,0 pontos (limite inferior do IC 95%: 8,0–12,7 · média +10,4 pts)",
+                        "meta_texto": "Aumento esperado de +10,4 pontos (IC 95%: 8,0 a 12,7) no teste de cancelamento de estrelas após 10 sessões diárias",
+                        "ic_min": 8.0,
+                        "ic_max": 12.7,
+                        "estudo_referencia": "Kim et al. (2013) — HF-rTMS 10 Hz P3/P4 Ipsilesional",
+                        "efeito_esperado_resumo": "Aumento de 10,4 pontos (IC 95%: 8,0 a 12,7) no teste de cancelamento de estrelas após 10 sessões diárias em pacientes em fase aguda com lesões corticais ou subcorticais",
+                    },
+                ),
+                make_chain_step(
+                    2, "RM03-PPC-2", "Próximo Protocolo — LF-rTMS PPC Contralesional", "LF-rTMS (1 Hz) — P3/P4 Contralesional (Kim et al., 2013)",
+                    "LF-rTMS", "P3/P4 contralesional", "1 Hz | 90% LMR | 1.200 pulsos",
+                    sessoes="10 sessões diárias",
+                    efeito_esperado="Aumento de 16,4 pontos (IC 95%: 13,0 a 20,0) no teste de cancelamento de estrelas após 10 sessões diárias em pacientes em fase aguda com lesões corticais ou subcorticais",
+                    referencia="Kim et al. (2013) · DOI: 10.1016/j.apmr.2012.12.016", fase_etapa="sequencia",
+                    calc_meta={
+                        "mcid_valor": 13.0,
+                        "mcid_label": "≥ +13,0 pontos (limite inferior do IC 95%: 13,0–20,0 · média +16,4 pts)",
+                        "meta_texto": "Aumento esperado de +16,4 pontos (IC 95%: 13,0 a 20,0) no teste de cancelamento de estrelas após 10 sessões diárias",
+                        "ic_min": 13.0,
+                        "ic_max": 20.0,
+                        "estudo_referencia": "Kim et al. (2013) — LF-rTMS 1 Hz P3/P4 Contralesional",
+                        "efeito_esperado_resumo": "Aumento de 16,4 pontos (IC 95%: 13,0 a 20,0) no teste de cancelamento de estrelas após 10 sessões diárias em pacientes em fase aguda com lesões corticais ou subcorticais",
+                    },
+                ),
+                make_chain_step(
+                    3, "RM03-ALT2", "Seção de Ajustes — iTBS F5 (Linha Pontilhada)", "iTBS F5 DLPFC Esquerdo (Cao et al., 2016)",
+                    "iTBS", "F5 (entre F3 e F7) — Córtex pré-frontal dorsolateral esquerdo",
+                    "iTBS: 2 sessões separadas por 15 min | 3 pulsos a 50 Hz / 5 Hz (2 s ON, 8 s OFF) | 600 pulsos | 80% LMR",
+                    sessoes="10 dias",
+                    efeito_esperado="+37% no teste de cancelamento de estrelas após 10 dias de tratamento",
+                    referencia="Cao et al. (2016) · DOI: 10.1097/WNR.0000000000000689", linha_fluxograma="pontilhada", fase_etapa="ajustes",
+                    calc_meta={
+                        "mcid_valor": 37.0,
+                        "mcid_label": "≥ +37% no teste de cancelamento de estrelas (Cao et al., 2016)",
+                        "meta_texto": "Aumento esperado ≥ +37% no teste de cancelamento de estrelas após 10 dias de tratamento",
+                        "is_percent": True,
+                        "estudo_referencia": "Cao et al. (2016) — iTBS DLPFC Esquerdo (F5)",
+                        "efeito_esperado_resumo": "Aumento de +37% no teste de cancelamento de estrelas após 10 dias de tratamento",
+                    },
+                ),
             ],
             ajuste_parametros=adj_mob_rtms, falha_terapeutica=falha_mob_rtms, sessoes_ajuste=sa_mob_rtms,
             notas_clinicas="Indicado na heminegligência unilateral afetando a mobilidade; associar terapia de varredura visual.",
@@ -1155,17 +1322,50 @@ def _build_avc_mobilidade():
             protocolo_id="RM04-PPC", tecnica="tDCS Anódica — Córtex Parietal Posterior P4/P3 (Bang et al., 2015)", modalidade_sigla="tDCS PPC",
             alvo="Ânodo P4 + Cátodo P3 no Córtex Parietal Posterior (35 cm²)", frequencia="Contínua", intensidade="1,0 mA",
             pulsos_duracao="20 min (eletrodos 35 cm²)", sessoes="15 sessões associadas à varredura visual",
-            escala_recomendada="Catherine Bergego / Cancelamento", meta_melhora="-3,0 pontos CBS / -6,0 mm bissecção",
+            escala_recomendada="Teste de Cancelamento de Estrelas (BIT — 0 a 54)", meta_melhora="Ganho ≥ +5,0 estrelas no Teste de Cancelamento de Estrelas (Bang et al., 2015: -6,0 mm bissecção)",
             tamanho_efeito=0.50, evidencia="Nível B — Eficácia clínica (Fan 2017)", linha_fluxograma="solida",
             diretriz_internacional="Nível B (Lefaucheur et al., 2017)", diretriz_ref=DIR_IFCN_TDCS_2017,
             artigo_referencia=REF_BANG_2015, meta_analise=REF_FAN_2017,
-            mcid_valor=3.0, mcid_label="-3,0 pontos CBS", cohen_d_valor=0.50, cohen_d_interp="Moderado",
-            estudo_referencia="Bang et al. (2015)", efeito_resumo="-6,0 mm bissecção após 15 sessões",
-            escalas_detalhadas=[scale_catherine],
+            mcid_valor=5.0, mcid_label="≥ +5,0 estrelas no Cancelamento de Estrelas (0–54)", cohen_d_valor=0.50, cohen_d_interp="Moderado",
+            estudo_referencia="Bang et al. (2015)", efeito_resumo="-6,0 mm na bissecção de linhas após 15 sessões (acompanhamento quantitativo pelo Teste de Cancelamento de Estrelas)",
+            escalas_detalhadas=[scale_star_cancel_tdcs],
             cadeia_sequencial=[
-                make_chain_step(1, "RM04-PPC-1", "Protocolo Inicial — tDCS P4/P3", "tDCS Anódica P4 / Cátodo P3 (Bang et al., 2015)", "tDCS PPC", "Ânodo P4 + Cátodo P3 (35 cm²)", "1,0 mA | 20 min", sessoes="15 sessões", efeito_esperado="-6,0 mm bissecção", referencia="Bang et al. (2015) · DOI: 10.1589/jpts.27.2759", fase_etapa="inicial"),
-                make_chain_step(2, "RM04-PPC-2", "Próximo Protocolo — tDCS P6/FP1", "tDCS Anódica P6 / Cátodo FP1 (Làdavas et al., 2015)", "tDCS PPC", "Ânodo P6 + Cátodo FP1 (35 cm²)", "2,0 mA | 20 min", sessoes="10 sessões", efeito_esperado="+19 pts BIT", referencia="Làdavas et al. (2015) · DOI: 10.3233/RNN-140464", fase_etapa="sequencia"),
-                make_chain_step(3, "RM04-PPC-3", "Próximo Protocolo (Linha Pontilhada) — tDCS Catódica P3 / Cz", "tDCS Catódica P3 / Ânodo Cz (Yi et al., 2016)", "tDCS Catódica PPC", "Cátodo P3 + Ânodo Cz (25 cm²)", "2,0 mA | 30 min", sessoes="15 sessões", efeito_esperado="+7,0 pts cancelamento", referencia="Yi et al. (2016) · DOI: 10.5535/arm.2016.40.2.223", linha_fluxograma="pontilhada", fase_etapa="sequencia"),
+                make_chain_step(
+                    1, "RM04-PPC-1", "Protocolo Inicial — tDCS P4/P3", "tDCS Anódica P4 / Cátodo P3 (Bang et al., 2015)",
+                    "tDCS PPC", "Ânodo P4 + Cátodo P3 (35 cm²)", "1,0 mA | 20 min", sessoes="15 sessões",
+                    efeito_esperado="-6,0 mm bissecção de linhas após 15 sessões", referencia="Bang et al. (2015) · DOI: 10.1589/jpts.27.2759", fase_etapa="inicial",
+                    calc_meta={
+                        "mcid_valor": 5.0,
+                        "mcid_label": "≥ +5,0 estrelas no Teste de Cancelamento de Estrelas (0–54)",
+                        "meta_texto": "Ganho ≥ +5,0 estrelas no Teste de Cancelamento de Estrelas (Bang et al., 2015: -6,0 mm bissecção)",
+                        "estudo_referencia": "Bang et al. (2015) — tDCS Anódica P4 / Cátodo P3",
+                        "efeito_esperado_resumo": "-6,0 mm na bissecção de linhas após 15 sessões (avaliação na calculadora pelo Teste de Cancelamento de Estrelas)",
+                    },
+                ),
+                make_chain_step(
+                    2, "RM04-PPC-2", "Próximo Protocolo — tDCS P6/FP1", "tDCS Anódica P6 / Cátodo FP1 (Làdavas et al., 2015)",
+                    "tDCS PPC", "Ânodo P6 + Cátodo FP1 (35 cm²)", "2,0 mA | 20 min", sessoes="10 sessões",
+                    efeito_esperado="+19 pts na bateria BIT", referencia="Làdavas et al. (2015) · DOI: 10.3233/RNN-140464", fase_etapa="sequencia",
+                    calc_meta={
+                        "mcid_valor": 5.0,
+                        "mcid_label": "≥ +5,0 estrelas no Teste de Cancelamento de Estrelas (BIT)",
+                        "meta_texto": "Ganho ≥ +5,0 estrelas no Teste de Cancelamento de Estrelas (Làdavas et al., 2015: +19 pts BIT)",
+                        "estudo_referencia": "Làdavas et al. (2015) — tDCS Anódica P6 / Cátodo FP1",
+                        "efeito_esperado_resumo": "+19 pontos na bateria BIT após 10 sessões",
+                    },
+                ),
+                make_chain_step(
+                    3, "RM04-PPC-3", "Próximo Protocolo (Linha Pontilhada) — tDCS Catódica P3 / Cz", "tDCS Catódica P3 / Ânodo Cz (Yi et al., 2016)",
+                    "tDCS Catódica PPC", "Cátodo P3 + Ânodo Cz (25 cm²)", "2,0 mA | 30 min", sessoes="15 sessões",
+                    efeito_esperado="+7,0 pontos no teste de cancelamento de estrelas", referencia="Yi et al. (2016) · DOI: 10.5535/arm.2016.40.2.223", linha_fluxograma="pontilhada", fase_etapa="sequencia",
+                    calc_meta={
+                        "mcid_valor": 7.0,
+                        "mcid_label": "≥ +7,0 pontos no Teste de Cancelamento de Estrelas (Yi et al., 2016)",
+                        "meta_texto": "Aumento esperado de +7,0 pontos no Teste de Cancelamento de Estrelas após 15 sessões",
+                        "estudo_referencia": "Yi et al. (2016) — tDCS Catódica P3 / Ânodo Cz",
+                        "efeito_esperado_resumo": "Aumento de +7,0 pontos no teste de cancelamento de estrelas após 15 sessões",
+                    },
+                ),
             ],
             ajuste_parametros=adj_mob_tdcs, falha_terapeutica=falha_mob_tdcs, sessoes_ajuste=sa_mob_tdcs,
             notas_clinicas="Combinar varredura visual em ortostatismo e marcha.",
@@ -1186,7 +1386,7 @@ def _build_avc_mobilidade():
                     {"id": "equilibrio", "rotulo": "Déficit de equilíbrio", "criterio": "BBS / Mini-BESTest", "descricao": "Instabilidade postural e risco de quedas.", "proxima_etapa": "alvo_mobilidade"},
                     {"id": "disfuncao_motora_mi", "rotulo": "Disfunção motora dos membros inferiores", "criterio": "FMA-LE (34 pts)", "descricao": "Comprometimento motor de MMII.", "proxima_etapa": "alvo_mobilidade"},
                     {"id": "velocidade_marcha", "rotulo": "Alteração na Marcha", "criterio": "TC10m / 10MWT", "descricao": "Redução de velocidade e cadência.", "proxima_etapa": "alvo_mobilidade"},
-                    {"id": "negligencia", "rotulo": "Heminegligência", "criterio": "Cancelamento / Catherine Bergego", "descricao": "Desatenção espacial afetando a marcha.", "protocolo_alvo": "rtms_ppc_mob"},
+                    {"id": "negligencia", "rotulo": "Heminegligência", "criterio": "Teste de Cancelamento de Estrelas (BIT)", "descricao": "Desatenção espacial afetando a marcha.", "protocolo_alvo": "rtms_ppc_mob"},
                 ],
             },
             "alvo_mobilidade": {
@@ -1247,7 +1447,7 @@ def _build_avc_mobilidade():
                     {"id": "fraqueza_tdcs", "rotulo": "Fraqueza muscular", "criterio": "MRC / FMA-LE", "descricao": "Inicia por tDCS anódica M1 MMII em Cz.", "protocolo_alvo": "tdcs_m1_mob"},
                     {"id": "equilibrio_tdcs", "rotulo": "Déficit de Equilíbrio", "criterio": "BBS / Mini-BESTest", "descricao": "Inicia por tDCS anódica M1 MMII em Cz.", "protocolo_alvo": "tdcs_m1_mob"},
                     {"id": "sensorial_tdcs_mi", "rotulo": "Disfunção sensorial do membro inferior", "criterio": "FMA-LE Sensorial", "descricao": "Inicia por tDCS anódica em S1 (CP3/CP4).", "protocolo_alvo": "tdcs_s1_mob"},
-                    {"id": "negligencia_tdcs_mi", "rotulo": "Heminegligência", "criterio": "Catherine Bergego / Cancelamento", "descricao": "Inicia por tDCS Parietal Posterior (P4/P3).", "protocolo_alvo": "tdcs_ppc_mob"},
+                    {"id": "negligencia_tdcs_mi", "rotulo": "Heminegligência", "criterio": "Teste de Cancelamento de Estrelas (BIT)", "descricao": "Inicia por tDCS Parietal Posterior (P4/P3).", "protocolo_alvo": "tdcs_ppc_mob"},
                 ],
             },
         },
@@ -1276,13 +1476,13 @@ def _build_avc_mobilidade():
         make_obs("RM03-HOTSPOT-CZ", "Regra de Aplicação: estimular M1 no hotspot via PEM por TMS de pulso único. Na ausência de PEM em MMII, usar Cz como referência e definir LMR pelo hemisfério não lesionado.", "step", categoria="neurofisiologia", etapa_ids=["alvo_mobilidade", "fase_aguda_mob"], modalidades_tipo=["rtms"], referencia_doi=PEM_GUIDE_DOI, referencia_rotulo=PEM_GUIDE_LABEL),
         make_obs("RM03-BOBINA-MMII", "Bobinas circulares ou parabólicas são mais adequadas para estimular a representação profunda dos membros inferiores em M1.", "alvo", categoria="equipamento", protocolo_ids=["velocidade_marcha", "rtms_m1_aguda"], modalidades_tipo=["rtms"]),
         make_obs("RM03-BOBINA-CEREB", "Bobinas parabólicas e duplo cone são mais indicadas para estimulação do cerebelo.", "alvo", categoria="equipamento", protocolo_ids=["equilibrio"], modalidades_tipo=["rtms"]),
-        make_obs("RM03-RPMS-MARCHA", "Abrangência Muscular (rPMS na marcha): músculos fracos (tibial anterior, transverso abdominal, multífidos) = modo intermitente (3 p 50 Hz / 5 Hz, 2 s ON / 8 s OFF, 600 p); músculos espásticos (isquiotibiais, adutores de quadril) = modo contínuo (600 p sem pausas). Bobina perpendicular com contração visível.", "stage", categoria="parametros", estagios=["alt1", "alt2"], modalidades_tipo=["rtms"]),
+        make_obs("RM03-RPMS-MARCHA", "Abrangência Muscular (rPMS na marcha): músculos fracos (tibial anterior, transverso abdominal, multífidos) = modo intermitente (3 p 50 Hz / 5 Hz, 2 s ON / 8 s OFF, 600 p); músculos espásticos (isquiotibiais, adutores de quadril) = modo contínuo (600 p sem pausas). Bobina perpendicular com contração visível.", "stage", categoria="parametros", protocolo_ids=["equilibrio", "velocidade_marcha", "rtms_m1_aguda"], estagios=["alt2"], modalidades_tipo=["rtms"]),
     ]
 
     obs_tdcs = _avc_shared_observations(
         "RM04", "o eletrodo", "mobilidade funcional", "tdcs", "", "", [],
     ) + [
-        make_obs("RM04-DELTOIDE", "Regra de Aplicação: na montagem cerebelar, o cátodo originalmente no músculo bucinador pode ser posicionado sobre o músculo deltoide direito em caso de desconforto facial.", "alvo", categoria="anatomia", protocolo_ids=["tdcs_m1_mob"], estagios=["alt1", "alt2"], modalidades_tipo=["tdcs"]),
+        make_obs("RM04-DELTOIDE", "Regra de Aplicação: na montagem cerebelar, o cátodo originalmente no músculo bucinador pode ser posicionado sobre o músculo deltoide direito em caso de desconforto facial.", "stage", categoria="anatomia", protocolo_ids=["tdcs_m1_mob"], estagios=["alt2"], modalidades_tipo=["tdcs"]),
     ]
 
     return {
@@ -1293,7 +1493,7 @@ def _build_avc_mobilidade():
             {"id": "disfuncao_motora_mi", "nome": "Disfunção motora dos membros inferiores", "instrumento_sugerido": "FMA-LE (34 pts)", "descricao": "Comprometimento motor em membros inferiores."},
             {"id": "velocidade_marcha", "nome": "Alteração na Marcha", "instrumento_sugerido": "TC10m / 10MWT", "descricao": "Redução de velocidade e cadência da marcha."},
             {"id": "sensorial_mi", "nome": "Disfunção sensorial do membro inferior", "instrumento_sugerido": "FMA-LE Sensorial (tDCS)", "descricao": "Déficit somatossensorial plantar/proprioceptivo."},
-            {"id": "negligencia", "nome": "Heminegligência", "instrumento_sugerido": "Catherine Bergego / Cancelamento", "descricao": "Heminegligência espacial impactando deslocamento."},
+            {"id": "negligencia", "nome": "Heminegligência", "instrumento_sugerido": "Teste de Cancelamento de Estrelas (BIT)", "descricao": "Heminegligência espacial impactando deslocamento."},
         ],
         "arvore_algoritmo": arvore_rtms, "arvores_por_modalidade": {"rtms": arvore_rtms, "tdcs": arvore_tdcs},
         "observacoes_contextuais": obs_rtms + obs_tdcs, "modalidades": modalidades, "tags_busca": tags,
@@ -1303,6 +1503,7 @@ def _build_avc_mobilidade():
 def _build_avc_disfagia():
     cid = "avc-disfagia"
     tags = {
+        "siglas": ["AVC", "AVE", "FOIS", "DOSS", "MASA", "SSA", "PAS"],
         "coordenadas_10_20": ["M1 Suprahioideo", "C5", "C6", "CP5", "CP6", "Cerebelo"],
         "alvos_anatomicos": ["Córtex Motor da Deglutição (2–4 cm à frente de Cz)", "Cerebelo Unilateral", "Cerebelo Bilateral", "tAVNS"],
         "sinonimos_en": ["stroke", "dysphagia", "swallowing disorder", "aspiration", "pharyngeal cortex"],
@@ -1535,10 +1736,9 @@ def _build_avc_disfagia():
         make_obs("RM07-PRE-TRIAGEM", "Atenção às contraindicações (implantes metálicos cerebrais, histórico de convulsões não controladas e implantes cocleares). Avaliar se a lesão envolve componentes corticais/subcorticais e se há alteração cognitiva ou de linguagem associada. Melhores resultados na fase aguda/subaguda (1–6 meses).", "pre", categoria="seguranca", severidade="warning"),
         make_obs("RM07-STEP-HEMISF", "Na escolha do hemisfério, considerar o tamanho da lesão cortical. A estimulação unilateral pode aumentar o drive corticobulbar bilateral; menor NIHSS e estimulação precoce são preditores positivos (Sawan et al., 2020).", "step", categoria="clinica", etapa_ids=["lesao_extensa_disf", "fator_limitante"]),
         make_obs("RM07-TBS-VANTAGEM", "Theta-Burst (TBS: iTBS/cTBS) apresenta vantagem operacional de requerer menos tempo de sessão e menor intensidade para atingir os mesmos efeitos clínicos vs. rTMS convencional.", "tec", categoria="clinica", protocolo_ids=["orofaringea", "rtms_cortical_extensa", "tempo_transito", "rtms_tronco"], modalidades_tipo=["rtms"]),
-        make_obs("RM07-PONTILHADO-TEC", "A linha tracejada nos protocolos de Ajustes representa estudos com menor força de evidência, que ainda não foram incluídos em metanálises.", "stage", categoria="evidencia", protocolo_ids=["orofaringea", "rtms_cortical_extensa", "tempo_transito", "rtms_tronco", "tdcs_disf_bi"], estagios=["alt2", "alt3", "alt4", "alt5", "alt6", "alt7"]),
         make_obs("RM07-COORD-SUPRA", "Coordenada anatômica suprahioidea: 2–4 cm à frente de Cz e 4–6 cm lateralmente.", "alvo", categoria="anatomia", protocolo_ids=["orofaringea", "rtms_cortical_extensa"], modalidades_tipo=["rtms"]),
         make_obs("RM07-COORD-CER-UNI", "Coordenada anatômica cerebelo unilateral: 1–2 cm abaixo do ínion e 3–4 cm lateralmente.", "alvo", categoria="anatomia", protocolo_ids=["tempo_transito"], modalidades_tipo=["rtms"]),
-        make_obs("RM07-COORD-CER-BI", "Coordenada anatômica cerebelo bilateral faríngeo: 2,4 cm abaixo do ínion e 4,3 cm lateralmente.", "alvo", categoria="anatomia", protocolo_ids=["rtms_tronco"], estagios=["primary", "alt1", "alt2"], modalidades_tipo=["rtms"]),
+        make_obs("RM07-COORD-CER-BI", "Coordenada anatômica cerebelo bilateral faríngeo: 2,4 cm abaixo do ínion e 4,3 cm lateralmente.", "alvo", categoria="anatomia", protocolo_ids=["rtms_tronco"], estagios=["primary"], modalidades_tipo=["rtms"]),
         make_obs("RM07-EXAMES-SCALE", "Recomenda-se realizar avaliações clínicas, escalas (FOIS/DOSS) e exames instrumentais (videodeglutograma) pré e pós-intervenção.", "scale", categoria="avaliacao"),
     ]
 
@@ -1556,6 +1756,7 @@ def _build_avc_disfagia():
 def _build_avc_afasia():
     cid = "avc-afasia"
     tags = {
+        "siglas": ["AVC", "AVE", "GFI", "MTL", "WAB", "BNT", "tsDCS"],
         "coordenadas_10_20": ["F5", "F6", "FC5", "FC6", "CP5", "CP6", "C3", "T3", "T4", "T10"],
         "alvos_anatomicos": ["Giro Frontal Inferior (Broca)", "Região Temporoparietal (Wernicke)", "M1 Esquerdo (C3)", "Cerebelo", "Medular Torácica (T10)"],
         "sinonimos_en": ["stroke", "aphasia", "broca aphasia", "non-fluent aphasia", "wernicke aphasia", "anomia", "language rehabilitation"],
@@ -1782,12 +1983,11 @@ def _build_avc_afasia():
         make_obs("RM09-PRE-IMAGEM", "Antes de iniciar qualquer protocolo de rTMS na afasia, basear a decisão em exames de imagem pertinentes (RNM com tractografia, EEG, TC), verificar dominância hemisférica (Inventário de Edimburgo) e checar contraindicações (implantes metálicos/cocleares, convulsões não controladas).", "pre", categoria="seguranca", modalidades_tipo=["rtms"], severidade="warning"),
         make_obs("RM08-PRE-MODERADORES", "Avaliar contraindicações e considerar que características clínicas individuais, parâmetros da tDCS e habilidades linguísticas basais moderam os efeitos terapêuticos.", "pre", categoria="clinica", modalidades_tipo=["tdcs"]),
         make_obs("RM09-TECIDO-VIAVEL", "A estimulação com alta frequência no hemisfério esquerdo (F5 10 Hz / CP5 10 Hz / Dual F5+CP5) é particularmente promissora em pacientes com tecido viável remanescente na imagem.", "alvo", categoria="anatomia", protocolo_ids=["expressao", "compreensao"], modalidades_tipo=["rtms"]),
-        make_obs("RM09-DUAL-ORDEM", "Na estimulação bilateral sequencial de rTMS (FC6+F6 1 Hz seguido de FC5+F5 20 Hz), realizar obrigatoriamente a inibição contralesional (1 Hz) ANTES da estimulação lesional (20 Hz).", "tec", categoria="seguranca", protocolo_ids=["expressao"], estagios=["primary", "alt2"], modalidades_tipo=["rtms"], severidade="warning"),
-        make_obs("RM08-DUAL-SIMULTANEO", "Na montagem dual bilateral de tDCS (F5/F6), considerar que a estimulação dos eletrodos ocorre de forma simultânea.", "tec", categoria="parametros", protocolo_ids=["tdcs_expressao_gfi"], modalidades_tipo=["tdcs"]),
+        make_obs("RM09-DUAL-ORDEM", "Na estimulação bilateral sequencial de rTMS (FC6+F6 1 Hz seguido de FC5+F5 20 Hz), realizar obrigatoriamente a inibição contralesional (1 Hz) ANTES da estimulação lesional (20 Hz).", "stage", categoria="seguranca", protocolo_ids=["expressao"], estagios=["alt2"], modalidades_tipo=["rtms"], severidade="warning"),
+        make_obs("RM08-DUAL-SIMULTANEO", "Na montagem dual bilateral de tDCS (F5/F6), considerar que a estimulação dos eletrodos ocorre de forma simultânea.", "stage", categoria="parametros", protocolo_ids=["tdcs_expressao_gfi"], estagios=["alt1"], modalidades_tipo=["tdcs"]),
         make_obs("RM08-LESAO-EXTENSA-INIB", "Na escolha do hemisfério, considerar o tamanho da lesão cortical: em lesões extensas envolvendo múltiplas áreas nos exames de imagem, recomenda-se a inibição do hemisfério contralateral (CP6).", "step", categoria="anatomia", etapa_ids=["fator_limitante"], modalidades_tipo=["tdcs", "rtms"]),
         make_obs("RM08-MTL-BRASIL", "Adaptação Clínica (Brasil): os artigos originais utilizam baterias internacionais de linguagem. No Brasil, recomenda-se a Bateria Montreal-Toulouse de Avaliação da Linguagem (MTL-Brasil), adaptada e validada para adultos e idosos.", "scale", categoria="avaliacao"),
         make_obs("RM09-SES-FONO", "Associar obrigatoriamente terapia fonoaudiológica estruturada conforme o microdesfecho de linguagem e a área estimulada.", "sessoes", categoria="clinica"),
-        make_obs("RM09-PONTILHADO-TEC", "Os protocolos com borda tracejada/pontilhada na seção de Ajustes (M1-E C3 e tsDCS Medular T10) representam estudos com menor força de evidência, cujo nível científico ainda não foi validado por metanálises.", "stage", categoria="evidencia", protocolo_ids=["tdcs_expressao_gfi", "tdcs_compreensao_tp", "tdcs_cerebelo_anomia"], estagios=["alt2", "alt3"]),
     ]
 
     return {

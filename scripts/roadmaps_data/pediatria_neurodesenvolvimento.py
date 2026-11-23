@@ -48,6 +48,7 @@ def _audit(nivel, resumo, just, sinais, grade, forca, dom, tol):
 def _build_pc():
     cid = "paralisia-cerebral"
     tags = {
+        "siglas": ["PC", "CP", "GMFCS", "MACS", "GMFM", "6MWT", "10MWT", "PDMS-FM", "BBT", "QUEST", "FMA", "PBS"],
         "coordenadas_10_20": ["C3", "C4", "Cz", "Fp1", "Fp2", "Inion", "Cerebelo Medial"],
         "alvos_anatomicos": ["Córtex Motor Primário (M1)", "Vértice Craniano (Cz)", "Região Cerebelar Medial (1 cm abaixo do ínion)"],
         "sinonimos_en": ["cerebral palsy", "spastic diplegia", "hemiplegic cerebral palsy", "tetraplegia", "pediatric motor rehabilitation"],
@@ -63,6 +64,7 @@ def _build_pc():
 
     scale_gmfm = make_scale("gmfm_88", "Gross Motor Function Measure (GMFM-88 Dimensões D/E + 6MWT)", "GMFM-88 / 6MWT", "aumento", "Ganho ≥ 5,0% na GMFM-88 (e evolução na velocidade/distância de marcha no 6MWT)", 0.58, placeholder="Ex: 52", min_val=0, max_val=100, mcid_valor=5.0, mcid_label="+5,0% GMFM-88 / +25% marcha")
     scale_manip = make_scale("pdms_bbt_quest", "Destreza e Função Manual (PDMS-FM / BBT / QUEST / FMA)", "PDMS-FM / BBT / QUEST", "aumento", "Ganho ≥ 11,7% na QUEST ou 14,1% no BBT (e evolução clínica em PDMS-FM / FMA-MS)", 0.56, placeholder="Ex: 38", min_val=0, max_val=100, mcid_valor=5.0, mcid_label="+11,7% QUEST / +14,1% BBT")
+    scale_fma_pc = make_scale("fma_ue", "Fugl-Meyer Assessment — Membros Superiores (FMA-MS)", "FMA-MS", "aumento", "Ganho ≥ +5,0 pontos na FMA-MS (+142,6% em Waqas et al., 2025)", 0.58, placeholder="Ex: 24", min_val=0, max_val=66, mcid_valor=5.0, mcid_label="+5,0 pontos na FMA-MS")
     scale_pbs = make_scale("pbs_estab", "Pediatric Balance Scale (PBS / Mini-BESTest / Estabilometria)", "PBS / Mini-BESTest", "aumento", "Diparesia: +11,9% PBS e -27,6% oscilação ML | Hemiparesia: até 63% equilíbrio estático", 0.55, placeholder="Ex: 32", min_val=0, max_val=56, mcid_valor=3.6, mcid_label="+11,9% na PBS")
 
     adj_pc = {"titulo": "Segurança Pediátrica, Limite de 25 Sessões e Treinamento Ativo", "tolerabilidade": "Rampa tDCS recomendada de 10 s (ajustável a sensibilidades sensoriais); pausar imediatamente se sintoma neurológico agudo.", "dose_pulsos": "5 a 20 sessões (10 para tDCS, até 20 rTMS, 1×/dia; máximo ≤ 25 sessões totais incluindo desmame). Proibido protocolo acelerado (> 1 sessão/dia); respeitar intervalo mínimo de 3–4 meses entre ciclos.", "calibracao_limiar": "Associar treinamento ativo (esteira, contensão induzida) simultâneo ou imediatamente após a estimulação (priming)."}
@@ -118,9 +120,9 @@ def _build_pc():
             tamanho_efeito=0.58, evidencia="Nível B — Waqas et al. 2025 / Zhang 2025", linha_fluxograma="solida",
             diretriz_internacional="Nível B (Zhang et al., 2025)", diretriz_ref=DIR_IFCN_TDCS_2017,
             artigo_referencia=REF_WAQAS_2025_PC, meta_analise=REF_ZHANG_2025_PC_MS,
-            mcid_valor=5.0, mcid_label="+142,6% na FMA-MS", cohen_d_valor=0.58, cohen_d_interp="Moderado",
+            mcid_valor=5.0, mcid_label="+5,0 pontos na FMA-MS", cohen_d_valor=0.58, cohen_d_interp="Moderado",
             estudo_referencia="Waqas et al. (2025)", efeito_resumo="Aumento de 142,6% na FMA-MS em 10 sessões",
-            escalas_detalhadas=[scale_manip],
+            escalas_detalhadas=[scale_fma_pc],
             cadeia_sequencial=[make_chain_step(1, "RM14-TETRA-P1", "tDCS Bilateral 2 mA (15 min/hemisfério)", "tDCS Bilateral — C3/C4 15 min/hemisfério (Waqas et al., 2025)", "tDCS Bilateral Sequencial", "C3 ou C4 + Supraorbital contralateral (25 cm²)", "2,0 mA | 15 min por hemisfério (30 min total)", sessoes="10 sessões", efeito_esperado="+142,6% FMA-MS", referencia="Waqas et al. (2025) · DOI: 10.2147/JMDH.S506784")],
             ajuste_parametros=adj_pc, falha_terapeutica=falha_pc, sessoes_ajuste=sa_pc,
             notas_clinicas="Monitorar aceitação sensorial nos dois hemisférios durante aplicação bilateral.",
@@ -272,6 +274,7 @@ def _build_pc():
 def _build_tea():
     cid = "transtorno-espectro-autista"
     tags = {
+        "siglas": ["TEA", "ASD", "CPFDL", "DLPFC", "HD-tDCS", "ATEC", "ABC", "RBS-R", "SRS-2", "FER", "GARS", "VABS", "CGI"],
         "coordenadas_10_20": ["F3", "F4", "Fp1", "Fp2", "FC1", "FC2", "CP5", "CP6", "Cerebelo Direito"],
         "alvos_anatomicos": ["CPFDL (F3/F4)", "Junção Temporoparietal Bilateral (CP5/CP6 HD-tDCS)", "Bilateral Motor/Pré-Frontal (FC1/FC2)", "Cerebelo Direito"],
         "sinonimos_en": ["autism", "autism spectrum disorder", "asd", "irritability", "repetitive behavior", "social interaction", "social communication"],
@@ -435,7 +438,7 @@ def _build_tea():
     obs_tea = [
         make_obs("RM15-PRE-NAO-PRIMEIRA-LINHA", "ELEGIBILIDADE E TRIAGEM INTEGRAL: a neuromodulação NÃO é terapia de 1ª linha no TEA. A maioria dos estudos inclui QI > 80 (alto funcionamento / leve-moderado); considerar nível de suporte (DSM-5), DI e comorbidades. Não aplicar com fontanelas abertas ou alterações craniofaciais (Guillen et al., 2023). Realizar triagem psiquiátrica/neurológica/comportamental; em epilepsia, avaliar com neurologista/EEG e, se as crises forem o limitante principal, priorizar protocolo direcionado à epilepsia (Hawas et al., 2025).", "pre", categoria="seguranca", severidade="warning"),
         make_obs("RM15-IDADE-MODALIDADE-STEP", "FAIXA ETÁRIA POR MODALIDADE: recomenda-se preferencialmente tDCS em crianças menores (≤ 5–6 anos) pela melhor tolerabilidade e segurança, e rTMS em crianças maiores, adolescentes e adultos.", "step", categoria="clinica", etapa_ids=["idade_modalidade_tea", "fator_limitante"]),
-        make_obs("RM15-EXPLORATORIO-TEC", "Evidência exploratória (estudos observacionais/relatos): mudança de alvo para junção temporoparietal CP5/CP6 ou cerebelo D e o ramo Déficits em Comunicação.", "tec", categoria="evidencia", protocolo_ids=["tea_comunicacao", "tea_repetitivos", "social"], estagios=["primary", "alt1", "alt2"]),
+        make_obs("RM15-EXPLORATORIO-TEC", "Evidência exploratória (estudo individual em linha pontilhada): o ramo Déficits em Comunicação ainda não foi consolidado por metanálises; aplicar com monitoramento próximo de comunicação funcional e tolerabilidade.", "tec", categoria="evidencia", protocolo_ids=["tea_comunicacao"], estagios=["primary"]),
         make_obs("RM15-VIGILANCIA-24H-TOL", "Monitorar aceitação tátil e auditiva durante posicionamento de eletrodos/bobina em crianças com hipersensibilidade e registrar eventos adversos no Banco NAPeN.", "tol", categoria="seguranca", referencia_doi=ADVERSE_BANK_URL, referencia_rotulo="Acessar Banco de Efeitos Adversos NAPeN", severidade="warning"),
     ]
 

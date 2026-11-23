@@ -183,6 +183,7 @@ def _audit(nivel, resumo, just, sinais, grade, forca, dom, tol):
 def _build_dor_neuropatica():
     cid = "dor-neuropatica"
     tags = {
+        "siglas": ["DN", "EM", "MS", "SDRC", "CRPS", "EVA", "VAS", "NRS", "NPSI", "BPI", "tsDCS", "rPMS", "PEP"],
         "coordenadas_10_20": ["C3", "C4", "Fp2", "M1", "SII", "C4-C5", "L1-L2"],
         "alvos_anatomicos": [
             "Córtex Motor Primário (M1)", "Córtex Somatossensorial Secundário (SII — 2 cm posterior a M1)",
@@ -363,6 +364,7 @@ def _build_dor_neuropatica():
 def _build_ataxia():
     cid = "ataxia-cerebelar"
     tags = {
+        "siglas": ["SCA", "SCA3", "AC", "SARA", "ICARS", "9HPT", "BBT", "csDCS", "ctDCS", "cbTMS", "DDK"],
         "coordenadas_10_20": ["Inion", "Cerebelo", "Vermis", "Núcleo Denteado", "T11", "C3", "C4", "Fp1", "Fp2"],
         "alvos_anatomicos": ["Córtex Cerebelar Global", "Vérmis Cerebelar (1 cm abaixo do ínion)", "Hemisférios Cerebelares (1 cm abaixo, 3 cm laterais)", "Núcleo Denteado", "Medula Espinal T11 (8 × 6 cm)"],
         "sinonimos_en": ["ataxia", "spinocerebellar ataxia", "sca", "cerebellar ataxia", "incoordination", "dysmetria", "dysarthria"],
@@ -552,10 +554,10 @@ def _build_ataxia():
     obs_ax = [
         make_obs("RM16-COORD-VERMIS", "Coordenada anatômica vérmis cerebelar: considerar 1 cm abaixo do ínion.", "alvo", categoria="anatomia", protocolo_ids=["severidade_motora", "destreza_manual", "mobilidade_funcional"]),
         make_obs("RM16-COORD-HEMISF", "Coordenada anatômica hemisférios cerebelares: considerar 1 cm abaixo do ínion e 3 cm laterais.", "alvo", categoria="anatomia", protocolo_ids=["equilibrio", "severidade_motora"]),
-        make_obs("RM16-COORD-DENTEADO", "Núcleo denteado: requer obrigatoriamente utilização de neuronavegação (3 cm lateral e 1 cm inferior ao ínion).", "alvo", categoria="equipamento", protocolo_ids=["severidade_motora"], estagios=["alt2", "alt3"], severidade="warning"),
+        make_obs("RM16-COORD-DENTEADO", "Núcleo denteado: requer obrigatoriamente utilização de neuronavegação (3 cm lateral e 1 cm inferior ao ínion).", "stage", categoria="equipamento", protocolo_ids=["severidade_motora"], estagios=["alt3"], severidade="warning"),
         make_obs("RM16-ELETRODO-T11", "Dimensão do eletrodo espinal (csDCS T11): usar eletrodo de 8 × 6 cm (48 cm²).", "alvo", categoria="equipamento", protocolo_ids=["severidade_motora", "destreza_manual", "mobilidade_funcional", "equilibrio"]),
         make_obs("RM16-FADIGA-TERAPIA", "Associar a estimulação à função que se deseja adquirir (motor/cognitivo); considerar realizar exercícios que mantenham o paciente no nível de fadiga leve-moderado.", "sessoes", categoria="clinica"),
-        make_obs("RM16-TRACEJADO-EXP", "Protocolos em linha tracejada são experimentais (evidência ainda não validada por metanálises); opções para disartria atáxica ainda carecem de estudos mais robustos.", "stage", categoria="evidencia", protocolo_ids=["severidade_motora", "disartria"], estagios=["alt1", "alt2", "alt3"]),
+        make_obs("RM16-TRACEJADO-EXP", "Observação específica para disartria atáxica: as opções de neuromodulação voltadas à fala ainda carecem de estudos controlados mais robustos; monitorar fala e diadococinesia semanalmente.", "stage", categoria="evidencia", protocolo_ids=["disartria"], estagios=["alt1"]),
         make_obs("RM16-BENZO-TEC", "Fique atento à presença de medicações que possam influenciar os efeitos da neuromodulação (ex.: benzodiazepínicos tendem a diminuir os efeitos terapêuticos).", "tec", categoria="clinica"),
         make_obs("RM16-AUTO-RELATO-SCALE", "Considerar o auto-relato do paciente em conjunto com a mudança objetiva nas escalas semanais.", "scale", categoria="avaliacao"),
         make_obs("RM16-TOL-EA", "Monitorar efeitos adversos durante e após a estimulação e registrar no Banco de Efeitos Adversos NAPeN.", "tol", categoria="seguranca", referencia_doi=ADVERSE_BANK_URL, referencia_rotulo="Acessar Banco de Efeitos Adversos NAPeN"),
@@ -578,6 +580,7 @@ def _build_ataxia():
 def _build_parkinson():
     cid = "doenca-parkinson"
     tags = {
+        "siglas": ["DP", "PD", "FOG", "AMS", "SMA", "DLPFC", "CPFDL", "UPDRS", "NFOG", "TUG", "TC6min", "tsMS"],
         "coordenadas_10_20": ["M1", "AMS (3 cm anterior)", "3 cm à frente de Cz", "F3 (DLPFC)", "T3 (tsMS)", "C7 (tsMS)", "T10-T12 (tsMS)"],
         "alvos_anatomicos": ["Área Motora Primária (M1)", "Área Motora Suplementar (AMS)", "Córtex Pré-Frontal Dorsolateral (DLPFC F3)", "Estimulação Trans-Espinal (tsMS T3/C7/T10-T12)"],
         "sinonimos_en": ["parkinson", "parkinson's disease", "pd", "freezing of gait", "fog", "bradykinesia", "rigidity", "levodopa-induced dyskinesia"],
@@ -804,7 +807,6 @@ def _build_parkinson():
 
     obs_pd = [
         make_obs("RM17-PRE-CONTRA", "Checar contraindicações absolutas (implantes metálicos na área de estimulação e epilepsia não controlada). Pacientes com fenótipo rígido-acinético têm melhor prognóstico; se houver discinesia induzida por levodopa ou freezing, priorizar protocolos voltados a esses sintomas.", "pre", categoria="clinica", severidade="warning"),
-        make_obs("RM17-EXPLORATORIO-TEC", "Protocolos com borda pontilhada e opções da Seção de Ajustes (tsMS T3, C7 e T10-T12) representam base científica exploratória cujo nível de evidência ainda não foi validado por metanálises.", "stage", categoria="evidencia", protocolo_ids=["funcao_global", "dp_ams", "dp_dlpfc", "fog", "mobilidade"], estagios=["alt1", "alt2", "alt3", "alt4", "alt5", "alt6"]),
         make_obs("RM17-CONTRALAT-STAR", "Regra de Aplicação: iniciar a estimulação em M1 pelo hemisfério CONTRALATERAL ao lado mais comprometido do paciente.", "alvo", categoria="anatomia", protocolo_ids=["fog"]),
         make_obs("RM17-CZ-HASH", "Regra de Aplicação: caso não seja possível localizar o hotspot do abdutor do hálux na AMS, considerar 3 cm à frente de Cz. Utilizar bobina circular para áreas motoras de MMII e AMS.", "alvo", categoria="anatomia", protocolo_ids=["funcao_global", "dp_ams", "fog", "mobilidade"]),
         make_obs("RM17-CEFALEIA-TOL", "Cefaleia é o efeito adverso mais frequente durante/após a estimulação. Registrar ocorrências no Banco de Efeitos Adversos NAPeN.", "tol", categoria="seguranca", referencia_doi=ADVERSE_BANK_URL, referencia_rotulo="Acessar Banco de Efeitos Adversos NAPeN"),

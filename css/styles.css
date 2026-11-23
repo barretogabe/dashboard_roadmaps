@@ -3937,5 +3937,380 @@ body {
   border-color: #EF4444;
 }
 
+/* ==========================================================================
+   Links DOI Clicáveis Universais & Badge de Sigla na Busca
+   ========================================================================== */
+.doi-inline-link {
+  color: var(--napen-teal-dark);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  word-break: break-word;
+  transition: color 0.15s ease;
+}
+
+.doi-inline-link:hover,
+.doi-inline-link:focus-visible {
+  color: var(--napen-navy);
+}
+
+.search-res-acronym-pill {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 1px 6px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--napen-teal-dark);
+  background-color: var(--napen-teal-soft);
+  border: 1px solid var(--napen-teal-bar);
+  border-radius: 3px;
+  vertical-align: middle;
+}
+
+/* ==========================================================================
+   Seletor de Protocolo Avaliado na Calculadora (Cadeias Multi-Estágio)
+   ========================================================================== */
+.calc-stage-selector-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px 14px;
+  margin-bottom: 14px;
+  background-color: #F4F8F9;
+  border: 1px solid var(--border-subtle);
+  border-left: 3px solid var(--napen-teal-bar);
+  border-radius: 4px;
+}
+
+.calc-stage-selector-label {
+  font-size: 0.74rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--napen-navy);
+}
+
+.calc-stage-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.calc-stage-btn {
+  appearance: none;
+  font-family: var(--font-main);
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: var(--napen-navy);
+  background-color: #FFFFFF;
+  border: 1px solid var(--border-subtle);
+  border-radius: 3px;
+  padding: 6px 10px;
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 0.15s ease, background-color 0.15s ease, color 0.15s ease;
+}
+
+.calc-stage-btn:hover {
+  border-color: var(--napen-teal-bar);
+  background-color: var(--napen-teal-soft);
+}
+
+.calc-stage-btn.is-dotted {
+  border-style: dashed;
+}
+
+.calc-stage-btn.is-ajustes {
+  border-color: #D97706;
+  color: #92400E;
+}
+
+.calc-stage-btn.active {
+  background-color: var(--napen-navy);
+  border-color: var(--napen-navy);
+  color: #FFFFFF;
+}
+
+.calc-stage-btn.is-ajustes.active {
+  background-color: #B45309;
+  border-color: #B45309;
+  color: #FFFFFF;
+}
+
+/* ==========================================================================
+   Painel de Continuidade Clínica Amigável (Busca Instantânea + Cards Clicáveis)
+   ========================================================================== */
+.home-cont-search-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.home-cont-search-box {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background-color: #FFFFFF;
+  border: 1.5px solid var(--border-subtle);
+  border-radius: 4px;
+  padding: 0 10px;
+  transition: border-color 0.15s ease;
+}
+
+.home-cont-search-box:focus-within {
+  border-color: var(--napen-teal-bar);
+}
+
+.home-cont-search-box .search-icon-svg {
+  display: inline-flex;
+  align-items: center;
+  color: var(--text-muted);
+  margin-right: 8px;
+  flex-shrink: 0;
+}
+
+.home-cont-search-input {
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: var(--font-main);
+  font-size: 0.86rem;
+  color: var(--text-main);
+  padding: 10px 4px;
+}
+
+.home-cont-search-clear {
+  appearance: none;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  font-weight: 700;
+  padding: 4px 8px;
+  cursor: pointer;
+  border-radius: 3px;
+}
+
+.home-cont-search-clear:hover {
+  color: var(--napen-navy);
+  background-color: var(--bg-soft);
+}
+
+.home-cont-acronym-hint {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  font-size: 0.80rem;
+  color: var(--napen-navy);
+  background-color: var(--napen-teal-soft);
+  border: 1px solid var(--napen-teal-bar);
+  border-radius: 4px;
+  padding: 6px 10px;
+}
+
+.home-cont-acronym-tag {
+  display: inline-block;
+  padding: 1px 6px;
+  font-size: 0.70rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #FFFFFF;
+  background-color: var(--napen-teal-dark);
+  border-radius: 3px;
+}
+
+.home-cont-direct-matches {
+  background-color: #F4F8F9;
+  border: 1px solid var(--napen-teal-bar);
+  border-radius: 4px;
+  padding: 10px 12px;
+}
+
+.home-cont-direct-title {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--napen-navy);
+  margin-bottom: 8px;
+}
+
+.home-cont-step-block {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.home-cont-step-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.home-cont-step-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #FFFFFF;
+  background-color: var(--napen-navy);
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+.home-cont-cards-grid {
+  display: grid;
+  gap: 8px;
+}
+
+.home-cont-cond-grid {
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+}
+
+.home-cont-mod-grid {
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+
+.home-cont-prot-grid {
+  grid-template-columns: repeat(auto-fill, minmax(245px, 1fr));
+}
+
+.home-cont-stopped-grid {
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+}
+
+.home-cont-direct-grid {
+  grid-template-columns: repeat(auto-fill, minmax(245px, 1fr));
+}
+
+.home-cont-card,
+.home-cont-direct-card {
+  width: 100%;
+  min-width: 0;
+  align-items: flex-start;
+  text-align: left;
+  padding: 10px 12px;
+  gap: 4px;
+}
+
+.home-cont-card-top {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  width: 100%;
+}
+
+.home-cont-card-acronym {
+  display: inline-block;
+  padding: 1px 6px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--napen-teal-dark);
+  background-color: var(--napen-teal-soft);
+  border: 1px solid var(--napen-teal-bar);
+  border-radius: 3px;
+}
+
+.home-cont-card-acronym.is-ajustes {
+  color: #92400E;
+  background-color: #FEF3C7;
+  border-color: #F59E0B;
+}
+
+.btn-cascade-choice.active .home-cont-card-acronym {
+  color: #FFFFFF;
+  background-color: rgba(255, 255, 255, 0.16);
+  border-color: rgba(255, 255, 255, 0.35);
+}
+
+.home-cont-card-meta {
+  font-size: 0.69rem;
+  font-weight: 600;
+  color: var(--text-faint);
+  line-height: 1.25;
+}
+
+.btn-cascade-choice.active .home-cont-card-meta {
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.home-cont-card-title {
+  font-size: 0.83rem;
+  font-weight: 700;
+  line-height: 1.32;
+  color: inherit;
+}
+
+.home-cont-match-sub {
+  color: var(--napen-teal-dark);
+  font-weight: 600;
+}
+
+.btn-cascade-choice.active .home-cont-match-sub {
+  color: rgba(255, 255, 255, 0.90);
+}
+
+.btn-cascade-choice.is-stopped-dotted {
+  border-style: dashed;
+}
+
+.btn-cascade-choice.is-stopped-ajustes:not(.active) {
+  border-color: #D97706;
+  background-color: #FFFBEB;
+}
+
+.home-cont-empty-msg {
+  grid-column: 1 / -1;
+  padding: 12px 14px;
+  font-size: 0.84rem;
+  color: var(--text-muted);
+  background-color: #FFFFFF;
+  border: 1px dashed var(--border-subtle);
+  border-radius: 4px;
+}
+
+/* Barra interna compacta de continuidade (Cards/Chips planos sem <select>) */
+.cont-inline-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.cont-inline-group-wide {
+  flex: 1 1 100%;
+}
+
+.cont-inline-cards-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.cont-inline-choice {
+  text-align: left;
+  font-size: 0.76rem;
+  padding: 6px 10px;
+}
+
+@media (max-width: 640px) {
+  .home-cont-cond-grid,
+  .home-cont-mod-grid,
+  .home-cont-prot-grid,
+  .home-cont-stopped-grid,
+  .home-cont-direct-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 
 

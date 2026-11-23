@@ -23,7 +23,11 @@ document.addEventListener('DOMContentLoaded', () => {
     therapeuticStage: 'primary', // 'primary' | 'alt1' | 'alt2' | 'failure'
     homeEntryMode: 'new', // 'new' | 'returning'
     homeSelectedConditionId: null,
-    homeSelectedModality: 'rtms'
+    homeSelectedModality: 'rtms',
+    homeSelectedProtocolKey: null,
+    homeSelectedPrimaryKey: null,
+    homeStoppedStage: 'primary',
+    homeSearchQuery: ''
   };
 
   const eamState = {
@@ -53,11 +57,18 @@ document.addEventListener('DOMContentLoaded', () => {
   const btnHomeEntryNew = document.getElementById('btnHomeEntryNew');
   const btnHomeEntryReturning = document.getElementById('btnHomeEntryReturning');
   const homeContinuityQuickPanel = document.getElementById('homeContinuityQuickPanel');
-  const homeContCondition = document.getElementById('homeContCondition');
+  const homeContSearchInput = document.getElementById('homeContSearchInput');
+  const homeContSearchClearBtn = document.getElementById('homeContSearchClearBtn');
+  const homeContAcronymHint = document.getElementById('homeContAcronymHint');
+  const homeContDirectMatches = document.getElementById('homeContDirectMatches');
+  const homeContConditionGrid = document.getElementById('homeContConditionGrid');
   const homeContModalityWrap = document.getElementById('homeContModalityWrap');
-  const homeContModality = document.getElementById('homeContModality');
-  const homeContProtocol = document.getElementById('homeContProtocol');
-  const homeContStoppedProtocol = document.getElementById('homeContStoppedProtocol');
+  const homeContModalityGrid = document.getElementById('homeContModalityGrid');
+  const homeContProtStepNum = document.getElementById('homeContProtStepNum');
+  const homeContProtocolGrid = document.getElementById('homeContProtocolGrid');
+  const homeContStoppedStepNum = document.getElementById('homeContStoppedStepNum');
+  const homeContStoppedWrap = document.getElementById('homeContStoppedWrap');
+  const homeContStoppedGrid = document.getElementById('homeContStoppedGrid');
   const homeContStageShortcuts = document.getElementById('homeContStageShortcuts');
 
   const algorithmActiveContainer = document.getElementById('algorithmActiveContainer');
@@ -143,6 +154,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Calculadora Dual (Clínica & Comparador de Efeito + Tolerabilidade)
   const dualCalcContainer = document.getElementById('dualCalcContainer');
+  const calcStageSelectorBar = document.getElementById('calcStageSelectorBar');
+  const calcStageButtons = document.getElementById('calcStageButtons');
   const calcScaleTabs = document.getElementById('calcScaleTabs');
   const calcEamBox = document.getElementById('calcEamBox');
   const eamGroupBase = document.getElementById('eamGroupBase');
@@ -407,6 +420,14 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
 
+    if (opts.calcStage) {
+      engine.setActiveCalcStage(opts.calcStage);
+    } else if (targetStage && /^alt\d+$/.test(targetStage)) {
+      engine.setActiveCalcStage(targetStage);
+    } else {
+      engine.setActiveCalcStage('primary');
+    }
+
     if (targetEntryMode === 'returning' && targetStage !== 'evaluation' && targetStage !== 'primary') {
       state.therapeuticStage = targetStage;
       engine.setOutcome('danger');
@@ -475,7 +496,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ==========================================================================
-  // 2a. Helpers Compartilhados de Observações Contextuais & Árvore Dinâmica
+  // 2a. Helpers Compartilhados de Observações, Links DOI & Busca por Siglas
   // ==========================================================================
   function escHtml(str) {
     return String(str || '')
@@ -485,12 +506,373 @@ document.addEventListener('DOMContentLoaded', () => {
       .replace(/"/g, '&quot;');
   }
 
+  function linkifyDoisHtml(rawText) {
+    if (!rawText) return '';
+    const escaped = escHtml(rawText);
+    return escaped.replace(
+      /(?:DOI:\s*)?(?:https?:\/\/(?:dx\.)?doi\.org\/)?(10\.\d{4,9}\/[^\s<>"',;\]\u00A0]+)/gi,
+      (_match, rawDoi) => {
+        let cleanDoi = rawDoi;
+        let trailing = '';
+        while (/[.,;:]$/.test(cleanDoi)) {
+          trailing = cleanDoi.slice(-1) + trailing;
+          cleanDoi = cleanDoi.slice(0, -1);
+        }
+        while (cleanDoi.endsWith(')')) {
+          const opens = (cleanDoi.match(/\(/g) || []).length;
+          const closes = (cleanDoi.match(/\)/g) || []).length;
+          if (closes > opens) {
+            trailing = ')' + trailing;
+            cleanDoi = cleanDoi.slice(0, -1);
+          } else {
+            break;
+          }
+        }
+        const url = `https://doi.org/${cleanDoi}`;
+        return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="doi-inline-link" title="Abrir artigo científico via DOI (${cleanDoi})">DOI: ${cleanDoi} ↗</a>${trailing}`;
+      }
+    );
+  }
+
   function formatObservationTextHtml(rawText) {
     const match = String(rawText || '').match(
       /^(Otimização de Dose|Regra de Aplicação|Ajuste de Segurança|Adaptação Clínica(?:\s*\([^)]+\))?|Abrangência Muscular(?:\s*\([^)]+\))?|Reserva Legal(?:\s*\([^)]+\))?):\s*(.+)$/i
     );
-    if (!match) return escHtml(rawText);
-    return `<span class="obs-semantic-tag">${escHtml(match[1])}</span>${escHtml(match[2])}`;
+    if (!match) return linkifyDoisHtml(rawText);
+    return `<span class="obs-semantic-tag">${escHtml(match[1])}</span>${linkifyDoisHtml(match[2])}`;
+  }
+
+  function normalizeSearchStr(str) {
+    return String(str || '')
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .toLowerCase()
+      .trim();
+  }
+
+  const CONDITION_ACRONYM_BADGE = {
+    'avc-membro-superior': 'AVC · MS',
+    'avc-mobilidade': 'AVC · MI',
+    'avc-disfagia': 'AVC · Disfagia',
+    'avc-afasia': 'AVC · Afasia',
+    'dor-neuropatica': 'DN · EM',
+    'ataxia-cerebelar': 'SCA · Ataxia',
+    'doenca-parkinson': 'DP · FOG',
+    'depressao-maior': 'TDM · DRT',
+    'ansiedade-generalizada': 'TAG',
+    'alzheimer-ccl': 'DA · CCL',
+    'tept': 'TEPT',
+    'paralisia-cerebral': 'PC',
+    'transtorno-espectro-autista': 'TEA'
+  };
+
+  const CLINICAL_ACRONYM_GLOSSARY = [
+    { sigla: 'AVC', extenso: 'Acidente Vascular Cerebral', condIds: ['avc-membro-superior', 'avc-mobilidade', 'avc-disfagia', 'avc-afasia'], terms: ['acidente vascular cerebral'] },
+    { sigla: 'AVE', extenso: 'Acidente Vascular Encefálico (Acidente Vascular Cerebral)', condIds: ['avc-membro-superior', 'avc-mobilidade', 'avc-disfagia', 'avc-afasia'], terms: ['acidente vascular cerebral'] },
+    { sigla: 'MS', extenso: 'Membro Superior (Acidente Vascular Cerebral — Membro Superior)', condIds: ['avc-membro-superior'], terms: ['membro superior'] },
+    { sigla: 'MMSS', extenso: 'Membros Superiores (AVC Membro Superior e Paralisia Cerebral)', condIds: ['avc-membro-superior', 'paralisia-cerebral'], terms: ['membro superior'] },
+    { sigla: 'MI', extenso: 'Membro Inferior / Mobilidade e Marcha (AVC)', condIds: ['avc-mobilidade'], terms: ['mobilidade', 'marcha'] },
+    { sigla: 'MMII', extenso: 'Membros Inferiores / Mobilidade e Marcha', condIds: ['avc-mobilidade', 'doenca-parkinson', 'paralisia-cerebral'], terms: ['membros inferiores', 'mobilidade'] },
+    { sigla: 'TAG', extenso: 'Transtorno de Ansiedade Generalizada', condIds: ['ansiedade-generalizada'], terms: ['ansiedade generalizada'] },
+    { sigla: 'GAD', extenso: 'Generalized Anxiety Disorder (Transtorno de Ansiedade Generalizada)', condIds: ['ansiedade-generalizada'], terms: ['ansiedade generalizada'] },
+    { sigla: 'TEPT', extenso: 'Transtorno de Estresse Pós-Traumático', condIds: ['tept'], terms: ['estresse pos-traumatico'] },
+    { sigla: 'PTSD', extenso: 'Post-Traumatic Stress Disorder (Transtorno de Estresse Pós-Traumático)', condIds: ['tept'], terms: ['estresse pos-traumatico'] },
+    { sigla: 'TEA', extenso: 'Transtorno do Espectro Autista', condIds: ['transtorno-espectro-autista'], terms: ['espectro autista'] },
+    { sigla: 'ASD', extenso: 'Autism Spectrum Disorder (Transtorno do Espectro Autista)', condIds: ['transtorno-espectro-autista'], terms: ['espectro autista'] },
+    { sigla: 'PC', extenso: 'Paralisia Cerebral', condIds: ['paralisia-cerebral'], terms: ['paralisia cerebral'] },
+    { sigla: 'CP', extenso: 'Cerebral Palsy (Paralisia Cerebral)', condIds: ['paralisia-cerebral'], terms: ['paralisia cerebral'] },
+    { sigla: 'DP', extenso: 'Doença de Parkinson', condIds: ['doenca-parkinson'], terms: ['parkinson'] },
+    { sigla: 'PD', extenso: "Parkinson's Disease (Doença de Parkinson)", condIds: ['doenca-parkinson'], terms: ['parkinson'] },
+    { sigla: 'FOG', extenso: 'Freezing of Gait (Congelamento da Marcha — Doença de Parkinson)', condIds: ['doenca-parkinson'], terms: ['freezing', 'congelamento'] },
+    { sigla: 'DA', extenso: 'Doença de Alzheimer', condIds: ['alzheimer-ccl'], terms: ['alzheimer'] },
+    { sigla: 'AD', extenso: "Alzheimer's Disease (Doença de Alzheimer)", condIds: ['alzheimer-ccl'], terms: ['alzheimer'] },
+    { sigla: 'CCL', extenso: 'Declínio Cognitivo Leve', condIds: ['alzheimer-ccl'], terms: ['declinio cognitivo leve'] },
+    { sigla: 'MCI', extenso: 'Mild Cognitive Impairment (Declínio Cognitivo Leve)', condIds: ['alzheimer-ccl'], terms: ['declinio cognitivo leve'] },
+    { sigla: 'TDM', extenso: 'Transtorno Depressivo Maior (Depressão Maior)', condIds: ['depressao-maior'], terms: ['depressao maior'] },
+    { sigla: 'DM', extenso: 'Depressão Maior (Transtorno Depressivo Maior)', condIds: ['depressao-maior'], terms: ['depressao maior'] },
+    { sigla: 'MDD', extenso: 'Major Depressive Disorder (Transtorno Depressivo Maior)', condIds: ['depressao-maior'], terms: ['depressao maior'] },
+    { sigla: 'DRT', extenso: 'Depressão Resistente ao Tratamento', condIds: ['depressao-maior'], terms: ['depressao'] },
+    { sigla: 'TRD', extenso: 'Treatment-Resistant Depression (Depressão Resistente)', condIds: ['depressao-maior'], terms: ['depressao'] },
+    { sigla: 'DN', extenso: 'Dor Neuropática Crônica', condIds: ['dor-neuropatica'], terms: ['dor neuropatica'] },
+    { sigla: 'EM', extenso: 'Esclerose Múltipla (Dor Neuropática na Esclerose Múltipla)', condIds: ['dor-neuropatica'], terms: ['esclerose multipla'] },
+    { sigla: 'SDRC', extenso: 'Síndrome da Dor Regional Complexa (Dor Neuropática Crônica)', condIds: ['dor-neuropatica'], terms: ['dor neuropatica'] },
+    { sigla: 'SCA', extenso: 'Ataxia Espinocerebelar (Ataxia Cerebelar)', condIds: ['ataxia-cerebelar'], terms: ['ataxia'] },
+    { sigla: 'AC', extenso: 'Ataxia Cerebelar', condIds: ['ataxia-cerebelar'], terms: ['ataxia'] },
+    { sigla: 'EMT', extenso: 'Estimulação Magnética Transcraniana (rTMS)', terms: ['rtms', 'itbs', 'ctbs'] },
+    { sigla: 'EMTR', extenso: 'Estimulação Magnética Transcraniana Repetitiva (rTMS)', terms: ['rtms'] },
+    { sigla: 'RTMS', extenso: 'Estimulação Magnética Transcraniana Repetitiva (rTMS)', terms: ['rtms'] },
+    { sigla: 'ETCC', extenso: 'Estimulação Transcraniana por Corrente Contínua (tDCS)', terms: ['tdcs'] },
+    { sigla: 'TDCS', extenso: 'Estimulação Transcraniana por Corrente Contínua (tDCS)', terms: ['tdcs'] },
+    { sigla: 'ITBS', extenso: 'Estimulação Theta Burst Intermitente (iTBS)', terms: ['itbs'] },
+    { sigla: 'CTBS', extenso: 'Estimulação Theta Burst Contínua (cTBS)', terms: ['ctbs'] },
+    { sigla: 'RPMS', extenso: 'Estimulação Magnética Periférica Repetitiva (rPMS)', terms: ['rpms'] },
+    { sigla: 'TAVNS', extenso: 'Estimulação Transcutânea Auricular do Nervo Vago (taVNS)', terms: ['tavns'] },
+    { sigla: 'TSDCS', extenso: 'Estimulação Espinal por Corrente Contínua (tsDCS)', terms: ['tsdcs'] },
+    { sigla: 'TSMS', extenso: 'Estimulação Magnética Trans-Espinal (tsMS)', terms: ['tsms'] },
+    { sigla: 'CSDCS', extenso: 'Estimulação Cerebelo-Espinal por Corrente Contínua (csDCS)', terms: ['csdcs'] },
+    { sigla: 'CTDCS', extenso: 'Estimulação Cerebelar por Corrente Contínua (ctDCS)', terms: ['ctdcs'] },
+    { sigla: 'PEM', extenso: 'Potencial Evocado Motor', condIds: ['avc-membro-superior', 'avc-mobilidade'], terms: ['pem', 'potencial evocado'] },
+    { sigla: 'MEP', extenso: 'Motor Evoked Potential (Potencial Evocado Motor)', condIds: ['avc-membro-superior', 'avc-mobilidade'], terms: ['pem'] },
+    { sigla: 'LMR', extenso: 'Limiar Motor de Repouso', terms: ['lmr'] },
+    { sigla: 'LMA', extenso: 'Limiar Motor Ativo', terms: ['lma'] },
+    { sigla: 'CPFDL', extenso: 'Córtex Pré-Frontal Dorsolateral (DLPFC — F3/F4)', terms: ['dlpfc', 'cpfdl', 'pre-frontal dorsolateral'] },
+    { sigla: 'DLPFC', extenso: 'Córtex Pré-Frontal Dorsolateral (CPFDL — F3/F4)', terms: ['dlpfc', 'cpfdl', 'pre-frontal dorsolateral'] },
+    { sigla: 'AMS', extenso: 'Área Motora Suplementar (SMA)', condIds: ['doenca-parkinson'], terms: ['area motora suplementar', 'ams'] },
+    { sigla: 'SMA', extenso: 'Supplementary Motor Area (Área Motora Suplementar)', condIds: ['doenca-parkinson'], terms: ['area motora suplementar', 'ams'] },
+    { sigla: 'PPC', extenso: 'Córtex Parietal Posterior (P3/P4 — Heminegligência)', condIds: ['avc-membro-superior', 'avc-mobilidade'], terms: ['parietal posterior', 'ppc'] },
+    { sigla: 'GFI', extenso: 'Giro Frontal Inferior (Área de Broca — F5/F6)', condIds: ['avc-afasia'], terms: ['giro frontal inferior', 'gfi'] },
+    { sigla: 'S1', extenso: 'Córtex Somatossensorial Primário (3 cm posterior a C3/C4)', condIds: ['avc-membro-superior', 'avc-mobilidade'], terms: ['somatossensorial', 's1'] },
+    { sigla: 'SCT', extenso: 'Star Cancellation Test (Teste de Cancelamento de Estrelas)', condIds: ['avc-membro-superior', 'avc-mobilidade'], terms: ['cancelamento de estrelas', 'heminegligencia'] },
+    { sigla: 'BIT', extenso: 'Behavioral Inattention Test (Teste de Cancelamento de Estrelas)', condIds: ['avc-membro-superior', 'avc-mobilidade'], terms: ['cancelamento de estrelas', 'bit'] },
+    { sigla: 'EAM', extenso: 'Escala de Ashworth Modificada (Espasticidade)', condIds: ['avc-membro-superior'], terms: ['ashworth', 'eam'] },
+    { sigla: 'FMA', extenso: 'Fugl-Meyer Assessment (Avaliação Motora e Sensorial)', condIds: ['avc-membro-superior', 'avc-mobilidade', 'paralisia-cerebral'], terms: ['fugl-meyer', 'fma'] },
+    { sigla: 'MRC', extenso: 'Medical Research Council (Força Muscular)', condIds: ['avc-membro-superior', 'avc-mobilidade'], terms: ['mrc'] },
+    { sigla: 'BBS', extenso: 'Escala de Equilíbrio de Berg (Berg Balance Scale)', condIds: ['avc-mobilidade', 'ataxia-cerebelar'], terms: ['berg', 'bbs'] },
+    { sigla: 'SARA', extenso: 'Scale for the Assessment and Rating of Ataxia', condIds: ['ataxia-cerebelar'], terms: ['sara'] },
+    { sigla: 'ICARS', extenso: 'International Cooperative Ataxia Rating Scale', condIds: ['ataxia-cerebelar'], terms: ['icars'] },
+    { sigla: 'FOIS', extenso: 'Functional Oral Intake Scale (Disfagia)', condIds: ['avc-disfagia'], terms: ['fois'] },
+    { sigla: 'DOSS', extenso: 'Dysphagia Outcome and Severity Scale (Disfagia)', condIds: ['avc-disfagia'], terms: ['doss'] },
+    { sigla: 'MTL', extenso: 'Bateria Montreal-Toulouse de Avaliação da Linguagem (MTL-Brasil)', condIds: ['avc-afasia'], terms: ['mtl'] },
+    { sigla: 'WAB', extenso: 'Western Aphasia Battery (Afasia)', condIds: ['avc-afasia'], terms: ['wab'] },
+    { sigla: 'UPDRS', extenso: 'MDS-UPDRS Seção III (Doença de Parkinson)', condIds: ['doenca-parkinson'], terms: ['updrs'] },
+    { sigla: 'HDRS', extenso: 'Hamilton Depression Rating Scale (Depressão Maior)', condIds: ['depressao-maior', 'ansiedade-generalizada'], terms: ['hdrs'] },
+    { sigla: 'MADRS', extenso: 'Montgomery-Åsberg Depression Rating Scale', condIds: ['depressao-maior'], terms: ['madrs'] },
+    { sigla: 'PSQI', extenso: 'Índice de Qualidade do Sono de Pittsburgh (PSQI)', condIds: ['ansiedade-generalizada'], terms: ['psqi'] },
+    { sigla: 'MEEM', extenso: 'Mini-Exame do Estado Mental (MMSE)', condIds: ['alzheimer-ccl'], terms: ['mmse', 'meem'] },
+    { sigla: 'MMSE', extenso: 'Mini-Mental State Examination (MEEM)', condIds: ['alzheimer-ccl'], terms: ['mmse', 'meem'] },
+    { sigla: 'MOCA', extenso: 'Montreal Cognitive Assessment (MoCA)', condIds: ['alzheimer-ccl'], terms: ['moca'] },
+    { sigla: 'GMFM', extenso: 'Gross Motor Function Measure (Paralisia Cerebral)', condIds: ['paralisia-cerebral'], terms: ['gmfm'] }
+  ];
+
+  function findGlossaryMatches(qNorm) {
+    if (!qNorm || qNorm.length < 2) return [];
+    const exact = CLINICAL_ACRONYM_GLOSSARY.filter(g => normalizeSearchStr(g.sigla) === qNorm);
+    if (exact.length > 0) return exact;
+    return CLINICAL_ACRONYM_GLOSSARY.filter(g => {
+      const sNorm = normalizeSearchStr(g.sigla);
+      const eNorm = normalizeSearchStr(g.extenso);
+      return (qNorm.length >= 2 && sNorm.startsWith(qNorm)) || (qNorm.length >= 3 && eNorm.includes(qNorm));
+    });
+  }
+
+  function searchPlatformCatalog(rawQuery) {
+    const qNorm = normalizeSearchStr(rawQuery);
+    if (!qNorm) return { conditions: [], directProtocols: [], glossaryHits: [] };
+
+    const glossaryHits = findGlossaryMatches(qNorm);
+    const expandedTerms = new Set([qNorm]);
+    const glossaryCondMap = new Map();
+    glossaryHits.forEach(g => {
+      (g.terms || []).forEach(t => expandedTerms.add(normalizeSearchStr(t)));
+      (g.condIds || []).forEach(cid => {
+        if (!glossaryCondMap.has(cid)) glossaryCondMap.set(cid, g);
+      });
+    });
+
+    const matchesWithReason = [];
+    const directProtocols = [];
+
+    (data.condicoes || []).forEach(c => {
+      let matched = false;
+      let matchReason = '';
+      let priority = 10;
+
+      const cTitleNorm = normalizeSearchStr(c.condicao);
+      const cEixoNorm = normalizeSearchStr(c.eixo);
+      const tags = c.tags_busca || {};
+
+      // 0. Sigla oficial no Glossário Clínico (ex: AVC -> Acidente Vascular Cerebral)
+      if (glossaryCondMap.has(c.id)) {
+        const g = glossaryCondMap.get(c.id);
+        matched = true;
+        priority = 1;
+        matchReason = `Sigla: ${g.sigla} ➔ ${g.extenso}`;
+      }
+
+      // 1. Siglas explícitas da condição (tags.siglas)
+      if (!matched && Array.isArray(tags.siglas)) {
+        const foundSigla = tags.siglas.find(s => {
+          const sn = normalizeSearchStr(s);
+          return sn === qNorm || (qNorm.length >= 2 && sn.startsWith(qNorm));
+        });
+        if (foundSigla) {
+          matched = true;
+          priority = 2;
+          matchReason = `Sigla: ${foundSigla} ➔ ${c.condicao}`;
+        }
+      }
+
+      // 2. Nome ou eixo principal (normalizado sem acentos)
+      if (!matched && (cTitleNorm.includes(qNorm) || cEixoNorm.includes(qNorm))) {
+        matched = true;
+        priority = 3;
+      }
+
+      // 3. Coordenadas 10-20
+      if (!matched && Array.isArray(tags.coordenadas_10_20)) {
+        const foundCoord = tags.coordenadas_10_20.find(coord => {
+          const cn = normalizeSearchStr(coord);
+          return cn === qNorm || cn.startsWith(qNorm);
+        });
+        if (foundCoord) {
+          matched = true;
+          priority = 4;
+          matchReason = `Sistema 10-20: ${foundCoord} ➔ ${c.modalidades ? Object.values(c.modalidades)[0]?.alvo || 'Alvo Cortical' : ''}`;
+        }
+      }
+
+      // 4. Alvos Anatômicos (incluindo termos expandidos do glossário ex.: CPFDL -> DLPFC)
+      if (!matched && Array.isArray(tags.alvos_anatomicos)) {
+        const foundAlvo = tags.alvos_anatomicos.find(a => {
+          const an = normalizeSearchStr(a);
+          return Array.from(expandedTerms).some(t => an.includes(t));
+        });
+        if (foundAlvo) {
+          matched = true;
+          priority = 5;
+          const gHit = glossaryHits[0];
+          matchReason = gHit && normalizeSearchStr(gHit.sigla) === qNorm
+            ? `Sigla: ${gHit.sigla} ➔ ${gHit.extenso} (${foundAlvo})`
+            : `Alvo Anatômico: ${foundAlvo}`;
+        }
+      }
+
+      // 5. Técnicas (tags.tecnicas — incluindo EMT->rTMS, ETCC->tDCS)
+      if (!matched && Array.isArray(tags.tecnicas)) {
+        const foundTec = tags.tecnicas.find(tec => {
+          const tn = normalizeSearchStr(tec);
+          return Array.from(expandedTerms).some(t => tn.includes(t));
+        });
+        if (foundTec) {
+          matched = true;
+          priority = 5;
+          const gHit = glossaryHits[0];
+          matchReason = gHit && normalizeSearchStr(gHit.sigla) === qNorm
+            ? `Sigla: ${gHit.sigla} ➔ ${gHit.extenso} (${foundTec})`
+            : `Técnica: ${foundTec}`;
+        }
+      }
+
+      // 6. Escalas Clínicas
+      if (!matched && Array.isArray(tags.escalas)) {
+        const foundScale = tags.escalas.find(s => {
+          const sn = normalizeSearchStr(s);
+          return Array.from(expandedTerms).some(t => sn.includes(t) || (t.length >= 3 && t.includes(sn)));
+        });
+        if (foundScale) {
+          matched = true;
+          priority = 6;
+          matchReason = `Escala Clínica: ${foundScale}`;
+        }
+      }
+
+      // 7. Sinônimos em Inglês
+      if (!matched && Array.isArray(tags.sinonimos_en)) {
+        const foundEn = tags.sinonimos_en.find(s => {
+          const sn = normalizeSearchStr(s);
+          return sn.includes(qNorm) || (qNorm.length >= 3 && qNorm.includes(sn));
+        });
+        if (foundEn) {
+          matched = true;
+          priority = 6;
+          matchReason = `Sinônimo (${foundEn})`;
+        }
+      }
+
+      // 8. Sintomas em Português
+      if (!matched && Array.isArray(tags.sintomas_pt)) {
+        const foundSymptom = tags.sintomas_pt.find(s => normalizeSearchStr(s).includes(qNorm));
+        if (foundSymptom) {
+          matched = true;
+          priority = 7;
+          matchReason = `Sintoma: ${foundSymptom}`;
+        }
+      }
+
+      // 9. Fatores limitantes
+      if (!matched) {
+        const foundFactor = (c.fatores_limitantes || []).find(f => normalizeSearchStr(f.label || f.nome).includes(qNorm));
+        if (foundFactor) {
+          matched = true;
+          priority = 7;
+          matchReason = `Desfecho / Fator: ${foundFactor.label || foundFactor.nome}`;
+        }
+      }
+
+      // 10. Modalidades e cadeia sequencial (autores, técnicas, alvos, referências)
+      Object.entries(c.modalidades || {}).forEach(([modKey, m]) => {
+        const modType = m.mod_tipo || 'rtms';
+        const chain = Array.isArray(m.cadeia_sequencial) ? m.cadeia_sequencial : [];
+
+        if (!matched) {
+          const mTecN = normalizeSearchStr(m.tecnica);
+          const mAlvoN = normalizeSearchStr(m.alvo);
+          const mEscN = normalizeSearchStr(m.escala_recomendada);
+          const mRefN = normalizeSearchStr(m.artigo_referencia?.autores || m.efeito_clinico?.estudo_referencia || '');
+          if (Array.from(expandedTerms).some(t => mTecN.includes(t))) {
+            matched = true;
+            priority = 8;
+            matchReason = `Técnica: ${m.tecnica}`;
+          } else if (Array.from(expandedTerms).some(t => mAlvoN.includes(t))) {
+            matched = true;
+            priority = 8;
+            matchReason = `Alvo: ${m.alvo}`;
+          } else if (mEscN.includes(qNorm)) {
+            matched = true;
+            priority = 8;
+            matchReason = `Escala: ${m.escala_recomendada}`;
+          } else if (qNorm.length >= 3 && mRefN.includes(qNorm)) {
+            matched = true;
+            priority = 8;
+            matchReason = `Protocolo de referência: ${m.tecnica}`;
+          }
+        }
+
+        // Busca de protocolos específicos (para atalhos diretos na continuidade "Sim — Já realizou protocolo")
+        if (qNorm.length >= 3 && chain.length > 0) {
+          chain.forEach((step, idx) => {
+            const hay = normalizeSearchStr(`${step.nome || ''} ${step.tecnica || ''} ${step.alvo || ''} ${step.referencia || ''} ${step.parametros || ''}`);
+            if (hay.includes(qNorm)) {
+              if (!matched) {
+                matched = true;
+                priority = 8;
+                matchReason = `Protocolo na sequência: ${step.nome || step.tecnica}`;
+              }
+              const stageKey = idx === 0 ? 'primary' : `alt${idx}`;
+              const nextStep = idx + 1 < chain.length ? chain[idx + 1] : null;
+              const nextStage = nextStep ? `alt${idx + 1}` : 'failure';
+              const dedupKey = `${c.id}::${modType}::${modKey}::${stageKey}`;
+              if (!directProtocols.some(dp => dp.dedupKey === dedupKey)) {
+                directProtocols.push({
+                  dedupKey,
+                  condId: c.id,
+                  condLabel: c.condicao,
+                  modType,
+                  factorKey: modKey,
+                  stageKey,
+                  stepName: step.nome || step.tecnica || m.tecnica,
+                  stepAlvo: step.alvo || m.alvo || '',
+                  stepRef: step.referencia || '',
+                  nextStage,
+                  nextLabel: nextStep ? (nextStep.nome || nextStep.tecnica) : 'Falha Terapêutica'
+                });
+              }
+            }
+          });
+        }
+      });
+
+      if (matched) {
+        matchesWithReason.push({ condition: c, matchReason, priority });
+      }
+    });
+
+    matchesWithReason.sort((a, b) => a.priority - b.priority);
+    return {
+      conditions: matchesWithReason,
+      directProtocols: directProtocols.slice(0, 6),
+      glossaryHits
+    };
   }
 
   function buildObservationsHtml(obsList, opts = {}) {
@@ -801,20 +1183,32 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!continuityInlineContext) return;
 
     const mods = cond.modalidades_suportadas || [];
-    const modSelectHtml = mods.length > 1
-      ? `<label class="continuity-inline-label" for="contSelectModality">Modalidade:</label>
-         <select id="contSelectModality" class="continuity-inline-select">
-           ${mods.map(m => `<option value="${m.id}" ${engine.activeModalityType === m.id ? 'selected' : ''}>${m.id.toUpperCase()}</option>`).join('')}
-         </select>`
+    const modButtonsHtml = mods.length > 1
+      ? `<div class="cont-inline-group">
+           <span class="continuity-inline-label">Modalidade:</span>
+           <div class="cont-inline-cards-row">
+             ${mods.map(m => `
+               <button type="button" class="btn-stage-shortcut cont-inline-choice ${engine.activeModalityType === m.id ? 'active' : ''}" data-cont-mod="${escHtml(m.id)}">
+                 ${escHtml(m.id === 'rtms' ? 'rTMS / iTBS' : (m.id === 'tdcs' ? 'tDCS / taVNS' : m.id.toUpperCase()))}
+               </button>
+             `).join('')}
+           </div>
+         </div>`
       : '';
 
     const protOptions = getContinuityProtocolOptions(cond);
     const activeProtKey = engine.activeFactorId || engine.primaryFactorId;
-    const protSelectHtml = `
-      <label class="continuity-inline-label" for="contSelectProtocol">Desfecho / Árvore Clínica:</label>
-      <select id="contSelectProtocol" class="continuity-inline-select">
-        ${protOptions.map(o => `<option value="${o.key}" data-primary="${o.primary}" ${activeProtKey === o.key ? 'selected' : ''}>${escHtml(o.label)}</option>`).join('')}
-      </select>
+    const protButtonsHtml = `
+      <div class="cont-inline-group cont-inline-group-wide">
+        <span class="continuity-inline-label">Ramo Clínico / Desfecho:</span>
+        <div class="cont-inline-cards-row">
+          ${protOptions.map(o => `
+            <button type="button" class="btn-stage-shortcut cont-inline-choice ${activeProtKey === o.key ? 'active' : ''}" data-cont-prot="${escHtml(o.key)}" data-cont-primary="${escHtml(o.primary || o.key)}">
+              ${escHtml(o.label)}
+            </button>
+          `).join('')}
+        </div>
+      </div>
     `;
 
     const curStage = engine.continuingStage || 'evaluation';
@@ -825,8 +1219,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     continuityInlineContext.innerHTML = `
       <div class="continuity-context-fields">
-        ${modSelectHtml}
-        ${protSelectHtml}
+        ${modButtonsHtml}
+        ${protButtonsHtml}
       </div>
       <div class="continuity-stage-shortcuts">
         <span class="continuity-inline-label">Ir no Assistente Pós-Indução:</span>
@@ -837,37 +1231,38 @@ document.addEventListener('DOMContentLoaded', () => {
       </div>
     `;
 
-    const selMod = document.getElementById('contSelectModality');
-    if (selMod) {
-      selMod.addEventListener('change', (e) => {
-        engine.setModalityType(e.target.value);
+    continuityInlineContext.querySelectorAll('[data-cont-mod]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const modType = btn.getAttribute('data-cont-mod');
+        if (!modType || modType === engine.activeModalityType) return;
+        engine.setModalityType(modType);
         renderContinuityBar(cond);
         renderNode1Options(cond);
         renderTolerabilityUI();
         updatePrescriptionDisplay();
         if (state.therapeuticStage !== 'primary') updateOutcomeDisplay();
       });
-    }
+    });
 
-    const selProt = document.getElementById('contSelectProtocol');
-    if (selProt) {
-      selProt.addEventListener('change', (e) => {
-        const selectedOpt = e.target.options[e.target.selectedIndex];
-        const key = selectedOpt.value;
-        const primaryKey = selectedOpt.getAttribute('data-primary') || key;
+    continuityInlineContext.querySelectorAll('[data-cont-prot]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const key = btn.getAttribute('data-cont-prot');
+        const primaryKey = btn.getAttribute('data-cont-primary') || key;
+        if (!key) return;
         engine.setFactor(primaryKey, true);
         if (key !== primaryKey) {
           engine.setFactor(key, false);
         }
+        engine.setActiveCalcStage('primary');
         renderContinuityBar(cond);
         renderNode1Options(cond);
         renderTolerabilityUI();
         updatePrescriptionDisplay();
         if (state.therapeuticStage !== 'primary') updateOutcomeDisplay();
       });
-    }
+    });
 
-    continuityInlineContext.querySelectorAll('.btn-stage-shortcut').forEach(btn => {
+    continuityInlineContext.querySelectorAll('[data-stage]').forEach(btn => {
       btn.addEventListener('click', () => {
         const targetStage = btn.getAttribute('data-stage');
         selectContinuityStage(cond, targetStage);
@@ -891,39 +1286,18 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function populateHomeContinuityConditions() {
-    if (!homeContCondition || !data?.condicoes?.length) return;
-    homeContCondition.innerHTML = '';
-
-    const groups = new Map();
-    data.condicoes.forEach(c => {
-      const axis = c.eixo || 'Condições Clínicas';
-      if (!groups.has(axis)) groups.set(axis, []);
-      groups.get(axis).push(c);
-    });
-
-    groups.forEach((conds, axisName) => {
-      const og = document.createElement('optgroup');
-      og.label = axisName;
-      conds.forEach(c => {
-        const opt = document.createElement('option');
-        opt.value = c.id;
-        opt.textContent = c.condicao;
-        og.appendChild(opt);
-      });
-      homeContCondition.appendChild(og);
-    });
-
+    if (!data?.condicoes?.length) return;
     if (!state.homeSelectedConditionId || !engine.getCondition(state.homeSelectedConditionId)) {
       state.homeSelectedConditionId = data.condicoes[0].id;
     }
-    homeContCondition.value = state.homeSelectedConditionId;
   }
 
   function getHomeModalityForSelection(cond) {
     if (!cond) return null;
-    const selectedProtOpt = homeContProtocol && homeContProtocol.options[homeContProtocol.selectedIndex];
     const protOptions = getContinuityProtocolOptions(cond, state.homeSelectedModality);
-    const factorKey = (selectedProtOpt && selectedProtOpt.value) || protOptions[0]?.key || null;
+    const factorKey = (state.homeSelectedProtocolKey && protOptions.some(o => o.key === state.homeSelectedProtocolKey))
+      ? state.homeSelectedProtocolKey
+      : (protOptions[0]?.key || null);
     return (factorKey && cond.modalidades?.[factorKey]) || Object.values(cond.modalidades || {})[0] || null;
   }
 
@@ -934,6 +1308,8 @@ document.addEventListener('DOMContentLoaded', () => {
       return chain.map((step, idx) => ({
         stageKey: idx === 0 ? 'primary' : `alt${idx}`,
         nome: step.nome || step.tecnica || mod.tecnica || 'Protocolo Clínico',
+        alvo: step.alvo || mod.alvo || '',
+        parametros: step.parametros || '',
         faseEtapa: idx === 0
           ? 'inicial'
           : ((step.fase_etapa === 'ajustes' || /ajustes/i.test(step.etapa_rotulo || '')) ? 'ajustes' : 'sequencia'),
@@ -943,6 +1319,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const items = [{
       stageKey: 'primary',
       nome: mod.tecnica || 'Protocolo Inicial',
+      alvo: mod.alvo || '',
+      parametros: `${mod.frequencia || ''} ${mod.intensidade || ''}`.trim(),
       faseEtapa: 'inicial',
       linhaFluxograma: mod.linha_fluxograma || ''
     }];
@@ -950,6 +1328,8 @@ document.addEventListener('DOMContentLoaded', () => {
       items.push({
         stageKey: 'alt1',
         nome: mod.protocolo_alternativo.nome || 'Próximo Protocolo na Sequência',
+        alvo: mod.protocolo_alternativo.alvo || '',
+        parametros: mod.protocolo_alternativo.parametros || '',
         faseEtapa: 'sequencia',
         linhaFluxograma: mod.protocolo_alternativo.linha_fluxograma || ''
       });
@@ -958,6 +1338,8 @@ document.addEventListener('DOMContentLoaded', () => {
       items.push({
         stageKey: 'alt2',
         nome: mod.protocolo_alternativo_2.nome || 'Seção de Ajustes',
+        alvo: mod.protocolo_alternativo_2.alvo || '',
+        parametros: mod.protocolo_alternativo_2.parametros || '',
         faseEtapa: 'ajustes',
         linhaFluxograma: mod.protocolo_alternativo_2.linha_fluxograma || ''
       });
@@ -965,32 +1347,173 @@ document.addEventListener('DOMContentLoaded', () => {
     return items;
   }
 
-  function populateHomeStoppedProtocols(cond) {
-    if (!homeContStoppedProtocol || !cond) return;
+  function renderHomeDirectProtocolMatches(searchResult) {
+    if (!homeContDirectMatches) return;
+    const query = (state.homeSearchQuery || '').trim();
+    const direct = searchResult?.directProtocols || [];
+
+    if (homeContAcronymHint) {
+      const gHits = searchResult?.glossaryHits || [];
+      const exactHit = gHits.find(g => normalizeSearchStr(g.sigla) === normalizeSearchStr(query)) || gHits[0];
+      if (query && exactHit) {
+        homeContAcronymHint.style.display = 'flex';
+        homeContAcronymHint.innerHTML = `<span class="home-cont-acronym-tag">Sigla: ${escHtml(exactHit.sigla)}</span> ➔ <strong>${escHtml(exactHit.extenso)}</strong>`;
+      } else {
+        homeContAcronymHint.style.display = 'none';
+        homeContAcronymHint.innerHTML = '';
+      }
+    }
+
+    if (!query || direct.length === 0) {
+      homeContDirectMatches.style.display = 'none';
+      homeContDirectMatches.innerHTML = '';
+      return;
+    }
+
+    homeContDirectMatches.style.display = 'block';
+    homeContDirectMatches.innerHTML = `
+      <div class="home-cont-direct-title">Atalhos diretos encontrados para "${escHtml(query)}" (clique para abrir direto no próximo protocolo):</div>
+      <div class="home-cont-cards-grid home-cont-direct-grid">
+        ${direct.map(item => `
+          <button type="button" class="btn-cascade-choice home-cont-direct-card"
+            data-direct-cond="${escHtml(item.condId)}"
+            data-direct-mod="${escHtml(item.modType)}"
+            data-direct-factor="${escHtml(item.factorKey)}"
+            data-direct-stopped="${escHtml(item.stageKey)}"
+            data-direct-next="${escHtml(item.nextStage)}">
+            <span class="home-cont-card-top">
+              <span class="home-cont-card-acronym">${escHtml(CONDITION_ACRONYM_BADGE[item.condId] || item.modType.toUpperCase())}</span>
+              <span class="home-cont-card-meta">${escHtml(item.condLabel)}</span>
+            </span>
+            <span class="home-cont-card-title">${escHtml(item.stepName)}</span>
+            <span class="btn-cascade-sub">Sem resposta ➔ ${escHtml(item.nextLabel)}</span>
+          </button>
+        `).join('')}
+      </div>
+    `;
+  }
+
+  function renderHomeConditionCards(filteredConditions) {
+    if (!homeContConditionGrid) return;
+    const list = Array.isArray(filteredConditions) ? filteredConditions : (data?.condicoes || []).map(c => ({ condition: c, matchReason: '' }));
+
+    if (list.length === 0) {
+      homeContConditionGrid.innerHTML = `
+        <div class="home-cont-empty-msg">
+          Nenhuma condição encontrada para "<strong>${escHtml(state.homeSearchQuery)}</strong>". Tente outra sigla (ex.: AVC, TAG, TEA, DP, PC, CCL) ou limpe a busca.
+        </div>
+      `;
+      return;
+    }
+
+    homeContConditionGrid.innerHTML = list.map(({ condition: c, matchReason }) => {
+      const isSelected = c.id === state.homeSelectedConditionId;
+      const badge = CONDITION_ACRONYM_BADGE[c.id] || '';
+      return `
+        <button type="button" class="btn-cascade-choice home-cont-card ${isSelected ? 'active' : ''}" data-home-cond="${escHtml(c.id)}" aria-selected="${isSelected ? 'true' : 'false'}">
+          <span class="home-cont-card-top">
+            ${badge ? `<span class="home-cont-card-acronym">${escHtml(badge)}</span>` : ''}
+            <span class="home-cont-card-meta">${escHtml(c.eixo || '')}</span>
+          </span>
+          <span class="home-cont-card-title">${escHtml(c.condicao)}</span>
+          ${matchReason ? `<span class="btn-cascade-sub home-cont-match-sub">${escHtml(matchReason)}</span>` : ''}
+        </button>
+      `;
+    }).join('');
+  }
+
+  function renderHomeModalityCards(cond) {
+    if (!homeContModalityWrap || !homeContModalityGrid || !cond) return;
+    const mods = cond.modalidades_suportadas || [];
+    const hasBoth = mods.length > 1;
+    if (homeContProtStepNum) homeContProtStepNum.textContent = hasBoth ? '3' : '2';
+    if (homeContStoppedStepNum) homeContStoppedStepNum.textContent = hasBoth ? '4' : '3';
+
+    if (!hasBoth) {
+      homeContModalityWrap.style.display = 'none';
+      homeContModalityGrid.innerHTML = '';
+      return;
+    }
+
+    homeContModalityWrap.style.display = 'flex';
+    homeContModalityGrid.innerHTML = mods.map(m => {
+      const isSelected = state.homeSelectedModality === m.id;
+      const title = m.id === 'rtms' ? 'rTMS / iTBS / rPMS' : (m.id === 'tdcs' ? 'tDCS / taVNS' : m.id.toUpperCase());
+      const sub = m.id === 'rtms' ? 'Estimulação Magnética Transcraniana' : (m.id === 'tdcs' ? 'Estimulação Elétrica por Corrente Contínua' : (m.label || ''));
+      return `
+        <button type="button" class="btn-cascade-choice home-cont-card ${isSelected ? 'active' : ''}" data-home-mod="${escHtml(m.id)}">
+          <span class="home-cont-card-title">${escHtml(title)}</span>
+          <span class="btn-cascade-sub">${escHtml(sub)}</span>
+        </button>
+      `;
+    }).join('');
+  }
+
+  function renderHomeProtocolCards(cond) {
+    if (!homeContProtocolGrid || !cond) return;
+    const protOptions = getContinuityProtocolOptions(cond, state.homeSelectedModality);
+    if (!protOptions.some(o => o.key === state.homeSelectedProtocolKey)) {
+      state.homeSelectedProtocolKey = protOptions[0]?.key || null;
+      state.homeSelectedPrimaryKey = protOptions[0]?.primary || state.homeSelectedProtocolKey;
+    } else {
+      const found = protOptions.find(o => o.key === state.homeSelectedProtocolKey);
+      state.homeSelectedPrimaryKey = found?.primary || state.homeSelectedProtocolKey;
+    }
+
+    homeContProtocolGrid.innerHTML = protOptions.map(o => {
+      const isSelected = o.key === state.homeSelectedProtocolKey;
+      const mod = cond.modalidades?.[o.key];
+      const subTec = mod?.tecnica || '';
+      return `
+        <button type="button" class="btn-cascade-choice home-cont-card ${isSelected ? 'active' : ''}" data-home-prot="${escHtml(o.key)}" data-home-primary="${escHtml(o.primary || o.key)}">
+          <span class="home-cont-card-title">${escHtml(o.label)}</span>
+          ${subTec ? `<span class="btn-cascade-sub">Início: ${escHtml(subTec)}</span>` : ''}
+        </button>
+      `;
+    }).join('');
+  }
+
+  function renderHomeStoppedCards(cond) {
+    if (!homeContStoppedGrid || !cond) return;
     const mod = getHomeModalityForSelection(cond);
     const steps = getStoppedChainForHomeModality(mod);
-    const prevVal = homeContStoppedProtocol.value;
-    homeContStoppedProtocol.innerHTML = steps.map((step, idx) => {
+    if (!steps.some(s => s.stageKey === state.homeStoppedStage)) {
+      state.homeStoppedStage = steps[0]?.stageKey || 'primary';
+    }
+
+    homeContStoppedGrid.innerHTML = steps.map((step, idx) => {
+      const isSelected = step.stageKey === state.homeStoppedStage;
+      const isDotted = step.linhaFluxograma === 'pontilhada';
+      const isAjustes = step.faseEtapa === 'ajustes';
       const tag = idx === 0
         ? 'Protocolo Inicial'
-        : (step.faseEtapa === 'ajustes'
+        : (isAjustes
           ? 'Seção de Ajustes'
-          : (step.linhaFluxograma === 'pontilhada' ? 'Linha Pontilhada' : 'Na Sequência'));
-      return `<option value="${escHtml(step.stageKey)}">[${tag}] ${escHtml(step.nome)}</option>`;
+          : (isDotted ? 'Linha Pontilhada' : 'Na Sequência'));
+      const extraCls = [
+        isSelected ? 'active' : '',
+        isDotted ? 'is-stopped-dotted' : '',
+        isAjustes ? 'is-stopped-ajustes' : ''
+      ].filter(Boolean).join(' ');
+      return `
+        <button type="button" class="btn-cascade-choice home-cont-card ${extraCls}" data-home-stopped="${escHtml(step.stageKey)}">
+          <span class="home-cont-card-top">
+            <span class="home-cont-card-acronym ${isAjustes ? 'is-ajustes' : ''}">${escHtml(tag)}</span>
+          </span>
+          <span class="home-cont-card-title">${escHtml(step.nome)}</span>
+          ${step.alvo ? `<span class="btn-cascade-sub">${escHtml(step.alvo)}</span>` : ''}
+        </button>
+      `;
     }).join('');
-    if (steps.some(s => s.stageKey === prevVal)) {
-      homeContStoppedProtocol.value = prevVal;
-    } else if (steps.length > 0) {
-      homeContStoppedProtocol.value = steps[0].stageKey;
-    }
   }
 
   function renderHomeContinuityStageButtons(cond) {
     if (!homeContStageShortcuts || !cond) return;
     const mod = getHomeModalityForSelection(cond);
     const steps = getStoppedChainForHomeModality(mod);
-    const stoppedStage = (homeContStoppedProtocol && homeContStoppedProtocol.value) || 'primary';
+    const stoppedStage = state.homeStoppedStage || 'primary';
     const stoppedIdx = Math.max(0, steps.findIndex(s => s.stageKey === stoppedStage));
+    const currentStep = steps[stoppedIdx] || steps[0] || null;
     const hasNext = stoppedIdx + 1 < steps.length;
     const nextStep = hasNext ? steps[stoppedIdx + 1] : null;
     const isUnique = steps.length <= 1;
@@ -1006,9 +1529,13 @@ document.addEventListener('DOMContentLoaded', () => {
       nextBtnHtml = `<button type="button" class="btn-stage-shortcut stage-danger" data-home-stage="failure">Sem Resposta após Sequência e Ajustes ➔ Falha Terapêutica</button>`;
     }
 
+    const evalLabel = currentStep
+      ? `Avaliar Resposta deste Protocolo na Calculadora (${currentStep.nome.split('(')[0].trim()})`
+      : 'Avaliar Resposta do Protocolo (Calculadora)';
+
     homeContStageShortcuts.innerHTML = `
       ${nextBtnHtml}
-      <button type="button" class="btn-stage-shortcut" data-home-stage="evaluation">Avaliar Resposta do Protocolo (Calculadora)</button>
+      <button type="button" class="btn-stage-shortcut" data-home-stage="evaluation">${escHtml(evalLabel)}</button>
     `;
   }
 
@@ -1026,13 +1553,30 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     homeContinuityQuickPanel.style.display = 'flex';
+    const query = (state.homeSearchQuery || '').trim();
+    if (homeContSearchClearBtn) {
+      homeContSearchClearBtn.style.display = query ? 'inline-flex' : 'none';
+    }
+
+    let filteredConditions;
+    if (query) {
+      const res = searchPlatformCatalog(query);
+      filteredConditions = res.conditions;
+      renderHomeDirectProtocolMatches(res);
+      if (filteredConditions.length > 0 && !filteredConditions.some(item => item.condition.id === state.homeSelectedConditionId)) {
+        state.homeSelectedConditionId = filteredConditions[0].condition.id;
+        state.homeSelectedProtocolKey = null;
+        state.homeStoppedStage = 'primary';
+      }
+    } else {
+      filteredConditions = (data?.condicoes || []).map(c => ({ condition: c, matchReason: '' }));
+      renderHomeDirectProtocolMatches(null);
+    }
+
     const condId = state.homeSelectedConditionId || data?.condicoes?.[0]?.id;
     const cond = engine.getCondition(condId);
     if (!cond) return;
-
-    if (homeContCondition && homeContCondition.value !== cond.id) {
-      homeContCondition.value = cond.id;
-    }
+    state.homeSelectedConditionId = cond.id;
 
     const mods = cond.modalidades_suportadas || [];
     const hasSelectedMod = mods.some(m => m.id === state.homeSelectedModality);
@@ -1040,24 +1584,10 @@ document.addEventListener('DOMContentLoaded', () => {
       state.homeSelectedModality = mods[0]?.id || 'rtms';
     }
 
-    if (homeContModalityWrap && homeContModality) {
-      if (mods.length > 1) {
-        homeContModalityWrap.style.display = 'flex';
-        homeContModality.innerHTML = mods
-          .map(m => `<option value="${m.id}" ${state.homeSelectedModality === m.id ? 'selected' : ''}>${m.id.toUpperCase()}</option>`)
-          .join('');
-      } else {
-        homeContModalityWrap.style.display = 'none';
-      }
-    }
-
-    if (homeContProtocol) {
-      const protOptions = getContinuityProtocolOptions(cond, state.homeSelectedModality);
-      homeContProtocol.innerHTML = protOptions
-        .map(o => `<option value="${o.key}" data-primary="${o.primary}">${escHtml(o.label)}</option>`)
-        .join('');
-    }
-    populateHomeStoppedProtocols(cond);
+    renderHomeConditionCards(filteredConditions);
+    renderHomeModalityCards(cond);
+    renderHomeProtocolCards(cond);
+    renderHomeStoppedCards(cond);
     renderHomeContinuityStageButtons(cond);
   }
 
@@ -1075,37 +1605,106 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  if (homeContCondition) {
-    homeContCondition.addEventListener('change', (e) => {
-      state.homeSelectedConditionId = e.target.value;
+  if (homeContSearchInput) {
+    homeContSearchInput.addEventListener('input', (e) => {
+      state.homeSearchQuery = e.target.value || '';
+      renderHomeContinuityPanel();
+    });
+  }
+
+  if (homeContSearchClearBtn) {
+    homeContSearchClearBtn.addEventListener('click', () => {
+      state.homeSearchQuery = '';
+      if (homeContSearchInput) homeContSearchInput.value = '';
+      renderHomeContinuityPanel();
+      if (homeContSearchInput) homeContSearchInput.focus();
+    });
+  }
+
+  if (homeContDirectMatches) {
+    homeContDirectMatches.addEventListener('click', (e) => {
+      const card = e.target.closest('[data-direct-cond]');
+      if (!card) return;
+      const condId = card.getAttribute('data-direct-cond');
+      const modType = card.getAttribute('data-direct-mod') || 'rtms';
+      const factorKey = card.getAttribute('data-direct-factor');
+      const stoppedStage = card.getAttribute('data-direct-stopped') || 'primary';
+      const nextStage = card.getAttribute('data-direct-next') || 'failure';
+
+      state.homeEntryMode = 'returning';
+      state.homeSelectedConditionId = condId;
+      state.homeSelectedModality = modType;
+      state.homeSelectedProtocolKey = factorKey;
+      state.homeStoppedStage = stoppedStage;
+
+      openConditionAlgorithm(condId, {
+        forceEntryMode: 'returning',
+        modalityType: modType,
+        factorKey,
+        primaryKey: factorKey,
+        continuingStage: nextStage,
+        calcStage: stoppedStage
+      });
+      scrollToResponseAssistantHighlight();
+    });
+  }
+
+  if (homeContConditionGrid) {
+    homeContConditionGrid.addEventListener('click', (e) => {
+      const card = e.target.closest('[data-home-cond]');
+      if (!card) return;
+      const condId = card.getAttribute('data-home-cond');
+      if (!condId) return;
+      state.homeSelectedConditionId = condId;
       state.homeSelectedModality = 'rtms';
-      if (homeContStoppedProtocol) homeContStoppedProtocol.value = '';
+      state.homeSelectedProtocolKey = null;
+      state.homeSelectedPrimaryKey = null;
+      state.homeStoppedStage = 'primary';
       renderHomeContinuityPanel();
     });
   }
 
-  if (homeContModality) {
-    homeContModality.addEventListener('change', (e) => {
-      state.homeSelectedModality = e.target.value;
-      if (homeContStoppedProtocol) homeContStoppedProtocol.value = '';
+  if (homeContModalityGrid) {
+    homeContModalityGrid.addEventListener('click', (e) => {
+      const card = e.target.closest('[data-home-mod]');
+      if (!card) return;
+      const modId = card.getAttribute('data-home-mod');
+      if (!modId) return;
+      state.homeSelectedModality = modId;
+      state.homeSelectedProtocolKey = null;
+      state.homeSelectedPrimaryKey = null;
+      state.homeStoppedStage = 'primary';
       renderHomeContinuityPanel();
     });
   }
 
-  if (homeContProtocol) {
-    homeContProtocol.addEventListener('change', () => {
-      const condId = (homeContCondition && homeContCondition.value) || state.homeSelectedConditionId;
-      const cond = engine.getCondition(condId);
-      if (homeContStoppedProtocol) homeContStoppedProtocol.value = '';
-      populateHomeStoppedProtocols(cond);
+  if (homeContProtocolGrid) {
+    homeContProtocolGrid.addEventListener('click', (e) => {
+      const card = e.target.closest('[data-home-prot]');
+      if (!card) return;
+      const protKey = card.getAttribute('data-home-prot');
+      const primaryKey = card.getAttribute('data-home-primary') || protKey;
+      if (!protKey) return;
+      state.homeSelectedProtocolKey = protKey;
+      state.homeSelectedPrimaryKey = primaryKey;
+      state.homeStoppedStage = 'primary';
+      const cond = engine.getCondition(state.homeSelectedConditionId);
+      renderHomeProtocolCards(cond);
+      renderHomeStoppedCards(cond);
       renderHomeContinuityStageButtons(cond);
     });
   }
 
-  if (homeContStoppedProtocol) {
-    homeContStoppedProtocol.addEventListener('change', () => {
-      const condId = (homeContCondition && homeContCondition.value) || state.homeSelectedConditionId;
-      renderHomeContinuityStageButtons(engine.getCondition(condId));
+  if (homeContStoppedGrid) {
+    homeContStoppedGrid.addEventListener('click', (e) => {
+      const card = e.target.closest('[data-home-stopped]');
+      if (!card) return;
+      const stageKey = card.getAttribute('data-home-stopped');
+      if (!stageKey) return;
+      state.homeStoppedStage = stageKey;
+      const cond = engine.getCondition(state.homeSelectedConditionId);
+      renderHomeStoppedCards(cond);
+      renderHomeContinuityStageButtons(cond);
     });
   }
 
@@ -1114,12 +1713,12 @@ document.addEventListener('DOMContentLoaded', () => {
       const btn = e.target.closest('[data-home-stage]');
       if (!btn) return;
       const targetStage = btn.getAttribute('data-home-stage');
-      const condId = (homeContCondition && homeContCondition.value) || state.homeSelectedConditionId;
+      const condId = state.homeSelectedConditionId;
       if (!condId) return;
 
-      const selectedProtOpt = homeContProtocol && homeContProtocol.options[homeContProtocol.selectedIndex];
-      const factorKey = selectedProtOpt ? selectedProtOpt.value : null;
-      const primaryKey = selectedProtOpt ? (selectedProtOpt.getAttribute('data-primary') || factorKey) : factorKey;
+      const factorKey = state.homeSelectedProtocolKey;
+      const primaryKey = state.homeSelectedPrimaryKey || factorKey;
+      const stoppedStage = state.homeStoppedStage || 'primary';
 
       state.homeEntryMode = 'returning';
       openConditionAlgorithm(condId, {
@@ -1127,7 +1726,8 @@ document.addEventListener('DOMContentLoaded', () => {
         modalityType: state.homeSelectedModality || 'rtms',
         factorKey,
         primaryKey,
-        continuingStage: targetStage
+        continuingStage: targetStage,
+        calcStage: (targetStage === 'evaluation' || targetStage === 'failure') ? stoppedStage : targetStage
       });
 
       if (targetStage === 'evaluation') {
@@ -1485,11 +2085,49 @@ document.addEventListener('DOMContentLoaded', () => {
   // ==========================================================================
   // 4. Renderiza Calculadora para a Escala Ativa (Suporte a Múltiplas Escalas e EAM)
   // ==========================================================================
-  function renderCalculatorForActiveScale() {
+  function renderCalculatorForActiveScale(opts = {}) {
     const m = engine.getActiveModality();
     if (!m) return;
 
     const scales = engine.getScalesForCurrentPath();
+    const chain = engine.getProtocolChain();
+    const stageCtx = engine.getCalculatorStageContext();
+    const cm = stageCtx?.calcMeta || null;
+    const stageStep = stageCtx?.step || null;
+
+    // 0. Seletor do Protocolo Avaliado na Calculadora (sincronizado com o protocolo em uso)
+    if (calcStageSelectorBar && calcStageButtons) {
+      if (chain.length > 1) {
+        calcStageSelectorBar.style.display = 'flex';
+        calcStageButtons.innerHTML = chain.map((step, idx) => {
+          const isActive = step.stageKey === stageCtx.stageKey;
+          const isAj = step.fase_etapa === 'ajustes';
+          const isDot = step.linha_fluxograma === 'pontilhada';
+          const shortPrefix = idx === 0
+            ? 'Inicial'
+            : (isAj ? 'Ajustes' : (isDot ? 'Linha Pontilhada' : 'Sequência'));
+          const cls = [
+            'calc-stage-btn',
+            isActive ? 'active' : '',
+            isAj ? 'is-ajustes' : '',
+            isDot ? 'is-dotted' : ''
+          ].filter(Boolean).join(' ');
+          return `<button type="button" class="${cls}" data-calc-stage="${escHtml(step.stageKey)}" title="${escHtml(step.nome)}">${escHtml(shortPrefix)}: ${escHtml(step.nome)}</button>`;
+        }).join('');
+
+        calcStageButtons.querySelectorAll('[data-calc-stage]').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const targetStage = btn.getAttribute('data-calc-stage');
+            if (!targetStage) return;
+            engine.setActiveCalcStage(targetStage);
+            renderCalculatorForActiveScale({ preserveScores: true });
+          });
+        });
+      } else {
+        calcStageSelectorBar.style.display = 'none';
+        calcStageButtons.innerHTML = '';
+      }
+    }
 
     // 1. Seletor de Múltiplas Escalas (Exibido apenas quando o desfecho selecionado possui mais de um instrumento)
     if (calcScaleTabs) {
@@ -1519,20 +2157,36 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const activeScale = engine.getActiveScale() || (scales.length > 0 ? scales[0] : null);
 
-    // 2. Sincronização em tempo real do tamanho de efeito e meta com a escala selecionada
+    // 2. Sincronização em tempo real do tamanho de efeito, estudo e corte com a escala e protocolo em avaliação
     const effObj = m?.efeito_clinico || {};
-    const eff = activeScale?.tamanho_efeito || effObj.efeito_esperado_resumo || m.tamanho_efeito || 'Eficácia demonstrada em ensaios controlados randomizados.';
-    const meta = activeScale?.meta_texto || m.meta_melhora || 'Melhora clinicamente relevante conforme protocolo.';
+    const scaleEffText = (typeof activeScale?.tamanho_efeito === 'string' && activeScale.tamanho_efeito.trim())
+      ? activeScale.tamanho_efeito
+      : null;
+    const isSecondaryStage = Boolean(stageStep && stageStep.stageKey !== 'primary');
+    const eff = cm?.efeito_esperado_resumo
+      || (isSecondaryStage && stageStep?.efeito_esperado ? stageStep.efeito_esperado : null)
+      || scaleEffText
+      || effObj.efeito_esperado_resumo
+      || m.tamanho_efeito
+      || 'Eficácia demonstrada em ensaios controlados randomizados.';
+    const meta = cm?.meta_texto
+      || (isSecondaryStage && stageStep?.efeito_esperado ? stageStep.efeito_esperado : null)
+      || activeScale?.meta_texto
+      || m.meta_melhora
+      || 'Melhora clinicamente relevante conforme protocolo.';
     const escNome = activeScale?.nome || m.escala_recomendada || 'Escala Clínica Validada';
 
-    // 2. Sincronização em tempo real do estudo de referência, efeito e MCID da literatura
     if (calcRoadmapEffectText) calcRoadmapEffectText.textContent = eff;
-    if (prescEfeito) prescEfeito.textContent = eff;
-    if (prescMeta) prescMeta.textContent = meta;
+    if (prescEfeito && !isSecondaryStage) prescEfeito.textContent = eff;
+    if (prescMeta && !isSecondaryStage) prescMeta.textContent = meta;
     if (prescEscala) prescEscala.textContent = escNome;
 
-    const studyName = effObj.estudo_referencia || m?.ensaio_clinico?.autores || 'Ensaio clínico do protocolo';
-    const studyDetail = effObj.estudo_detalhe ? ` (${effObj.estudo_detalhe})` : '';
+    const studyName = cm?.estudo_referencia
+      || (isSecondaryStage && stageStep?.referencia ? stageStep.referencia.split('·')[0].trim() : null)
+      || effObj.estudo_referencia
+      || m?.ensaio_clinico?.autores
+      || 'Ensaio clínico do protocolo';
+    const studyDetail = (!cm && !isSecondaryStage && effObj.estudo_detalhe) ? ` (${effObj.estudo_detalhe})` : '';
     if (calcStudyRef) {
       calcStudyRef.textContent = `${studyName}${studyDetail}`;
     }
@@ -1542,7 +2196,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (calcStudyMcid) {
-      calcStudyMcid.textContent = activeScale?.mcid_label || effObj.mcid_label || activeScale?.meta_texto || m.meta_melhora || 'Ganho clínico relevante';
+      calcStudyMcid.textContent = cm?.mcid_label || activeScale?.mcid_label || effObj.mcid_label || activeScale?.meta_texto || m.meta_melhora || 'Ganho clínico relevante';
     }
 
     // 3. Alternância entre Modo EAM (Graus 0 a 4) e Modo Contínuo
@@ -1550,14 +2204,15 @@ document.addEventListener('DOMContentLoaded', () => {
       if (calcEamBox) calcEamBox.style.display = 'flex';
       if (calcContinuousInputsRow) calcContinuousInputsRow.style.display = 'none';
 
-      // Reseta seleção visual dos botões EAM
-      eamState.base = null;
-      eamState.post = null;
-      if (eamGroupBase) eamGroupBase.querySelectorAll('.btn-eam').forEach(b => b.classList.remove('active'));
-      if (eamGroupPost) eamGroupPost.querySelectorAll('.btn-eam').forEach(b => b.classList.remove('active'));
+      if (!opts.preserveScores) {
+        eamState.base = null;
+        eamState.post = null;
+        if (eamGroupBase) eamGroupBase.querySelectorAll('.btn-eam').forEach(b => b.classList.remove('active'));
+        if (eamGroupPost) eamGroupPost.querySelectorAll('.btn-eam').forEach(b => b.classList.remove('active'));
+      }
 
       if (calcGoalFeedback) {
-        calcGoalFeedback.textContent = `Meta do protocolo: ${activeScale.meta_texto}`;
+        calcGoalFeedback.textContent = `Meta do protocolo: ${meta}`;
       }
     } else {
       if (calcEamBox) calcEamBox.style.display = 'none';
@@ -1570,15 +2225,24 @@ document.addEventListener('DOMContentLoaded', () => {
         calcValPostLabel.textContent = `Escore Pós-Tratamento (${activeScale?.sigla || 'Pós-Tratamento'})`;
       }
       if (calcValBase) {
-        calcValBase.value = '';
+        if (!opts.preserveScores) calcValBase.value = '';
         calcValBase.placeholder = activeScale?.placeholder || 'Ex: 24';
       }
       if (calcValPost) {
-        calcValPost.value = '';
+        if (!opts.preserveScores) calcValPost.value = '';
         calcValPost.placeholder = activeScale?.placeholder || 'Ex: 12';
       }
       if (calcGoalFeedback) {
-        calcGoalFeedback.textContent = `Meta do protocolo: ${activeScale?.meta_texto || m.meta_melhora || 'Melhora clinicamente relevante.'}`;
+        calcGoalFeedback.textContent = `Meta do protocolo em avaliação: ${meta}`;
+      }
+    }
+
+    if (opts.preserveScores) {
+      const hasContinuous = Boolean(calcValBase?.value !== '' && calcValPost?.value !== '');
+      const hasEam = Boolean(activeScale?.tipo === 'ordinal_eam' && eamState.base !== null && eamState.post !== null);
+      if (hasContinuous || hasEam) {
+        handleScoreComputation();
+        return;
       }
     }
 
@@ -1594,7 +2258,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (cardMcidBadge) cardMcidBadge.className = 'calc-metric-card';
 
     if (calcComparisonFeedback) {
-      calcComparisonFeedback.textContent = 'Ao informar os escores, o sistema analisará se o ganho clínico individual é compatível com o intervalo de confiança do ensaio clínico de referência do protocolo e se superou a MCID da escala.';
+      calcComparisonFeedback.textContent = 'Ao informar os escores, o sistema analisará se o ganho clínico individual é compatível com o intervalo de confiança do ensaio clínico de referência do protocolo e se superou o limiar clínico esperado.';
     }
 
     // Reseta desfecho ao alternar escala/fator, preservando quando em salto direto de continuidade para etapa sequencial/Ajustes/Falha
@@ -1602,7 +2266,7 @@ document.addEventListener('DOMContentLoaded', () => {
       && state.therapeuticStage
       && state.therapeuticStage !== 'primary'
       && state.therapeuticStage !== 'evaluation';
-    if (!keepReturningOutcome) {
+    if (!keepReturningOutcome && !opts.preserveScores) {
       engine.setOutcome(null);
     }
     updateOutcomeDisplay();
@@ -1821,8 +2485,9 @@ document.addEventListener('DOMContentLoaded', () => {
       prescDesfechoNome.textContent = chosenRootOpt?.rotulo || activeFactor?.nome || activeFactor?.label || m.titulo_curto || cond?.condicao || '—';
     }
     const activeScale = engine.getActiveScale() || (m.escalas_detalhadas && m.escalas_detalhadas.length > 0 ? m.escalas_detalhadas[0] : null);
+    const scaleEffStr = (typeof activeScale?.tamanho_efeito === 'string' && activeScale.tamanho_efeito.trim()) ? activeScale.tamanho_efeito : null;
     if (prescEscala) prescEscala.textContent = activeScale?.nome || m.escala_recomendada || '—';
-    if (prescEfeito) prescEfeito.textContent = activeScale?.tamanho_efeito || m.tamanho_efeito || 'Eficácia demonstrada em ensaios controlados randomizados.';
+    if (prescEfeito) prescEfeito.textContent = scaleEffStr || m.efeito_clinico?.efeito_esperado_resumo || m.tamanho_efeito || 'Eficácia demonstrada em ensaios controlados randomizados.';
     if (prescMeta) prescMeta.textContent = activeScale?.meta_texto || m.meta_melhora || 'Melhora clinicamente relevante conforme protocolo.';
     renderObservationsSlot(prescObsEscala, engine.getContextualObservations({ slot: 'scale', stage: state.therapeuticStage }), { compact: true });
 
@@ -2154,7 +2819,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <div><strong>Alvo Anatômico:</strong> ${escHtml(altData?.alvo || '—')}</div>
           <div><strong>Parâmetros:</strong> ${escHtml(altData?.parametros || '—')}</div>
           ${altData?.efeitoEsperado ? `<div><strong>Efeito Esperado:</strong> ${escHtml(altData.efeitoEsperado)}</div>` : ''}
-          ${altData?.referencia ? `<div><strong>Referência:</strong> ${escHtml(altData.referencia)}</div>` : ''}
+          ${altData?.referencia ? `<div><strong>Referência:</strong> ${linkifyDoisHtml(altData.referencia)}</div>` : ''}
           <div class="alt-clinical-notes" style="margin-top: 8px;">
             <strong>Observações Clínicas:</strong> ${formatObservationTextHtml(altData?.observacoes || 'Transição sequencial indicada conforme a árvore de decisão clínica.')}
           </div>
@@ -2162,6 +2827,9 @@ document.addEventListener('DOMContentLoaded', () => {
           <div class="adjustment-actions-row" style="margin-top: 14px;">
             <button type="button" class="btn-step-action secondary" id="${prevBtnId}" data-target-stage="${prevStage ? prevStage.stageKey : 'primary'}">
               ${prevStage ? `← ${escHtml(prevStage.nome)}` : '← Rever Protocolo Inicial'}
+            </button>
+            <button type="button" class="btn-step-action secondary js-eval-stage-calc" data-eval-stage="${escHtml(curStage)}">
+              Avaliar este Protocolo na Calculadora ↑
             </button>
             ${nextAlt
               ? `<button type="button" class="btn-step-action primary" id="${nextBtnId}" data-target-stage="${nextAlt.stageKey}">Sem Resposta neste Protocolo ➔ ${nextAlt.faseEtapa === 'ajustes' ? 'Seção de Ajustes: ' : 'Avançar para '}${escHtml(nextAlt.nome)}</button>`
@@ -2171,7 +2839,7 @@ document.addEventListener('DOMContentLoaded', () => {
       `;
     } else if (curStage === 'failure') {
       const failData = engine.getPrescriptionForStage('failure');
-      const conductList = (failData?.condutas || []).map(c => `<li>${escHtml(c)}</li>`).join('');
+      const conductList = (failData?.condutas || []).map(c => `<li>${linkifyDoisHtml(c)}</li>`).join('');
       const lastAlt = altStages.length > 0 ? altStages[altStages.length - 1] : null;
       stageHtml = `
         <div class="failure-therapeutic-card">
@@ -2180,7 +2848,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <span class="failure-title">${escHtml(failData?.titulo || 'Falha Terapêutica / Encerramento da Sequência NAPeN')}</span>
           </div>
           <div class="failure-description">
-            ${escHtml(failData?.criterio || 'Paciente concluiu o ciclo inicial, os protocolos subsequentes e a seção de ajustes sem apresentar resposta clínica mínima relevante.')}
+            ${linkifyDoisHtml(failData?.criterio || 'Paciente concluiu o ciclo inicial, os protocolos subsequentes e a seção de ajustes sem apresentar resposta clínica mínima relevante.')}
           </div>
           <div class="failure-conduct-box">
             <div class="failure-conduct-title">Conduta Clínica Sistematizada da Rede NAPeN:</div>
@@ -2204,6 +2872,15 @@ document.addEventListener('DOMContentLoaded', () => {
       link.addEventListener('click', (e) => {
         e.preventDefault();
         scrollToTolerabilityGuide();
+      });
+    });
+
+    branchResultPanel.querySelectorAll('.js-eval-stage-calc').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const evalStage = btn.getAttribute('data-eval-stage') || 'primary';
+        engine.setActiveCalcStage(evalStage);
+        renderCalculatorForActiveScale();
+        scrollToCalculatorHighlight();
       });
     });
 
@@ -2549,12 +3226,14 @@ document.addEventListener('DOMContentLoaded', () => {
   // ==========================================================================
   function resolveScaleKey(rawScaleStr) {
     if (!rawScaleStr) return 'eam';
-    const str = String(rawScaleStr).toLowerCase();
-    if (str.includes('ashworth') || str.includes('eam')) return 'eam';
-    if (str.includes('fma-le') || str.includes('membro inferior') && str.includes('fugl')) return 'fma_le';
+    const str = normalizeSearchStr(rawScaleStr);
+    if (str.includes('star_cancellation') || str.includes('cancelamento') || str.includes('estrela')) return 'star_cancellation';
+    if (str.includes('bergego') || /\bcbs\b/.test(str)) return 'catherine_bergego';
+    if (str.includes('psqi') || str.includes('pittsburgh')) return 'psqi';
+    if (str.includes('ashworth') || /\beam\b/.test(str)) return 'eam';
+    if (str.includes('fma-le') || str.includes('fma_le') || (str.includes('membro inferior') && str.includes('fugl'))) return 'fma_le';
     if (str.includes('fugl') || str.includes('fma')) return 'fma_ue';
     if (str.includes('mal-brazil') || str.includes('mal ') || str.includes('motor activity log')) return 'mal_brazil';
-    if (str.includes('bergego')) return 'catherine_bergego';
     if (str.includes('berg') || str.includes('bbs')) return 'bbs';
     if (str.includes('icars')) return 'icars';
     if (str.includes('sara')) return 'sara';
@@ -2580,8 +3259,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (str.includes('meem') || str.includes('mmse') || str.includes('mental')) return 'meem';
     if (str.includes('adas')) return 'adas_cog';
     if (str.includes('trilhas') || str.includes('trail') || str.includes('tmt')) return 'teste_trilhas';
-    if (str.includes('wais') || str.includes('dígitos') || str.includes('digitos')) return 'wais_digitos';
-    if (str.includes('d2')) return 'd2_psico';
+    if (str.includes('wais') || str.includes('digitos')) return 'wais_digitos';
+    if (str.includes('d2') || str.includes('rbmt') || str.includes('privativo') || str.includes('cognitivo')) return 'd2_psico';
     if (str.includes('boston') || str.includes('bnt')) return 'bnt';
     if (str.includes('mtl')) return 'mtl_brasil';
     if (str.includes('token')) return 'token_test';
@@ -2629,8 +3308,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const li = document.createElement('li');
         li.className = 'scale-step-item';
         li.innerHTML = `
-          <div class="scale-step-item-title">${step.passo}. ${step.titulo}</div>
-          <div class="scale-step-item-desc">${step.descricao}</div>
+          <div class="scale-step-item-title">${escHtml(step.passo)}. ${escHtml(step.titulo)}</div>
+          <div class="scale-step-item-desc">${linkifyDoisHtml(step.descricao)}</div>
         `;
         scaleGuideStepsList.appendChild(li);
       });
@@ -2643,16 +3322,16 @@ document.addEventListener('DOMContentLoaded', () => {
         const row = document.createElement('div');
         row.className = 'scale-score-row';
         row.innerHTML = `
-          <span class="scale-score-grau">${crit.grau}</span>
-          <span class="scale-score-desc">${crit.descricao}</span>
+          <span class="scale-score-grau">${escHtml(crit.grau)}</span>
+          <span class="scale-score-desc">${linkifyDoisHtml(crit.descricao)}</span>
         `;
         scaleGuideScoresTable.appendChild(row);
       });
     }
 
-    if (scaleGuideMcidText) scaleGuideMcidText.textContent = scale.mcid || 'Consulte a literatura de referência.';
-    if (scaleGuideInterpretacaoText) scaleGuideInterpretacaoText.textContent = scale.interpretacao_clinica || '';
-    if (scaleGuideRefAbnt) scaleGuideRefAbnt.textContent = scale.referencia_abnt || '';
+    if (scaleGuideMcidText) scaleGuideMcidText.innerHTML = linkifyDoisHtml(scale.mcid || 'Consulte a literatura de referência.');
+    if (scaleGuideInterpretacaoText) scaleGuideInterpretacaoText.innerHTML = linkifyDoisHtml(scale.interpretacao_clinica || '');
+    if (scaleGuideRefAbnt) scaleGuideRefAbnt.innerHTML = linkifyDoisHtml(scale.referencia_abnt || '');
     if (scaleGuideDoiLink) {
       const hasLink = Boolean(scale.doi || (scale.link_artigo && scale.link_artigo !== '#'));
       if (hasLink) {
@@ -2664,7 +3343,7 @@ document.addEventListener('DOMContentLoaded', () => {
         scaleGuideDoiLink.href = '#';
       }
     }
-    if (scaleGuideValidacaoBrasil) scaleGuideValidacaoBrasil.textContent = scale.validacao_brasil || 'Adaptação e normas psicométricas disponíveis em língua portuguesa.';
+    if (scaleGuideValidacaoBrasil) scaleGuideValidacaoBrasil.innerHTML = linkifyDoisHtml(scale.validacao_brasil || 'Adaptação e normas psicométricas disponíveis em língua portuguesa.');
 
     // Aba inicial: Passo a Passo
     document.querySelectorAll('.scale-tab-btn').forEach((b, idx) => b.classList.toggle('active', idx === 0));
@@ -2698,7 +3377,7 @@ document.addEventListener('DOMContentLoaded', () => {
     btnOpenScaleGuideMain.addEventListener('click', () => {
       const activeMod = engine.getActiveModality();
       const activeScale = engine.getActiveScale();
-      const scaleToOpen = activeScale?.scale_key || activeScale?.sigla || activeScale?.id || activeMod?.escala_recomendada;
+      const scaleToOpen = activeScale?.scale_key || activeScale?.id || activeScale?.sigla || activeScale?.nome || activeMod?.escala_recomendada;
       openScaleGuide(scaleToOpen);
     });
   }
@@ -2707,7 +3386,7 @@ document.addEventListener('DOMContentLoaded', () => {
     btnOpenScaleGuideCalc.addEventListener('click', () => {
       const activeScale = engine.getActiveScale();
       const activeMod = engine.getActiveModality();
-      const scaleToOpen = activeScale?.scale_key || activeScale?.sigla || activeScale?.id || activeMod?.escala_recomendada;
+      const scaleToOpen = activeScale?.scale_key || activeScale?.id || activeScale?.sigla || activeScale?.nome || activeMod?.escala_recomendada;
       openScaleGuide(scaleToOpen);
     });
   }
@@ -2717,7 +3396,7 @@ document.addEventListener('DOMContentLoaded', () => {
     btnOpenScaleGuidePresc.addEventListener('click', () => {
       const activeScale = engine.getActiveScale();
       const activeMod = engine.getActiveModality();
-      const scaleToOpen = activeScale?.scale_key || activeScale?.sigla || activeScale?.id || activeMod?.escala_recomendada;
+      const scaleToOpen = activeScale?.scale_key || activeScale?.id || activeScale?.sigla || activeScale?.nome || activeMod?.escala_recomendada;
       openScaleGuide(scaleToOpen);
     });
   }
@@ -2795,143 +3474,56 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       clearTimeout(searchDebounce);
       searchDebounce = setTimeout(() => {
-        const q = e.target.value.toLowerCase().trim();
-        state.searchQuery = q;
+        const rawQ = e.target.value.trim();
+        state.searchQuery = rawQ;
 
         if (searchClearBtn) {
-          searchClearBtn.classList.toggle('visible', !!q);
+          searchClearBtn.classList.toggle('visible', !!rawQ);
         }
 
-        if (!q) {
+        if (!rawQ) {
           searchResultsDropdown.classList.remove('visible');
           searchResultsDropdown.innerHTML = '';
           return;
         }
 
-      const matchesWithReason = [];
+        const { conditions: matchesWithReason } = searchPlatformCatalog(rawQ);
 
-      data.condicoes.forEach(c => {
-        let matched = false;
-        let matchReason = '';
-
-        const cTitle = (c.condicao || '').toLowerCase();
-        const cEixo = (c.eixo || '').toLowerCase();
-        const tags = c.tags_busca || {};
-
-        // 1. Nome ou eixo principal
-        if (cTitle.includes(q) || cEixo.includes(q)) {
-          matched = true;
+        if (matchesWithReason.length === 0) {
+          searchResultsDropdown.innerHTML = `
+            <div style="padding: 14px 18px; color: var(--text-muted); font-size: 0.88rem;">
+              Nenhuma condição encontrada para "<strong>${escHtml(rawQ)}</strong>".
+            </div>
+          `;
+          searchResultsDropdown.classList.add('visible');
+          return;
         }
 
-        // 2. Coordenadas do Sistema 10-20 (ex: C3, C4, Cz, F3, F4, Broca)
-        if (!matched && tags.coordenadas_10_20) {
-          const foundCoord = tags.coordenadas_10_20.find(coord => coord.toLowerCase() === q || coord.toLowerCase().startsWith(q));
-          if (foundCoord) {
-            matched = true;
-            matchReason = `Sistema 10-20: ${foundCoord} ➔ ${c.modalidades ? Object.values(c.modalidades)[0]?.alvo || 'M1' : ''}`;
-          }
-        }
+        searchResultsDropdown.innerHTML = '';
+        matchesWithReason.forEach(({ condition: c, matchReason }) => {
+          const item = document.createElement('div');
+          item.className = 'search-result-item';
+          const badge = CONDITION_ACRONYM_BADGE[c.id] || '';
+          item.innerHTML = `
+            <div>
+              <div class="search-res-title">${escHtml(c.condicao)}${badge ? ` <span class="search-res-acronym-pill">${escHtml(badge)}</span>` : ''}</div>
+              <div class="search-res-eixo">${escHtml(c.eixo)}</div>
+              ${matchReason ? `<div class="search-res-match-tag">${escHtml(matchReason)}</div>` : ''}
+            </div>
+            <span style="color: var(--napen-teal-dark); font-weight: 700; font-size: 0.95rem;">➔</span>
+          `;
 
-        // 3. Alvos Anatômicos
-        if (!matched && tags.alvos_anatomicos) {
-          const foundAlvo = tags.alvos_anatomicos.find(a => a.toLowerCase().includes(q));
-          if (foundAlvo) {
-            matched = true;
-            matchReason = `Alvo Anatômico: ${foundAlvo}`;
-          }
-        }
-
-        // 4. Sinônimos em Inglês (stroke, depression, anxiety, pain, etc.)
-        if (!matched && tags.sinonimos_en) {
-          const foundEn = tags.sinonimos_en.find(s => s.toLowerCase().includes(q) || q.includes(s.toLowerCase()));
-          if (foundEn) {
-            matched = true;
-            matchReason = `Sinônimo em Inglês (${foundEn})`;
-          }
-        }
-
-        // 5. Escalas Clínicas (EAM, FMA, BBS, SARA, HAM-D, etc.)
-        if (!matched && tags.escalas) {
-          const foundScale = tags.escalas.find(s => s.toLowerCase().includes(q) || q.includes(s.toLowerCase()));
-          if (foundScale) {
-            matched = true;
-            matchReason = `Escala Clínica: ${foundScale}`;
-          }
-        }
-
-        // 6. Sintomas em Português
-        if (!matched && tags.sintomas_pt) {
-          const foundSymptom = tags.sintomas_pt.find(s => s.toLowerCase().includes(q));
-          if (foundSymptom) {
-            matched = true;
-            matchReason = `Sintoma: ${foundSymptom}`;
-          }
-        }
-
-        // 7. Modalidades, técnicas e alvos
-        if (!matched) {
-          Object.values(c.modalidades || {}).forEach(m => {
-            if ((m.tecnica || '').toLowerCase().includes(q)) {
-              matched = true;
-              matchReason = `Técnica: ${m.tecnica}`;
-            } else if ((m.alvo || '').toLowerCase().includes(q)) {
-              matched = true;
-              matchReason = `Alvo: ${m.alvo}`;
-            } else if ((m.escala_recomendada || '').toLowerCase().includes(q)) {
-              matched = true;
-              matchReason = `Escala: ${m.escala_recomendada}`;
-            }
+          item.addEventListener('click', () => {
+            openConditionAlgorithm(c.id);
           });
-        }
 
-        // 8. Fatores limitantes
-        if (!matched) {
-          const foundFactor = (c.fatores_limitantes || []).find(f => f.label.toLowerCase().includes(q));
-          if (foundFactor) {
-            matched = true;
-            matchReason = `Fator: ${foundFactor.label}`;
-          }
-        }
-
-        if (matched) {
-          matchesWithReason.push({ condition: c, matchReason });
-        }
-      });
-
-      if (matchesWithReason.length === 0) {
-        searchResultsDropdown.innerHTML = `
-          <div style="padding: 14px 18px; color: var(--text-muted); font-size: 0.88rem;">
-            Nenhuma condição encontrada para "<strong>${e.target.value}</strong>".
-          </div>
-        `;
-        searchResultsDropdown.classList.add('visible');
-        return;
-      }
-
-      searchResultsDropdown.innerHTML = '';
-      matchesWithReason.forEach(({ condition: c, matchReason }) => {
-        const item = document.createElement('div');
-        item.className = 'search-result-item';
-        item.innerHTML = `
-          <div>
-            <div class="search-res-title">${c.condicao}</div>
-            <div class="search-res-eixo">${c.eixo}</div>
-            ${matchReason ? `<div class="search-res-match-tag">${matchReason}</div>` : ''}
-          </div>
-          <span style="color: var(--napen-teal-dark); font-weight: 700; font-size: 0.95rem;">➔</span>
-        `;
-
-        item.addEventListener('click', () => {
-          openConditionAlgorithm(c.id);
+          searchResultsDropdown.appendChild(item);
         });
 
-        searchResultsDropdown.appendChild(item);
-      });
-
-      searchResultsDropdown.classList.add('visible');
-    }, 120);
-  });
-}
+        searchResultsDropdown.classList.add('visible');
+      }, 120);
+    });
+  }
 
   if (searchClearBtn) {
     searchClearBtn.addEventListener('click', () => {
@@ -3019,8 +3611,8 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
             <div class="pocket-source-note">${escHtml(fonteRecLabel)}</div>
             ${guideRef && guideRef.url_doi ? `
-              <a href="${escHtml(guideRef.url_doi)}" target="_blank" rel="noopener noreferrer" style="color: var(--napen-teal-dark); font-weight: 700; text-decoration: underline; font-size: 0.75rem; display: inline-block; margin-top: 4px;">
-                ${escHtml(guideRef.autores || 'Referência')} (${escHtml(guideRef.ano || '')}) · DOI ↗
+              <a href="${escHtml(guideRef.url_doi)}" target="_blank" rel="noopener noreferrer" class="doi-inline-link" style="font-size: 0.75rem; display: inline-block; margin-top: 4px;">
+                ${escHtml(guideRef.autores || 'Referência')} (${escHtml(guideRef.ano || '')}) · ${guideRef.doi ? `DOI: ${escHtml(String(guideRef.doi).replace(/^https?:\/\/(?:dx\.)?doi\.org\//i, ''))}` : 'DOI'} ↗
               </a>
             ` : ''}
           </td>
@@ -3033,8 +3625,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div style="font-weight: 700; color: var(--text-main);">${escHtml(ensaio.autores)} (${escHtml(ensaio.ano)})</div>
                 <div style="font-size: 0.74rem; color: var(--text-muted); margin-top: 2px;">${escHtml(ensaio.titulo || '')}</div>
                 ${ensaio.url_doi ? `
-                  <a href="${escHtml(ensaio.url_doi)}" target="_blank" rel="noopener noreferrer" style="color: var(--napen-teal-dark); font-weight: 700; text-decoration: underline; font-size: 0.76rem; display: inline-block; margin-top: 4px;">
-                    Acessar Ensaio do Protocolo via DOI ↗
+                  <a href="${escHtml(ensaio.url_doi)}" target="_blank" rel="noopener noreferrer" class="doi-inline-link" style="font-size: 0.76rem; display: inline-block; margin-top: 4px;">
+                    ${ensaio.doi ? `DOI: ${escHtml(String(ensaio.doi).replace(/^https?:\/\/(?:dx\.)?doi\.org\//i, ''))}` : 'Acessar Ensaio via DOI'} ↗
                   </a>
                 ` : ''}
                 ${altRouteHint}
@@ -3057,8 +3649,8 @@ document.addEventListener('DOMContentLoaded', () => {
                   </div>
                 ` : ''}
                 ${meta.url_doi ? `
-                  <a href="${escHtml(meta.url_doi)}" target="_blank" rel="noopener noreferrer" style="color: var(--napen-teal-dark); font-weight: 700; text-decoration: underline; font-size: 0.76rem; display: inline-block; margin-top: 4px;">
-                    Acessar Metanálise via DOI ↗
+                  <a href="${escHtml(meta.url_doi)}" target="_blank" rel="noopener noreferrer" class="doi-inline-link" style="font-size: 0.76rem; display: inline-block; margin-top: 4px;">
+                    ${meta.doi ? `DOI: ${escHtml(String(meta.doi).replace(/^https?:\/\/(?:dx\.)?doi\.org\//i, ''))}` : 'Acessar Metanálise via DOI'} ↗
                   </a>
                 ` : ''}
               </div>
@@ -3153,6 +3745,14 @@ document.addEventListener('DOMContentLoaded', () => {
       closeAllDropdowns();
     }
   });
+
+  // Exposição de utilitários para inspeção e testes automatizados
+  window.NAPEN_APP_UTILS = {
+    linkifyDoisHtml,
+    normalizeSearchStr,
+    searchPlatformCatalog,
+    resolveScaleKey
+  };
 
   // Inicialização
   populateDropdownMenu();

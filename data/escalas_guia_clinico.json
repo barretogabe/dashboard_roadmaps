@@ -2231,5 +2231,108 @@
     "doi": "10.1037/pas0000486",
     "link_artigo": "https://doi.org/10.1037/pas0000486",
     "validacao_brasil": "Padrão-ouro clínico em português brasileiro para acompanhamento de TEPT."
+  },
+  "star_cancellation": {
+    "id": "star_cancellation",
+    "sigla": "Cancelamento de Estrelas",
+    "nome": "Teste de Cancelamento de Estrelas (BIT — Star Cancellation Test)",
+    "nome_en": "Behavioral Inattention Test — Star Cancellation Subtest",
+    "dominio": "Atenção Espacial / Heminegligência Unilateral",
+    "tempo_aplicacao": "5 minutos",
+    "publico_alvo": "Pacientes pós-AVC com suspeita ou diagnóstico de heminegligência espacial unilateral (rotas rTMS P3/P4 e tDCS PPC em Membro Superior e Mobilidade).",
+    "materiais": "Folha A4 horizontal padronizada da bateria BIT contendo 56 estrelas pequenas (54 pontuáveis + 2 de demonstração) entre 52 estrelas grandes, 13 letras e 10 palavras curtas, e caneta de ponta firme.",
+    "procedimento_passo_a_passo": [
+      {
+        "passo": 1,
+        "titulo": "Posicionamento Padronizado",
+        "descricao": "Posicionar a folha A4 alinhada à linha média do paciente (sem inclinar para o lado não negligenciado) sobre mesa iluminada, utilizando caneta de ponta firme."
+      },
+      {
+        "passo": 2,
+        "titulo": "Demonstração das 2 Estrelas Centrais",
+        "descricao": "O examinador risca as 2 estrelas pequenas centrais apontando para a folha e instrui o paciente a cancelar TODAS as demais estrelas pequenas que conseguir encontrar, sem limite rígido de tempo (geralmente até 5 minutos)."
+      },
+      {
+        "passo": 3,
+        "titulo": "Contagem do Escore (0 a 54)",
+        "descricao": "Contar o número total de estrelas pequenas corretamente riscadas (máximo = 54; 27 à esquerda e 27 à direita). Registrar separadamente omissões no hemicampo contralesional (geralmente esquerdo) e o índice de lateralidade."
+      },
+      {
+        "passo": 4,
+        "titulo": "Reavaliação Pós-Protocolo",
+        "descricao": "Repetir sob condições idênticas após 10 sessões. No protocolo inicial rTMS P3/P4 (10 Hz ipsilesional, Kim et al., 2013), o ganho esperado é +10,4 pontos (IC 95%: 8,0 a 12,7); no protocolo contralesional (1 Hz), +16,4 pontos (IC 95%: 13,0 a 20,0); na seção de Ajustes (iTBS F5, Cao et al., 2016), +37%."
+      }
+    ],
+    "criterios_pontuacao": [
+      {
+        "grau": "52 a 54 estrelas",
+        "descricao": "Desempenho dentro da faixa de normalidade (ausência de heminegligência clinicamente significativa)."
+      },
+      {
+        "grau": "≤ 51 estrelas (ponto de corte BIT)",
+        "descricao": "Presença de heminegligência espacial unilateral; quanto menor o escore, maior a gravidade da omissão contralesional."
+      },
+      {
+        "grau": "Corte Satisfatório rTMS P3/P4 (10 Hz ipsilesional)",
+        "descricao": "Aumento ≥ +8,0 pontos (limite inferior do IC 95%: 8,0–12,7 · média esperada +10,4 pontos — Kim et al., 2013)."
+      },
+      {
+        "grau": "Corte Satisfatório rTMS P3/P4 (1 Hz contralesional)",
+        "descricao": "Aumento ≥ +13,0 pontos (limite inferior do IC 95%: 13,0–20,0 · média esperada +16,4 pontos — Kim et al., 2013)."
+      }
+    ],
+    "interpretacao_clinica": "Instrumento mais sensível da bateria BIT para rastreamento e monitoramento quantitativo da heminegligência pós-AVC. O aumento no número de estrelas canceladas reflete expansão direta da exploração visuoespacial para o hemicampo negligenciado.",
+    "mcid": "Protocolo rTMS P3/P4 ipsilesional: +10,4 pts (IC 95%: 8,0–12,7); P3/P4 contralesional: +16,4 pts (IC 95%: 13,0–20,0); Ajustes iTBS F5: +37%.",
+    "referencia_abnt": "Halligan, P. W., Cockburn, J., & Wilson, B. A. (1991). The behavioural assessment of visual neglect. Neuropsychological Rehabilitation, 1(1), 5-32. (Desenvolvimento original: Wilson, Cockburn & Halligan, 1987, Arch Phys Med Rehabil, 68(2), 98-102.)",
+    "doi": "10.1080/09602019108401377",
+    "link_artigo": "https://doi.org/10.1080/09602019108401377",
+    "validacao_brasil": "Amplamente empregado na reabilitação neuropsicológica e fisioterapêutica brasileira pós-AVC como desfecho primário dos ensaios de neuromodulação em heminegligência (Kim et al., 2013 · DOI: 10.1016/j.apmr.2012.12.016)."
+  },
+  "psqi": {
+    "id": "psqi",
+    "sigla": "PSQI",
+    "nome": "Índice de Qualidade do Sono de Pittsburgh (PSQI)",
+    "nome_en": "Pittsburgh Sleep Quality Index (PSQI)",
+    "dominio": "Qualidade do Sono / Comorbidades em Ansiedade e Humor",
+    "tempo_aplicacao": "5 a 10 minutos",
+    "publico_alvo": "Pacientes com Transtorno de Ansiedade Generalizada (TAG) com queixa associada de insônia ou sono não reparador, além de acompanhamento complementar em depressão e dor crônica.",
+    "materiais": "Questionário impresso ou digital com 19 questões autorrelatadas (mais 5 opcionais para acompanhante) avaliando 7 componentes do sono no último mês.",
+    "procedimento_passo_a_passo": [
+      {
+        "passo": 1,
+        "titulo": "Preenchimento dos 7 Componentes",
+        "descricao": "Avaliar: (1) qualidade subjetiva do sono, (2) latência do sono, (3) duração do sono, (4) eficiência habitual do sono, (5) distúrbios do sono, (6) uso de medicação para dormir e (7) disfunção diurna."
+      },
+      {
+        "passo": 2,
+        "titulo": "Cálculo do Escore Global (0 a 21)",
+        "descricao": "Somar os 7 componentes (cada componente varia de 0 = sem dificuldade a 3 = dificuldade grave). Escores maiores indicam pior qualidade do sono."
+      },
+      {
+        "passo": 3,
+        "titulo": "Monitoramento Pós-Ciclo",
+        "descricao": "Reaplicar ao final do ciclo de neuromodulação em TAG com insônia (protocolo bilateral ou P4/F4) para quantificar melhora objetiva do sono."
+      }
+    ],
+    "criterios_pontuacao": [
+      {
+        "grau": "0 a 4 pontos",
+        "descricao": "Boa qualidade do sono."
+      },
+      {
+        "grau": "5 a 10 pontos",
+        "descricao": "Qualidade do sono ruim (ponto de corte clássico > 5 indica comprometimento clínico do sono)."
+      },
+      {
+        "grau": "11 a 21 pontos",
+        "descricao": "Distúrbio grave do sono / insônia acentuada."
+      }
+    ],
+    "interpretacao_clinica": "Redução ≥ 3 pontos no escore global do PSQI representa melhora clinicamente relevante na qualidade do sono em pacientes com insônia ou ansiedade generalizada.",
+    "mcid": "Redução ≥ 3,0 pontos no escore global (0–21) ou queda abaixo do ponto de corte (≤ 5 pontos).",
+    "referencia_abnt": "Buysse, D. J., Reynolds, C. F., Monk, T. H., Berman, S. R., & Kupfer, D. J. (1989). The Pittsburgh Sleep Quality Index: a new instrument for psychiatric practice and research. Psychiatry Research, 28(2), 193-213.",
+    "doi": "10.1016/0165-1781(89)90047-4",
+    "link_artigo": "https://doi.org/10.1016/0165-1781(89)90047-4",
+    "validacao_brasil": "Traduzido e validado para o português brasileiro por Bertolazi et al. (2011), Sleep Medicine, 12(1), 70-75 · DOI: 10.1016/j.sleep.2010.04.020."
   }
 }

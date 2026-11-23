@@ -17,6 +17,7 @@ class DecisionEngine {
     this.activeOutcome = null; // 'success' | 'warning' | 'danger' | null
     this.entryMode = 'new'; // 'new' | 'returning'
     this.continuingStage = 'primary'; // 'primary' | 'evaluation' | 'alt1' | 'alt2' | 'failure'
+    this.activeCalcStage = 'primary'; // 'primary' | 'alt1' | 'alt2' | ... (protocolo avaliado na calculadora)
     this.tolerabilityStatus = 'boa'; // 'boa' | 'leve' | 'intolerante' | 'grave'
   }
 
@@ -42,6 +43,7 @@ class DecisionEngine {
     this.continuingStage = this.entryMode === 'returning'
       ? (options.continuingStage || 'evaluation')
       : 'primary';
+    this.activeCalcStage = /^alt\d+$/.test(this.continuingStage) ? this.continuingStage : 'primary';
     this.tolerabilityStatus = 'boa';
 
     if (cond && cond.fatores_limitantes && cond.fatores_limitantes.length > 0) {
@@ -73,6 +75,7 @@ class DecisionEngine {
     this.pathChoices = {};
     this.activeScaleId = null;
     this.activeOutcome = null;
+    this.activeCalcStage = 'primary';
     const tree = this.getActiveTree();
     if (tree && tree.etapas && tree.etapas.length > 0) {
       const firstEtapa = tree.etapas[0];
@@ -402,9 +405,32 @@ class DecisionEngine {
     };
   }
 
-  calculateDelta(valBaseRaw, valPostRaw, scaleObj = null, modality = null) {
+  setActiveCalcStage(stage) {
+    const str = String(stage || 'primary');
+    if (str === 'primary' || /^alt\d+$/.test(str)) {
+      this.activeCalcStage = str;
+    } else {
+      this.activeCalcStage = 'primary';
+    }
+  }
+
+  getCalculatorStageContext(stageKey = null) {
+    const chain = this.getProtocolChain();
+    const rawStage = stageKey || this.activeCalcStage || 'primary';
+    const normalized = rawStage === 'evaluation' || rawStage === 'failure' ? 'primary' : rawStage;
+    const step = chain.find(s => s.stageKey === normalized) || chain[0] || null;
+    return {
+      stageKey: step?.stageKey || 'primary',
+      step,
+      calcMeta: (step && step.calc_meta) ? step.calc_meta : null
+    };
+  }
+
+  calculateDelta(valBaseRaw, valPostRaw, scaleObj = null, modality = null, stageKey = null) {
     const scale = scaleObj || this.getActiveScale();
     const m = modality || this.getActiveModality();
+    const stageCtx = this.getCalculatorStageContext(stageKey);
+    const cm = stageCtx?.calcMeta || null;
 
     // 1. Caso especial: Escala de Ashworth Modificada (EAM) com graus 0, 1, 1+, 2, 3, 4
     if (scale && scale.tipo === 'ordinal_eam') {
@@ -447,8 +473,8 @@ class DecisionEngine {
       const outcomeRecommended = goalMet ? 'success' : 'danger';
 
       const eff = m?.efeito_clinico || {};
-      const estudo = eff.estudo_referencia || 'o ensaio clínico de referência do protocolo';
-      const esperado = eff.efeito_esperado_resumo || m?.tamanho_efeito || 'Diminuição de 1 nível na EAM';
+      const estudo = cm?.estudo_referencia || eff.estudo_referencia || 'o ensaio clínico de referência do protocolo';
+      const esperado = cm?.efeito_esperado_resumo || eff.efeito_esperado_resumo || m?.tamanho_efeito || 'Diminuição de 1 nível na EAM';
 
       let comparativeFeedback = '';
       if (outcomeRecommended === 'success') {
@@ -472,6 +498,9 @@ class DecisionEngine {
         isOrdinal: true,
         gradeFrom: strBase,
         gradeTo: strPost,
+        stageKey: stageCtx.stageKey,
+        studyRef: estudo,
+        expectedSummary: esperado,
         comparativeFeedback
       };
     }
@@ -485,7 +514,7 @@ class DecisionEngine {
     }
 
     const delta = valPost - valBase;
-    const meta = scale?.meta_texto || m?.meta_melhora || '';
+    const meta = cm?.meta_texto || scale?.meta_texto || m?.meta_melhora || '';
     const isReduction = scale ? scale.direcao_melhora === 'reducao' : (/redução|queda|diminuição|alívio/i.test(meta));
 
     const isImproved = isReduction ? delta < 0 : delta > 0;
@@ -507,34 +536,36 @@ class DecisionEngine {
       textDisplay = `Δ = ${sign}${delta.toFixed(1)} pts (${percentFormatted})`;
     }
 
-    // Avaliação de MCID (Minimal Clinically Important Difference)
+    // Avaliação de MCID / Limiar do estudo (sensível ao protocolo da sequência em uso)
     const eff = m?.efeito_clinico || {};
-    const mcidVal = scale?.mcid_valor ?? eff.mcid_valor ?? m?.mcid_valor ?? ((scale?.id === 'fma_ue' || scale?.id === 'fma-ue' || /fma/i.test(scale?.nome || '')) ? 5.0 : 30.0);
-    const mcidLabel = scale?.mcid_label || eff.mcid_label || m?.mcid_label || `Meta clínica: ${meta}`;
-    const isPercentMcid = /%/.test(mcidLabel) || (!/ponto|pt|grau|seg|s\b|m\/s/i.test(mcidLabel) && (mcidVal === 30.0 || mcidVal === 50.0));
+    const mcidVal = cm?.mcid_valor ?? scale?.mcid_valor ?? eff.mcid_valor ?? m?.mcid_valor ?? ((scale?.id === 'fma_ue' || scale?.id === 'fma-ue' || /fma/i.test(scale?.nome || '')) ? 5.0 : 30.0);
+    const mcidLabel = cm?.mcid_label || scale?.mcid_label || eff.mcid_label || m?.mcid_label || `Meta clínica: ${meta}`;
+    const isPercentMcid = (cm && typeof cm.is_percent === 'boolean')
+      ? cm.is_percent
+      : (/%/.test(mcidLabel) && !/IC\s*95%|ponto|pt|estrela/i.test(mcidLabel)) || (!/ponto|pt|estrela|grau|seg|s\b|m\/s/i.test(mcidLabel) && (mcidVal === 30.0 || mcidVal === 50.0));
 
     let mcidMet = false;
     const changeMagnitude = Math.abs(delta);
     
-    // Se a MCID for percentual (ex: 30%, 50%)
+    // Se o corte for percentual (ex: 30%, 37%, 50%)
     if (isPercentMcid) {
       mcidMet = isImproved && percentChange >= mcidVal;
     } else {
-      // Se for em pontos absolutos (ex: 5.0 na FMA-UE ou BBS, 1.5 na SARA)
+      // Se for em pontos absolutos (ex: 5.0 FMA-UE, 8.0 / 13.0 Cancelamento de Estrelas)
       mcidMet = isImproved && changeMagnitude >= mcidVal;
     }
 
     // Compatibilidade com Intervalo de Confiança do Estudo (IC 95%)
-    const icMin = eff.ic_min;
-    const icMax = eff.ic_max;
+    const icMin = cm?.ic_min ?? eff.ic_min;
+    const icMax = cm?.ic_max ?? eff.ic_max;
     let withinCI = false;
     if (icMin !== undefined && icMax !== undefined && icMin !== null && icMax !== null) {
       const metricToCheck = isPercentMcid ? percentChange : changeMagnitude;
-      withinCI = metricToCheck >= icMin && metricToCheck <= icMax;
+      withinCI = isImproved && metricToCheck >= icMin && metricToCheck <= icMax;
     }
 
     let goalMet = mcidMet;
-    if (!goalMet) {
+    if (!goalMet && !cm) {
       if (/30%/i.test(meta)) goalMet = isImproved && percentChange >= 30;
       else if (/50%/i.test(meta)) goalMet = isImproved && percentChange >= 50;
       else if (/5[,.]0/i.test(meta) && /fma|bbs/i.test(`${scale?.id || ''} ${scale?.nome || ''}`)) goalMet = isImproved && changeMagnitude >= 5.0;
@@ -543,14 +574,26 @@ class DecisionEngine {
 
     const outcomeRecommended = goalMet ? 'success' : 'danger';
 
-    const estudo = eff.estudo_referencia || m?.ensaio_clinico?.autores || 'o ensaio clínico de referência do protocolo';
-    const esperadoResumo = eff.efeito_esperado_resumo || m?.tamanho_efeito || 'efeito clinicamente relevante';
+    const stageStep = stageCtx?.step || null;
+    const estudo = cm?.estudo_referencia
+      || (stageStep && stageStep.stageKey !== 'primary' && stageStep.referencia ? stageStep.referencia.split('·')[0].trim() : null)
+      || eff.estudo_referencia
+      || m?.ensaio_clinico?.autores
+      || 'o ensaio clínico de referência do protocolo';
+    const esperadoResumo = cm?.efeito_esperado_resumo
+      || (stageStep && stageStep.stageKey !== 'primary' && stageStep.efeito_esperado ? stageStep.efeito_esperado : null)
+      || eff.efeito_esperado_resumo
+      || m?.tamanho_efeito
+      || 'efeito clinicamente relevante';
 
     let comparativeFeedback = '';
     if (outcomeRecommended === 'success') {
-      comparativeFeedback = `<strong>[Resposta Clínica Satisfatória Alcançada]</strong> O ganho individual de <strong>${sign}${changeMagnitude.toFixed(1)} pontos (${percentFormatted})</strong> superou a MCID da escala (${mcidLabel}) e é compatível com o ensaio clínico de referência do protocolo (<em>${estudo}</em>: ${esperadoResumo}). <strong>Conduta Oficial NAPeN:</strong> Prosseguir para o protocolo de consolidação e manutenção periódica com redução gradual das sessões.`;
+      const ciSuffix = (icMin != null && icMax != null)
+        ? ` (compatível com o IC 95% de ${icMin} a ${icMax} do protocolo em uso)`
+        : '';
+      comparativeFeedback = `<strong>[Resposta Clínica Satisfatória Alcançada]</strong> O ganho individual de <strong>${sign}${changeMagnitude.toFixed(1)} pontos (${percentFormatted})</strong> atingiu o critério clínico esperado (${mcidLabel})${ciSuffix}, alinhado ao estudo de referência (<em>${estudo}</em>: ${esperadoResumo}). <strong>Conduta Oficial NAPeN:</strong> Prosseguir para consolidação e manutenção periódica com redução gradual das sessões.`;
     } else {
-      comparativeFeedback = `<strong>[Resposta Clínica Insatisfatória (< MCID)]</strong> O ganho individual de <strong>${sign}${changeMagnitude.toFixed(1)} pontos (${percentFormatted})</strong> não atingiu o limiar mínimo de relevância clínica (${mcidLabel}). <strong>Conduta Oficial NAPeN:</strong> Avançar para o próximo protocolo da sequência clínica no Assistente de Resposta Pós-Indução. Caso persista sem melhora após os protocolos seguintes e ajustes, caracteriza-se Falha Terapêutica formal.`;
+      comparativeFeedback = `<strong>[Resposta Clínica Insatisfatória]</strong> A variação individual de <strong>${sign}${delta.toFixed(1)} pontos (${percentFormatted})</strong> não atingiu o limiar esperado para o protocolo em uso (${mcidLabel} · <em>${estudo}</em>). <strong>Conduta Oficial NAPeN:</strong> Avançar para o próximo protocolo da sequência clínica no Assistente de Resposta Pós-Indução. Caso persista sem melhora após os protocolos seguintes e ajustes, caracteriza-se Falha Terapêutica formal.`;
     }
 
     return {
@@ -564,9 +607,14 @@ class DecisionEngine {
       mcidMet,
       mcidLabel,
       withinCI,
+      icMin: icMin ?? null,
+      icMax: icMax ?? null,
       goalMet,
       outcomeRecommended,
       metaText: meta,
+      stageKey: stageCtx.stageKey,
+      studyRef: estudo,
+      expectedSummary: esperadoResumo,
       comparativeFeedback
     };
   }
@@ -578,8 +626,10 @@ class DecisionEngine {
     this.entryMode = mode === 'returning' ? 'returning' : 'new';
     if (this.entryMode === 'new') {
       this.continuingStage = 'primary';
+      this.activeCalcStage = 'primary';
     } else {
       this.continuingStage = stage || (this.continuingStage === 'primary' ? 'evaluation' : this.continuingStage);
+      this.activeCalcStage = /^alt\d+$/.test(this.continuingStage) ? this.continuingStage : 'primary';
     }
   }
 
@@ -589,6 +639,9 @@ class DecisionEngine {
       this.continuingStage = str;
     } else {
       this.continuingStage = 'evaluation';
+    }
+    if (str === 'primary' || /^alt\d+$/.test(str)) {
+      this.activeCalcStage = str;
     }
   }
 
@@ -795,7 +848,8 @@ class DecisionEngine {
       ? reevalObs[0].texto
       : (activeMod?.sessoes_ajuste?.quando_reavaliar || '');
 
-    const { nextStage: nextProtocolStage, nextStep, isFailure } = this.getNextStageFrom(this.continuingStage);
+    const evalBaseStage = deltaResult?.stageKey || (this.activeCalcStage && this.activeCalcStage !== 'primary' ? this.activeCalcStage : this.continuingStage);
+    const { nextStage: nextProtocolStage, nextStep, isFailure } = this.getNextStageFrom(evalBaseStage);
     const nextProtocolLabel = nextStep
       ? (nextStep.nome || nextStep.etapa_rotulo || 'Próximo Protocolo na Sequência')
       : 'Falha Terapêutica Formal';
@@ -833,7 +887,7 @@ class DecisionEngine {
     // 2. Avaliação com escores numéricos preenchidos
     if (hasScores) {
       const eff = activeMod?.efeito_clinico || {};
-      const estudo = eff.estudo_referencia || activeMod?.ensaio_clinico?.autores || 'o ensaio clínico de referência do protocolo';
+      const estudo = deltaResult.studyRef || eff.estudo_referencia || activeMod?.ensaio_clinico?.autores || 'o ensaio clínico de referência do protocolo';
       const scoreSummary = deltaResult.isOrdinal
         ? `${Math.abs(deltaResult.delta)} nível(is) na EAM`
         : `${deltaResult.delta >= 0 ? '+' : ''}${deltaResult.delta.toFixed(1)} pts (${deltaResult.percentFormatted})`;
@@ -846,13 +900,13 @@ class DecisionEngine {
         return {
           recommendationType: 'success',
           outcomeButton: 'success',
-          recommendedStage: this.continuingStage === 'evaluation' ? 'primary' : this.continuingStage,
+          recommendedStage: evalBaseStage === 'evaluation' ? 'primary' : evalBaseStage,
           needsAdverseReport: tol === 'leve',
           adverseBankUrl: guidance.adverseBankUrl,
           badgeLabel: tol === 'leve'
             ? 'Resposta Satisfatória (≥ MCID · Monitorar Desconforto Leve)'
             : 'Resposta Clínica Satisfatória Alcançada',
-          summaryHtml: `<strong>[Resposta Clínica Satisfatória Alcançada]</strong> O paciente obteve variação de <strong>${scoreSummary}</strong>, atingindo a MCID (${deltaResult.mcidLabel}) em concordância com o ensaio clínico de referência do protocolo (<em>${estudo}</em>), com perfil de segurança favorável. <strong>Conduta Oficial NAPeN:</strong> Manter protocolo até consolidação clínica e iniciar transição gradual para manutenção.${tolSuffix}`
+          summaryHtml: `<strong>[Resposta Clínica Satisfatória Alcançada]</strong> O paciente obteve variação de <strong>${scoreSummary}</strong>, atingindo o critério clínico (${deltaResult.mcidLabel}) em concordância com o estudo de referência (<em>${estudo}</em>), com perfil de segurança favorável. <strong>Conduta Oficial NAPeN:</strong> Manter protocolo até consolidação clínica e iniciar transição gradual para manutenção.${tolSuffix}`
         };
       }
 

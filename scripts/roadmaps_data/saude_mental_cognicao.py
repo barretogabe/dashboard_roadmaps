@@ -70,6 +70,7 @@ def _audit(nivel, resumo, just, sinais, grade, forca, dom, tol):
 def _build_depressao():
     cid = "depressao-maior"
     tags = {
+        "siglas": ["TDM", "DM", "MDD", "DRT", "TRD", "CPFDL", "DLPFC", "HDRS", "MADRS", "TTT", "SNT", "SAINT"],
         "coordenadas_10_20": ["F3", "F4", "DLPFC"],
         "alvos_anatomicos": ["Córtex Pré-Frontal Dorsolateral Esquerdo (DLPFC Esquerdo — F3)", "Córtex Pré-Frontal Dorsolateral Direito (F4)"],
         "sinonimos_en": ["depression", "major depressive disorder", "mdd", "treatment-resistant depression", "saint", "snt", "ttt"],
@@ -181,6 +182,7 @@ def _build_depressao():
 def _build_tag():
     cid = "ansiedade-generalizada"
     tags = {
+        "siglas": ["TAG", "GAD", "CPFDL", "DLPFC", "HAM-A", "BAI", "GAD-7", "DASS-21", "PSQI"],
         "coordenadas_10_20": ["F4", "F3", "P4", "DLPFC Direito"],
         "alvos_anatomicos": ["Córtex Pré-Frontal Dorsolateral Direito (F4)", "Córtex Parietal Direito (P4)", "Bilateral F3+F4"],
         "sinonimos_en": ["anxiety", "generalized anxiety disorder", "gad", "insomnia", "worry"],
@@ -297,6 +299,7 @@ def _build_tag():
 def _build_alzheimer():
     cid = "alzheimer-ccl"
     tags = {
+        "siglas": ["DA", "AD", "CCL", "MCI", "CPFDL", "DLPFC", "MMSE", "MEEM", "MoCA", "ADAS", "NPI", "DAS", "TAVEC"],
         "coordenadas_10_20": ["F3", "F4", "P3", "P4", "T5", "T6", "T3", "Precuneus", "Cerebelo"],
         "alvos_anatomicos": ["CPFDL (F3/F4)", "Córtex Parietal e Temporal (P3/P4, T5/T6)", "Precúneo", "Cerebelo Bilateral", "Córtex Temporoparietal (T3-P3/T4-P4)"],
         "sinonimos_en": ["alzheimer", "alzheimer's disease", "mild cognitive impairment", "mci", "dementia", "apathy", "sundowning"],
@@ -552,7 +555,6 @@ def _build_alzheimer():
         make_obs("RM12-PSICO-SCALE", "RESERVA LEGAL (Uso Privativo de Psicólogos — Lei nº 4.119/1962): D2 (Atenção Concentrada), WAIS-IV/WASI Dígitos, Teste de Trilhas e TAVEC são instrumentos privativos de psicólogos no Brasil. Usar MMSE/MoCA/NPI também para acompanhar pacientes mais graves.", "scale", categoria="avaliacao", severidade="warning"),
         make_obs("RM12-BENZO-TEC", "Uso de benzodiazepínicos diminui o efeito do tratamento; não alterar medicações em uso durante o ciclo. Pacientes com comprometimento leve/moderado têm melhor resposta.", "tec", categoria="clinica"),
         make_obs("RM13-MENOR-EFEITO-TEC", "Análise comparativa: o tamanho de efeito da tDCS é geralmente menor que o da rTMS no tratamento cognitivo da Doença de Alzheimer.", "tec", categoria="evidencia", modalidades_tipo=["tdcs"]),
-        make_obs("RM12-EXPLORATORIO-TEC", "Base científica exploratória (ensaios individuais): Cerebelo bilateral (Yao 2022), Precúneo (Koch 2022), Cerebelo D tDCS (Kim 2024) e Multissítio 6 regiões (Andrade 2022).", "tec", categoria="evidencia", estagios=["alt1", "alt2"]),
         make_obs("RM12-3AREAS-ALVO", "Regra de Aplicação: na etapa multissítio parieto-temporal (P3/P4, T5/T6), selecionar e estimular 3 áreas corticais por sessão.", "alvo", categoria="anatomia", protocolo_ids=["rtms_parietal_temporal"], modalidades_tipo=["rtms"]),
         make_obs("RM13-LESAO-TECIDUAL-ALVO", "Na tDCS para Doença de Alzheimer/CCL, não posicionar eletrodos sobre áreas com lesões teciduais.", "alvo", categoria="seguranca", modalidades_tipo=["tdcs"], severidade="warning"),
         make_obs("RM12-CHECKLIST-SESSAO", "CHECKLIST DIÁRIO PRÉ-SESSÃO: (1) Qualidade do sono na noite anterior; (2) Medicamentos ingeridos; (3) Alimentação/jejum prolongado; (4) Notícia/evento de agitação no dia.", "sessoes", categoria="clinica"),
@@ -576,6 +578,7 @@ def _build_alzheimer():
 def _build_tept():
     cid = "tept"
     tags = {
+        "siglas": ["TEPT", "PTSD", "CPFDL", "DLPFC", "PCL-5", "CAPS", "EMDR", "TCC"],
         "coordenadas_10_20": ["F4", "F3", "r-CPFDL"],
         "alvos_anatomicos": ["Córtex Pré-Frontal Dorsolateral Direito (F4 — r-CPFDL)", "DLPFC Bilateral (F3 + F4)"],
         "sinonimos_en": ["ptsd", "posttraumatic stress disorder", "trauma", "hyperarousal", "nightmares"],

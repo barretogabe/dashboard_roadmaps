@@ -173,9 +173,9 @@
             <input type="text" id="globalSearchInput" class="search-input-field" placeholder="" aria-label="Busca por diagnóstico, alvo ou técnica (ex: AVC, espasticidade, depressão, dor neuropática, áreas do sistema 10-20 como C3, F3, Cz, marcha, Parkinson, iTBS, EAM, SARA, BBS...)">
             <div class="search-placeholder-marquee" id="searchPlaceholderMarquee" aria-hidden="true">
               <div class="marquee-track">
-                <span class="marquee-content">Busca por diagnóstico, alvo ou técnica (ex: AVC, espasticidade, depressão, dor neuropática, áreas do sistema 10-20 como C3, F3, Cz, marcha, Parkinson, iTBS, EAM, SARA, BBS...)</span>
+                <span class="marquee-content">Busca por sigla, diagnóstico, alvo ou técnica (ex: AVC, TAG, TEPT, TEA, PC, DP, DA, CCL, TDM, EMT, ETCC, CPFDL, C3, F3, Cz, espasticidade, marcha, iTBS, EAM, SARA, BBS, Cancelamento de Estrelas...)</span>
                 <span class="marquee-separator">•</span>
-                <span class="marquee-content">Busca por diagnóstico, alvo ou técnica (ex: AVC, espasticidade, depressão, dor neuropática, áreas do sistema 10-20 como C3, F3, Cz, marcha, Parkinson, iTBS, EAM, SARA, BBS...)</span>
+                <span class="marquee-content">Busca por sigla, diagnóstico, alvo ou técnica (ex: AVC, TAG, TEPT, TEA, PC, DP, DA, CCL, TDM, EMT, ETCC, CPFDL, C3, F3, Cz, espasticidade, marcha, iTBS, EAM, SARA, BBS, Cancelamento de Estrelas...)</span>
                 <span class="marquee-separator">•</span>
               </div>
             </div>
@@ -211,25 +211,56 @@
             </div>
           </div>
 
-          <!-- Seletor Rápido em Linha na Própria Homepage (Exibido quando "Sim") -->
+          <!-- Painel Amigável em Cards + Busca Rápida na Própria Homepage (Exibido quando "Sim") -->
           <div class="home-continuity-quick-panel" id="homeContinuityQuickPanel" style="display: none;">
-            <div class="home-continuity-fields">
-              <div class="home-continuity-field">
-                <label class="continuity-inline-label" for="homeContCondition">Condição Clínica</label>
-                <select id="homeContCondition" class="continuity-inline-select home-continuity-select"></select>
+            <!-- Busca Instantânea de Protocolo / Sigla / Autor -->
+            <div class="home-cont-search-wrap">
+              <label class="continuity-inline-label" for="homeContSearchInput">Buscar condição, sigla, alvo, técnica ou autor do protocolo já realizado</label>
+              <div class="home-cont-search-box">
+                <span class="search-icon-svg" aria-hidden="true">
+                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                </span>
+                <input type="text" id="homeContSearchInput" class="home-cont-search-input" placeholder="Ex.: AVC, TAG, TEA, DP, PC, Long, Zheng, Zanona, P3/P4, S1, iTBS, tDCS..." autocomplete="off">
+                <button type="button" id="homeContSearchClearBtn" class="home-cont-search-clear" style="display: none;" aria-label="Limpar busca de continuidade">✕</button>
               </div>
-              <div class="home-continuity-field" id="homeContModalityWrap" style="display: none;">
-                <label class="continuity-inline-label" for="homeContModality">Modalidade</label>
-                <select id="homeContModality" class="continuity-inline-select"></select>
+              <div class="home-cont-acronym-hint" id="homeContAcronymHint" style="display: none;"></div>
+              <div class="home-cont-direct-matches" id="homeContDirectMatches" style="display: none;"></div>
+            </div>
+
+            <!-- Passo 1: Condição Clínica (Cards clicáveis) -->
+            <div class="home-cont-step-block">
+              <div class="home-cont-step-header">
+                <span class="home-cont-step-num">1</span>
+                <span class="continuity-inline-label">Selecione a Condição Clínica</span>
               </div>
-              <div class="home-continuity-field home-continuity-field-wide">
-                <label class="continuity-inline-label" for="homeContProtocol">Protocolo / Desfecho Prévio</label>
-                <select id="homeContProtocol" class="continuity-inline-select home-continuity-select"></select>
+              <div class="home-cont-cards-grid home-cont-cond-grid" id="homeContConditionGrid" role="listbox" aria-label="Condições clínicas disponíveis"></div>
+            </div>
+
+            <!-- Passo 2: Modalidade (exibido apenas quando a condição tem rTMS e tDCS) -->
+            <div class="home-cont-step-block" id="homeContModalityWrap" style="display: none;">
+              <div class="home-cont-step-header">
+                <span class="home-cont-step-num">2</span>
+                <span class="continuity-inline-label">Modalidade Utilizada</span>
               </div>
-              <div class="home-continuity-field home-continuity-field-wide" id="homeContStoppedWrap">
-                <label class="continuity-inline-label" for="homeContStoppedProtocol">Em qual protocolo o paciente parou?</label>
-                <select id="homeContStoppedProtocol" class="continuity-inline-select home-continuity-select"></select>
+              <div class="home-cont-cards-grid home-cont-mod-grid" id="homeContModalityGrid"></div>
+            </div>
+
+            <!-- Passo 3: Protocolo / Desfecho Prévio -->
+            <div class="home-cont-step-block" id="homeContProtocolWrap">
+              <div class="home-cont-step-header">
+                <span class="home-cont-step-num" id="homeContProtStepNum">2</span>
+                <span class="continuity-inline-label">Protocolo / Desfecho Prévio</span>
               </div>
+              <div class="home-cont-cards-grid home-cont-prot-grid" id="homeContProtocolGrid"></div>
+            </div>
+
+            <!-- Passo 4: Em qual protocolo o paciente parou? -->
+            <div class="home-cont-step-block" id="homeContStoppedWrap">
+              <div class="home-cont-step-header">
+                <span class="home-cont-step-num" id="homeContStoppedStepNum">3</span>
+                <span class="continuity-inline-label">Em qual protocolo o paciente parou?</span>
+              </div>
+              <div class="home-cont-cards-grid home-cont-stopped-grid" id="homeContStoppedGrid"></div>
             </div>
 
             <div class="home-continuity-stage-row">
@@ -241,7 +272,7 @@
             </div>
 
             <p class="home-continuity-hint">
-              Ao escolher em qual protocolo o paciente parou e indicar resposta insatisfatória, o sistema abre diretamente a aba <strong>Assistente de Resposta Clínica (Pós-Indução)</strong> já posicionada no protocolo seguinte.
+              Ao escolher em qual protocolo o paciente parou e indicar resposta insatisfatória, o sistema abre diretamente o <strong>Assistente de Resposta Clínica (Pós-Indução)</strong> já posicionado no protocolo seguinte da sequência oficial.
             </p>
           </div>
         </section>
@@ -495,6 +526,12 @@
               <a href="#metodologia-calculo-efeito" class="effect-calc-info-link" id="linkComoEfeitoCalculado">
                 Como o tamanho de efeito foi calculado? ↗
               </a>
+            </div>
+
+            <!-- Seletor de Protocolo Avaliado na Calculadora (Sincronizado com o Protocolo em Uso / Sequência) -->
+            <div class="calc-stage-selector-bar" id="calcStageSelectorBar" style="display: none;">
+              <span class="calc-stage-selector-label">Protocolo em avaliação na calculadora:</span>
+              <div class="calc-stage-pills" id="calcStageButtons"></div>
             </div>
 
             <div class="dual-calc-grid">

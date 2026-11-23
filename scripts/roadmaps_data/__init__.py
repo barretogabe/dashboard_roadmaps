@@ -176,7 +176,8 @@ def make_chain_step(
     referencia='',
     linha_fluxograma='solida',
     observacoes='',
-    fase_etapa=None
+    fase_etapa=None,
+    calc_meta=None
 ):
     resolved_fase = fase_etapa
     if not resolved_fase:
@@ -187,7 +188,7 @@ def make_chain_step(
             resolved_fase = 'inicial'
         else:
             resolved_fase = 'sequencia'
-    return {
+    step_obj = {
         'ordem': ordem,
         'id': step_id,
         'etapa_rotulo': etapa_rotulo,
@@ -202,6 +203,9 @@ def make_chain_step(
         'observacoes': observacoes,
         'fase_etapa': resolved_fase
     }
+    if calc_meta:
+        step_obj['calc_meta'] = dict(calc_meta)
+    return step_obj
 
 
 def make_mod(
